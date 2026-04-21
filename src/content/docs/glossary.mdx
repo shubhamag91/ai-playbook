@@ -1,0 +1,135 @@
+---
+title: AI Glossary
+description: 35 key terms explained in plain English — from tokens to transformers.
+---
+
+import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
+
+# AI Glossary
+
+35 key terms explained in plain English — from tokens to transformers.
+
+## Core Concepts
+
+<CardGrid>
+  <Card title="Large Language Model (LLM)" icon="book">
+    A neural network trained on massive text corpora to predict and generate language. The technology behind ChatGPT, Claude, Gemini and most modern AI tools.
+  </Card>
+  <Card title="Transformer" icon="seti:cpu">
+    The neural network architecture (introduced 2017) that powers virtually all modern LLMs. Uses attention mechanisms to understand context across long sequences.
+  </Card>
+  <Card title="Token" icon="seti:json">
+    The basic unit LLMs process — roughly ¾ of a word. 'ChatGPT' = 2 tokens. Context windows are measured in tokens.
+  </Card>
+  <Card title="Context Window" icon="seti:window">
+    The maximum amount of text an LLM can 'see' at once. GPT-4o: 128K tokens. Claude: 200K. Gemini 1.5: 1M.
+  </Card>
+  <Card title="Parameters" icon="seti:settings">
+    The learnable weights inside a neural network. GPT-4 has ~1.8T parameters. More parameters ≠ always better.
+  </Card>
+  <Card title="Inference" icon="rocket">
+    Running a trained model to generate outputs. Separate from training — much cheaper and faster.
+  </Card>
+  <Card title="Fine-tuning" icon="pencil">
+    Further training a pretrained model on a specific dataset to specialise it for a domain or task.
+  </Card>
+  <Card title="Embedding" icon="seti:database">
+    A numerical vector representing text, images or data. Similar meanings produce similar vectors — the basis of semantic search.
+  </Card>
+  <Card title="Multimodal" icon="seti:image">
+    A model that can process multiple types of input — text, images, audio, video (e.g. GPT-4o, Gemini).
+  </Card>
+  <Card title="Open Weights" icon="open-book">
+    Model weights that are publicly released. Anyone can download, run and fine-tune them (Llama, Mistral, etc.).
+  </Card>
+</CardGrid>
+
+## Prompting
+
+<CardGrid>
+  <Card title="Prompt Engineering" icon="pencil">
+    The practice of crafting effective inputs to guide AI model outputs — system prompts, examples, constraints.
+  </Card>
+  <Card title="System Prompt" icon="settings">
+    Instructions given to an AI at the start of a conversation to set its persona, capabilities and constraints.
+  </Card>
+  <Card title="Few-Shot Prompting" icon="list">
+    Providing 2–5 examples of the desired output format inside your prompt so the model learns the pattern.
+  </Card>
+  <Card title="Chain-of-Thought" icon="git-branch">
+    Prompting technique asking the model to 'think step by step' — improves accuracy on reasoning tasks significantly.
+  </Card>
+  <Card title="Hallucination" icon="warning">
+    When an LLM confidently generates false information. Not lying — it's pattern-matching that produces plausible but incorrect text.
+  </Card>
+  <Card title="Temperature" icon="thermometer">
+    A sampling parameter (0–2) controlling output randomness. 0 = deterministic, 1 = default, 2 = very random.
+  </Card>
+  <Card title="System Grounding" icon="link">
+    Anchoring AI responses to specific, verified source documents to reduce hallucination — the basis of RAG.
+  </Card>
+  <Card title="Agentic AI" icon="bot">
+    AI systems that autonomously take sequences of actions (browsing, coding, calling APIs) to complete a goal.
+  </Card>
+</CardGrid>
+
+## Technical
+
+<CardGrid>
+  <Card title="RAG" icon="book">
+    Retrieval-Augmented Generation — retrieves relevant documents from a knowledge base before generating a response.
+  </Card>
+  <Card title="Vector Database" icon="database">
+    A database optimised for storing and searching embeddings by semantic similarity (Pinecone, Chroma, Weaviate).
+  </Card>
+  <Card title="Semantic Search" icon="magnifier">
+    Search that finds conceptually similar content rather than keyword matches — powered by embeddings.
+  </Card>
+  <Card title="RLHF" icon="seti:training">
+    Reinforcement Learning from Human Feedback — the training technique used to align LLMs with human preferences.
+  </Card>
+  <Card title="Constitutional AI" icon="scale">
+    Anthropic's technique for training Claude to be helpful, harmless and honest using AI-generated feedback.
+  </Card>
+  <Card title="Quantization" icon="compress">
+    Compressing model weights (e.g. 16-bit → 4-bit) to reduce memory usage and speed up inference on consumer hardware.
+  </Card>
+  <Card title="LoRA" icon="seti:git">
+    Low-Rank Adaptation — efficient fine-tuning technique that trains only small adapter layers, not the full model.
+  </Card>
+  <Card title="MCP" icon="plug">
+    Model Context Protocol — Anthropic's open standard for connecting AI models to external data sources and tools.
+  </Card>
+  <Card title="API" icon="seti:api">
+    Application Programming Interface — lets software talk to other software. Send prompts to OpenAI/Anthropic servers and receive responses.
+  </Card>
+  <Card title="CLI" icon="terminal">
+    Command Line Interface — text-based way to interact with your computer by typing commands instead of clicking.
+  </Card>
+</CardGrid>
+
+## Often Misunderstood
+
+<CardGrid>
+  <Card title="AGI" icon="star">
+    Artificial General Intelligence — hypothetical AI matching or exceeding human cognitive ability. Not achieved yet.
+  </Card>
+  <Card title="AI vs Machine Learning" icon="seti:ml">
+    ML is a subset of AI using statistical patterns. Deep learning is a subset of ML using neural networks. LLMs are deep learning models.
+  </Card>
+  <Card title="Sentience / Consciousness" icon="heart">
+    LLMs are not conscious or sentient. They process patterns statistically — they have no feelings or self-awareness.
+  </Card>
+  <Card title="'The AI will take my job'" icon="briefcase">
+    AI automates tasks, not jobs. Most roles evolve — the people most at risk refuse to learn to work with AI.
+  </Card>
+  <Card title="More parameters = smarter" icon="scale">
+    Not always true. Phi-4 (14B) outperforms many larger models. Efficiency, data quality and RLHF matter more than raw size.
+  </Card>
+  <Card title="AI knows everything up-to-date" icon="calendar">
+    LLMs have a training cutoff date and don't know about recent events unless given tools like web search.
+  </Card>
+  <Card title="Open Source = Free" icon="warning">
+    Many 'open' models have restrictive commercial licenses. Check the specific license before use.
+  </Card>
+</CardGrid>

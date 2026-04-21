@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AI Landscape — Mind Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    html, body, #mm { margin: 0; padding: 0; height: 100%; width: 100%; background: transparent; }
+    body { font-family: Inter, system-ui, sans-serif; }
+  </style>
+</head>
+<body>
+  <svg id="mm"></svg>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-view"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-lib/dist/browser/index.js"></script>
+  <script>
+    const markdown = `# AI Landscape
+## Foundation models
+### Closed
+- Claude (Anthropic)
+- GPT (OpenAI)
+- Gemini (Google)
+### Open
+- Llama
+- Mistral / Mixtral
+- Qwen
+## Customization
+### Prompting
+- Zero / few-shot
+- Chain-of-thought
+- ReAct
+### RAG
+- Chunking
+- Embedding
+- Retrieval + rerank
+### Fine-tuning
+- LoRA / QLoRA
+- SFT
+- DPO / RLHF
+### Continued pre-training
+## Agents
+### Tool use
+- Function calling
+- MCP servers
+### Planning
+- Task decomposition
+- Self-reflection
+### Memory
+- Short-term (context)
+- Long-term (vector store)
+## Infrastructure
+### Inference
+- vLLM / TGI / Ollama
+### Vector DBs
+- pgvector / Qdrant / Weaviate
+### Eval
+- Ragas / promptfoo / LangSmith
+## Deployment
+### Cost control
+- Caching / Routing / Small-model fallback
+### Safety
+- Guardrails / Red-teaming
+### Observability
+- Tracing / Token-level metrics`;
+
+    const { Transformer } = window.markmap;
+    const transformer = new Transformer();
+    const { root } = transformer.transform(markdown);
+    window.markmap.Markmap.create('#mm', undefined, root);
+  </script>
+</body>
+</html>

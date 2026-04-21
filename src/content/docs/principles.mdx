@@ -1,0 +1,77 @@
+---
+title: Principles
+description: Six guiding rules for using AI effectively, plus AI safety and ethics.
+---
+
+import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
+
+# Principles
+
+Six guiding rules for using AI effectively, plus AI safety and ethics at the end of this page.
+
+<CardGrid>
+  <Card title="Start with the outcome, not the tool" icon="target">
+    Define the job you need done before choosing a model or platform. The best AI tool is the one that gets the job done, not the newest or most expensive one.
+    
+    💡 **Tip:** Use Perplexity for quick answers, Claude for complex analysis, ChatGPT for creative tasks.
+  </Card>
+  <Card title="Iterate aggressively" icon="refresh">
+    Your first prompt is a hypothesis. Treat every AI interaction as a conversation — refine, add context, push back, ask for alternatives.
+    
+    💡 **Tip:** In Cursor: start broad, then narrow constraints. In Lovable: describe the delta, not the whole.
+  </Card>
+  <Card title="Always verify outputs" icon="warning">
+    LLMs hallucinate. Treat AI outputs as a strong first draft from a smart but fallible intern — always fact-check important claims.
+    
+    💡 **Tip:** Perplexity cites sources. NotebookLM grounds answers in your documents. Grammarly checks the prose.
+  </Card>
+  <Card title="Own your data layer" icon="database">
+    The real moat is your proprietary data, not the model. Build pipelines to ingest and retrieve your own documents and knowledge.
+    
+    💡 **Tip:** LlamaIndex for ingestion. Pinecone or Chroma for retrieval. n8n to automate the pipeline.
+  </Card>
+  <Card title="Build in guardrails" icon="shield">
+    For production systems, add input validation, output filtering and human review for high-stakes decisions. Never deploy raw LLM output in sensitive domains.
+    
+    💡 **Tip:** LangSmith for tracing. LangChain for output parsers. Human-in-the-loop for critical decisions.
+  </Card>
+  <Card title="Stay genuinely curious" icon="lightbulb">
+    The AI landscape changes monthly. The best practitioners follow research, experiment with new tools, and share what they learn.
+    
+    💡 **Tip:** Hugging Face for new models. Ollama to run them locally. DeepSeek for open-weight reasoning.
+  </Card>
+</CardGrid>
+
+---
+
+## AI Safety & Ethics
+
+Understanding the risks, guardrails and responsible practices around modern AI systems.
+
+### Why AI Safety Matters
+
+AI systems are becoming more capable at a rate that outpaces our understanding of their inner workings. Safety research aims to ensure these systems remain beneficial, controllable and aligned with human values — even as they grow more powerful.
+
+### Key Concepts
+
+**Alignment** — Ensuring AI systems pursue the goals humans actually intend — not a misspecified proxy. The classic problem: "maximize paperclips" leads to a paperclip-maximising AI that destroys everything else.
+
+**Interpretability** — Understanding what's happening inside neural networks. Currently we can't fully explain why models produce certain outputs — mechanistic interpretability research aims to change that.
+
+**RLHF & Constitutional AI** — Reinforcement Learning from Human Feedback (OpenAI) and Constitutional AI (Anthropic) are the main techniques for aligning LLMs with human preferences and values.
+
+**Red-teaming** — Adversarial testing where teams try to make models produce harmful outputs. Used by Anthropic, OpenAI and others before major model releases.
+
+**Bias & Fairness** — Models trained on internet data absorb societal biases. Measuring and mitigating bias in hiring, lending and criminal justice AI is an active research area.
+
+**Regulation & Governance** — EU AI Act (2024) classifies AI by risk level. US Executive Orders, UK AI Safety Institute and international treaties are shaping the regulatory landscape.
+
+### Practical Safety Tips for Builders
+
+1. Never put raw LLM output directly in high-stakes decisions (hiring, lending, medical diagnosis) without human review.
+2. Add output validation — parse and validate AI responses before acting on them in code.
+3. Use structured prompts with explicit constraints — tell the model what NOT to do, not just what to do.
+4. Log everything in production — use LangSmith or similar to trace inputs and outputs for audit trails.
+5. Set conservative temperature (0.2–0.5) for factual tasks; higher for creative tasks.
+6. Ground responses in documents using RAG to reduce hallucination in knowledge-heavy applications.
+7. Test adversarially — try to make your system produce harmful outputs before users do.

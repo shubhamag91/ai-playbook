@@ -1,0 +1,113 @@
+---
+title: Open Source Models
+description: Open-weight models you can run, fine-tune and build on — often rivalling closed frontier models.
+---
+
+import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
+
+# Open Source Models
+
+Open-weight models you can run, fine-tune and build on — often rivalling closed frontier models.
+
+> **Open Source vs Open Weights:** True open-source includes training code and data. "Open weights" (Llama, Mistral) releases model weights but not always training data. Both are valuable — check licenses before commercial use.
+
+## Models
+
+<CardGrid>
+  <Card title="Llama 3.3 (Meta)" icon="open-book">
+    Meta's flagship open-weight family — 8B, 70B, 405B. The most widely deployed open model. Commercial use allowed.
+    <Badge text="Recommended" variant="tip" />
+  </Card>
+  <Card title="DeepSeek R1" icon="rocket">
+    Chinese open-weight reasoning model matching GPT-o1 quality at a fraction of the cost. MIT license.
+    <Badge text="Free" variant="success" />
+    <Badge text="Open Source" variant="tip" />
+  </Card>
+  <Card title="Mistral 7B / Large" icon="open-book">
+    French AI lab producing excellent open-weight models. Mistral 7B punches far above its size.
+    <Badge text="Recommended" variant="tip" />
+  </Card>
+  <Card title="Gemma 2 / 3 (Google)" icon="seti:google">
+    Google's lightweight open models — 2B, 7B, 27B. Designed for on-device and edge inference.
+  </Card>
+  <Card title="Phi-4 (Microsoft)" icon="seti:microsoft">
+    14B parameter model outperforming many larger ones. Excellent for reasoning and math. MIT license.
+  </Card>
+  <Card title="Falcon (TII)" icon="rocket">
+    UAE's Technology Innovation Institute open-weight models — strong multilingual capabilities.
+  </Card>
+  <Card title="Qwen 2.5 (Alibaba)" icon="open-book">
+    Alibaba's open-weight family with strong code and multilingual performance.
+  </Card>
+  <Card title="Command R (Cohere)" icon="seti:database">
+    Optimised for enterprise RAG applications — excellent at retrieval and reasoning over documents.
+  </Card>
+</CardGrid>
+
+## Tools & Platforms
+
+<CardGrid>
+  <Card title="Ollama" icon="laptop">
+    The easiest way to run open models locally — one command to download and chat with Llama, Mistral, Gemma.
+    <Badge text="Recommended" variant="tip" />
+  </Card>
+  <Card title="Hugging Face" icon="seti:git">
+    The central hub for open models — 500K+ models, transformers library, Inference API.
+    <Badge text="Recommended" variant="tip" />
+  </Card>
+  <Card title="vLLM" icon="server">
+    High-throughput inference server for open models — the standard for production open-model deployment.
+  </Card>
+  <Card title="llama.cpp" icon="seti:cpp">
+    C++ inference engine for running quantised open models on CPU and consumer hardware.
+  </Card>
+  <Card title="LM Studio" icon="laptop">
+    Desktop GUI for downloading and running open models locally with a ChatGPT-like interface.
+  </Card>
+  <Card title="Together AI" icon="cloud">
+    Cloud inference API for open models — pay-per-token, fast, wide model selection.
+  </Card>
+  <Card title="Replicate" icon="cloud">
+    Run any open model via a simple REST API — no GPU provisioning required.
+  </Card>
+  <Card title="Text Generation WebUI" icon="globe">
+    Oobabooga's popular web interface for local LLM inference — extensive customisation.
+  </Card>
+</CardGrid>
+
+## Example Architecture: AI Agent with WhatsApp Control
+
+A practical example of how to connect messaging, AI models, and automation into a working system. This pattern is commonly used for personal AI assistants, automated customer support, and agentic workflows.
+
+### Messaging Interface
+**WhatsApp / Discord / Telegram** — User-facing chat interface. Users send messages, AI responds — familiar, accessible, no app install needed.
+
+Alternatives:
+- **WhatsApp** — Most accessible globally
+- **Discord** — Best for communities, bots, voice
+- **Telegram** — Better bot API, privacy
+
+### Automation Layer
+**n8n / Zapier** — Connects the messaging platform to your AI. Receives messages, triggers workflows, sends responses.
+
+### AI Layer
+**Ollama (local) or OpenAI / Anthropic API** — The brain. Processes user requests, generates responses.
+
+### Example: Personal AI WhatsApp Assistant
+
+1. User sends a message on WhatsApp
+2. n8n receives it via Twilio or WhatsApp Business API
+3. n8n sends the message to Ollama or OpenAI API
+4. Response comes back and n8n sends it to WhatsApp
+
+---
+
+## Getting Started Locally
+
+![Visual walkthrough — running Ollama locally](/ollama_local_setup.png)
+
+1. **Install Ollama:** `curl -fsSL https://ollama.ai/install.sh | sh`
+2. **Pull a model:** `ollama pull llama3.3` or `ollama pull mistral`
+3. **Chat in terminal:** `ollama run llama3.3`
+4. **Use the API:** Ollama runs a local REST API at `http://localhost:11434` — OpenAI-compatible.
+5. **GUI option:** Install LM Studio for a desktop ChatGPT-like interface with model management.

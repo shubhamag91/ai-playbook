@@ -1,0 +1,87 @@
+---
+title: Hardware & Frontier Models
+description: The chips powering AI and today's most capable models.
+---
+
+import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
+
+# Hardware & Frontier Models
+
+The chips powering AI and today's most capable models.
+
+## The Chips
+
+<CardGrid>
+  <Card title="NVIDIA (H100/B200)" icon="seti:gpu">
+    The dominant AI training and inference GPU. CUDA ecosystem makes it the default for nearly all research and production.
+    <Badge text="Paid" variant="danger" />
+  </Card>
+  <Card title="AMD (MI300X)" icon="seti:gpu">
+    NVIDIA's closest competitor — ROCm stack, strong for inference, growing adoption.
+    <Badge text="Paid" variant="danger" />
+  </Card>
+  <Card title="Google TPUs" icon="cloud">
+    Tensor Processing Units — Google's custom ASICs powering Gemini and Google Cloud AI.
+    <Badge text="Paid" variant="danger" />
+  </Card>
+  <Card title="AWS Trainium & Inferentia" icon="cloud">
+    Amazon's custom training and inference chips for cost-efficient ML at scale.
+    <Badge text="Paid" variant="danger" />
+  </Card>
+  <Card title="Groq LPU" icon="seti:cpu">
+    Language Processing Unit — world's fastest LLM inference chip (700+ tokens/sec).
+    <Badge text="Paid" variant="danger" />
+  </Card>
+  <Card title="Apple Silicon (M-series)" icon="laptop">
+    M1/M2/M3 unified memory architecture — excellent for running 7B–70B models locally.
+    <Badge text="Paid" variant="danger" />
+  </Card>
+  <Card title="Cerebras WSE" icon="seti:cpu">
+    Wafer-Scale Engine — single-chip AI training, eliminates inter-chip communication bottlenecks.
+    <Badge text="Paid" variant="danger" />
+  </Card>
+</CardGrid>
+
+## Frontier Models
+
+<CardGrid>
+  <Card title="Claude 3.5 / 4 Sonnet" icon="open-book">
+    Anthropic's flagship: 200K context, excellent coding & reasoning, safety-focused.
+    <Badge text="Paid" variant="danger" />
+  </Card>
+  <Card title="GPT-4o" icon="seti:openai">
+    OpenAI's multimodal flagship — text, images, audio in one model.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="o1 / o3 / o4-mini" icon="seti:openai">
+    OpenAI's reasoning models — slow deliberate thinking for math, science, code.
+    <Badge text="Paid" variant="danger" />
+  </Card>
+  <Card title="Gemini 1.5 Pro / 2.0" icon="seti:google">
+    Google's long-context powerhouse — 1M+ tokens, multimodal, integrated with Google.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="DeepSeek R1" icon="open-book">
+    Open-weight reasoning model from China — rivals GPT-o1 at a fraction of the cost.
+    <Badge text="Free" variant="success" />
+    <Badge text="Open Source" variant="tip" />
+  </Card>
+  <Card title="Mistral Large / 7B" icon="open-book">
+    French AI lab producing efficient open-weight models. Mistral 7B excellent for local use.
+    <Badge text="Recommended" variant="tip" />
+    <Badge text="Open Source" variant="tip" />
+  </Card>
+  <Card title="Gemma 2 / 3" icon="seti:google">
+    Google's lightweight open models designed for on-device and edge inference.
+    <Badge text="Open Source" variant="tip" />
+  </Card>
+  <Card title="Phi-4" icon="seti:microsoft">
+    Microsoft's small but surprisingly capable open model — punches above its weight.
+    <Badge text="Open Source" variant="tip" />
+  </Card>
+  <Card title="Llama 3.3" icon="open-book">
+    Meta's open-weight family — 8B to 405B. The most widely deployed open model.
+    <Badge text="Recommended" variant="tip" />
+    <Badge text="Open Source" variant="tip" />
+  </Card>
+</CardGrid>

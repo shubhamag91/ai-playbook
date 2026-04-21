@@ -1,0 +1,412 @@
+---
+title: Developer & AI Tools
+description: The core tools powering modern AI workflows — from chat interfaces to coding and automation.
+---
+
+import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
+
+# Developer & AI Tools
+
+The core tools powering modern AI workflows — from chat interfaces to coding and automation.
+
+> Free tier limits and full pricing comparison are on the [Home page](index.md).
+
+## Conversational AI
+
+<CardGrid>
+  <Card title="ChatGPT" icon="open-book">
+    The world's most widely used AI assistant by OpenAI. Excellent for writing, coding, reasoning and creative tasks.
+    <Badge text="⭐ Recommended" variant="tip" />
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Claude" icon="open-book">
+    Anthropic's thoughtful AI — 200K context, excellent for long documents, coding and nuanced analysis.
+    <Badge text="⭐ Recommended" variant="tip" />
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Gemini" icon="open-book">
+    Google's multimodal AI with a 1M-token context window. Deeply integrated with Google Workspace.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Perplexity" icon="magnifier">
+    AI search engine that synthesises real-time web results with citations. Great for research.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="NotebookLM" icon="document">
+    Google's research assistant: upload papers/docs and have conversations with them.
+    <Badge text="Free" variant="success" />
+  </Card>
+  <Card title="Ollama" icon="laptop">
+    Run open-source LLMs (Llama, Mistral, etc.) locally — fully private, no API needed.
+    <Badge text="Free" variant="success" />
+    <Badge text="Open Source" variant="tip" />
+  </Card>
+  <Card title="Microsoft Copilot" icon="microsoft">
+    Microsoft's AI assistant embedded in Edge, Windows and Bing. Uses GPT-4.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+</CardGrid>
+
+## Coding Tools
+
+<CardGrid>
+  <Card title="Cursor" icon="seti:json">
+    AI-first fork of VS Code with inline chat, codebase-wide context and agent mode.
+    <Badge text="⭐ Recommended" variant="tip" />
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Windsurf" icon="seti:json">
+    Agentic IDE by Codeium — Cascade model understands your full project context.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Lovable" icon="rocket">
+    Build full-stack React apps from natural language. No coding required.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="GitHub Copilot" icon="github">
+    AI pair programmer by GitHub/OpenAI — integrates into any editor, best GitHub workflow tool.
+    <Badge text="Paid" variant="danger" />
+  </Card>
+  <Card title="Claude Code" icon="terminal">
+    Anthropic's agentic coding CLI — edits files, runs tests, opens PRs from your terminal.
+    <Badge text="Paid" variant="danger" />
+  </Card>
+  <Card title="Replit" icon="laptop">
+    Browser-based IDE with AI coding assistant, instant deployment and multiplayer.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Vercel v0" icon="open-book">
+    Generate shadcn/Tailwind UI components from text. Copy-paste into your project.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Bolt.new" icon="rocket">
+    Full-stack AI app builder by StackBlitz — runs entirely in the browser.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+</CardGrid>
+
+### Codex
+
+OpenAI's code-focused model powering GitHub Copilot. Available via API.
+
+**Tags:** [Paid]
+
+---
+
+### OpenCode
+
+Open-source terminal AI coding agent — works with any AI provider (OpenAI, Anthropic, Gemini). The provider-agnostic alternative to Claude Code. Run locally, point at any model.
+
+**Tags:** [Open Source], [Free]
+
+---
+
+## Automation
+
+### Zapier
+
+No-code automation connecting 6,000+ apps. Trigger AI actions across your stack.
+
+**Tags:** [⭐ Recommended], [Freemium]
+
+---
+
+### n8n
+
+Open-source workflow automation with powerful AI nodes — self-host or use cloud.
+
+**Tags:** [Freemium], [Open Source]
+
+---
+
+### OpenClaw
+
+AI-native workflow tool designed around agent-based tasks.
+
+**Tags:** [Freemium]
+
+---
+
+### CrewAI
+
+Python framework for orchestrating multiple AI agents working together.
+
+**Tags:** [Open Source]
+
+---
+
+### LangChain
+
+The most popular LLM app framework — chains, agents, tools, memory.
+
+**Tags:** [Open Source]
+
+---
+
+### LlamaIndex
+
+Data framework for ingesting, indexing and querying custom data with LLMs.
+
+**Tags:** [Open Source]
+
+---
+
+## Infrastructure
+
+### Pinecone
+
+Managed vector database for semantic search and RAG applications.
+
+**Tags:** [Freemium]
+
+---
+
+### Chroma
+
+Open-source embedding database — easy to run locally for prototyping.
+
+**Tags:** [Open Source]
+
+---
+
+### LangSmith
+
+LangChain's observability and evaluation platform for LLM apps.
+
+**Tags:** [Freemium]
+
+---
+
+### Weaviate
+
+Open-source vector search engine with multimodal support.
+
+**Tags:** [Open Source]
+
+---
+
+### OpenTelemetry
+
+Open standard for LLM tracing and observability.
+
+**Tags:** [Open Source]
+
+---
+
+## Chinese AI
+
+China has built a rapidly growing AI ecosystem largely independent of the US big three. These tools are worth knowing — several rival or exceed Western models in specific areas.
+
+> Some Chinese AI tools may have restricted access outside mainland China, or require a Chinese phone number to register. DeepSeek and Qwen models are the most accessible internationally via Ollama and Hugging Face.
+
+### DeepSeek
+
+Built by a Chinese quant hedge fund (High-Flyer). DeepSeek R1 shocked the world by matching OpenAI o1 reasoning quality at a fraction of the cost. V3 is their general-purpose model. Fully open weights under MIT license.
+
+**Access:** chat.deepseek.com · Ollama · Hugging Face · API
+
+**Tags:** [Free], [Open Source]
+
+---
+
+### Qwen / Tongyi (Alibaba)
+
+Alibaba's model family — Qwen 2.5 series covers text, code and multimodal tasks. Tongyi Qianwen is their consumer chat app. Strong multilingual performance, especially Chinese-English.
+
+**Access:** tongyi.aliyun.com · Hugging Face · Alibaba Cloud API
+
+**Tags:** [Freemium], [Open Source]
+
+---
+
+### Kimi (Moonshot AI)
+
+Chinese AI startup pushing the boundaries of context and agentic AI. Their latest Kimi K2.5 is a multimodal model with a 256K token context window, native vision, and an Agent Swarm system that coordinates up to 100 specialised AI agents simultaneously — cutting execution time by 4.5x. Kimi K2 Thinking is a 1-trillion-parameter open-source reasoning model (32B active via MoE) that can autonomously execute 200–300 sequential tool calls. Scores 50.2% on Humanity's Last Exam at 76% lower cost than Claude Opus.
+
+**Access:** kimi.com/en · Moonshot API · OpenRouter · Together AI · Hugging Face (open weights)
+
+**Tags:** [Freemium], [Open Source (K2 Thinking)]
+
+---
+
+### ERNIE / Wenxin (Baidu)
+
+Baidu's flagship AI — ERNIE Bot (Wenxin Yiyan) is China's most widely deployed consumer AI assistant. ERNIE 4.0 competes with GPT-4 on Chinese-language benchmarks. Deeply integrated with Baidu Search.
+
+**Access:** yiyan.baidu.com · Baidu AI Cloud API
+
+**Tags:** [Freemium]
+
+---
+
+### Doubao (ByteDance)
+
+ByteDance's (TikTok's parent company) AI assistant. Based on their Skylark model family. Fastest-growing AI app in China in 2024. Strong at creative writing and entertainment use cases.
+
+**Access:** doubao.com · Volcano Engine API
+
+**Tags:** [Freemium]
+
+---
+
+### ChatGLM / Zhipu AI
+
+Open-source model from Zhipu AI (spun out of Tsinghua University). GLM-4 is their flagship — bilingual, strong reasoning, widely used in Chinese enterprise AI deployments.
+
+**Access:** chatglm.cn · Hugging Face · Zhipu API
+
+**Tags:** [Freemium], [Open Source]
+
+---
+
+### Kling AI (Kuaishou)
+
+Video generation AI by Kuaishou (China's rival to TikTok). Kling produces high-quality, physically realistic video from text or images — widely regarded as matching or exceeding Sora for many use cases.
+
+**Access:** klingai.com · API
+
+**Tags:** [Freemium]
+
+---
+
+### Yi (01.AI)
+
+Model series from 01.AI, founded by Kai-Fu Lee (former Google China head). Yi-34B was one of the strongest open-weight models when released. Focuses on bilingual English-Chinese performance.
+
+**Access:** 01.ai · Hugging Face
+
+**Tags:** [Freemium], [Open Source]
+
+---
+
+## Chat Interface vs API
+
+### Chat Interface
+
+**Use when you're the user**
+
+- Back-and-forth conversation, one-off tasks
+- Writing, research, summarising documents
+- No coding required — just open a browser
+- Great for exploring what's possible
+- Files, images and plugins all available in-app
+
+**Examples:** claude.ai, chatgpt.com, gemini.google.com, perplexity.ai
+
+---
+
+### API
+
+**Use when you're building something**
+
+- Integrating AI into your own app or workflow
+- Automating tasks at scale (thousands of requests)
+- Customising system prompts and model behaviour
+- Combining AI with your own data or databases
+- Pay-per-token — no fixed subscription needed
+
+**Access via:** OpenAI API, Anthropic API, Google AI Studio, Perplexity API
+
+---
+
+For a full breakdown of how AI companies are structured and how other tools fit in, see the [Home page ecosystem section](index.md#ecosystem).
+
+---
+
+## Deploying AI as an Individual
+
+You don't need a DevOps team or cloud infrastructure. For individuals, deploying AI means building a small app that calls an AI API — and hosting it somewhere always-on. Here's exactly how it works.
+
+### The key insight: you deploy the app, not the model
+
+When you use ChatGPT, two things are running: the **website** (what you see and click) and the **AI model** (what actually thinks). These are separate. The model lives on OpenAI's servers. The website is just an interface that sends your message to the model and shows the response back. When you "deploy AI," you're building and hosting that middle layer — the app that connects your users to the model. You never touch the model itself.
+
+The flow:
+
+1. **User** → visits your URL
+2. **Your App** → hosted on Vercel / Railway (you build this)
+3. **AI Model** → Anthropic / OpenAI API (they run this)
+4. **Result** → shown to user
+
+Think of it like a restaurant: your app is the kitchen and dining room you build and run. The AI API is the food supplier. You cook and serve — they grow the ingredients.
+
+---
+
+### Layer 1: The AI Layer
+
+Where intelligence lives — pay per use.
+
+You call an API — they run the model. You pay fractions of a cent per message. No GPU, no servers, no setup.
+
+- **Anthropic API** — Claude models, excellent for reasoning and writing
+- **OpenAI API** — GPT-4o and o-series, widest ecosystem
+- **Google AI Studio** — Gemini models, generous free tier
+- **Groq / Together AI** — open-source models, 10x cheaper
+
+Typical cost: $5–20/month for a personal project with moderate traffic.
+
+---
+
+### Layer 2: The App Layer
+
+Your code — the middle layer you host.
+
+Your app lives here — a website, a bot, a script — always online and accessible via a URL. These platforms take your code and run it on their servers.
+
+- **Vercel** — best for web apps (Next.js/React). Free tier generous. One-click deploy.
+- **Railway** — great for Python/Flask/FastAPI backends. ~$5/month.
+- **Render** — similar to Railway, solid free tier for low-traffic apps.
+- **Cloudflare Workers** — edge hosting, runs AI inference directly, very cheap.
+
+Typical cost: free to $5/month depending on traffic.
+
+---
+
+### No-Code Path
+
+Skip the code entirely — if you're not a developer, start here.
+
+These tools generate the app code for you from a plain English description. You describe what you want — they write and deploy the code.
+
+- **Lovable** — describe your app, it builds and hosts a full React app
+- **Bolt.new** — similar, runs entirely in-browser, fast for prototypes
+- **Replit** — browser IDE + instant hosting, good for learning as you go
+- **Zapier / n8n** — for automation workflows rather than user-facing apps
+
+Most people building personal AI tools today use these rather than writing code from scratch.
+
+---
+
+### Getting started
+
+1. **Get an API key** — sign up at platform.openai.com or console.anthropic.com. Both have free credits to start. This is your access to the AI model.
+
+2. **Build the app** — if you code, use Cursor or Claude Code to generate it fast. If you don't, use Lovable or Bolt.new and describe what you want in plain English. Either way, your app calls the API using the key from step 1.
+
+3. **Deploy it** — push your code to Vercel or Railway (5 minutes). Set your API key as an environment variable. You now have a live URL you can share with anyone.
+
+4. **Scale if needed** — if your project grows and you need GPU control or private model hosting, look at Modal or RunPod for on-demand GPU access, or AWS Bedrock / Azure OpenAI for enterprise-grade managed APIs.
+
+---
+
+> **Reality check:** A personal AI app serving a few hundred users costs roughly $10–30/month total — $5 for hosting + API fees based on usage. The complexity people associate with "AI infrastructure" is the enterprise problem of running models at massive scale on private hardware. That's not your problem as an individual.
+
+---
+
+## Companion Decks
+
+Two slide decks that go deeper than the web pages. Preview them inline below, or download the originals to read offline.
+
+### The AI Ecosystem Blueprint
+
+A map of how the AI landscape fits together — labs, models, platforms and infrastructure.
+
+[Download PDF](The_AI_Ecosystem_Blueprint.pdf) · [Open full-screen](The_AI_Ecosystem_Blueprint.pdf)
+
+---
+
+### The 16GB Agentic AI Blueprint
+
+Run agentic AI workflows locally on a 16GB machine — a practical, hardware-aware walkthrough.
+
+[Download PDF](16GB_Agentic_AI_Blueprint.pdf) · [Open full-screen](16GB_Agentic_AI_Blueprint.pdf)

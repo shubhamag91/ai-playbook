@@ -1,0 +1,26 @@
+/* Tweak the Starlight theme for a warmer, more "playbook" feel.
+   Uncomment / edit as you like. */
+
+:root {
+  --sl-font: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --sl-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Accent color — pick anything you like */
+:root {
+  --sl-color-accent-low: #1a2d4d;
+  --sl-color-accent: #3b82f6;
+  --sl-color-accent-high: #bfdbfe;
+}
+
+/* Make mermaid diagrams center nicely */
+.mermaid, svg[aria-roledescription] {
+  display: block;
+  margin: 1.5rem auto;
+  max-width: 100%;
+}
+
+/* Make card-style pages a touch softer */
+.card {
+  border-radius: 12px;
+}

@@ -1,0 +1,127 @@
+---
+title: Workflows
+description: Five real-world AI workflows for common tasks and industry verticals.
+---
+
+import { Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
+
+# Workflows
+
+Five real-world AI workflows for common tasks. Below that, industry verticals show how AI is transforming major sectors today.
+
+## Deep Research on Any Topic
+
+Use a combination of AI search, document analysis and synthesis to produce research faster than manual methods.
+
+**Steps:**
+
+1. Start with **Perplexity** — ask your research question. Note the 5 most relevant sources.
+2. Upload key PDFs/articles to **NotebookLM**. Ask for a structured summary and key claims.
+3. Use **Claude** (200K context) to synthesise findings across multiple documents into a coherent narrative.
+4. Ask Claude to identify gaps, contradictions or follow-up questions in the research.
+5. Produce a final document with **Notion AI** or export as a PDF.
+
+---
+
+## Building a Tool or App
+
+Go from idea to working prototype using AI-assisted coding tools.
+
+**Steps:**
+
+1. Describe your app to **Lovable** or **Bolt.new** — get a working prototype in minutes.
+2. Pull the code into **Cursor** or **Windsurf** for further development with AI assistance.
+3. Use **Claude Code** in your terminal for complex refactoring, tests, and PR automation.
+4. For AI features: scaffold with **LangChain**, add memory with **Chroma** or **Pinecone**.
+5. Deploy to Vercel, Railway or Replit with one command.
+
+---
+
+## Learning From Your Notes
+
+Turn raw notes, PDFs and lectures into active study material.
+
+**Steps:**
+
+1. Upload all your notes/PDFs to **NotebookLM**.
+2. Ask it to create a study guide, FAQ and quiz questions from the material.
+3. Use **Claude** to explain concepts you don't understand — paste the relevant section.
+4. Ask Claude to create flashcard-style Q&A pairs for spaced repetition.
+5. Set up a **Zapier** automation to send daily review cards to your email or Notion.
+
+---
+
+## Automating Repetitive Tasks
+
+Identify manual tasks in your workflow and hand them off to AI automations.
+
+**Steps:**
+
+1. List 5 tasks you do repeatedly (email responses, data entry, reporting).
+2. For no-code connections: build in **Zapier** — trigger on new email/form → AI action → output.
+3. For more complex flows: use **n8n** with AI nodes for multi-step logic.
+4. For agent-based tasks: use **CrewAI** to define roles (researcher, writer, reviewer) and let agents collaborate.
+5. Monitor with **LangSmith** to track performance and catch failures.
+
+---
+
+## Writing & Publishing Content
+
+Go from idea to polished published content faster with AI at every stage.
+
+**Steps:**
+
+1. Brainstorm angles and headlines with **ChatGPT** or **Claude** — ask for 10 variations.
+2. Write a first draft with Claude — give it context about your audience and desired tone.
+3. Paste into **Grammarly** for grammar, clarity and tone refinement.
+4. Add images with **Midjourney** or **DALL-E 3** based on your content.
+5. Schedule and distribute with your CMS — Zapier can automate social sharing.
+
+---
+
+## Industry Verticals
+
+How AI is transforming major industries — real applications happening today.
+
+<CardGrid>
+  <Card title="Healthcare" icon="heart">
+    AI is accelerating drug discovery, improving diagnostic accuracy and enabling personalised treatment plans.
+    
+    **Tools:** Claude, GPT-4o, Elicit
+  </Card>
+  <Card title="Finance & Banking" icon="seti:chart">
+    From fraud detection to AI financial advisors, the sector is being reshaped by models.
+    
+    **Tools:** LangChain, Pinecone, GPT-4o
+  </Card>
+  <Card title="Legal" icon="scale">
+    Contract review, legal research and compliance monitoring are being dramatically accelerated.
+    
+    **Tools:** Claude, LlamaIndex, NotebookLM
+  </Card>
+  <Card title="Education" icon="graduation-cap">
+    AI tutors, personalised curricula and instant feedback are transforming how people learn.
+    
+    **Tools:** ChatGPT, NotebookLM, Khan Academy AI
+  </Card>
+  <Card title="Manufacturing" icon="seti:cube">
+    Predictive maintenance, quality control and supply chain optimisation.
+    
+    **Tools:** NVIDIA, AWS, Custom LLMs
+  </Card>
+  <Card title="Gaming & Entertainment" icon="gamepad">
+    AI-generated content, dynamic NPCs and personalised experiences.
+    
+    **Tools:** Midjourney, ElevenLabs, Runway
+  </Card>
+  <Card title="Real Estate" icon="home">
+    Property valuation, document processing and virtual tours.
+    
+    **Tools:** ChatGPT, DALL-E, Claude
+  </Card>
+  <Card title="Autonomous Vehicles" icon="car">
+    Perception, planning and decision-making systems for self-driving cars.
+    
+    **Tools:** NVIDIA Drive, Custom CV models, LLMs
+  </Card>
+</CardGrid>

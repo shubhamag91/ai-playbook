@@ -1,0 +1,129 @@
+---
+title: Common Confusions
+description: Misconceptions that trip up most early adopters — cleared up in plain English.
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+# Common Confusions
+
+The AI space moves fast and the marketing rarely helps. These are the misconceptions that trip up most early adopters — cleared up in plain English.
+
+## Memory & Context
+
+<CardGrid>
+  <Card title="Myth: It forgot what I said — the AI has bad memory" icon="warning">
+    **Reality:** AI models do not have persistent memory. Each conversation has a finite context window (128K–200K tokens). Once exceeded, oldest messages are dropped.
+    
+    💡 **Tip:** Periodically paste a summary of key facts to keep them in context.
+  </Card>
+  <Card title="Myth: It remembered my name from last week" icon="warning">
+    **Reality:** Most AI tools have no memory across sessions. If it seemed to remember you, you used a memory feature or the model inferred from current context.
+    
+    💡 **Tip:** Check Settings → Personalization → Memory to see what's stored.
+  </Card>
+  <Card title="Myth: Longer conversation = smarter AI" icon="warning">
+    **Reality:** The model does not learn during your conversation. Longer context risks pushing early content outside the window.
+    
+    💡 **Tip:** For long tasks, start fresh sessions with a clear summary.
+  </Card>
+</CardGrid>
+
+## Models, Products & Versions
+
+<CardGrid>
+  <Card title="Myth: ChatGPT and GPT-4 are the same thing" icon="warning">
+    **Reality:** GPT-4 is the model. ChatGPT is the consumer product. Claude is the model, claude.ai is the product. They are not the same.
+  </Card>
+  <Card title="Myth: Free tier is basically the same as paid" icon="warning">
+    **Reality:** Free tiers give lighter models with strict daily limits. Paid plans offer more usage, capable models, and features like file analysis.
+    
+    💡 **Tip:** $20/mo Pro pays for itself in saved time if you use AI daily.
+  </Card>
+  <Card title="Myth: I use Cursor/Copilot — I don't need Claude" icon="warning">
+    **Reality:** Coding tools are specialised. ChatGPT and Claude are better for writing, research, planning and non-code tasks.
+    
+    💡 **Tip:** Cursor is a power tool for one job. Claude/ChatGPT are the general workbench.
+  </Card>
+  <Card title="Myth: Newest/biggest model is always best" icon="warning">
+    **Reality:** Flagship models are slower and more expensive. For simple tasks, smaller faster models work just as well.
+    
+    💡 **Tip:** Match the model to the task. Use frontier models only for deep reasoning.
+  </Card>
+</CardGrid>
+
+## Accuracy & Trust
+
+<CardGrid>
+  <Card title="Myth: Confident answer = correct answer" icon="warning">
+    **Reality:** LLMs generate likely text, not verified facts. Confident tone is writing style, not accuracy. Models hallucinate.
+    
+    💡 **Tip:** Use Perplexity or NotebookLM which cite sources for factual research.
+  </Card>
+  <Card title="Myth: It said its own answer was right" icon="warning">
+    **Reality:** Self-verification doesn't work reliably. The model tends to affirm its original answer.
+    
+    💡 **Tip:** Ask a different model to critique, or verify manually.
+  </Card>
+  <Card title="Myth: AI agreed with me = I'm correct" icon="warning">
+    **Reality:** AI can show sycophancy — telling you what you want to hear. Disagreement is often more valuable.
+    
+    💡 **Tip:** Ask: "Find the weakest parts of this argument."
+  </Card>
+</CardGrid>
+
+## Knowledge & Capabilities
+
+<CardGrid>
+  <Card title="Myth: It doesn't know recent events — it's broken" icon="warning">
+    **Reality:** LLMs have a training data cutoff (6–18 months). Only tools with web search know current info.
+    
+    💡 **Tip:** Use Perplexity or ChatGPT with Browse for time-sensitive info.
+  </Card>
+  <Card title="Myth: AI does images, video, voice — one AI thing" icon="warning">
+    **Reality:** Different modalities are entirely different model families. Text, images, video, voice are separate technologies.
+  </Card>
+  <Card title="Myth: I can just prompt it to build my full app" icon="warning">
+    **Reality:** AI accelerates development but has limits. Complex logic, security and production reliability still need engineering.
+    
+    💡 **Tip:** Use AI for boilerplate. Apply human review for architecture and security.
+  </Card>
+</CardGrid>
+
+## Chat UI vs API vs Local
+
+<CardGrid>
+  <Card title="Myth: API is too complicated — for developers only" icon="warning">
+    **Reality:** Basic API calls are simple JSON. Python SDK is learnable in an afternoon. Benefits: no limits, full control, direct integration.
+  </Card>
+  <Card title="Myth: Ollama is just as good as Claude/GPT-4" icon="warning">
+    **Reality:** Local models are excellent for privacy and offline use, but generally behind frontier models on reasoning.
+    
+    💡 **Tip:** Use local for privacy-sensitive data. Use frontier for complex reasoning.
+  </Card>
+  <Card title="Myth: Chat UI and API give same experience" icon="warning">
+    **Reality:** Same model weights, different experience. Chat UI adds filtering and formatting. API gives raw access.
+    
+    💡 **Tip:** API for precise outputs. Chat UI for exploratory work.
+  </Card>
+</CardGrid>
+
+## Prompting & Output Quality
+
+<CardGrid>
+  <Card title="Myth: Tried AI, got useless output — it's overhyped" icon="warning">
+    **Reality:** Output quality is proportional to input quality. Vague prompts = generic content.
+    
+    💡 **Tip:** Treat first prompt as hypothesis. Iterate: add constraints, specify audience.
+  </Card>
+  <Card title="Myth: Longer, more detailed prompts are always better" icon="warning">
+    **Reality:** Relevant context helps. Irrelevant padding dilutes focus. Every sentence should earn its place.
+    
+    💡 **Tip:** If prompt exceeds 300–400 words, review. Can you cut without losing signal?
+  </Card>
+  <Card title="Myth: I can't share company data with AI" icon="warning">
+    **Reality:** Depends on plan. Enterprise plans include data privacy — data never used for training. API also provides strong privacy.
+    
+    💡 **Tip:** Check data processing agreement before pasting confidential info.
+  </Card>
+</CardGrid>
