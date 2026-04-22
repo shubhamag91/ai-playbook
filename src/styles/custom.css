@@ -8,7 +8,7 @@
 
 /* Reduce sidebar width to give more space to content */
 :root {
-  --sl-sidebar-width: 14rem;
+  --sl-sidebar-width: 8rem;
 }
 
 /* Accent color — pick anything you like */
