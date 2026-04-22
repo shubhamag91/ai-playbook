@@ -6,23 +6,15 @@
   --sl-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 }
 
-/* Reduce sidebar width to give more space to content */
+/* Reduce TOC (On this page) width */
 :root {
   --sl-sidebar-width: 8rem;
 }
 
-/* Accent color — pick anything you like */
-:root {
-  --sl-color-accent-low: #1a2d4d;
-  --sl-color-accent: #3b82f6;
-  --sl-color-accent-high: #bfdbfe;
-}
-
-/* Make mermaid diagrams center nicely */
-.mermaid, svg[aria-roledescription] {
-  display: block;
-  margin: 1.5rem auto;
-  max-width: 100%;
+/* On this page TOC - reduce width */
+.right-sidebar {
+  width: 12rem !important;
+  min-width: 12rem !important;
 }
 
 /* Make card-style pages a touch softer */
