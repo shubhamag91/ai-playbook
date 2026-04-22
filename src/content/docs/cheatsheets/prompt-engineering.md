@@ -60,5 +60,5 @@ $$
 
 ## See also
 
-- [LLM model comparison](./llm-comparison/)
-- [RAG architecture diagram](../diagrams/rag-architecture/)
+- [LLM model comparison](/cheatsheets/llm-comparison/)
+- [RAG architecture diagram](/diagrams/rag-architecture/)
