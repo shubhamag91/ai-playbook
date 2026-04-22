@@ -6,6 +6,11 @@
   --sl-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 }
 
+/* Reduce sidebar width to give more space to content */
+:root {
+  --sl-sidebar-width: 14rem;
+}
+
 /* Accent color — pick anything you like */
 :root {
   --sl-color-accent-low: #1a2d4d;

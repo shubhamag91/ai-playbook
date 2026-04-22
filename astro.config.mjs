@@ -18,7 +18,6 @@ export default defineConfig({
     starlight({
       title: 'AI Playbook',
       description: 'A living playbook of AI & LLM knowledge — notes, cheatsheets, diagrams, and decks.',
-      tableOfContents: false,
       logo: {
         src: './src/assets/logo.svg',
         replacesTitle: false,
