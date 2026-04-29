@@ -165,6 +165,35 @@ RESULT: Metrics, impact, what you learned
 2. **The Misaligned Team**: Your team wants to use a different approach than you suggested. Handle the disagreement.
 3. **The Deadline Crunch**: You have 2 weeks to deliver something that should take 2 months. What do you do?
 
+### Advanced Behavioral Questions
+
+| Question | What It Reveals |
+|----------|-----------------|
+| Tell me about a time you had to influence without authority | Influence skills, stakeholder management |
+| Describe a time you made a decision that was unpopular | Leadership, conviction, communication |
+| Give an example of when you had to learn something quickly | Adaptability, learning ability |
+| Tell me about a time you improved a process | Process improvement, initiative |
+| Describe when you had to manage competing priorities | Time management, prioritization |
+
+### ML-Specific Behavioral Scenarios
+
+| Scenario | What to Focus On |
+|----------|-----------------|
+| Your model worked in testing but failed in production | Debugging, monitoring, responsibility |
+| You discovered bias in your model | Ethics, mitigation, stakeholder management |
+| You had to explain model decisions to business stakeholders | Communication, simplification |
+| Your project was cancelled mid-way | Adaptability, learning from failure |
+| You had to choose between accuracy and speed to market | Trade-off reasoning, business impact |
+
+### Team Conflict Scenarios
+
+| Situation | How to Handle |
+|-----------|---------------|
+| Engineer disagrees with your model choice | Present evidence, consider alternatives, decide together |
+| Manager wants to ship despite your concerns | Document risks, escalate appropriately, propose alternatives |
+| Data scientist and engineer have different priorities | Facilitate discussion, find common ground, focus on goal |
+| Stakeaker wants unrealistic timeline | Negotiate, explain constraints, propose phased approach |
+
 ## Quick Reference Cards
 
 ### Story Bank Template

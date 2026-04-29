@@ -172,6 +172,96 @@ description: Interview questions for analytics roles in banking — domain knowl
 | **Property Prices** | -20% to -30% | -30% to -40% | Scenario |
 | **Interest Rates** | Up 200bps | Up 300bps | Stress |
 
+## Advanced Regulatory Technical Questions
+
+### CCAR Model Development
+
+| Question | Answer |
+|----------|--------|
+| **How would you build a wholesale credit model for CCAR?** | Segment by industry, geography, exposure. Link PD to macroeconomic variables (GDP, sector performance). Model LGD using recovery rates. EAD = current exposure + undrawn commitment × credit conversion factor. Aggregate at counterparty level. |
+| **What is the difference between point-in-time (PIT) and through-the-cycle (TTC) PDs in stress testing?** | PIT PDs reflect current economic conditions, rise quickly in stress. TTC PDs are long-run averages, more stable. CCAR typically uses PIT for conservatism. |
+| **How do you handle exposure at default (EAD) modeling for revolving facilities?** | Use credit conversion factors (CCF) for undrawn commitments. CCF may increase in stress due to drawdown behavior. Model based on facility type, customer behavior, economic conditions. |
+| **What is overlays in CCAR modeling?** | Expert judgment adjustments on top of model outputs. Used when model doesn't capture known risks (e.g., pandemic, war). Must be documented and validated. |
+| **How would you project pre-provision net revenue (PPNR) under stress?** | Model net interest income (NII) using interest rate risk gap, non-interest income (fee income, trading), and expenses (fixed + variable). Apply stress to each component using economic drivers. |
+| **What is interest rate risk in the banking book (IRRBB)?** | Risk to earnings and capital from interest rate movements. Affects NII projections in stress. Measure using repricing gap, duration analysis, sensitivity to rate shocks. |
+
+### BoE Deep Dive
+
+| Question | Answer |
+|----------|--------|
+| **What is the UK PRA's approach to model approval?** | Banks needIMA approval for internal models used in stress testing. PRA assesses: theoretical foundation, data quality, governance, validation. Ongoing supervision includes annual model review. |
+| **What is the 'capital action' constraint in BoE?** | Banks assume no capital raises, dividends, or share buybacks during stress. Tests organic capital generation only. Makes stress more severe. |
+| **How does BoE incorporate climate stress?** | Climate stress scenarios test transition risk (carbon taxes, stranded assets) and physical risk (property damage, productivity loss). Emerging requirement. |
+| **What is the 'systemic risk buffer' in BoE?** | Additional capital for banks that pose systemic risk. Counter-cyclical in nature. Added to minimum capital requirements in stress. |
+| **What is the leverage ratio floor in BoE?** | BoE applies a leverage ratio floor (3.25%) in addition to risk-weighted requirements. Ensures minimum capital regardless of risk model assumptions. |
+
+### RRP Technical Questions
+
+| Question | Answer |
+|----------|--------|
+| **What is the 18-month resolution timeline in RRP?** | Regulators require banks to be resolvable within 18 months of failure. Affects: data infrastructure, intercompany agreements, operational continuity planning. |
+| **How would you calculate MREL requirements?** | MREL = (8% of RWA + 6% of Leverage Exposure) - Capital Requirements. Adjustments for tier 2, senior unsecured. Phased implementation. |
+| **What is the 'critical function' test in resolution?** | Identify services that if disrupted would cause harm to real economy: payment services, deposit taking, lending. Must be maintained in resolution. |
+| **What is CESS (Creditor Hierarchy) in resolution?** | Order in which creditors are bailed in: equity > subordinated debt > senior debt > depositors. Understanding helps design TLAC/MREL. |
+| **How do you model operational continuity in resolution?** | Identify key processes, systems, staff needed. Ensure they can transfer to another entity or be wound down. Test with table-top exercises. |
+
+### Model Risk Management for Stress Testing
+
+| Question | Answer |
+|----------|--------|
+| **What is model validation in the context of stress testing?** | Independent review of model accuracy, stability, governance. Includes: backtesting, benchmarking, sensitivity analysis, documentation review. |
+| **What is the three lines of defense in model risk?** | 1st: Model developers (own risk). 2nd: Model validation team (independent review). 3rd: Internal audit (governance oversight). |
+| **What is model documentation requirements for regulators?** | Purpose, methodology, data sources, assumptions, limitations, governance, validation results. Must be comprehensive and maintained. |
+| **How do you handle model decay in stress testing models?** | Regular monitoring of backtest results, stability metrics. Trigger recalibration when performance degrades. Document decay and remediation. |
+
+## Practical Interview Scenarios
+
+### Scenario 1: CCAR Model Development
+- "Your wholesale credit model is projecting 2% loss rate but actual losses are 3.5%. What do you do?"
+- "The Fed questions your PPNR projection methodology. How do you defend it?"
+
+### Scenario 2: RRP Planning
+- "Your bank's resolution plan shows $10B in resolution costs. How would you reduce this?"
+- "The PRA questions your operational continuity plan. What improvements would you make?"
+
+### Scenario 3: Regulatory Change
+- "New Basel IV rules change RWA calculations. How do you update your stress models?"
+- "BoE introduces climate stress scenario. How would you build the model?"
+
+### Scenario 4: Model Risk
+- "A critical stress model fails backtesting. What's your escalation process?"
+- "How would you explain a model limitation to the board?"
+
+## Quick Reference Cards
+
+### CCAR Key Metrics
+
+| Metric | Definition | Minimum |
+|--------|------------|---------|
+| **CET1 Ratio** | Common Equity Tier 1 / RWA | 4.5% + CCB |
+| **Tier 1 Ratio** | Tier 1 Capital / RWA | 6% |
+| **Total Capital** | Total Capital / RWA | 8% |
+| **Stress Capital Buffer** | Additional buffer in stress | Variable |
+
+### Key Stress Testing Formulas
+
+```
+Credit Losses = Σ (Exposure × PD × LGD)
+PD_stress = PD_base × (1 + macro_sensitivity)
+NII_sensitivity = Gap × Rate_change × Duration
+Capital Generation = PPNR - Taxes - Dividends
+```
+
+### Model Governance Checklist
+
+- [ ] Clear ownership and documentation
+- [ ] Independent validation
+- [ ] Backtesting results reviewed
+- [ ] Sensitivity analysis documented
+- [ ] Governance committee approval
+- [ ] Regulatory submission reviewed
+- [ ] Ongoing monitoring in place
+
 ## See Also
 
 - [ML Fundamentals Interview Prep](/cheatsheets/ml-fundamentals-interview/)

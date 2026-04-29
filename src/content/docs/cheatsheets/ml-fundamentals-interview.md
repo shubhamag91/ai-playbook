@@ -222,6 +222,36 @@ Bagging (Random Forest)    Boosting (XGBoost)
 - What is the difference between a parameter and a hyperparameter?
 - How does regularization prevent overfitting?
 
+### ML System Design Scenarios
+
+| Scenario | What to Demonstrate |
+|----------|---------------------|
+| Design a recommendation system for Netflix | User-item interactions, embeddings, real-time vs batch |
+| Build a spam classifier for email | Text processing, model selection, edge cases |
+| Create a demand forecasting model for retail | Time series, feature engineering, inventory impact |
+| Design a fraud detection system for credit cards | Real-time scoring, class imbalance, latency |
+| Build an image search system for e-commerce | CNN/vision embeddings, vector search, scaling |
+
+### ML Interview Coding Questions
+
+| Question | Focus |
+|----------|-------|
+| Implement gradient descent for linear regression | Optimization fundamentals |
+| Write a function to calculate precision, recall, F1 | Metrics |
+| Implement K-means clustering | Unsupervised learning |
+| Build a decision tree from scratch | Tree-based methods |
+| Write forward and backward pass for a simple NN | Deep learning basics |
+
+### Debugging ML Systems
+
+| Problem | Approach |
+|---------|----------|
+| Training loss not decreasing | Check learning rate, data quality, model capacity |
+| Good train, bad test | Overfitting - regularization, more data |
+| Model predictions are all the same class | Check class imbalance, loss function |
+| Predictions have high variance | Increase data, reduce model complexity |
+| Gradients exploding/vanishing | Check initialization, learning rate, network depth |
+
 ## Quick Reference Cards
 
 ### Evaluation Metrics at a Glance

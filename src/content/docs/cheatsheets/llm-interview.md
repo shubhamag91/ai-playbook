@@ -245,6 +245,36 @@ Query:      Query → Embed → Search → Rerank → Prompt → LLM → Respons
 - What is the "lost in the middle" problem in RAG?
 - How does RLHF align models with human preferences?
 
+### Advanced Reasoning Questions
+
+| Question | What It Tests |
+|----------|---------------|
+| You ask an LLM a math problem. It gives the wrong answer. Why might this happen? | Understanding LLM limitations, tokenization issues with numbers |
+| How would you reduce hallucinations in a medical Q&A system? | RAG, grounding, evaluation, safety |
+| What happens inside the model when you increase temperature from 0 to 1? | Sampling mechanics, randomness |
+| Why might a model fail on non-English languages? | Tokenization, training data, embedding space |
+| How would you debug why the model is repeating itself? | Decoding strategies, attention patterns |
+
+### Whiteboard Coding Questions
+
+| Question | What to Code |
+|----------|--------------|
+| Implement scaled dot-product attention from scratch | Attention mechanism |
+| Write a function to tokenize text using BPE | Tokenization logic |
+| Implement a simple GPT forward pass | Transformer forward |
+| Calculate perplexity from cross-entropy loss | Evaluation metric |
+| Write a text generation function with temperature | Sampling |
+
+### Production Troubleshooting Scenarios
+
+| Scenario | Debug Approach |
+|----------|---------------|
+| LLM latency increased from 500ms to 3s | Check model loading, batch size, rate limits, embeddings |
+| Model started generating toxic content | Check input sanitization, system prompt, data drift |
+| Retrieval returning irrelevant documents | Check embedding quality, chunking, vector DB index |
+| Token costs doubled this month | Analyze prompt lengths, caching, usage patterns |
+| Model performance degraded on weekends | Check data distribution, user patterns, model updates |
+
 ## Quick Reference Cards
 
 ### LLM Decision Matrix
