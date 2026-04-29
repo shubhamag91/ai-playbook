@@ -108,6 +108,70 @@ description: Interview questions for analytics roles in banking — domain knowl
 | **ECOA** | US | Fair lending |
 | **RBI Guidelines** | India | Local compliance |
 
+## Regulatory Stress Testing (CCAR, BoE, RRP)
+
+### CCAR (Comprehensive Capital Analysis and Review)
+
+| Question | Answer |
+|----------|--------|
+| **What is CCAR?** | US Federal Reserve's annual exercise to assess if large banks have enough capital to survive adverse economic scenarios. Tests capital planning, stress testing, and capital distribution (dividends, buybacks). |
+| **What are the CCAR scenarios?** | Baseline (most likely), Adverse (significant recession), Severely Adverse (crisis). Each includes macroeconomic variables: GDP, unemployment, interest rates, housing prices, equity markets. |
+| **What is the CCAR capital adequacy framework?** | Minimum CET1 ratio (4.5%), capital conservation buffer (2.5%), stress capital buffer (varies). Banks must maintain capital ratios above thresholds under stress. |
+| **What is the CCAR quantitative test?** | Project incomes, losses, and capital ratios over 9 quarters under each scenario. Must show capital above minimum thresholds throughout. |
+| **What is the CCAR qualitative test?** | Assesses bank's capital planning process: governance, model validation, internal controls, stress testing methodology. |
+| **What is a CCAR model?** | Econometric models linking macroeconomic variables to income statement and balance sheet items (interest income, credit losses, expenses). Types: wholesale credit, retail credit, pre-provision net revenue (PPNR). |
+| **How would you build a credit loss model for CCAR?** | Segment by portfolio (commercial, retail), apply loss rates by segment, project using macroeconomic drivers (PD, LGD, EAD). Validate with backtesting. |
+| **What is PPNR in CCAR?** | Pre-Provision Net Revenue = Net interest income + Non-interest income - Expenses. Projected under stress to determine capital generation capacity. |
+| **What is capital action timeline in CCAR?** | Q1: Fed releases scenarios. Q2: Banks submit capital plans. Q3: Fed reviews, announces results. Q4: Implementation. |
+| **How do you validate CCAR models?** | Backtesting (actual vs projected), sensitivity analysis, benchmarking, model governance, documentation. |
+
+### BoE (Bank of England) Stress Testing
+
+| Question | Answer |
+|----------|--------|
+| **What is the BoE stress test?** | Annual UK bank stress test conducted by PRA (Prudential Regulation Authority). Tests whether banks can support the economy through severe scenarios. |
+| **What is the BoE scenario design?** | Global scenario with UK-specific elements: recession, property market crash, interest rate spikes, inflation, unemployment. More severe than CCAR. |
+| **What is the Bank of England's systemic risk scenario?** | Forward-looking scenario testing system-wide vulnerabilities: commercial real estate, leverage in financial system, interconnectedness. |
+| **What are the key BoE metrics?** | CET1 ratio, leverage ratio, liquidity coverage ratio, funding risk. Must remain above minimum throughout stress. |
+| **How does BoE differ from CCAR?** | BoE more severe scenarios, tests system-wide (not just individual banks), includes conduct risk, more emphasis on resolvability. |
+| **What is the BoE's approach to model validation?** |IMA (Internal Model Approach) approval, PRA scrutiny, Independent validation, benchmarking across banks. |
+| **What is the 'macroeconomic scenario' in BoE?** | Created by BoE's Monetary Policy Committee, includes GDP path, unemployment, inflation, interest rates, exchange rates, asset prices. |
+
+### RRP (Recovery and Resolution Planning)
+
+| Question | Answer |
+|----------|--------|
+| **What is RRP?** | Recovery and Resolution Planning - regulators require banks to have plans to recover from financial distress and be resolvable if they fail. |
+| **What is the Recovery Plan?** | Bank's own plan to restore viability if in crisis: capital actions (raise capital, sell assets), liquidity management, cost reduction, restructuring. |
+| **What is the Resolution Plan?** | "Living Will" - plan for orderly resolution if bank fails: which parts to close, which to sell, how to protect depositors, how to minimize taxpayer cost. |
+| **What is MREL in RRP?** | Minimum Requirement for own Funds and Eligible Liabilities - loss-absorbing capital that must be written down/bailed-in in resolution. |
+| **What is TLAC in RRP?** | Total Loss-Absorbing Capacity - global standard for resolvability. Large banks must issue enough TLAC instruments. |
+| **What is the resolvability assessment?** | BoE/Fed assessment of whether bank can be resolved without taxpayer bail-out. Tests: governance, operational continuity, data, bail-in capacity. |
+| **What is a 'gone concern' loss absorbency?** | Instruments that can be written down or converted to equity when bank fails (bail-in). Includes MREL, TLAC. |
+| **How would you build a RRP model?** | Analyze business lines, identify critical functions, model intercompany dependencies, design resolution strategies, estimate resolution costs. |
+| **What is the 'run-off' analysis in RRP?** | Modeling how deposits and wholesale funding would run off in stress, affecting liquidity and resolution options. |
+
+### Stress Testing Technical Questions
+
+| Question | Answer |
+|----------|--------|
+| **How do you project credit losses under stress?** | Segment portfolio by risk type, apply scenario-specific PD/LGD, account for portfolio growth/run-off, validate with historical stress. |
+| **What is backtesting in stress testing?** | Comparing actual outcomes to stress projections from prior periods. Key metric: actual vs projected losses. |
+| **What is sensitivity analysis in stress testing?** | Testing model output changes when individual inputs change (e.g., what if unemployment is 2% higher?). Identifies model drivers. |
+| **How do you handle model risk in stress testing?** | Independent validation, documentation, governance, multiple models for key projections, expert judgment overlays. |
+| **What is the stress testing governance framework?** | Board approval, model validation team, internal audit, regulatory submission, ongoing monitoring. |
+| **How would you explain CCAR to a non-technical stakeholder?** | "We test if the bank has enough money to survive a worst-case scenario like 2008. We project losses, capital needs, and show we can meet regulatory requirements." |
+| **What are the key differences between CCAR, BoE, and RRP?** | CCAR: US, annual, capital planning focus. BoE: UK, severe scenarios, system-wide. RRP: Global, recovery & resolution, bail-in capacity. |
+
+### Stress Testing Scenarios
+
+| Scenario | CCAR | BoE | RRP |
+|----------|------|-----|-----|
+| **GDP Decline** | -4% to -6% | -5% to -7% | Projected |
+| **Unemployment** | 8-10% | 10-12% | Estimated |
+| **Property Prices** | -20% to -30% | -30% to -40% | Scenario |
+| **Interest Rates** | Up 200bps | Up 300bps | Stress |
+
 ## See Also
 
 - [ML Fundamentals Interview Prep](/cheatsheets/ml-fundamentals-interview/)
