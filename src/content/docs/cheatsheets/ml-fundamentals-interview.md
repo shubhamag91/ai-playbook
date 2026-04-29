@@ -173,65 +173,33 @@ description: Machine learning interview questions and answers for AI/ML Engineer
 
 ## Diagrams
 
-### Bias-Variance Tradeoff
+### Bias-Variance
 
-```mermaid
-graph TD
-    A[Total Error] --> B[Bias²]
-    A --> C[Variance]
-    A --> D[Irreducible Error]
-    
-    E[Underfitting] -.-> B
-    E -.-> F[High Bias]
-    G[Overfitting] -.-> C
-    G -.-> H[High Variance]
-    
-    I[Optimal] -.-> J[Low Bias + Low Variance]
+```
+┌─────────────────────────────────────┐
+│        Model Complexity            │
+│                                     │
+│   Low ──► High                     │
+│                                     │
+│   Underfitting ──► Optimal ──► Overfitting  │
+│   (high bias)    ✓      (high variance)    │
+└─────────────────────────────────────┘
 ```
 
-### Neural Network Architecture
+### Neural Network
 
-```mermaid
-graph LR
-    Input[Input Layer] --> Hidden1[Hidden 1]
-    Hidden1 --> Hidden2[Hidden 2]
-    Hidden2 --> Hidden3[Hidden 3]
-    Hidden3 --> Output[Output Layer]
-    
-    subgraph "Forward Pass"
-    Input -->|weights| Hidden1
-    Hidden1 -->|weights| Hidden2
-    Hidden2 -->|weights| Hidden3
-    Hidden3 -->|weights| Output
-    end
-    
-    subgraph "Backpropagation"
-    Output -.->|gradients| Hidden3
-    Hidden3 -.->|gradients| Hidden2
-    Hidden2 -.->|gradients| Hidden1
-    Hidden1 -.->|gradients| Input
-    end
+```
+Input → Hidden → Hidden → Output
+  ↓        ↓        ↓        ↓
+Weights flow forward, gradients flow back
 ```
 
-### Ensemble Methods Comparison
+### Ensemble Methods
 
-```mermaid
-graph TD
-    A[Ensemble Methods] --> B[Bagging]
-    A --> C[Boosting]
-    A --> D[Stacking]
-    
-    B --> B1[Random Forest]
-    B --> B2[Parallel Models]
-    B --> B3[Reduce Variance]
-    
-    C --> C1[XGBoost]
-    C --> C2[LightGBM]
-    C --> C3[Sequential Models]
-    C --> C4[Reduce Bias]
-    
-    D --> D1[Meta-learner]
-    D --> D2[Combine Predictions]
+```
+Bagging (Random Forest)    Boosting (XGBoost)
+- Parallel training        - Sequential training  
+- Reduces variance         - Reduces bias
 ```
 
 ## Practice Questions

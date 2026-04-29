@@ -106,58 +106,30 @@ description: AI Product Manager interview questions — product design, metrics,
 
 ## Diagrams
 
-### AI Product Development Lifecycle
+### Development Cycle
 
-```mermaid
-flowchart LR
-    RESEARCH[Research<br/>User Needs] --> IDEATE[Ideate<br/>AI Solutions]
-    IDEATE --> DEFINE[Define<br/>Success Metrics]
-    DEFINE --> BUILD[Build<br/>MVP]
-    BUILD --> TEST[Test<br/>& Iterate]
-    TEST --> LAUNCH[Launch<br/>& Monitor]
-    LAUNCH --> IMPROVE[Improve<br/>& Scale]
-    
-    RESEARCH -.->|informs| IDEATE
-    TEST -.->|feedback| BUILD
-    IMPROVE -.->|data| RESEARCH
+```
+Research → Ideate → Define Metrics → Build → Test → Launch → Improve
 ```
 
-### AI Product Metrics Framework
+### Metrics Hierarchy
 
-```mermaid
-graph TB
-    subgraph "Business Outcomes"
-        REV[Revenue] --> ROI
-        RET[Retention] --> ROI
-        CONV[Conversion] --> ROI
-    end
-    
-    subgraph "Product Metrics"
-        ENGAGEMENT[Engagement] --> PROXY
-        TASKS[Task Completion] --> PROXY
-        ADOPTION[Adoption] --> PROXY
-    end
-    
-    subgraph "AI Metrics"
-        ACCURACY[Accuracy] --> AI_KPI
-        LATENCY[Latency] --> AI_KPI
-        ERROR[Error Rate] --> AI_KPI
-    end
-    
-    PROXY --> ROI
-    AI_KPI --> PROXY
+```
+Business KPI (Revenue, Retention)
+    ↓
+Product Metrics (Engagement, Task Completion)
+    ↓
+AI Metrics (Accuracy, Latency, Error Rate)
 ```
 
-### AI vs Traditional Product Trade-offs
+### AI vs Traditional
 
-| Aspect | Traditional Product | AI Product |
-|--------|-------------------|------------|
-| **确定性** | More predictable | Probabilistic output |
-| **Evaluation** | Clear metrics | Evolving metrics |
-| **Failure** | Bug/ crash | Wrong answer |
-| **Iteration** | Code change | Retraining needed |
-| **Explainability** | Code visible | Black box |
-| **User Trust** | Built over time | Must be earned |
+| Aspect | Traditional | AI |
+|--------|-------------|-----|
+| Output | Predictable | Probabilistic |
+| Failure | Crash | Wrong answer |
+| Iteration | Code change | Retrain model |
+| Trust | Built over time | Must be earned |
 
 ## Practice Questions
 

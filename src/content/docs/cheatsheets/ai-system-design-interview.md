@@ -138,69 +138,36 @@ description: AI system design interview questions — RAG, agents, vector databa
 
 ## Diagrams
 
-### End-to-End RAG Architecture
+### RAG Architecture
 
-```mermaid
-flowchart TB
-    subgraph "Client Layer"
-        UI[User Interface] --> API[API Gateway]
-    end
-    
-    subgraph "Ingestion Pipeline"
-        DOCS[Documents] --> PARSE[Document Parser]
-        PARSE --> CHUNK[Chunker]
-        CHUNK --> EMBED[Embedding Model]
-        EMBED --> VDB[(Vector DB)]
-    end
-    
-    subgraph "Query Pipeline"
-        USER[User Query] --> QEMBED[Query Embedder]
-        QEMBED --> VSEARCH[Vector Search]
-        VDB --> VSEARCH
-        VSEARCH --> RERANK[Reranker]
-        RERANK --> PROMPT[Prompt Builder]
-    end
-    
-    subgraph "Generation"
-        PROMPT --> LLM[LLM API]
-        LLM --> RESP[Response]
-    end
-    
-    API --> QEMBED
-    RESP --> UI
-    
-    subgraph "Supporting Systems"
-        CACHE[(Cache)] -.-> API
-        MONITOR[Monitoring] -.-> all
-        QUEUE[Message Queue] -.-> CHUNK
-    end
+```
+┌─────────────┐      ┌─────────────┐      ┌─────────────┐
+│  Ingestion │      │   Query     │      │ Generation  │
+├─────────────┤      ├─────────────┤      ├─────────────┤
+│ Docs        │      │ User Query  │      │ Prompt     │
+│ ↓           │      │ ↓           │      │ ↓           │
+│ Chunk       │      │ Embed       │      │ LLM         │
+│ ↓           │      │ ↓           │      │ ↓           │
+│ Embed       │      │ Vector Search│     │ Response   │
+│ ↓           │      │ ↓           │      │            │
+│ Vector DB   │      │ Rerank      │      │            │
+└─────────────┘      └─────────────┘      └─────────────┘
 ```
 
-### Agent Architecture with ReAct
+### Agent Loop (ReAct)
 
-```mermaid
-stateDiagram-v2
-    [*] --> Start
-    Start --> Think: User Query
-    Think --> Action: Decide Tool
-    Action --> Execute: Call Tool
-    Execute --> Observe: Get Result
-    Observe --> Think: Analyze Result
-    Think --> Action: Continue?
-    Action --> [*]: Done
-    Action --> Think: Continue Loop
-    Observe --> [*]: Fail/Max Iterations
+```
+Think → Action → Observe → Think → (repeat until done)
 ```
 
-### Latency Breakdown in RAG
+### Latency Breakdown
 
-```mermaid
-pie title Latency Components (Typical RAG)
-    "Embedding Query" : 50
-    "Vector Search" : 100
-    "LLM Token Processing" : 200
-    "LLM Token Generation" : 650
-```
+| Component | Typical Time |
+|-----------|-------------|
+| Embed Query | ~50ms |
+| Vector Search | ~100ms |
+| LLM Processing | ~200ms |
+| LLM Generation | ~650ms |
 
 ## Practice Questions
 

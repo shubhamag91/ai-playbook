@@ -202,63 +202,27 @@ description: Large Language Model interview questions and answers — transforme
 
 ## Diagrams
 
-### Transformer Architecture
+### Transformer
 
-```mermaid
-graph TB
-    subgraph "Input"
-    I[Token IDs] --> E[Token Embeddings]
-    E --> PE[Positional Encoding]
-    end
-    
-    subgraph "Encoder Layer (×N)"
-    PE --> MHA[Multi-Head Attention]
-    MHA --> ADD1[Add & Norm]
-    ADD1 --> FFN[Feed Forward]
-    ADD1 --> ADD2[Add & Norm]
-    end
-    
-    MHA -.->|residual| ADD1
-    FFN -.->|residual| ADD2
-    
-    ADD2 --> O[Output]
+```
+Input → Embedding → Attention → Feed Forward → Output
+            ↓
+      Positional Encoding
 ```
 
-### Self-Attention Mechanism
+### Attention
 
-```mermaid
-graph LR
-    Q[Query] --> DOT[Q × Kᵀ]
-    K[Key] --> DOT
-    DOT --> SCALE[÷ √dₖ]
-    SCALE --> SOFTMAX[Softmax]
-    SOFTMAX --> WV[Weighted Values]
-    V[Value] --> WV
-    WV --> OUTPUT[Attention Output]
+```
+Query × Key → Softmax → Attention Weights → Output
+     ↓
+  Scale by √dₖ
 ```
 
 ### RAG Pipeline
 
-```mermaid
-flowchart LR
-    subgraph "Ingestion"
-    DOCS[Documents] --> CHUNK[Chunking]
-    CHUNK --> EMBED[Embedding Model]
-    EMBED --> VDB[(Vector DB)]
-    end
-    
-    subgraph "Query"
-    USER[User Query] --> QEMBED[Embed Query]
-    QEMBED --> VS[Vector Search]
-    VDB --> VS
-    VS --> RERANK[Reranker]
-    RERANK --> PROMPT[Build Prompt]
-    end
-    
-    subgraph "Generation"
-    PROMPT --> LLM[LLM]
-    LLM --> RESPONSE[Response]
-    end
+```
+Ingestion: Docs → Chunk → Embed → Vector DB
+Query:      Query → Embed → Search → Rerank → Prompt → LLM → Response
 ```
 
 ## Practice Questions

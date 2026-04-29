@@ -107,54 +107,22 @@ description: Behavioral interview questions for AI/ML Engineer, AI Data Scientis
 
 ## Diagrams
 
-### STAR Method Framework
+### STAR Method
 
-```mermaid
-graph TB
-    START[Interview Question] --> SITUATION[Situation]
-    SITUATION --> TASK[Task]
-    TASK --> ACTION[Action]
-    ACTION --> RESULT[Result]
-    RESULT --> LEARNING[Learnings]
-    
-    SITUATION -->|"Context<br/>1-2 sentences"| Q1[Who, What, Where, When]
-    TASK -->|"Your responsibility<br/>1 sentence"| Q2[What needed to happen]
-    ACTION -->|"What YOU did<br/>50-60% of answer"| Q3[Specific steps, decisions]
-    RESULT -->|"Impact + metrics<br/>1-2 sentences"| Q4[What happened]
-    
-    subgraph "ML-STAR Extensions"
-    EXP[Experiment Results] -.-> ACTION
-    METRICS[Metrics Tracked] -.-> RESULT
-    ITERATION[Iteration Loop] -.-> ACTION
-    end
-```
+| Step | Time | What to Include |
+|------|------|-----------------|
+| **S**ituation | 10-15% | Context (1-2 sentences) |
+| **T**ask | 10-15% | Your responsibility (1 sentence) |
+| **A**ction | 50-60% | What YOU did (specific steps, decisions) |
+| **R**esult | 15-20% | Impact (metrics), learnings |
 
-### Story Mapping Template
+### Story Template
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  PROJECT: [Name]                                          │
-├─────────────────────────────────────────────────────────────┤
-│  SITUATION:                                                │
-│  - Company/size                                            │
-│  - Your role                                               │
-│  - The problem                                             │
-├─────────────────────────────────────────────────────────────┤
-│  TASK:                                                     │
-│  - What you were responsible for                           │
-│  - Success criteria                                        │
-├─────────────────────────────────────────────────────────────┤
-│  ACTION:                                                   │
-│  - Step 1: [What you did]                                  │
-│  - Step 2: [What you did]                                  │
-│  - Step 3: [What you did]                                  │
-│  Decision points: [Why you chose A over B]                 │
-├─────────────────────────────────────────────────────────────┤
-│  RESULT:                                                   │
-│  - Quantitative: [metrics, %, $]                           │
-│  - Qualitative: [what changed]                             │
-│  - What you learned                                        │
-└─────────────────────────────────────────────────────────────┘
+SITUATION: Company, role, the problem
+TASK: What you needed to do, success criteria
+ACTION: Steps you took, decisions you made
+RESULT: Metrics, impact, what you learned
 ```
 
 ## Practice Questions
