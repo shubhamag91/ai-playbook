@@ -1,0 +1,113 @@
+---
+title: AI Product Interview Prep
+description: AI Product Manager interview questions — product design, metrics, technical depth, ethics, and case studies.
+---
+
+## AI Product Design
+
+| Question | Answer |
+|----------|--------|
+| **Design an AI feature for [product]. How would you handle when it's wrong?** | Start with user problem, not technology. Define core value. Handle wrong outputs: explain uncertainty, allow easy correction, learn from feedback, show confidence level. |
+| **When should a company NOT use AI for a feature?** | When: problem is well-solved with rules, data insufficient, cost exceeds benefit, lack of explainability is unacceptable, user trust critical. |
+| **How would you build user trust in an AI feature that's 85% accurate?** | Show confidence level, allow override/easy correction, explain when wrong, show it's improving over time, set expectations clearly. |
+| **Design a feedback loop that improves your AI feature over time.** | Collect implicit (usage) and explicit (ratings) feedback, store with context, use to retrain/finetune, measure improvement, close the loop with users. |
+| **Should every product add AI features? How do you decide?** | No. Only add AI if: solves real user problem better than alternatives, data exists to power it, benefits outweigh complexity/risks. Evaluate need vs capability. |
+| **You're launching an AI writing assistant. Walk me through the entire product lifecycle.** | 1) Identify user need (speed, quality), 2) Define success metrics, 3) Choose approach (RAG, fine-tune), 4) Build MVP, 5) Test with users, 6) Iterate, 7) Launch & monitor, 8) Iterate based on data. |
+| **A competitor just launched an AI feature similar to what you're building. What do you do?** | Assess: is it a real threat? Differentiate: better accuracy, privacy, integration, UX. Don't just copy — find your unique angle. |
+
+## AI Metrics & Evaluation
+
+| Question | Answer |
+|----------|--------|
+| **How would you measure success for an AI product?** | Primary: business KPI (conversion, retention, task completion). Secondary: AI-specific (accuracy, relevance, hallucination rate). Guardrails: error rate, latency. |
+| **How do you A/B test an AI feature when outputs are non-deterministic?** | Use user-level randomization, track aggregated metrics (engagement, completion), look at long-term metrics (not just immediate), consider holdout groups, watch for novelty effect. |
+| **Design an eval suite for [specific AI feature].** | Define dimensions: accuracy, latency, toxicity, relevance. Create test set (golden inputs/expected outputs). Automate scoring. Include human evaluation for nuance. |
+| **Your AI feature's quality dropped 5% this week. Walk me through your investigation.** | Check: data drift (input distribution), model drift (output distribution), recent changes (model, prompts, data), external factors (new user segment). |
+| **How do you know if users are over-trusting your AI?** | Track: override rates (too low = over-trusting), correction rates (after AI made error), usage patterns without verification. |
+| **What's the difference between precision and recall in product terms?** | Precision: "of what AI suggested, how much was relevant?" (important for suggestions). Recall: "of all relevant things, how much did AI find?" (important for search). |
+
+## Technical Depth
+
+| Question | Answer |
+|----------|--------|
+| **Explain the difference between training and inference.** | Training: model learns from data (one-time, compute-intensive). Inference: model makes predictions (ongoing, needs to be fast). Product impact: cost structure, latency. |
+| **What is RAG and when would you use it vs fine-tuning?** | RAG: retrieve relevant docs, use as context. Use when: need up-to-date info, large knowledge base, need citations. Fine-tuning: teach specific style/tasks. Often use both. |
+| **Explain the quality/latency/cost trade-off in model selection.** | Better models = more expensive, slower. Need to balance based on use case: critical tasks use best model, simple tasks use fast/cheap. |
+| **What is model drift and why should PMs care?** | Model performance degrades over time as data changes. Impact: quality drops silently. Need monitoring and retraining strategy. |
+| **What is the difference between supervised and unsupervised learning for product context?** | Supervised: learn from labeled data (can define "correct" answer). Unsupervised: find patterns without labels (exploratory). Choose based on data availability and problem type. |
+| **How do you decide between API vs self-hosted models?** | API: easy, latest models, pay-per-use. Self-host: control, no per-token cost at scale, custom. Break-even ~10M tokens/month. |
+| **What is a vector database and why is it relevant for AI products?** | Stores embeddings for semantic search. Enables RAG, recommendations. Choose based on scale, filtering needs, latency requirements. |
+| **What is fine-tuning and when is it worth the cost?** | Continuing training on specific data to learn patterns. Worth it when: need specific style/tasks, lots of examples, base model doesn't fit. Expensive — often RAG suffices. |
+
+## Ethics & Safety
+
+| Question | Answer |
+|----------|--------|
+| **How do you think about AI ethics in product development?** | Consider: bias in data/model, transparency (users know they're using AI), privacy, misuse potential, environmental impact. Build safeguards early. |
+| **Your AI model works well overall but performs poorly for a minority user group. What do you do?** | Identify affected group, investigate causes (data representation, model architecture), fix (rebalance data, adjust model), test specifically for this group, be transparent with users. |
+| **How would you handle hallucinations in a generative AI product?** | RAG to ground in sources, prompt engineering, citation/references, allow easy correction, detect and flag uncertain responses, user feedback loop. |
+| **What is AI safety and why does it matter for products?** | Preventing harm: harmful outputs, misuse, privacy violations. Matters for: user trust, legal compliance, brand reputation. |
+| **How do you ensure your AI product is accessible?** | Consider: different abilities (screen readers), different languages, different literacy levels. Test with diverse users. |
+
+## Execution & Strategy
+
+| Question | Answer |
+|----------|--------|
+| **How would you prioritize the AI roadmap for a startup with limited ML resources?** | Focus on highest impact/lowest effort first. Use RAG over fine-tuning (faster). Outsource where possible. Measure and iterate. |
+| **How do you write a PRD for an AI feature?** | Include: problem statement, success metrics, data requirements, model approach, evaluation criteria, risks/mitigations, launch criteria. |
+| **How do you manage stakeholder expectations for AI product outcomes?** | Be realistic about capabilities, show demo/early results, set clear metrics, communicate uncertainty, build trust with small wins. |
+| **How do you assess technical feasibility of new AI features?** | Talk to engineers about: data availability, model options, timeline, infrastructure needs. Don't over-promise. |
+| **How do you balance innovation with practicality?** | Start with MVP to test hypothesis, iterate based on data, don't over-engineer initially. Ship, learn, improve. |
+
+## Case Study Questions
+
+| Question | Answer |
+|----------|--------|
+| **How would you improve Google Search using AI?** | Start with user needs (more relevant, conversational, personalized). Ideas: better ranking, conversational search, multi-modal, personalized results. Trade-off: relevance vs diversity. |
+| **Design an AI feature for a ride-sharing app.** | Ideas: dynamic pricing prediction, ETA prediction, driver-rider matching, fraud detection, conversational support. Pick one, explain user value, metrics, implementation. |
+| **You're at a company with legacy product. How would you add AI?** | Start with: biggest pain point with highest impact. Pilot first, measure, scale. Consider integration points, data availability, team capability. |
+| **Design an AI product for [industry].** | Understand: user needs in that industry, current workflows, what AI can improve. Common: healthcare (diagnosis), finance (fraud), retail (recommendations). |
+
+## Behavioral & Leadership
+
+| Question | Answer |
+|----------|--------|
+| **How would you convince a skeptical VP to invest in AI when ROI is uncertain?** | Start small: pilot with clear success criteria. Show competitor examples. Calculate potential upside. Manage risk with limited investment first. |
+| **Tell me about a time you had to pivot your AI product strategy.** | Show: what changed (data, market, results), decision process, how you communicated, what you learned. |
+| **How do you collaborate with data scientists and engineers?** | Clear requirements, regular sync, realistic timelines, appreciate technical constraints. Be the bridge between user needs and technical reality. |
+| **Where do you think AI product management is headed in 2-3 years?** | More AI-first products, PMs need technical fluency, more emphasis on evaluation and metrics, AI as co-pilot for PMs themselves. |
+
+## Common AI PM Questions (Rapid Fire)
+
+| Question | Answer |
+|----------|--------|
+| **What's the difference between AI and ML?** | AI: broader goal of machines being smart. ML: subset where machines learn from data. |
+| **What experience do you have with supervised and unsupervised learning?** | Be ready with specific examples. Supervised: classification/regression tasks. Unsupervised: clustering, anomaly detection. |
+| **How do you handle data challenges in AI projects?** | Common: missing data (imputation), noisy data (cleaning), imbalanced data (sampling/weighting), data access (governance). |
+| **What is transfer learning?** | Using knowledge from one task to improve another. Pre-trained models as starting point. Key to modern AI efficiency. |
+| **How do you determine if you need more data vs better model?** | If model underfitting → more data or more complex model. If overfitting → better data or regularization. Experiment to know. |
+| **What's your approach to user research for AI products?** | Similar to traditional but: test with real tasks, measure trust, observe how users handle AI errors, understand AI literacy levels. |
+
+## Company-Specific Prep
+
+| Question | Answer |
+|----------|--------|
+| **Why do you want to work at [company]?** | Research the company's AI products, mission, unique challenges. Connect your background to their specific needs. |
+| **What AI product would you build for [company] if you could?** | Show understanding of their business. Identify user needs. Propose something aligned with their strengths. |
+| **How would you improve [company's] existing AI feature?** | Use the product. Identify pain points. Propose specific improvements with rationale. |
+
+## Role-Specific Notes
+
+| Question | Answer |
+|----------|--------|
+| **Engineer**: What's the difference between ML Engineer and AI PM?** | Engineer: builds models, writes code. PM: defines what to build, why, measures success. PM needs business + technical fluency. |
+| **Scientist**: How would you explain your research to a PM?** | Focus on: problem, approach, results, not just methodology. Translate for business impact. |
+| **Transitioning to AI PM**: What makes you qualified?** | Highlight: technical background, product interest, learning capability. Show you've been thinking about AI product problems. |
+
+## See Also
+
+- [ML Fundamentals Interview Prep](/cheatsheets/ml-fundamentals-interview/)
+- [LLM Interview Prep](/cheatsheets/llm-interview/)
+- [AI System Design Interview Prep](/cheatsheets/ai-system-design-interview/)
+- [Behavioral Interview Prep](/cheatsheets/behavioral-interview/)
+- [Prompt Engineering Cheatsheet](/cheatsheets/prompt-engineering/)
