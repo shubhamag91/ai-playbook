@@ -79,12 +79,8 @@ export default defineConfig({
           link: '/tools/',
         },
         {
-          label: 'Productivity',
-          link: '/productivity/',
-        },
-        {
-          label: 'Creative',
-          link: '/creative/',
+          label: 'Productivity & Creative',
+          link: '/productivity-tools/',
         },
         {
           label: 'Hardware',
