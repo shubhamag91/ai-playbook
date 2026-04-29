@@ -72,7 +72,6 @@ export default defineConfig({
           label: 'Start here',
           items: [
             { label: 'Welcome', slug: 'index' },
-            { label: 'How this playbook works', slug: 'guides/how-it-works' },
           ],
         },
         {
