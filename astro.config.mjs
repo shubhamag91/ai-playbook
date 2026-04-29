@@ -79,10 +79,6 @@ export default defineConfig({
           link: '/tools/',
         },
         {
-          label: 'Principles',
-          link: '/principles/',
-        },
-        {
           label: 'Workflows',
           link: '/workflows/',
         },
@@ -117,6 +113,10 @@ export default defineConfig({
         {
           label: 'Follow',
           link: '/follow/',
+        },
+        {
+          label: 'Principles',
+          link: '/principles/',
         },
         {
           label: 'Cheatsheets',
