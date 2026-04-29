@@ -104,6 +104,170 @@ description: AI Product Manager interview questions — product design, metrics,
 | **Scientist**: How would you explain your research to a PM?** | Focus on: problem, approach, results, not just methodology. Translate for business impact. |
 | **Transitioning to AI PM**: What makes you qualified?** | Highlight: technical background, product interest, learning capability. Show you've been thinking about AI product problems. |
 
+## Diagrams
+
+### AI Product Development Lifecycle
+
+```mermaid
+flowchart LR
+    RESEARCH[Research<br/>User Needs] --> IDEATE[Ideate<br/>AI Solutions]
+    IDEATE --> DEFINE[Define<br/>Success Metrics]
+    DEFINE --> BUILD[Build<br/>MVP]
+    BUILD --> TEST[Test<br/>& Iterate]
+    TEST --> LAUNCH[Launch<br/>& Monitor]
+    LAUNCH --> IMPROVE[Improve<br/>& Scale]
+    
+    RESEARCH -.->|informs| IDEATE
+    TEST -.->|feedback| BUILD
+    IMPROVE -.->|data| RESEARCH
+```
+
+### AI Product Metrics Framework
+
+```mermaid
+graph TB
+    subgraph "Business Outcomes"
+        REV[Revenue] --> ROI
+        RET[Retention] --> ROI
+        CONV[Conversion] --> ROI
+    end
+    
+    subgraph "Product Metrics"
+        ENGAGEMENT[Engagement] --> PROXY
+        TASKS[Task Completion] --> PROXY
+        ADOPTION[Adoption] --> PROXY
+    end
+    
+    subgraph "AI Metrics"
+        ACCURACY[Accuracy] --> AI_KPI
+        LATENCY[Latency] --> AI_KPI
+        ERROR[Error Rate] --> AI_KPI
+    end
+    
+    PROXY --> ROI
+    AI_KPI --> PROXY
+```
+
+### AI vs Traditional Product Trade-offs
+
+| Aspect | Traditional Product | AI Product |
+|--------|-------------------|------------|
+| **确定性** | More predictable | Probabilistic output |
+| **Evaluation** | Clear metrics | Evolving metrics |
+| **Failure** | Bug/ crash | Wrong answer |
+| **Iteration** | Code change | Retraining needed |
+| **Explainability** | Code visible | Black box |
+| **User Trust** | Built over time | Must be earned |
+
+## Practice Questions
+
+### Product Design Questions
+
+| Question | What to Show |
+|----------|--------------|
+| Design an AI feature for [company's product] | User empathy, technical feasibility, metrics |
+| When should you NOT use AI? | Judgment, ethics, cost-benefit thinking |
+| How would you build trust in an 85% accurate AI? | User experience, transparency |
+| Design a feedback loop for your AI | Data flywheel, continuous improvement |
+
+### Case Study Practice
+
+**Case 1: The Competitor Launched AI**
+- Competitor just released AI feature you're building
+- What do you do? How do you differentiate?
+
+**Case 2: The Accuracy Trade-off**
+- Your AI is 95% accurate but costs $1M/month
+- Alternative is 85% accurate at $100K/month
+- How do you decide?
+
+**Case 3: The Edge Case**
+- AI works great for 99% of users but fails for 5% minority
+- What do you do? Ship or fix?
+
+**Case 4: The Measurement Problem**
+- How do you measure success when "good" is subjective?
+- Example: AI writing assistant, creative tool
+
+### Technical Depth Questions to Prepare
+
+- Explain the trade-off between model quality and latency
+- How does RAG differ from fine-tuning?
+- What is model drift and why should you care?
+- How would you A/B test a non-deterministic feature?
+
+## Quick Reference Cards
+
+### AI PM Skills Matrix
+
+| Skill | Beginner | Intermediate | Advanced |
+|-------|----------|--------------|-----------|
+| **Technical** | Understand ML types | Can read papers | Can evaluate trade-offs |
+| **Product** | User research | Metrics design | Roadmap strategy |
+| **Data** | Know data sources | Data quality | Data strategy |
+| **Ethics** | Identify issues | Mitigation | Proactive design |
+| **Execution** | Ship MVP | Iterate | Scale |
+
+### Metrics Selection Framework
+
+```
+1. Start with Business KPI
+   └─ What business outcome matters?
+   
+2. Find Proxy ML Metric
+   └─ What ML metric drives that KPI?
+   
+3. Add Guardrails
+   └─ What could go wrong?
+   
+4. Define Segment Metrics
+   └─ Does it work for all users?
+```
+
+### Common AI Product Metrics
+
+| Product Type | Primary Metric | Guardrail Metrics |
+|--------------|---------------|-------------------|
+| **Search** | Query completion rate | Zero-result rate |
+| **Recommendation** | CTR / Engagement | Coverage, diversity |
+| **Chatbot** | Resolution rate | Escalation rate |
+| **Content Gen** | Usage / Engagement | Quality score, error rate |
+| **Automation** | Task completion | Human override rate |
+
+### Decision Framework: Build vs Buy
+
+| Factor | Build | Buy |
+|--------|-------|-----|
+| **Data** | Proprietary, unique | Generic |
+| **Core Value** | Your differentiator | Table stakes |
+| **Cost** | High upfront, low marginal | Low upfront, high marginal |
+| **Control** | Full | Limited |
+| **Time** | Slow | Fast |
+
+## External Resources
+
+### Learning Resources
+
+- [Lenny's Product Newsletter](https://www.lennysnewsletter.com) - Product strategy
+- [AI Product Management](https://www.producthunt.com/category/artificial-intelligence) - Top AI products
+- [Google's AI Product Guide](https://developers.google.com/machine-learning/product) - Best practices
+
+### Technical Understanding for PMs
+
+- [Practical AI for Product People](https://productschool.com/blog/artificial-intelligence/practical-ai-for-product-managers) - Accessible intro
+- [AI PM Fundamentals](https://www.impulse.dev/blog/ai-product-manager-guide) - Role overview
+
+### Industry Examples
+
+- [Notion AI Case Study](https://www.notion.com/product/ai) - AI in productivity
+- [GitHub Copilot Case Study](https://github.com/features/copilot) - Developer tools
+- [Netflix Recommendations](https://www.netflix.com/browse/recommendations) - Classic ML product
+
+### Communities
+
+- [AI Product Hub](https://aiproducthub.com) - AI PM community
+- [Product School AI](https://productschool.com) - AI PM training
+
 ## See Also
 
 - [ML Fundamentals Interview Prep](/cheatsheets/ml-fundamentals-interview/)

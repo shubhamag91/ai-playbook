@@ -136,6 +136,155 @@ description: AI system design interview questions — RAG, agents, vector databa
 | **Scientist**: How would you optimize for a specific metric (e.g., citation accuracy)?** | Add citation enforcement in prompt, fine-tune for citation task, post-process to verify citations, evaluate with specific metric. |
 | **PM**: How do you define success metrics for an AI product?** | Start with business KPIs, map to proxy ML metrics. Example: if goal is user retention → proxy could be task completion rate. Include guardrail metrics. |
 
+## Diagrams
+
+### End-to-End RAG Architecture
+
+```mermaid
+flowchart TB
+    subgraph "Client Layer"
+        UI[User Interface] --> API[API Gateway]
+    end
+    
+    subgraph "Ingestion Pipeline"
+        DOCS[Documents] --> PARSE[Document Parser]
+        PARSE --> CHUNK[Chunker]
+        CHUNK --> EMBED[Embedding Model]
+        EMBED --> VDB[(Vector DB)]
+    end
+    
+    subgraph "Query Pipeline"
+        USER[User Query] --> QEMBED[Query Embedder]
+        QEMBED --> VSEARCH[Vector Search]
+        VDB --> VSEARCH
+        VSEARCH --> RERANK[Reranker]
+        RERANK --> PROMPT[Prompt Builder]
+    end
+    
+    subgraph "Generation"
+        PROMPT --> LLM[LLM API]
+        LLM --> RESP[Response]
+    end
+    
+    API --> QEMBED
+    RESP --> UI
+    
+    subgraph "Supporting Systems"
+        CACHE[(Cache)] -.-> API
+        MONITOR[Monitoring] -.-> all
+        QUEUE[Message Queue] -.-> CHUNK
+    end
+```
+
+### Agent Architecture with ReAct
+
+```mermaid
+stateDiagram-v2
+    [*] --> Start
+    Start --> Think: User Query
+    Think --> Action: Decide Tool
+    Action --> Execute: Call Tool
+    Execute --> Observe: Get Result
+    Observe --> Think: Analyze Result
+    Think --> Action: Continue?
+    Action --> [*]: Done
+    Action --> Think: Continue Loop
+    Observe --> [*]: Fail/Max Iterations
+```
+
+### Latency Breakdown in RAG
+
+```mermaid
+pie title Latency Components (Typical RAG)
+    "Embedding Query" : 50
+    "Vector Search" : 100
+    "LLM Token Processing" : 200
+    "LLM Token Generation" : 650
+```
+
+## Practice Questions
+
+### System Design Scenarios
+
+| Question | Time | Focus |
+|----------|------|-------|
+| Design a RAG system for 1M documents with <500ms latency | 30-40 min | Architecture, trade-offs |
+| Design an LLM-powered customer support bot | 30-40 min | End-to-end, fallback handling |
+| Design a code assistant for your codebase | 30-40 min | Chunking, code-specific challenges |
+| Design an AI search for e-commerce | 30-40 min | Ranking, personalization |
+| Design a multi-language RAG system | 30-40 min | Multilingual embedding, translation |
+
+### Debugging Scenarios
+
+| Question | What to Check |
+|----------|---------------|
+| RAG quality dropped 20% | Retrieval (embeddings, chunking), data drift, model changes |
+| Latency spiked from 200ms to 2s | Vector DB, LLM API, network, rate limits |
+| Users reporting more hallucinations | Context quality, retrieval relevance, prompt changes |
+| Embedding pipeline falling behind | Queue depth, worker scaling, embedding model issues |
+
+### Quick Design Questions
+
+- How would you add caching to a RAG system?
+- How do you implement rate limiting for LLM APIs?
+- Design a system that auto-retries on LLM failures
+- How would you implement access control in RAG?
+- Design a system for real-time document updates
+
+## Quick Reference Cards
+
+### Vector Database Comparison
+
+| DB | Best For | Limitations | Scale |
+|----|----------|-------------|-------|
+| **pgvector** | Already on Postgres | Limited filtering | <10M vectors |
+| **Pinecone** | Managed, scale | Vendor lock-in | Unlimited |
+| **Weaviate** | Hybrid search | Memory-intensive | Unlimited |
+| **Qdrant** | Performance | Smaller ecosystem | Unlimited |
+| **Chroma** | Prototyping | Not production-ready | <1M |
+
+### Latency Budget for RAG
+
+| Component | Target | Acceptable | Problematic |
+|-----------|--------|------------|-------------|
+| Embedding | <50ms | 50-100ms | >100ms |
+| Vector Search | <50ms | 50-100ms | >100ms |
+| Reranking | <100ms | 100-200ms | >200ms |
+| LLM (TTFT) | <1s | 1-2s | >2s |
+| LLM (generation) | <2s/token | 2-5s/token | >5s/token |
+
+### Cost Optimization Levers
+
+| Strategy | Impact | Effort |
+|----------|--------|--------|
+| Model tiering | 50-70% cost reduction | Medium |
+| Prompt caching | 20-40% cost reduction | Low |
+| Response caching | 30-60% cost reduction | Medium |
+| Smaller chunks | 10-30% cost reduction | Low |
+| Batch processing | 20-40% cost reduction | High |
+
+## External Resources
+
+### System Design References
+
+- [RAG at Scale](https://newsletter.pragmaticengineer.com/p/rag-at-scale) - Production RAG patterns
+- [The Engineer’s Guide to RAG](https://wandb.ai/articles/rag-evaluation) - Evaluation strategies
+- [Building Production LLM Apps](https://python.langchain.com/docs/guides/production) - LangChain production guide
+
+### Tools & Libraries
+
+- [LangChain](https://js.langchain.com) - LLM app framework
+- [LlamaIndex](https://www.llamaindex.ai) - Data framework for LLMs
+- [AutoGen](https://microsoft.github.io/autogen) - Microsoft agent framework
+- [OpenAI Agents SDK](https://openai.com/docs/agents-sdk) - OpenAI agent tools
+
+### Monitoring & Observability
+
+- [Evidently AI](https://www.evidentlyai.com) - ML monitoring
+- [Great Expectations](https://greatexpectations.io) - Data quality
+- [LangSmith](https://smith.langchain.com) - LLM debugging/tracing
+- [Weave](https://wandb.ai/weave) - ML observability
+
 ## See Also
 
 - [ML Fundamentals Interview Prep](/cheatsheets/ml-fundamentals-interview/)

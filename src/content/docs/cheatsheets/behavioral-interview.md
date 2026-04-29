@@ -105,6 +105,160 @@ description: Behavioral interview questions for AI/ML Engineer, AI Data Scientis
 | **What does success look like in the first 90 days?** | Shows you're thinking about impact and want clarity. |
 | **How does the team approach AI/ML?** | Shows interest in technical depth and team culture. |
 
+## Diagrams
+
+### STAR Method Framework
+
+```mermaid
+graph TB
+    START[Interview Question] --> SITUATION[Situation]
+    SITUATION --> TASK[Task]
+    TASK --> ACTION[Action]
+    ACTION --> RESULT[Result]
+    RESULT --> LEARNING[Learnings]
+    
+    SITUATION -->|"Context<br/>1-2 sentences"| Q1[Who, What, Where, When]
+    TASK -->|"Your responsibility<br/>1 sentence"| Q2[What needed to happen]
+    ACTION -->|"What YOU did<br/>50-60% of answer"| Q3[Specific steps, decisions]
+    RESULT -->|"Impact + metrics<br/>1-2 sentences"| Q4[What happened]
+    
+    subgraph "ML-STAR Extensions"
+    EXP[Experiment Results] -.-> ACTION
+    METRICS[Metrics Tracked] -.-> RESULT
+    ITERATION[Iteration Loop] -.-> ACTION
+    end
+```
+
+### Story Mapping Template
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  PROJECT: [Name]                                          │
+├─────────────────────────────────────────────────────────────┤
+│  SITUATION:                                                │
+│  - Company/size                                            │
+│  - Your role                                               │
+│  - The problem                                             │
+├─────────────────────────────────────────────────────────────┤
+│  TASK:                                                     │
+│  - What you were responsible for                           │
+│  - Success criteria                                        │
+├─────────────────────────────────────────────────────────────┤
+│  ACTION:                                                   │
+│  - Step 1: [What you did]                                  │
+│  - Step 2: [What you did]                                  │
+│  - Step 3: [What you did]                                  │
+│  Decision points: [Why you chose A over B]                 │
+├─────────────────────────────────────────────────────────────┤
+│  RESULT:                                                   │
+│  - Quantitative: [metrics, %, $]                           │
+│  - Qualitative: [what changed]                             │
+│  - What you learned                                        │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## Practice Questions
+
+### Mock Interview Prompts
+
+**Technical Decision-Making:**
+- "Tell me about a time you had to choose between accuracy and latency in an ML system."
+- "Describe how you decided between building something in-house vs using a third-party API."
+- "Tell me about a time your model didn't perform as expected in production."
+
+**Collaboration:**
+- "Describe a time you had to work with a difficult stakeholder."
+- "Tell me about a time you had to explain ML concepts to non-technical team members."
+- "How did you handle a disagreement with your team about the approach to a problem?"
+
+**Failure & Growth:**
+- "Tell me about a project that didn't go as planned. What would you do differently?"
+- "Describe a time you failed and what you learned from it."
+- "What's the biggest technical challenge you've faced and how did you overcome it?"
+
+**Leadership:**
+- "Tell me about a time you took the initiative on a project."
+- "Describe how you convinced your team to adopt a new approach or technology."
+- "Tell me about a time you had to deliver difficult news to stakeholders."
+
+### Follow-Up Questions to Prepare For
+
+| Question | What They're Testing |
+|----------|---------------------|
+| "What would you do differently?" | Self-awareness, growth mindset |
+| "How did you measure success?" | Data-driven thinking |
+| "What was the hardest part?" | Challenge handling |
+| "Who else was involved?" | Team dynamics understanding |
+| "What would you do with more time?" | Scope management |
+
+### Role-Play Scenarios
+
+1. **The Skeptical VP**: Your VP doesn't believe in investing in AI. Convince them with data.
+2. **The Misaligned Team**: Your team wants to use a different approach than you suggested. Handle the disagreement.
+3. **The Deadline Crunch**: You have 2 weeks to deliver something that should take 2 months. What do you do?
+
+## Quick Reference Cards
+
+### Story Bank Template
+
+| Story Title | Problem Type | Questions It Answers |
+|-------------|--------------|---------------------|
+| [Name] | Technical decision | "Best technical decision", "Trade-offs made" |
+| [Name] | Collaboration | "Work with difficult person", "Influence team" |
+| [Name] | Failure | "Project failed", "Didn't work first time" |
+| [Name] | Leadership | "Took initiative", "Led team through challenge" |
+| [Name] | Ambiguity | "Unclear requirements", "Dealt with uncertainty" |
+
+### Common Behavioral Themes
+
+| Theme | Example Questions |
+|-------|-------------------|
+| **Decision Making** | "Made decision with incomplete info", "Chose simple over complex" |
+| **Failure/Setback** | "Project failed", "First approach didn't work" |
+| **Collaboration** | "Cross-functional team", "Conflict with teammate" |
+| **Communication** | "Explained technical to non-technical", "Convinced someone" |
+| **Initiative** | "Took initiative", "Identified and solved problem" |
+| **Growth** | "Biggest challenge", "Stay current with AI", "Weakness" |
+
+### STAR Quick Check
+
+- [ ] **S**ituation: Context provided (1-2 sentences)
+- [ ] **T**ask: Your responsibility clear (1 sentence)
+- [ ] **A**ction: "I" not "we", specific steps (bulk of answer)
+- [ ] **R**esult: Quantified impact, lessons learned
+
+### Answer Length Guide
+
+| Section | Time | Content |
+|---------|------|---------|
+| Situation | 10-15% | Brief context |
+| Task | 10-15% | Your responsibility |
+| Action | 50-60% | What YOU did, decisions, trade-offs |
+| Result | 15-20% | Metrics, impact, learnings |
+
+## External Resources
+
+### Interview Preparation
+
+- [Exponent Behavioral](https://tryexponent.com) - ML behavioral prep
+- [Tech Interview Handbook](https://techinterviewhandbook.org/behavioral) - General behavioral
+- [ML Interview Guide](https://engineersofai.com/docs/break-into-ai/behavioral) - ML-specific STAR
+
+### Practice Platforms
+
+- [Pramp](https://pramp.com) - Mock interviews
+- [Interviewing.io](https://interviewing.io) - Real interview practice
+
+### Reading & Research
+
+- [The Manager's Path](https://managerreadme.com) - Leadership and communication
+- [Radical Candor](https://www.radicalcandor.com) - Feedback and relationships
+
+### Newsletters & Updates
+
+- [The Rundown AI](https://therundown.ai) - AI industry news
+- [The Batch](https://www.deeplearning.ai/the-batch/) - AI research updates
+
 ## See Also
 
 - [ML Fundamentals Interview Prep](/cheatsheets/ml-fundamentals-interview/)

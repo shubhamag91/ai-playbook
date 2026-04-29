@@ -171,6 +171,138 @@ description: Machine learning interview questions and answers for AI/ML Engineer
 | **Scientist**: How do you stay current with ML research?** | Read papers (ArXiv, distill.pub), follow key researchers on Twitter, attend conferences (NeurIPS, ICML), implement papers. Focus on what's practical, not just trending. |
 | **PM**: What makes a good AI PM?** | Technical enough to understand trade-offs, product sense to identify valuable problems, communication skills to align engineering and stakeholders. |
 
+## Diagrams
+
+### Bias-Variance Tradeoff
+
+```mermaid
+graph TD
+    A[Total Error] --> B[Bias²]
+    A --> C[Variance]
+    A --> D[Irreducible Error]
+    
+    E[Underfitting] -.-> B
+    E -.-> F[High Bias]
+    G[Overfitting] -.-> C
+    G -.-> H[High Variance]
+    
+    I[Optimal] -.-> J[Low Bias + Low Variance]
+```
+
+### Neural Network Architecture
+
+```mermaid
+graph LR
+    Input[Input Layer] --> Hidden1[Hidden 1]
+    Hidden1 --> Hidden2[Hidden 2]
+    Hidden2 --> Hidden3[Hidden 3]
+    Hidden3 --> Output[Output Layer]
+    
+    subgraph "Forward Pass"
+    Input -->|weights| Hidden1
+    Hidden1 -->|weights| Hidden2
+    Hidden2 -->|weights| Hidden3
+    Hidden3 -->|weights| Output
+    end
+    
+    subgraph "Backpropagation"
+    Output -.->|gradients| Hidden3
+    Hidden3 -.->|gradients| Hidden2
+    Hidden2 -.->|gradients| Hidden1
+    Hidden1 -.->|gradients| Input
+    end
+```
+
+### Ensemble Methods Comparison
+
+```mermaid
+graph TD
+    A[Ensemble Methods] --> B[Bagging]
+    A --> C[Boosting]
+    A --> D[Stacking]
+    
+    B --> B1[Random Forest]
+    B --> B2[Parallel Models]
+    B --> B3[Reduce Variance]
+    
+    C --> C1[XGBoost]
+    C --> C2[LightGBM]
+    C --> C3[Sequential Models]
+    C --> C4[Reduce Bias]
+    
+    D --> D1[Meta-learner]
+    D --> D2[Combine Predictions]
+```
+
+## Practice Questions
+
+### Scenario-Based
+
+| Question | Hint |
+|----------|------|
+| You're building a fraud detection model. 0.1% of transactions are fraudulent. What metrics would you use and why? | Think about cost of false negatives vs false positives |
+| Your model's training accuracy is 99% but test accuracy is 85%. What's happening and how would you fix it? | Consider overfitting signals |
+| You have 1M samples but only 10 features. Should you use a complex model? Explain your reasoning. | Think about bias-variance and model capacity |
+| How would you decide whether to collect more data vs engineer better features? | Consider data quality and feature utility |
+| Your model performs well on all test sets but fails in production. What could be wrong? | Think about data drift, distribution shift |
+
+### "Explain This Concept" Quick Questions
+
+- Explain gradient descent to a 5-year-old
+- What happens when learning rate is too high? Too low?
+- Why do we need activation functions?
+- What is the difference between a parameter and a hyperparameter?
+- How does regularization prevent overfitting?
+
+## Quick Reference Cards
+
+### Evaluation Metrics at a Glance
+
+| Metric | Formula | Use When |
+|--------|---------|----------|
+| **Accuracy** | (TP + TN) / (TP + TN + FP + FN) | Balanced classes |
+| **Precision** | TP / (TP + FP) | False positives costly |
+| **Recall** | TP / (TP + FN) | False negatives costly |
+| **F1 Score** | 2 × (P × R) / (P + R) | Imbalanced, single metric needed |
+| **AUC-ROC** | Area under ROC curve | Class separation quality |
+
+### Regularization Quick Look
+
+| Method | Effect | Use When |
+|--------|--------|----------|
+| **L1 (Lasso)** | Sparsity, feature selection | High-dimensional data |
+| **L2 (Ridge)** | Weight shrinkage | All features relevant |
+| **Dropout** | Prevents co-adaptation | Deep networks |
+| **Early Stopping** | Prevents overfitting | Any training |
+
+### Optimizer Comparison
+
+| Optimizer | Pros | Cons |
+|-----------|------|------|
+| **SGD + Momentum** | Interpretable, well-studied | Manual LR tuning |
+| **Adam** | Robust default, adapts LR | May overfit on small data |
+| **RMSprop** | Good for RNNs | Sensitive to hyperparameters |
+
+## External Resources
+
+### Essential Reading
+
+- [The Elements of Statistical Learning](https://link.springer.com/book/10.1007/978-0-387-84858-7) - Classic textbook
+- [Machine Learning Yearning](https://www.mlyearning.org/) - Andrew Ng's practical guide
+- [Dive into Deep Learning](https://d2l.ai/) - Interactive book with code
+
+### Practice Platforms
+
+- [Kaggle](https://kaggle.com) - Competitions and datasets
+- [LeetCode ML](https://leetcode.com/ml/) - ML coding practice
+- [Machine Learning Practice Questions](https://github.com/rfordatascience/tidytuesday) - Real-world datasets
+
+### Video Courses
+
+- [Fast.ai](https://fast.ai) - Practical deep learning
+- [CS229 (Stanford)](https://cs229.stanford.edu/) - Machine Learning
+- [3Blue1Brown Neural Networks](https://www.3blue1brown.com/topics/neural-networks) - Visual explanations
+
 ## See Also
 
 - [LLM Interview Prep](/cheatsheets/llm-interview/)

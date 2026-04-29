@@ -200,6 +200,143 @@ description: Large Language Model interview questions and answers — transforme
 | **What are the key differences between GPT-4, Claude, and Gemini?** | Different strengths: GPT-4 (general, ecosystem), Claude (safety, long context), Gemini (multimodal, native integration). |
 | **PM**: How do you choose which LLM to use?** | Consider: task fit (reasoning vs generation), cost, context length, safety, API availability, and team expertise. |
 
+## Diagrams
+
+### Transformer Architecture
+
+```mermaid
+graph TB
+    subgraph "Input"
+    I[Token IDs] --> E[Token Embeddings]
+    E --> PE[Positional Encoding]
+    end
+    
+    subgraph "Encoder Layer (×N)"
+    PE --> MHA[Multi-Head Attention]
+    MHA --> ADD1[Add & Norm]
+    ADD1 --> FFN[Feed Forward]
+    ADD1 --> ADD2[Add & Norm]
+    end
+    
+    MHA -.->|residual| ADD1
+    FFN -.->|residual| ADD2
+    
+    ADD2 --> O[Output]
+```
+
+### Self-Attention Mechanism
+
+```mermaid
+graph LR
+    Q[Query] --> DOT[Q × Kᵀ]
+    K[Key] --> DOT
+    DOT --> SCALE[÷ √dₖ]
+    SCALE --> SOFTMAX[Softmax]
+    SOFTMAX --> WV[Weighted Values]
+    V[Value] --> WV
+    WV --> OUTPUT[Attention Output]
+```
+
+### RAG Pipeline
+
+```mermaid
+flowchart LR
+    subgraph "Ingestion"
+    DOCS[Documents] --> CHUNK[Chunking]
+    CHUNK --> EMBED[Embedding Model]
+    EMBED --> VDB[(Vector DB)]
+    end
+    
+    subgraph "Query"
+    USER[User Query] --> QEMBED[Embed Query]
+    QEMBED --> VS[Vector Search]
+    VDB --> VS
+    VS --> RERANK[Reranker]
+    RERANK --> PROMPT[Build Prompt]
+    end
+    
+    subgraph "Generation"
+    PROMPT --> LLM[LLM]
+    LLM --> RESPONSE[Response]
+    end
+```
+
+## Practice Questions
+
+### Scenario-Based
+
+| Question | Hint |
+|----------|------|
+| Your RAG system returns irrelevant documents 30% of the time. How would you diagnose and fix this? | Consider: chunking strategy, embedding model, retrieval algorithm, reranking |
+| The LLM keeps hallucinating on factual questions. What techniques would you use to reduce this? | Think: RAG, retrieval quality, prompting techniques, fine-tuning |
+| You need to serve 10K concurrent users with <200ms latency. How would you architect this? | Consider: model selection, caching, batching, scaling |
+| How would you decide between fine-tuning an LLM vs using RAG for your use case? | Think: data freshness, cost, complexity, accuracy needs |
+| Your model works well in English but poorly in Spanish. What's likely wrong and how do you fix it? | Consider: tokenizer coverage, training data, multilingual models |
+
+### "Explain This Concept" Quick Questions
+
+- Explain the attention mechanism to a non-technical person
+- What is the difference between transformers and RNNs?
+- Why does scaling model size lead to emergent capabilities?
+- What is the "lost in the middle" problem in RAG?
+- How does RLHF align models with human preferences?
+
+## Quick Reference Cards
+
+### LLM Decision Matrix
+
+| Need | Recommended Approach |
+|------|----------------------|
+| Latest knowledge | RAG |
+| Specific style/tone | Fine-tuning |
+| Low cost | Smaller models, caching |
+| Long context | Claude 3, Gemini 1.5 |
+| Code generation | GPT-4, Claude |
+| Safety-critical | Claude, RLHF/DPO |
+| Self-hosting | LLaMA, Mistral, DeepSeek |
+
+### Decoding Strategy Comparison
+
+| Strategy | Use When | Temperature |
+|----------|----------|-------------|
+| **Greedy** | Code, factual Q&A | 0 |
+| **Temperature 0.1-0.3** | Customer support | Low |
+| **Temperature 0.7-1.0** | Creative writing | Medium |
+| **Top-k** | Controlled creativity | N/A |
+| **Top-p (nucleus)** | Balanced generation | N/A |
+| **Beam search** | Translation, summarization | 0 |
+
+### Token Cost Comparison (per 1M tokens)
+
+| Model | Input | Output |
+|-------|-------|--------|
+| GPT-4o mini | $0.15 | $0.60 |
+| GPT-4o | $2.50 | $10.00 |
+| Claude Sonnet | $3.00 | $15.00 |
+| Gemini Flash | $0.075 | $0.30 |
+| Claude Haiku | $0.25 | $1.25 |
+
+## External Resources
+
+### Essential Papers
+
+- [Attention Is All You Need](https://arxiv.org/abs/1706.03762) - Transformer original paper
+- [BERT: Pre-training of Deep Bidirectional Transformers](https://arxiv.org/abs/1810.04805) - BERT paper
+- [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) - GPT-3 paper
+- [Training language models to follow instructions](https://arxiv.org/abs/2203.02155) - InstructGPT/RLHF
+
+### Learning Resources
+
+- [Karpathy's Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero/) - Build GPT from scratch
+- [Jay Mody's CUDA Python](https://github.com/jaymody/cuda-python) - GPU programming for LLMs
+- [Lil'Log](https://lilianweng.github.io/blog/) - Deep Learning blog
+
+### Practice Platforms
+
+- [LangChain Academy](https://academy.langchain.com/) - LLM development
+- [Vercel AI SDK](https://vercel.com/ai) - Build AI apps
+- [OpenAI Cookbook](https://cookbook.openai.com/) - Examples and guides
+
 ## See Also
 
 - [ML Fundamentals Interview Prep](/cheatsheets/ml-fundamentals-interview/)
