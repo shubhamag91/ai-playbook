@@ -233,3 +233,5 @@ RESULT: Metrics, impact, what you learned
 - [LLM Interview Prep](/cheatsheets/llm-interview/)
 - [AI System Design Interview Prep](/cheatsheets/ai-system-design-interview/)
 - [AI Product Interview Prep](/cheatsheets/ai-product-interview/)
+- [Banking Analytics Interview Prep](/cheatsheets/banking-analytics-interview/)
+- [AI Product in Banking Interview Prep](/cheatsheets/ai-product-banking-interview/)

@@ -306,5 +306,7 @@ Query:      Query → Embed → Search → Rerank → Prompt → LLM → Respons
 - [ML Fundamentals Interview Prep](/cheatsheets/ml-fundamentals-interview/)
 - [AI System Design Interview Prep](/cheatsheets/ai-system-design-interview/)
 - [Behavioral Interview Prep](/cheatsheets/behavioral-interview/)
+- [AI Product Interview Prep](/cheatsheets/ai-product-interview/)
+- [Banking Analytics Interview Prep](/cheatsheets/banking-analytics-interview/)
 - [Prompt Engineering Cheatsheet](/cheatsheets/prompt-engineering/)
 - [RAG Architecture Diagram](/diagrams/rag-architecture/)
