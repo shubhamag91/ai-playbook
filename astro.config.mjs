@@ -83,10 +83,6 @@ export default defineConfig({
           link: '/productivity-tools/',
         },
         {
-          label: 'Hardware',
-          link: '/hardware/',
-        },
-        {
           label: 'Glossary',
           link: '/glossary/',
         },
