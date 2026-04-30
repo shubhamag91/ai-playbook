@@ -83,16 +83,16 @@ export default defineConfig({
           link: '/productivity-tools/',
         },
         {
+          label: 'Open Source',
+          link: '/opensource/',
+        },
+        {
           label: 'Glossary',
           link: '/glossary/',
         },
         {
           label: 'History',
           link: '/history/',
-        },
-        {
-          label: 'Open Source',
-          link: '/opensource/',
         },
         {
           label: 'Confusions',
