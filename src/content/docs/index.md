@@ -221,7 +221,7 @@ AI moves fast. You don't need to read everything — just stay loosely informed.
 - Follow Ethan Mollick on X — best practical takes on using AI at work
 
 ### 5. Month 2+ — Pick your lane
-
+ 
 Go deeper based on what you actually care about. Once you have the basics, use this playbook as your reference. Pick the path that fits your interest:
 
 - **Creative work** — Midjourney → Runway → Suno → Creative page
@@ -232,3 +232,30 @@ Go deeper based on what you actually care about. Once you have the basics, use t
 - **Ethics & Safety** — Read the Principles page — guardrails, alignment, responsible use
 
 **The biggest mistake beginners make:** signing up for 10 tools in week one. Master one thing first.
+
+---
+
+<div style="text-align: center; margin: 40px 0;">
+  <button 
+    onclick="window.open('https://ai.studio.google.com/chat?utm_source=playbook', '_blank', 'width=800,height=600')"
+    style="
+      background: #4285f4;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: all 0.2s ease;
+      font-weight: 500;
+    "
+    onmouseover="this.style.background='#3367d6'; this.style.transform='translateY(-2px)';"
+    onmouseout="this.style.background='#4285f4'; this.style.transform='translateY(0)';"
+  >
+    💬 Ask Playbook Bot (Powered by Gemini)
+  </button>
+  <p style="margin-top: 12px; color: #666; font-size: 0.9rem;">
+    Get instant AI help using your Gemini API key
+  </p>
+</div>
