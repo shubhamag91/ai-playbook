@@ -1,15 +1,26 @@
-// src/pages/api/chat.js - Gemini API endpoint for Cloudflare Pages
-export async function POST({ request }) {
-  if (request.method !== 'POST') 
-    return new Response(JSON.stringify({error: 'Method not allowed'}), {status: 405});
+export async function onRequestPost({ request }) {
+  if (request.method !== 'POST') {
+    return new Response(JSON.stringify({error: 'Method not allowed'}), {
+      status: 405,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
 
   const { message } = await request.json();
-  if (!message) 
-    return new Response(JSON.stringify({error: 'Message required'}), {status: 400});
+  if (!message) {
+    return new Response(JSON.stringify({error: 'Message required'}), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
 
-  const apiKey = import.meta.env.GEMINI_API_KEY;
-  if (!apiKey) 
-    return new Response(JSON.stringify({error: 'Server misconfigured'}), {status: 500});
+  const apiKey = __GEMINI_API_KEY__;
+  if (!apiKey) {
+    return new Response(JSON.stringify({error: 'Server misconfigured'}), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
 
   try {
     const res = await fetch(
@@ -29,8 +40,14 @@ export async function POST({ request }) {
     const data = await res.json();
     const reply = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '(No response)';
     
-    return new Response(JSON.stringify({reply}), {status: 200, headers: {'Content-Type': 'application/json'}});
+    return new Response(JSON.stringify({reply}), {
+      status: 200,
+      headers: {'Content-Type': 'application/json'}
+    });
   } catch (e) {
-    return new Response(JSON.stringify({error: 'Failed to reach Gemini'}), {status: 502});
+    return new Response(JSON.stringify({error: 'Failed to reach Gemini'}), {
+      status: 502,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 }
