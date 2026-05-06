@@ -14,13 +14,16 @@ export async function onRequestPost({ request, env }) {
     });
   }
 
-  const apiKey = env.GEMINI_API_KEY;
+  let apiKey = env.GEMINI_API_KEY;
   if (!apiKey) {
     return new Response(JSON.stringify({error: 'Server misconfigured: Missing GEMINI_API_KEY binding'}), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
   }
+
+  // Remove any whitespace (including newline) that might have been accidentally included
+  apiKey = apiKey.replace(/\s/g, '');
 
   try {
     const res = await fetch(
