@@ -1,4 +1,4 @@
-export async function onRequestPost({ request }) {
+export async function onRequestPost({ request, env }) {
   if (request.method !== 'POST') {
     return new Response(JSON.stringify({error: 'Method not allowed'}), {
       status: 405,
@@ -14,9 +14,9 @@ export async function onRequestPost({ request }) {
     });
   }
 
-  const apiKey = __GEMINI_API_KEY__;
+  const apiKey = env.GEMINI_API_KEY;
   if (!apiKey) {
-    return new Response(JSON.stringify({error: 'Server misconfigured'}), {
+    return new Response(JSON.stringify({error: 'Server misconfigured: Missing GEMINI_API_KEY binding'}), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
@@ -42,7 +42,7 @@ export async function onRequestPost({ request }) {
     
     return new Response(JSON.stringify({reply}), {
       status: 200,
-      headers: {'Content-Type': 'application/json'}
+      headers: { 'Content-Type': 'application/json' }
     });
   } catch (e) {
     return new Response(JSON.stringify({error: 'Failed to reach Gemini'}), {
