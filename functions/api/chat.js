@@ -35,7 +35,13 @@ export async function onRequestPost({ request, env }) {
       }
     );
 
-    if (!res.ok) throw new Error(`Gemini error: ${res.status}`);
+    if (!res.ok) {
+      const errorText = await res.text();
+      return new Response(JSON.stringify({error: `Gemini API error: ${res.status} - ${errorText}`}), {
+        status: res.status,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
 
     const data = await res.json();
     const reply = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '(No response)';
@@ -45,7 +51,7 @@ export async function onRequestPost({ request, env }) {
       headers: { 'Content-Type': 'application/json' }
     });
   } catch (e) {
-    return new Response(JSON.stringify({error: 'Failed to reach Gemini'}), {
+    return new Response(JSON.stringify({error: `Failed to reach Gemini: ${e.message}`}), {
       status: 502,
       headers: { 'Content-Type': 'application/json' }
     });
