@@ -35,8 +35,22 @@ export async function onRequestPost({ request, env }) {
       }
     );
 
+    // If the response is not OK, we will try to get the error message from Gemini and return it.
     if (!res.ok) {
-      const errorText = await res.text();
+      let errorText = 'Unknown error';
+      try {
+        const errorData = await res.json();
+        // Gemini error response format: { error: { code, message, status } }
+        if (errorData.error && errorData.error.message) {
+          errorText = errorData.error.message;
+        } else if (errorData.message) {
+          errorText = errorData.message;
+        } else {
+          errorText = await res.text();
+        }
+      } catch (e) {
+        errorText = await res.text();
+      }
       return new Response(JSON.stringify({error: `Gemini API error: ${res.status} - ${errorText}`}), {
         status: res.status,
         headers: { 'Content-Type': 'application/json' }
