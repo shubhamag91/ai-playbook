@@ -25,13 +25,10 @@
   border-radius: 12px;
 }
 
-/* Expand content width on wider screens */
+/* Improve content width on wide screens */
 @media (min-width: 1440px) {
   main {
-    max-width: 100%;
-  }
-
-  .sl-markdown-content {
-    max-width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
   }
 }
