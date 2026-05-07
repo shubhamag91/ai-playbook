@@ -1,0 +1,309 @@
+---
+title: Open Source AI & Self-Hosting
+description: Run AI models locally. No API costs, full privacy, own the weights.
+lastUpdated: 2026-05-08
+---
+
+If you care about privacy, cost at scale, or control — open-source models let you own your AI stack.
+
+This page is for people who want to run models locally or on their own infrastructure.
+
+---
+
+## Why Open Source?
+
+| Reason | When it matters |
+|---|---|
+| **Privacy** | You process sensitive data (medical, financial, legal). No API logs. |
+| **Cost** | 100M+ tokens/month. No per-token fees at scale. |
+| **Control** | Fine-tune on your data. Customize behavior. Own the weights. |
+| **Latency** | Inference must be sub-100ms. Local beats API. |
+| **Reliability** | Can't depend on API uptime. Need offline capability. |
+
+**Reality check:** Open-source = more setup, less hand-holding. Only go this route if you need one of the above.
+
+---
+
+## Open-Source Models (May 2026)
+
+### Tier 1: Frontier Quality
+
+| Model | License | Size | Capability | Where to run |
+|---|---|---|---|---|
+| **Llama 4** | MIT | 70B | GPT-4-class reasoning | Ollama, local GPU |
+| **Qwen 3.5** | Custom | 72B | Strong reasoning, multilingual | Ollama, Hugging Face |
+| **Mistral Large** | Apache 2.0 | 123B | Instruction-following, fast | vLLM, SageMaker |
+| **DeepSeek V4** | MIT | 236B | o1-competitive reasoning | Local, Together AI |
+
+**Winner for general use:** Llama 4 (best balance of quality + ease)
+
+---
+
+### Tier 2: Fast & Efficient
+
+| Model | License | Size | Best for | Latency |
+|---|---|---|---|---|
+| **Llama 3.2 Instruct** | MIT | 8B | Low-latency tasks, mobile | <50ms |
+| **Phi 4** | MIT | 14B | Code, reasoning | <100ms |
+| **TinyLlama** | MIT | 1.1B | Running on CPU only | Fast |
+| **Gemma 2** | Google | 9B | Lightweight, coding | <100ms |
+
+**Use case:** Running on laptop, edge devices, extremely cost-sensitive.
+
+---
+
+### Tier 3: Specialized
+
+| Model | License | Specialty | Example |
+|---|---|---|---|
+| **CodeLlama** | MIT | Code generation | Repository-wide refactors |
+| **Llava** | MIT | Vision + language | Image understanding, local |
+| **Whisper** | MIT | Speech-to-text | Transcription, 99 languages |
+| **Stable Video Diffusion** | Open | Video generation | Short clips, local |
+
+---
+
+## How to Run Them Locally
+
+### Easiest: Ollama (Start here)
+
+```bash
+# Install: ollama.ai
+ollama pull llama2
+ollama run llama2
+```
+
+Done. Chat with Llama 2 locally. That's it.
+
+**Supports:** Llama, Mistral, Qwen, Phi, and 100+ other models
+**Cost:** Free
+**Requirement:** 8GB+ RAM (more for 70B models)
+
+---
+
+### More Control: vLLM + LocalAI
+
+**vLLM:** Fast inference server. Use with:
+```bash
+python -m vllm.entrypoints.openai_compatible_server \
+  --model meta-llama/Llama-3-70b-chat-hf
+```
+
+Gives you an OpenAI-compatible API locally.
+
+**Best for:** Production use, batch processing, multiple concurrent requests.
+
+---
+
+### For Developers: HuggingFace Transformers
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+model_id = "meta-llama/Llama-3-70b-chat-hf"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(model_id)
+
+# Use model
+```
+
+**Best for:** Research, fine-tuning, custom integrations.
+
+---
+
+## Self-Hosting Infrastructure
+
+### Options by Scale
+
+| Setup | Cost | Uptime | Best for |
+|---|---|---|---|
+| **Local GPU** ($500-2K) | One-time | Offline OK | Personal projects, testing |
+| **Lambda Labs** (hourly) | $0.5-2/hour | 100% | Experiments, temporary |
+| **Modal** (serverless) | $0.50/GPU-hour | 100% | Bursty workloads |
+| **Runpod** (GPUs) | $0.4-1/hour | 100% | Fine-tuning, inference |
+| **AWS SageMaker** (managed) | ~$10-50/day | 100% | Production workloads |
+| **On-prem GPU servers** | High upfront | 99%+ | Mission-critical, high volume |
+
+**Recommendation:** Start with Ollama locally, move to Runpod if you need GPU, use vLLM for production.
+
+---
+
+## Privacy-First Stack (May 2026)
+
+### For Sensitive Work
+
+**Local:**
+1. Ollama + Llama 4 (chat)
+2. Whisper (transcription, offline)
+3. Stable Diffusion (image generation)
+4. n8n (automation, self-hosted)
+
+**Cost:** ~$500 GPU + electricity. One-time investment.
+
+**Flow:**
+- Sensitive data stays on your machine
+- No logs sent anywhere
+- Own all outputs
+- Can fine-tune on proprietary data
+
+### For Teams (Still Private)
+
+1. vLLM server on private cloud
+2. Ollama for backup/failover
+3. PrivateGPT (RAG for documents)
+4. n8n for workflows
+
+**Cost:** $50-500/month (depending on infra)
+
+---
+
+## Cost Comparison: API vs Self-Hosted
+
+### Scenario: 100M tokens/month
+
+**Using APIs:**
+- Claude Sonnet: $300 input + $1500 output = **$1,800/month**
+- GPT-4o: $300 input + $1200 output = **$1,500/month**
+- DeepSeek V4: $55 input + $219 output = **$274/month** (cheapest API)
+
+**Self-hosted (Llama 4 on Runpod):**
+- GPU rental: 30 days × 24h × $0.60/h = **$432/month**
+- Bandwidth: ~$50/month
+- **Total: ~$480/month**
+
+**Break-even:** ~60-80M tokens/month, depending on model.
+
+---
+
+## Fine-Tuning Your Own Model
+
+### Why Fine-Tune?
+
+- Adapt model to your domain (legal, medical, finance)
+- Reduce hallucinations on specific tasks
+- Own the behavior (no API policy changes affecting you)
+
+### When it's worth it:
+
+- 10K+ high-quality examples
+- Budget: $1-5K for one-time training
+- Want exclusive model for competitive advantage
+
+### Tools:
+
+- **Hugging Face TRL** — Simple, free
+- **Axolotl** — Popular for open-source community
+- **Unsloth** — Fast fine-tuning, saves VRAM
+
+---
+
+## Open-Source Vision Models
+
+### Image Understanding (Local)
+
+| Model | License | Capability | Where |
+|---|---|---|---|
+| **Llava 1.6** | MIT | Multimodal, understands images | Ollama |
+| **Phi Vision** | MIT | Small, fast | Ollama |
+| **Claude (not open)** | Proprietary | Best accuracy | API only |
+
+**Best local option:** Llava (free, surprisingly capable)
+
+---
+
+### Image Generation (Local)
+
+| Model | License | Speed | Quality |
+|---|---|---|---|
+| **Stable Diffusion 3** | Open | Medium | Good |
+| **Flux** | Open | Slow | Excellent |
+| **DALL-E 3** | Proprietary | Fast | Best |
+
+**Best local:** Flux (quality), Stable Diffusion 3 (balance)
+
+---
+
+## Real-World Examples
+
+### Example 1: Legal Firm
+- **Goal:** Analyze contracts privately, don't send to 3rd-party APIs
+- **Solution:** Fine-tuned Llama 4 on contract templates + Llamaindex for RAG
+- **Cost:** $2K setup + $200/month infrastructure
+- **Result:** 10x faster contract review, no privacy concerns
+
+---
+
+### Example 2: Startup (Cost-Conscious)
+- **Goal:** Scale chatbot, minimize API costs
+- **Solution:** DeepSeek V4 API ($0.55/1M) + self-hosted fallback with Llama 3.2
+- **Cost:** $100/month for 10M tokens + $200 GPU
+- **Result:** 5x cheaper than Claude/OpenAI
+
+---
+
+### Example 3: Research Lab
+- **Goal:** Experiment with model fine-tuning
+- **Solution:** Ollama locally + LoRA fine-tuning on custom data
+- **Cost:** Existing GPU + time
+- **Result:** Custom models for domain-specific tasks
+
+---
+
+## Getting Started (Beginner Path)
+
+### Week 1: Try Locally
+```bash
+# Install Ollama
+# Download Llama 2 or Llama 3.2 (8B is fast)
+# Chat locally, see how it works
+```
+
+### Week 2: Integrate into Apps
+- Use Ollama's OpenAI-compatible API
+- Connect to your own scripts/apps
+- No API keys, no costs
+
+### Week 3: Add Tools
+- Try Llamaindex for RAG
+- Add Whisper for transcription
+- Build a basic chatbot
+
+---
+
+## Common Mistakes
+
+1. **Downloading 70B model on laptop with 8GB RAM** — Start with 7B-13B
+2. **Expecting open-source to match Claude/GPT exactly** — Llama 4 is excellent but ~10% less capable on average
+3. **Ignoring latency** — Local inference is slower than APIs (but more private)
+4. **Running 24/7 on consumer GPU** — Use cloud GPU, leave your laptop alone
+5. **Not version controlling your fine-tuning data** — Track what you trained on
+
+---
+
+## May 2026 Updates
+
+**Breakthroughs:**
+- Llama 4 finally matches GPT-4 class quality
+- DeepSeek V4 showed you don't need to be Western lab to compete
+- Qwen 3.5 surpassed many proprietary models
+- Phi 4 brought GPT-4 quality to 14B models
+
+**Cost improvements:**
+- Self-hosting break-even moved down to 50M tokens/month
+- 8B models now "good enough" for many real tasks
+
+**Frontier:**
+- Open-source multimodal (vision + language) getting competitive
+- Local fine-tuning tooling (Unsloth) making it accessible
+
+---
+
+## Resources
+
+- **Ollama** — ollama.ai (local inference, easiest start)
+- **Hugging Face** — huggingface.co/models (model marketplace)
+- **Llamaindex** — RAG framework
+- **vLLM** — Fast inference server
+- **Together AI** — Open-source model APIs (if you don't want to self-host)
+- **Replicate** — Run open models serverless
+
