@@ -302,6 +302,29 @@ Bagging (Random Forest)    Boosting (XGBoost)
 - [CS229 (Stanford)](https://cs229.stanford.edu/) - Machine Learning
 - [3Blue1Brown Neural Networks](https://www.3blue1brown.com/topics/neural-networks) - Visual explanations
 
+## Agentic AI & Reasoning Models (May 2026)
+
+| Question | Answer |
+|----------|--------|
+| **What is an agentic AI system?** | AI that autonomously breaks down goals into steps, uses tools, observes results, and iterates. Beyond single prompt-response. Examples: Cursor (78% SWE-bench), Claude Code, Aider. |
+| **How is agentic AI different from traditional ML?** | Traditional ML: predictive models on fixed inputs. Agentic: goal-oriented, iterative, uses tools, requires human oversight for irreversible actions. |
+| **What are reasoning models (o1, DeepSeek r1)?** | Models that spend compute "thinking" before answering. Better on hard problems (math, coding, logic). Trade-off: slower but more accurate. |
+| **When would you use a reasoning model vs standard model?** | Reasoning: hard problems needing deep logic. Standard: routine tasks, latency-critical. Reasoning costs 2-3x more compute. |
+| **Engineer**: How do you measure agent performance? | Task completion rate, steps to completion, cost per task, human intervention rate, error recovery success. |
+| **PM**: Should we build agents or hire more people?** | Agents excel at well-defined, repeatable tasks (code generation, data research, content drafts). Hire for judgment, creativity, high-stakes decisions. |
+
+## Real-Time & Multimodal AI (May 2026)
+
+| Question | Answer |
+|----------|--------|
+| **What is real-time AI?** | Models that process live video/audio streams without buffering. Used in: autonomous vehicles, live translation, interactive apps (Grok 3). |
+| **How does real-time AI differ from batch processing?** | Batch: entire dataset at once. Real-time: continuous stream, low latency (sub-100ms ideal). Requires different architectures and trade-offs. |
+| **What is multimodal AI?** | Models processing multiple input types (text, image, audio, video) simultaneously. GPT-4o, Claude, Gemini. Enables richer understanding. |
+| **Engineer**: What latency targets matter for real-time AI?** | Autonomous vehicles < 50ms. Live translation < 200ms. Interactive AI < 1s. Batch processing > 5s ok. |
+| **PM**: When is real-time AI critical vs nice-to-have?** | Critical: autonomous systems, live communication. Nice-to-have: content recommendations, post-hoc analysis. |
+
+---
+
 ## See Also
 
 - [LLM Interview Prep](/cheatsheets/llm-interview/)

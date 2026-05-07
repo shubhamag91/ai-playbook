@@ -97,6 +97,29 @@ lastUpdated: 2026-05-08
 | **What AI product would you build for [company] if you could?** | Show understanding of their business. Identify user needs. Propose something aligned with their strengths. |
 | **How would you improve [company's] existing AI feature?** | Use the product. Identify pain points. Propose specific improvements with rationale. |
 
+## Agents & Agentic AI (May 2026)
+
+| Question | Answer |
+|----------|--------|
+| **Design an AI agent that handles customer support.**  | Goals: answer questions, escalate complex issues, learn from feedback. Steps: classify query → search KB → draft response → check confidence → escalate if needed. Metrics: resolution rate, escalation %, user satisfaction. |
+| **How do you scope agent capabilities vs complexity?** | Simple agents (routing, summarization) are low-risk. Complex agents (multi-step reasoning, tool use) need careful design. Start narrow, expand based on data. |
+| **When should you NOT use agents?** | Avoid for: high-stakes decisions (hiring, medical), one-off tasks (use single model), user-facing judgment calls. Agents excel at repetitive, bounded tasks. |
+| **How do you monitor agent failures?** | Track: step-level errors, tool failures, hallucinations, human intervention rate. Log all decisions for audit. |
+| **Engineer**: How do you implement agent guardrails? | Input validation, step approval gates, tool whitelisting, output filtering, human-in-the-loop for risky actions. |
+| **PM**: What's the ROI model for agentic AI?** | Measure: time saved per task, error rate, user satisfaction. Example: code agent saving 20 min/dev/day × 50 devs × $100/hour ≈ $200K/year benefit. |
+
+## Real-Time &amp; Streaming AI (May 2026)
+
+| Question | Answer |
+|----------|--------|
+| **Design an AI feature for live video analysis (sports, security).** | Requirements: <50ms latency, handle frame rate variations, graceful degradation. Approach: edge inference + streaming architecture. Trade-off: accuracy vs latency. |
+| **What's different about building real-time vs batch AI?** | Batch: optimize for throughput. Real-time: optimize for latency. Real-time requires streaming inference, careful batching, and fallbacks for slow responses. |
+| **How would you build live transcription with AI?** | Use streaming speech-to-text (not batch). Buffer 100-200ms of audio. Trade-off: latency vs accuracy. Correct mistakes as more context arrives. |
+| **Engineer**: What infrastructure do you need for real-time AI? | Stream processing (Kafka), edge inference, low-latency DB, proper caching. CDN for geographic distribution. |
+| **PM**: When is real-time AI worth the cost? | Worth it: autonomous systems, live communication, interactive. Not worth: analytics, post-hoc review. ROI depends on use case. |
+
+---
+
 ## Role-Specific Notes
 
 | Question | Answer |
