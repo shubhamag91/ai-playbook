@@ -6,6 +6,7 @@ sidebar:
   badge:
     text: Starter
     variant: tip
+lastUpdated: 2026-05-08
 ---
 
 ## The core patterns

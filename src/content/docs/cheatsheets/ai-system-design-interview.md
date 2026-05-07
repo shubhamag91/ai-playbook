@@ -1,6 +1,7 @@
 ---
 title: AI System Design Interview Prep
 description: AI system design interview questions — RAG, agents, vector databases, scalability, latency, and production considerations.
+lastUpdated: 2026-05-08
 ---
 
 ## RAG System Design
