@@ -24,3 +24,11 @@
 .card {
   border-radius: 12px;
 }
+
+/* Improve content width on wide screens */
+@media (min-width: 1440px) {
+  main {
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+}
