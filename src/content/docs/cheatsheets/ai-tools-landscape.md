@@ -147,3 +147,34 @@ What do you want to do?
 - NotebookLM + Perplexity
 - n8n self-hosted
 - Total: $150-300/mo + API costs
+
+## Agentic AI Tools (May 2026)
+
+| Tool | What it does | Cost | When to use |
+|---|---|---|---|
+| **Cursor** | AI-powered IDE (78% SWE-bench) | $20/mo | Daily coding, refactoring |
+| **Claude Code** | CLI agent for complex tasks | Pay-per-token | Large refactors, automation |
+| **Aider** | Git-native AI coding | Free + API costs | Terminal-based development |
+| **Windsurf** | Cascading AI IDE (75% SWE-bench) | $20/mo | Real-time code collaboration |
+| **AutoGen** | Microsoft multi-agent framework | Free | Building agent systems |
+| **CrewAI** | Role-based agent orchestration | Free | Teams of specialized agents |
+
+## Open-Source & Self-Hosted (May 2026)
+
+| Tool | What it does | Cost | Trade-off |
+|---|---|---|---|
+| **Ollama + Llama 4** | Local LLM inference | Free | Setup required, slower than API |
+| **LlamaIndex** | RAG framework (open-source) | Free | More flexible than cloud RAG |
+| **n8n self-hosted** | Open automation | Free | Infrastructure cost |
+| **Chroma** | Vector DB (simple) | Free | Limited filtering vs Pinecone |
+| **Unsloth** | Fast fine-tuning | Free | Specialized for LoRA |
+
+## Real-Time AI Tools (May 2026)
+
+| Use Case | Best Tool | Cost |
+|---|---|---|
+| Live video analysis | Claude API + streaming | Pay-per-token |
+| Real-time transcription | OpenAI Whisper API | $0.02/minute |
+| Live translation | Google Translate API + LLM | Variable |
+| Stock market monitoring | Grok 3 API | API pricing |
+| Autonomous vehicles | Custom models (not yet consumer-facing) | Enterprise |

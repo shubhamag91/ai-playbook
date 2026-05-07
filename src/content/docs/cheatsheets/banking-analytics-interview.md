@@ -263,6 +263,27 @@ Capital Generation = PPNR - Taxes - Dividends
 - [ ] Regulatory submission reviewed
 - [ ] Ongoing monitoring in place
 
+## May 2026 Analytics Trends in Banking
+
+| Topic | 2026 Shift | Impact |
+|-------|-----------|--------|
+| **Real-Time Analytics** | From batch pipelines to streaming (Kafka, Kinesis) | Fraud detection <100ms, real-time dashboards |
+| **Agentic Reporting** | Humans ask questions → agents generate reports autonomously | Analytics team focuses on strategy vs manual work |
+| **Cost Optimization** | Smart model routing (cheap for simple, expensive for complex) | 50-80% reduction in inference costs |
+| **Multi-Model Inference** | Claude 4.7 (reasoning), GPT-5.5 Instant (routing), DeepSeek (cost) | Choose right model per task, not one-size-fits-all |
+| **Privacy-First Analytics** | Local inference (Ollama + Llama 4) for sensitive data | Keep customer data on-prem, no API calls |
+| **Context Windows** | 400K-1M tokens enable entire analyses in one context | RAG-less analytics (just put all data in prompt) |
+
+## Practical Skills (May 2026 Edition)
+
+| Skill | How It's Changed | What You Should Know |
+|-------|-----------------|----------------------|
+| **SQL** | Still essential, but now: generate with Claude/GPT, optimize with agents | Writing better queries faster with AI assistance |
+| **Python** | Write less, understand more (Claude Code generates 80% of code) | Focus on logic/requirements, let AI handle boilerplate |
+| **Dashboarding** | Dashboards generated from natural language queries (Claude 4.7) | Design dashboards, don't build them manually |
+| **Statistics** | Understanding assumptions still critical (AI can hallucinate statistical claims) | Verify AI's statistical reasoning, don't trust blindly |
+| **Communication** | Clearer storytelling (AI helps draft insights, you refine) | Become better at iterating with AI on narratives |
+
 ## See Also
 
 - [ML Fundamentals Interview Prep](/cheatsheets/ml-fundamentals-interview/)
