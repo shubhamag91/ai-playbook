@@ -1,127 +1,245 @@
 ---
 title: Common Confusions
-description: Misconceptions that trip up most early adopters — cleared up in plain English.
+description: 30+ misconceptions about AI — cleared up in plain English. Updated May 2026.
+lastUpdated: 2026-05-08
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
 
-The AI space moves fast and the marketing rarely helps. These are the misconceptions that trip up most early adopters — cleared up in plain English.
+The AI space moves fast and marketing rarely helps. These misconceptions trip up most early adopters — cleared up in plain English. Updated through May 2026.
+
+---
 
 ## Memory & Context
 
 <CardGrid>
-  <Card title="Myth: It forgot what I said — the AI has bad memory" icon="warning">
-    **Reality:** AI models do not have persistent memory. Each conversation has a finite context window (128K–200K tokens). Once exceeded, oldest messages are dropped.
+  <Card title="Myth: It forgot what I said — bad memory" icon="warning">
+    **Reality:** AI models have no persistent memory. Each conversation has a finite context window (Claude 4.7: 400K tokens, Gemini 3.1: 1M tokens). Once exceeded, oldest messages are dropped.
     
-    💡 **Tip:** Periodically paste a summary of key facts to keep them in context.
+    💡 **Tip:** Periodically paste a summary of key facts to keep them in context. Or use RAG to store facts externally.
   </Card>
-  <Card title="Myth: It remembered my name from last week" icon="warning">
-    **Reality:** Most AI tools have no memory across sessions. If it seemed to remember you, you used a memory feature or the model inferred from current context.
+  <Card title="Myth: It remembered me from last week" icon="warning">
+    **Reality:** Most AI tools have no memory across sessions. If it seemed to remember you, you used a memory feature (check Settings → Memory) or the model inferred from context clues.
     
-    💡 **Tip:** Check Settings → Personalization → Memory to see what's stored.
+    💡 **Tip:** Enterprise plans offer user memory features. Personal plans start fresh each session.
   </Card>
   <Card title="Myth: Longer conversation = smarter AI" icon="warning">
-    **Reality:** The model does not learn during your conversation. Longer context risks pushing early content outside the window.
+    **Reality:** The model does not learn during your conversation. Longer context risks pushing early content outside the window, causing it to 'forget'.
     
-    💡 **Tip:** For long tasks, start fresh sessions with a clear summary.
+    💡 **Tip:** For long tasks, start fresh sessions with a clear summary of what came before.
+  </Card>
+  <Card title="Myth: Bigger context window = always better" icon="warning">
+    **Reality:** Larger windows help for long documents, but don't improve quality on hard reasoning. A 128K model outperforms a 1M model on chess or math.
+    
+    💡 **Tip:** Match context to your task. Small windows = cheaper and faster.
   </Card>
 </CardGrid>
+
+---
 
 ## Models, Products & Versions
 
 <CardGrid>
-  <Card title="Myth: ChatGPT and GPT-4 are the same thing" icon="warning">
-    **Reality:** GPT-4 is the model. ChatGPT is the consumer product. Claude is the model, claude.ai is the product. They are not the same.
+  <Card title="Myth: ChatGPT and GPT-4 are the same" icon="warning">
+    **Reality:** GPT-4 is the model. ChatGPT is the consumer product. Claude is the model, claude.ai is the product. Different names = different things.
+  </Card>
+  <Card title="Myth: Newest model is always best" icon="warning">
+    **Reality:** Flagship models are slower and more expensive. For simple tasks, smaller models work fine. In May 2026: use GPT-5.5 Instant ($0.05/1M tokens) for simple work.
+    
+    💡 **Tip:** Match model to task. Use Claude 4.7 for deep reasoning. Use Instant models for routine work.
   </Card>
   <Card title="Myth: Free tier is basically the same as paid" icon="warning">
-    **Reality:** Free tiers give lighter models with strict daily limits. Paid plans offer more usage, capable models, and features like file analysis.
+    **Reality:** Free tiers give lighter models with strict daily limits. Paid plans offer capable models, higher limits, and features like file analysis.
     
     💡 **Tip:** $20/mo Pro pays for itself in saved time if you use AI daily.
   </Card>
-  <Card title="Myth: I use Cursor/Copilot — I don't need Claude" icon="warning">
-    **Reality:** Coding tools are specialised. ChatGPT and Claude are better for writing, research, planning and non-code tasks.
+  <Card title="Myth: I use Cursor — I don't need Claude" icon="warning">
+    **Reality:** Coding tools like Cursor are specialized. Claude is better for writing, research, planning, and non-code tasks.
     
     💡 **Tip:** Cursor is a power tool for one job. Claude/ChatGPT are the general workbench.
   </Card>
-  <Card title="Myth: Newest/biggest model is always best" icon="warning">
-    **Reality:** Flagship models are slower and more expensive. For simple tasks, smaller faster models work just as well.
+  <Card title="Myth: Open-source models are always worse" icon="warning">
+    **Reality:** Llama 4, Qwen 3.5, DeepSeek now match proprietary models. The gap is weeks, not years. For privacy-sensitive work, local models are better.
     
-    💡 **Tip:** Match the model to the task. Use frontier models only for deep reasoning.
+    💡 **Tip:** Use open-source for privacy. Use frontier for cutting-edge reasoning.
   </Card>
 </CardGrid>
+
+---
+
+## Cost & Pricing
+
+<CardGrid>
+  <Card title="Myth: AI APIs are too expensive" icon="warning">
+    **Reality:** Costs collapsed. DeepSeek: $0.14/1M input tokens. GPT-5.5 Instant: $0.05/1M. Claude Haiku: $0.80/1M. May 2026 vs May 2023 = 50-100x cheaper.
+    
+    💡 **Tip:** Instant models for routine work. Frontier only for complex reasoning.
+  </Card>
+  <Card title="Myth: I need expensive frontier models for everything" icon="warning">
+    **Reality:** 80% of tasks work with cheaper models. Batch processing and prompt caching cut costs 50-80% more.
+    
+    💡 **Tip:** Start with Claude Haiku or Instant. Upgrade only if needed.
+  </Card>
+  <Card title="Myth: Local AI costs nothing" icon="warning">
+    **Reality:** Free model. But GPU ($500-2K), electricity, infrastructure still cost. At scale (100M+ tokens/month), local becomes cheaper. At small scale, APIs win.
+    
+    💡 **Tip:** Use APIs for prototyping. Switch to local only if cost is critical at scale.
+  </Card>
+</CardGrid>
+
+---
 
 ## Accuracy & Trust
 
 <CardGrid>
   <Card title="Myth: Confident answer = correct answer" icon="warning">
-    **Reality:** LLMs generate likely text, not verified facts. Confident tone is writing style, not accuracy. Models hallucinate.
+    **Reality:** LLMs generate likely text, not verified facts. Confident tone is writing style, not truth. Models hallucinate convincingly.
     
-    💡 **Tip:** Use Perplexity or NotebookLM which cite sources for factual research.
+    💡 **Tip:** Use Perplexity or NotebookLM which cite sources. Verify critical claims manually.
   </Card>
   <Card title="Myth: It said its own answer was right" icon="warning">
-    **Reality:** Self-verification doesn't work reliably. The model tends to affirm its original answer.
+    **Reality:** Self-verification doesn't work. Models tend to affirm their original answer even if it's wrong.
     
-    💡 **Tip:** Ask a different model to critique, or verify manually.
+    💡 **Tip:** Ask a different model to critique. Or verify manually.
   </Card>
   <Card title="Myth: AI agreed with me = I'm correct" icon="warning">
-    **Reality:** AI can show sycophancy — telling you what you want to hear. Disagreement is often more valuable.
+    **Reality:** AI shows sycophancy — telling you what you want to hear. Disagreement is often more valuable.
     
-    💡 **Tip:** Ask: "Find the weakest parts of this argument."
+    💡 **Tip:** Ask: 'Find the weakest parts of this argument.' Disagreement reveals blind spots.
   </Card>
 </CardGrid>
+
+---
 
 ## Knowledge & Capabilities
 
 <CardGrid>
   <Card title="Myth: It doesn't know recent events — it's broken" icon="warning">
-    **Reality:** LLMs have a training data cutoff (6–18 months). Only tools with web search know current info.
+    **Reality:** Models have training cutoffs (Claude 4.7: May 2025, GPT-5.5: April 2026). Only models with real-time tools know current events.
     
-    💡 **Tip:** Use Perplexity or ChatGPT with Browse for time-sensitive info.
+    💡 **Tip:** Use Grok 3 for trending news. Perplexity for web search. ChatGPT with Browse.
   </Card>
-  <Card title="Myth: AI does images, video, voice — one AI thing" icon="warning">
-    **Reality:** Different modalities are entirely different model families. Text, images, video, voice are separate technologies.
+  <Card title="Myth: One AI does text, images, video, voice" icon="warning">
+    **Reality:** Different modalities are separate model families. Text, images, video, voice each have different architectures, training, and quality levels.
   </Card>
-  <Card title="Myth: I can just prompt it to build my full app" icon="warning">
-    **Reality:** AI accelerates development but has limits. Complex logic, security and production reliability still need engineering.
+  <Card title="Myth: I can prompt it to build my entire app" icon="warning">
+    **Reality:** AI accelerates development but has limits. Complex logic, security, production reliability still need engineering and human review.
     
-    💡 **Tip:** Use AI for boilerplate. Apply human review for architecture and security.
+    💡 **Tip:** Use Claude Code or Cursor for boilerplate. Apply human review for architecture and security.
+  </Card>
+  <Card title="Myth: Reasoning models are always better" icon="warning">
+    **Reality:** Reasoning models (o1, DeepSeek R1) spend compute 'thinking'. Slower and more expensive. Good for math/coding. Bad for simple Q&A.
+    
+    💡 **Tip:** Use reasoning models only for hard problems. Use standard models for routine work.
   </Card>
 </CardGrid>
+
+---
 
 ## Chat UI vs API vs Local
 
 <CardGrid>
-  <Card title="Myth: API is too complicated — for developers only" icon="warning">
+  <Card title="Myth: API is too complicated" icon="warning">
     **Reality:** Basic API calls are simple JSON. Python SDK is learnable in an afternoon. Benefits: no limits, full control, direct integration.
-  </Card>
-  <Card title="Myth: Ollama is just as good as Claude/GPT-4" icon="warning">
-    **Reality:** Local models are excellent for privacy and offline use, but generally behind frontier models on reasoning.
     
-    💡 **Tip:** Use local for privacy-sensitive data. Use frontier for complex reasoning.
+    💡 **Tip:** Grab the Python quickstart from Anthropic/OpenAI docs. You'll be done in an hour.
+  </Card>
+  <Card title="Myth: Local models are always slower" icon="warning">
+    **Reality:** On your hardware, local is instant. API requires network latency. For batch processing, local wins. For interactive use, API wins on quality.
+    
+    💡 **Tip:** Local for speed. API for quality. Hybrid for best of both.
+  </Card>
+  <Card title="Myth: Ollama is just as good as frontier models" icon="warning">
+    **Reality:** Local models like Llama 4 are excellent for privacy and offline use. But still ~10% behind frontier on average reasoning.
+    
+    💡 **Tip:** Use Ollama + Llama 4 for 90% of tasks. Use Claude/GPT for hard problems.
   </Card>
   <Card title="Myth: Chat UI and API give same experience" icon="warning">
-    **Reality:** Same model weights, different experience. Chat UI adds filtering and formatting. API gives raw access.
+    **Reality:** Same model weights, different experience. Chat UI adds filtering, safety guardrails, formatting. API gives raw access.
     
-    💡 **Tip:** API for precise outputs. Chat UI for exploratory work.
+    💡 **Tip:** API for precise outputs and fine-grained control. Chat UI for exploratory work.
   </Card>
 </CardGrid>
+
+---
 
 ## Prompting & Output Quality
 
 <CardGrid>
-  <Card title="Myth: Tried AI, got useless output — it's overhyped" icon="warning">
-    **Reality:** Output quality is proportional to input quality. Vague prompts = generic content.
+  <Card title="Myth: Tried AI, got useless output — overhyped" icon="warning">
+    **Reality:** Output quality is proportional to input quality. Vague prompts = generic output.
     
-    💡 **Tip:** Treat first prompt as hypothesis. Iterate: add constraints, specify audience.
+    💡 **Tip:** Treat first prompt as hypothesis. Iterate: add constraints, specify audience, request examples.
   </Card>
-  <Card title="Myth: Longer, more detailed prompts are always better" icon="warning">
-    **Reality:** Relevant context helps. Irrelevant padding dilutes focus. Every sentence should earn its place.
+  <Card title="Myth: Longer prompts are always better" icon="warning">
+    **Reality:** Relevant context helps. Irrelevant padding dilutes focus. Token limits matter — shorter is sometimes better.
     
-    💡 **Tip:** If prompt exceeds 300–400 words, review. Can you cut without losing signal?
+    💡 **Tip:** Every sentence should earn its place. If prompt exceeds 400 words, trim.
   </Card>
   <Card title="Myth: I can't share company data with AI" icon="warning">
-    **Reality:** Depends on plan. Enterprise plans include data privacy — data never used for training. API also provides strong privacy.
+    **Reality:** Depends on plan. Enterprise plans include data privacy — data never used for training. APIs also provide strong privacy.
     
-    💡 **Tip:** Check data processing agreement before pasting confidential info.
+    💡 **Tip:** Check data processing agreement. Many enterprise plans are zero-retention.
+  </Card>
+  <Card title="Myth: Prompt engineering is essential" icon="warning">
+    **Reality:** Basic clarity matters. But modern models (Claude 4.7, GPT-5.5) work well on simple prompts. Diminishing returns after ~100 words.
+    
+    💡 **Tip:** Write naturally. Add constraints only if first attempt misses the mark.
+  </Card>
+</CardGrid>
+
+---
+
+## AI Agents & Agentic Systems (NEW — May 2026)
+
+<CardGrid>
+  <Card title="Myth: Agents will replace software engineers" icon="warning">
+    **Reality:** Agents automate tasks, not judgment. They handle 70% of routine coding. The remaining 30% (architecture, security, design) still needs humans.
+    
+    💡 **Tip:** Cursor (78% SWE-bench) and Claude Code accelerate junior devs. They don't replace senior engineers.
+  </Card>
+  <Card title="Myth: I can just unleash an agent and walk away" icon="warning">
+    **Reality:** Agents need clear goals, constraints, and guardrails. They make mistakes. They need monitoring.
+    
+    💡 **Tip:** Use agents for well-defined, bounded tasks. Monitor their work. Require human approval for irreversible actions.
+  </Card>
+  <Card title="Myth: Agentic AI is AGI" icon="warning">
+    **Reality:** Agentic AI is autonomous task completion within narrow domains (code, research, writing). AGI is general problem-solving matching human cognition. Not the same thing.
+    
+    💡 **Tip:** Agents are tools. Smart tools. But not conscious. Not general. Still require human oversight.
+  </Card>
+  <Card title="Myth: Multi-agent systems are always better than single models" icon="warning">
+    **Reality:** Multi-agent adds complexity. Single powerful model often works better. 80/20 rule: one agent (coder, researcher, writer) handles 80% of work.
+    
+    💡 **Tip:** Start with single agent. Add more only if first agent hits limitations.
+  </Card>
+</CardGrid>
+
+---
+
+## Privacy & Data
+
+<CardGrid>
+  <Card title="Myth: My prompts are sent to training data" icon="warning">
+    **Reality:** Depends on plan. Consumer free tiers may use data for improvement. Paid plans and enterprise are zero-retention by default.
+    
+    💡 **Tip:** Check your plan's data policy. If private, use API with data retention disabled or local models.
+  </Card>
+  <Card title="Myth: Local is always more private than API" icon="warning">
+    **Reality:** Local keeps data on your machine. API (with zero-retention) keeps data on servers. Both can be private. Local is more private if you distrust cloud providers.
+    
+    💡 **Tip:** For max privacy: local model + local deployment. For convenience: API with zero-retention clause.
+  </Card>
+</CardGrid>
+
+---
+
+## The Meta Confusion
+
+<CardGrid>
+  <Card title="Myth: AI companies know what they're doing" icon="thinking">
+    **Reality:** Honest answer: they don't fully. Emergent capabilities surprise everyone (in-context learning, reasoning, jailbreaks). The field moves faster than understanding.
+    
+    💡 **Insight:** This is why benchmarking and red-teaming matter. Stay skeptical. Question confidence.
   </Card>
 </CardGrid>
