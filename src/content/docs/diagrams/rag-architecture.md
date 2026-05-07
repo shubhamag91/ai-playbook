@@ -3,6 +3,7 @@ title: RAG Architecture
 description: A canonical Retrieval-Augmented Generation pipeline, drawn in Mermaid.
 sidebar:
   order: 1
+lastUpdated: 2026-05-08
 ---
 
 A minimal RAG system has four moving parts: **ingest**, **index**, **retrieve**, and **generate**.

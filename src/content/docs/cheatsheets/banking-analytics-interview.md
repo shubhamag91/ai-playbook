@@ -1,6 +1,7 @@
 ---
 title: Banking Analytics Interview Prep
 description: Interview questions for analytics roles in banking — domain knowledge, use cases, and regulatory considerations.
+lastUpdated: 2026-05-08
 ---
 
 ## Banking Domain Knowledge

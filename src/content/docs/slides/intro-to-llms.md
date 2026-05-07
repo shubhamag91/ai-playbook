@@ -3,6 +3,7 @@ title: Intro to LLMs (Slide Deck)
 description: A ~15-minute lunch-and-learn intro to large language models.
 sidebar:
   label: Slide Decks
+lastUpdated: 2026-05-08
   order: 1
 ---
 

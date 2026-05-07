@@ -1,6 +1,7 @@
 ---
 title: AI Product in Banking Interview Prep
 description: AI Product Manager interview questions specific to banking and fintech — domain knowledge, use cases, regulatory considerations.
+lastUpdated: 2026-05-08
 ---
 
 ## Banking Domain for PMs

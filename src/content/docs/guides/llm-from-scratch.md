@@ -1,6 +1,7 @@
 ---
 title: Build an LLM from Scratch — Book Summary
 description: Notes and summary from "Build a Large Language Model (From Scratch)" by Sebastian Raschka.
+lastUpdated: 2026-05-08
 ---
 
 This guide summarizes key concepts from Sebastian Raschka's book "Build a Large Language Model (From Scratch)" — a practical, code-first journey through building a GPT-like LLM from the ground up.

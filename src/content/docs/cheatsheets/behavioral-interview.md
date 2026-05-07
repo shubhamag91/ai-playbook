@@ -1,6 +1,7 @@
 ---
 title: Behavioral Interview Prep
 description: Behavioral interview questions for AI/ML Engineer, AI Data Scientist, and AI Product Manager roles — STAR method, common questions, and role-specific scenarios.
+lastUpdated: 2026-05-08
 ---
 
 ## STAR Method for ML

@@ -1,6 +1,7 @@
 ---
 title: ML Fundamentals Interview Prep
 description: Machine learning interview questions and answers for AI/ML Engineer, AI Data Scientist, and AI Product Manager roles.
+lastUpdated: 2026-05-08
 ---
 
 ## Supervised vs Unsupervised vs Reinforcement Learning
