@@ -79,10 +79,6 @@ export default defineConfig({
           link: '/tools/',
         },
         {
-          label: 'Productivity & Creative',
-          link: '/productivity/',
-        },
-        {
           label: 'Open Source',
           link: '/opensource/',
         },
