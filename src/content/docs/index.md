@@ -1,6 +1,7 @@
 ---
 title: Home
 description: A personal reference for navigating the modern AI ecosystem — tools, workflows, models, and principles.
+lastUpdated: 2026-05-08
 ---
 
 # Shubham's AI Playbook
@@ -43,11 +44,11 @@ Founded 2021 · Safety-focused · San Francisco
 - Powering other apps — Cursor, Windsurf use Claude under the hood
 
 **Model Tiers (cheapest → most capable):**
-- Haiku — Fast & cheap
-- Sonnet — Balanced (default)
-- Opus — Most capable
+- Claude Haiku 4.5 — Fast & cheap ($0.80/$4 per 1M tokens)
+- Claude Sonnet 4.6 — Balanced (default) ($3/$15 per 1M tokens)
+- Claude Opus 4.7 — Most capable ($15/$75 per 1M tokens)
 
-All tiers share the same 200K token context window.
+All tiers share the same 200K token context window (Opus supports up to 400K).
 
 ---
 
@@ -68,9 +69,9 @@ Founded 2015 · Microsoft-backed · San Francisco
 - ChatGPT Enterprise — Business plan, data privacy
 
 **Model Tiers (cheapest → most capable):**
-- GPT-4o mini — Fast & cheap
-- GPT-4o — Balanced (default)
-- o1 / o3 / o4 — Deep reasoning
+- GPT-5.5 Instant — Fast & cost-effective ($0.05/$0.15 per 1M tokens)
+- GPT-5.5 — Balanced (default) ($2/$8 per 1M tokens)
+- o3 — Deep reasoning (reasoning model, slower) ($8/$32 per 1M tokens)
 
 Note: o-series "thinks" before answering — slower but significantly smarter on complex problems.
 
@@ -91,11 +92,11 @@ Founded 1998 (Google) · Alphabet subsidiary · Mountain View
 - Gemini on Android — On-device assistant replacing Google Assistant
 
 **Model Tiers (cheapest → most capable):**
-- Flash — Fast & free
-- Pro — Balanced (1M context)
-- Ultra — Most capable
+- Gemini 2 Flash — Fast & free
+- Gemini 3.1 Pro — Balanced (1M context) ($2/$12 per 1M tokens)
+- Gemini 3.1 Ultra — Most capable (advanced reasoning)
 
-Gemini 1.5 Pro has a 1M-token context window — the largest of any major model.
+Gemini 3.1 Pro has a 1M-token context window — tied with largest in the market.
 
 ---
 
@@ -111,10 +112,11 @@ Founded 2023 · Hangzhou, China · Open weights
 - Open weights — Run via Ollama or Hugging Face
 
 **Model Tiers (cheapest → most capable):**
-- V3 — General purpose
-- R1 — Reasoning (matches o1)
+- V4 Flash — General purpose ($0.14/$0.28 per 1M tokens)
+- V4 — Balanced (default) ($0.55/$2.19 per 1M tokens)
+- R1 — Reasoning (matches o3) ($0.55/$2.19 per 1M tokens)
 
-MIT license — free for commercial use. Trained at a fraction of Western model costs.
+MIT license — free for commercial use. **Most cost-effective option by far.** Trained at a fraction of Western model costs.
 
 ---
 
@@ -164,19 +166,19 @@ These tools don't provide AI themselves — they help you build systems that con
 
 ---
 
-## Quick Comparison: Top Conversational AI
+## Quick Comparison: Top Conversational AI (May 2026)
 
-| Feature | ChatGPT (GPT-4o) | Claude (Sonnet 4) | Gemini (1.5 Pro) | Perplexity | Ollama (Local) |
+| Feature | ChatGPT (GPT-5.5) | Claude (Sonnet 4.6) | Gemini (3.1 Pro) | DeepSeek (V4) | Perplexity |
 |---------|------------------|-------------------|------------------|------------|-----------------|
-| **Context window** | 128K tokens | 200K tokens | 1M tokens | Varies by model | Varies by model |
-| **Image input** | ✅ | ✅ | ✅ | ✅ | ✅ (llava, llama3.2-vision) |
-| **Web browsing** | ✅ (plugin) | ✅ (claude.ai) | ✅ | ✅ Core feature — always on | ❌ |
-| **Code execution** | ✅ (Code Interpreter) | ✅ (Artifacts) | ✅ | ❌ | ❌ (model only) |
-| **Free daily limit** | ~10–15 GPT-4o msgs, then falls back to GPT-4o mini (unlimited, less capable) | ~20–40 msgs/day on Sonnet; throttled or blocked after | Generous — Flash mostly free; Pro is rate-limited | ~5 AI Pro searches/day; basic search unlimited | Unlimited — runs on your hardware |
-| **Paid plan** | Plus $20/mo — higher GPT-4o limits | Pro $20/mo — ~5× more usage | Google One AI $20/mo — full 1.5 Pro access | Pro $20/mo — unlimited Pro searches | Free forever |
-| **Privacy** | Data sent to OpenAI | Data sent to Anthropic | Data sent to Google | Data sent to Perplexity | ✅ 100% local |
-| **API access** | ✅ OpenAI API | ✅ Anthropic API | ✅ Google AI Studio | ✅ Perplexity API | ✅ Local REST API |
-| **Best for** | General tasks, plugins, broad use | Writing, long docs, safety-critical tasks | Research, very long context | Real-time research with cited sources | Privacy, offline, cost-free automation |
+| **Context window** | 128K tokens | 200K tokens | 1M tokens | 128K tokens | Varies by model |
+| **Image input** | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Web browsing** | ✅ | ✅ (claude.ai) | ✅ | ❌ | ✅ Core feature |
+| **Code execution** | ✅ (Code Interpreter) | ✅ (Artifacts) | ✅ | ✅ | ❌ |
+| **API pricing** | $2/$8 per 1M tokens | $3/$15 per 1M tokens | $2/$12 per 1M tokens | **$0.55/$2.19** | ~$8/month API |
+| **Web/Mobile** | ✅ Plus $20/mo | ✅ Pro $20/mo | ✅ $20/mo | ✅ Free + API | ✅ Pro $20/mo |
+| **Free daily limit** | Generous (GPT-5.5 Instant) | ~20–40 msgs/day | Generous Flash tier | Unlimited | 5 Pro searches/day |
+| **Privacy** | Data to OpenAI | Data to Anthropic | Data to Google | Private training focus | Data to Perplexity |
+| **Best for** | General tasks, web search | Writing, long docs, reasoning | Very long research | **Cost-conscious users** | Real-time research + citations |
 
 **Tip:** If you hit free limits often, the **API** is often cheaper for heavy use — you pay per token with no daily cap. For regular personal use, a $20/mo Pro plan on your most-used tool pays for itself quickly.
 
