@@ -292,9 +292,10 @@ Bagging (Random Forest)    Boosting (XGBoost)
 
 ### Practice Platforms
 
-- [Kaggle](https://kaggle.com) - Competitions and datasets
-- [LeetCode ML](https://leetcode.com/ml/) - ML coding practice
-- [Machine Learning Practice Questions](https://github.com/rfordatascience/tidytuesday) - Real-world datasets
+- [Kaggle](https://www.kaggle.com) - ML competitions, datasets, and notebooks
+- [LeetCode](https://www.leetcode.com) - Coding interview practice with ML problems
+- [HackerRank Data Science](https://www.hackerrank.com/domains/data-science) - Data science challenges
+- [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday) - Real-world datasets for practice
 
 ### Video Courses
 

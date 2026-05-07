@@ -322,15 +322,17 @@ Query:      Query → Embed → Search → Rerank → Prompt → LLM → Respons
 
 ### Learning Resources
 
-- [Karpathy's Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero/) - Build GPT from scratch
-- [Jay Mody's CUDA Python](https://github.com/jaymody/cuda-python) - GPU programming for LLMs
-- [Lil'Log](https://lilianweng.github.io/blog/) - Deep Learning blog
+- [Karpathy's Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero/) - Build GPT from scratch (foundational)
+- [Lil'Log by Lilian Weng](https://lilianweng.github.io/blog/) - Deep learning blog with LLM focus
+- [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) - Visual guide to transformers
+- [Hugging Face Course](https://huggingface.co/course) - NLP and transformer models
 
-### Practice Platforms
+### Practice & Implementation
 
-- [LangChain Academy](https://academy.langchain.com/) - LLM development
-- [Vercel AI SDK](https://vercel.com/ai) - Build AI apps
-- [OpenAI Cookbook](https://cookbook.openai.com/) - Examples and guides
+- [LangChain Academy](https://www.langchain.com/academy) - Production LLM development
+- [Vercel AI SDK](https://sdk.vercel.ai) - Build and deploy AI apps
+- [OpenAI Cookbook](https://cookbook.openai.com/) - Practical examples and best practices
+- [Anthropic Docs](https://docs.anthropic.com) - Claude API documentation
 
 ## See Also
 

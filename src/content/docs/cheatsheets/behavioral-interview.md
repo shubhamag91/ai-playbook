@@ -238,24 +238,27 @@ RESULT: Metrics, impact, what you learned
 
 ### Interview Preparation
 
-- [Exponent Behavioral](https://tryexponent.com) - ML behavioral prep
-- [Tech Interview Handbook](https://techinterviewhandbook.org/behavioral) - General behavioral
-- [ML Interview Guide](https://engineersofai.com/docs/break-into-ai/behavioral) - ML-specific STAR
+- [Exponent Behavioral](https://www.tryexponent.com) - ML behavioral interview prep
+- [Tech Interview Handbook](https://www.techinterviewhandbook.org/behavioral-round/) - General behavioral framework
+- [STAR Method Guide](https://www.indeed.com/career-advice/interviewing/how-to-use-the-star-interview-response-technique) - Structured response technique
 
 ### Practice Platforms
 
-- [Pramp](https://pramp.com) - Mock interviews
-- [Interviewing.io](https://interviewing.io) - Real interview practice
+- [Pramp](https://www.pramp.com) - Free peer mock interviews
+- [Interviewing.io](https://www.interviewing.io) - Real interview practice with engineers
+- [Maven Live Sessions](https://www.maven.com) - Live mock interview coaching
 
 ### Reading & Research
 
-- [The Manager's Path](https://managerreadme.com) - Leadership and communication
-- [Radical Candor](https://www.radicalcandor.com) - Feedback and relationships
+- [Radical Candor by Kim Scott](https://www.radicalcandor.com) - Feedback and relationships
+- [Principles by Ray Dalio](https://www.principles.com) - Management philosophy
+- [How to Invent the Future](https://www.theatlantic.com) - Strategic thinking
 
 ### Newsletters & Updates
 
-- [The Rundown AI](https://therundown.ai) - AI industry news
-- [The Batch](https://www.deeplearning.ai/the-batch/) - AI research updates
+- [The Rundown AI](https://www.therundown.ai) - Daily AI industry news and updates
+- [The Batch by Andrew Ng](https://www.deeplearning.ai/the-batch/) - Weekly AI research digest
+- [Ethan Mollick's One Useful Thing](https://www.oneusefulthing.org) - Practical AI applications
 
 ## See Also
 

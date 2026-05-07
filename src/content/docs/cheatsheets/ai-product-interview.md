@@ -244,25 +244,27 @@ AI Metrics (Accuracy, Latency, Error Rate)
 
 ### Learning Resources
 
-- [Lenny's Product Newsletter](https://www.lennysnewsletter.com) - Product strategy
-- [AI Product Management](https://www.producthunt.com/category/artificial-intelligence) - Top AI products
-- [Google's AI Product Guide](https://developers.google.com/machine-learning/product) - Best practices
+- [Lenny's Product Newsletter](https://www.lennysnewsletter.com) - Product strategy and frameworks
+- [Maven AI Product Management Course](https://www.maven.com/courses/ai-product-management) - Structured AI PM curriculum
+- [Google's AI Product Guide](https://developers.google.com/machine-learning/product) - Google's best practices
 
 ### Technical Understanding for PMs
 
-- [Practical AI for Product People](https://productschool.com/blog/artificial-intelligence/practical-ai-for-product-managers) - Accessible intro
-- [AI PM Fundamentals](https://www.impulse.dev/blog/ai-product-manager-guide) - Role overview
+- [Ethan Mollick on AI](https://www.oneusefulthing.org) - Practical AI use cases and strategy
+- [Simon Willison's AI Newsletter](https://simonwillison.net/tags/ai/) - Hands-on AI experimentation
+- [ChatGPT for Product Managers](https://www.linkedin.com/learning/chatgpt-for-product-managers) - Practical AI tools
 
-### Industry Examples
+### Industry Examples & Case Studies
 
-- [Notion AI Case Study](https://www.notion.com/product/ai) - AI in productivity
-- [GitHub Copilot Case Study](https://github.com/features/copilot) - Developer tools
-- [Netflix Recommendations](https://www.netflix.com/browse/recommendations) - Classic ML product
+- [Notion AI Case Study](https://www.notion.com/product/ai) - AI in productivity tools
+- [GitHub Copilot Case Study](https://github.com/features/copilot) - Developer-first AI
+- [Perplexity AI](https://www.perplexity.ai) - Search reimagined with AI
 
-### Communities
+### Communities & Podcasts
 
-- [AI Product Hub](https://aiproducthub.com) - AI PM community
-- [Product School AI](https://productschool.com) - AI PM training
+- [Reforge AI Product Management](https://www.reforge.com/programs) - Advanced PM program
+- [The Rundown AI](https://www.therundown.ai) - Daily AI industry news
+- [Product Podcast by Maven](https://www.maven.com/blog) - Product strategy insights
 
 ## See Also
 

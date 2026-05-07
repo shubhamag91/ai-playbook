@@ -235,16 +235,18 @@ Think → Action → Observe → Think → (repeat until done)
 
 ### System Design References
 
-- [RAG at Scale](https://newsletter.pragmaticengineer.com/p/rag-at-scale) - Production RAG patterns
-- [The Engineer’s Guide to RAG](https://wandb.ai/articles/rag-evaluation) - Evaluation strategies
-- [Building Production LLM Apps](https://python.langchain.com/docs/guides/production) - LangChain production guide
+- [LangChain Production Guide](https://python.langchain.com/docs/guides/production) - Best practices for production LLM apps
+- [Building Reliable LLM Systems](https://www.anthropic.com/research) - Anthropic’s research on LLM reliability
+- [RAG Deep Dive](https://www.llamaindex.ai/blog) - LlamaIndex blog on RAG systems
+- [Griptape Architecture](https://www.griptape.ai/architecture) - Open-source agent framework
 
 ### Tools & Libraries
 
-- [LangChain](https://js.langchain.com) - LLM app framework
-- [LlamaIndex](https://www.llamaindex.ai) - Data framework for LLMs
-- [AutoGen](https://microsoft.github.io/autogen) - Microsoft agent framework
-- [OpenAI Agents SDK](https://openai.com/docs/agents-sdk) - OpenAI agent tools
+- [LangChain](https://www.langchain.com) - Most popular LLM application framework
+- [LlamaIndex (formerly GPT Index)](https://www.llamaindex.ai) - Data indexing for LLMs
+- [AutoGen by Microsoft](https://microsoft.github.io/autogen/) - Multi-agent framework
+- [Griptape](https://www.griptape.ai) - Open-source agent orchestration
+- [CrewAI](https://www.crewai.io) - Agent coordination framework
 
 ### Monitoring & Observability
 

@@ -1,8 +1,14 @@
 # AI Playbook
 
-A living, opinionated playbook for AI & LLM knowledge — built to be **your** reference first, and shareable as a public site second.
+A living, opinionated playbook for AI & LLM knowledge — updated through **May 2026** with the latest models, tools, and agentic AI systems. Built to be **your** reference first, and shareable as a public site second.
 
-Stack: [**Astro**](https://astro.build) + [**Starlight**](https://starlight.astro.build) (docs theme), Markdown/MDX content, Mermaid diagrams, Markmap mind maps, Slidev decks, and plain SVG infographics. Deploys free to Cloudflare Pages / Vercel / Netlify / GitHub Pages.
+Stack: [**Astro 5.5.6**](https://astro.build) + [**Starlight 0.32.6**](https://starlight.astro.build) (docs theme), Markdown/MDX content, Mermaid diagrams, Markmap mind maps, Slidev decks, and plain SVG infographics. Deploys free to Cloudflare Pages / Vercel / Netlify / GitHub Pages.
+
+**Current Coverage (May 2026):**
+- **Models:** Claude 4.7 (400K context), GPT-5.5 Instant, Gemini 3.1 Pro (1M context), DeepSeek V4 ($0.14/1M tokens), o3 reasoning, Grok 3
+- **Agentic AI:** Cursor (78% SWE-bench), Claude Code, Windsurf (75%), CrewAI, AutoGen
+- **Real-time AI:** Live video analysis, multimodal streaming, real-time transcription
+- **60+ AI terms** with complexity levels, **7 guiding principles**, **30+ misconceptions debunked**, **11 interview cheatsheets**
 
 ---
 
@@ -41,16 +47,19 @@ You need Node.js 20+ installed.
 # 1. Install dependencies
 npm install
 
-# 2. Start the dev server (hot reload)
+# 2. Start the dev server (hot reload at localhost:4321)
 npm run dev
-# → http://localhost:4321
 
-# 3. Build the static site
+# 3. Edit .md or .mdx files in src/content/docs/ — browser auto-reloads
+
+# 4. Build the static site
 npm run build
 
-# 4. Preview the production build locally
+# 5. Preview the production build locally
 npm run preview
 ```
+
+**Tip:** After `npm run dev`, edits to any `.md`, `.mdx`, or `astro.config.mjs` file trigger instant hot reload. No restart needed.
 
 ---
 
@@ -58,11 +67,12 @@ npm run preview
 
 ```text
 ai-playbook/
-├── astro.config.mjs          # Astro + Starlight config (sidebar, plugins, theme)
-├── package.json
+├── astro.config.mjs          # Starlight config (sidebar, plugins, theme)
+├── package.json              # Dependencies: astro, starlight, mdx
 ├── tsconfig.json
+├── CLAUDE.md                 # Guidance for Claude Code working in this repo
 ├── public/                   # Static files served as-is
-│   ├── decks/                # Exported Slidev/Reveal decks → embedded via iframe
+│   ├── decks/                # Exported Slidev/Reveal HTML → embedded via iframe
 │   └── mindmaps/             # Exported Markmap HTML + source .md
 ├── src/
 │   ├── assets/
@@ -70,15 +80,24 @@ ai-playbook/
 │   │   └── infographics/     # SVG infographics imported into MDX pages
 │   ├── content.config.ts     # Wires docs collection into Starlight
 │   ├── content/docs/
-│   │   ├── index.md          # Landing page (splash hero)
-│   │   ├── guides/           # Long-form articles
-│   │   ├── cheatsheets/      # Quick-reference pages
+│   │   ├── index.md          # Welcome page
+│   │   ├── tools.md          # AI tools landscape (May 2026)
+│   │   ├── workflows.md      # AI workflows by industry
+│   │   ├── agents.md         # Agentic AI systems (Cursor, Claude Code, etc.)
+│   │   ├── open-source.md    # Open-weight models (Llama, DeepSeek, etc.)
+│   │   ├── glossary.mdx      # 60+ AI terms (Beginner→Advanced)
+│   │   ├── history.mdx       # Timeline: 1950s → May 2026
+│   │   ├── confusions.mdx    # 30+ misconceptions debunked
+│   │   ├── follow.mdx        # Researchers, practitioners, newsletters
+│   │   ├── principles.mdx    # 7 guiding principles + AI safety/ethics
+│   │   ├── guides/           # Long-form articles & how-tos
+│   │   ├── cheatsheets/      # 11 interview prep + reference cards
 │   │   ├── diagrams/         # Mermaid-based architecture pages
 │   │   ├── mind-maps/        # Markmap pages
 │   │   ├── slides/           # Slide-deck wrapper pages
-│   │   └── infographics/     # SVG-centric pages
+│   │   └── infographics/     # SVG-centric narrative pages
 │   └── styles/
-│       └── custom.css        # Minor theme tweaks (fonts, accent color)
+│       └── custom.css        # Theme tweaks (1300px content width)
 ```
 
 Folders under `src/content/docs/` become sidebar sections automatically (wired in `astro.config.mjs`).
@@ -91,19 +110,23 @@ Folders under `src/content/docs/` become sidebar sections automatically (wired i
 
 1. Create a file in the right folder:
    ```
-   src/content/docs/cheatsheets/my-new-cheatsheet.md
+   src/content/docs/cheatsheets/my-cheatsheet.md
+   src/content/docs/guides/my-guide.md
    ```
 2. Add frontmatter:
    ```yaml
    ---
    title: My New Cheatsheet
-   description: One-line summary for SEO and previews.
+   description: One-line summary for SEO and search.
    sidebar:
      order: 3
-     badge: { text: New, variant: tip }
+     badge:
+       text: New
+       variant: tip
+   lastUpdated: 2026-05-08
    ---
    ```
-3. Write Markdown. Save. Dev server hot-reloads.
+3. Write Markdown. Save. Dev server hot-reloads instantly.
 
 ### A new Mermaid diagram
 
@@ -181,25 +204,45 @@ Use the [`withastro/action`](https://github.com/withastro/action) GitHub Action 
 
 ---
 
-## Migrating from your existing site
+## How to maintain & extend
 
-Your current site (`flowing-poplar-z3zy.here.now`) looks like a single `index.html`. To migrate:
+### Keep content fresh
+- Update `lastUpdated: YYYY-MM-DD` in frontmatter whenever you refresh a page
+- Pin specific model pricing/capabilities to dates (e.g., "As of May 2026: Claude 4.7 costs...")
+- Add dated sections (e.g., "## May 2026 Updates") when major changes land
 
-1. Copy each section into its own `.md` file under `src/content/docs/`.
-2. Keep the **information**, drop the **styling** — Starlight handles the look.
-3. Redirect old URLs if you get a domain, using `astro.config.mjs` `redirects`.
+### Add to existing sections
+- **Glossary:** Add new terms to the appropriate complexity level
+- **Confusions:** Add new misconceptions as they surface
+- **Principles:** Expand safety sections as agentic AI evolves
+- **Cheatsheets:** Add Q&A pairs to interview prep pages
 
-Migration is usually a 1–2 hour job for a single-page site.
+### Contributing your own knowledge
+The playbook is open to structure your own reference. You can:
+1. Fork or clone this repo
+2. Edit content directly in Markdown
+3. Push to Cloudflare Pages / Vercel / Netlify
+4. Share your version (CC BY 4.0 licensed)
 
 ---
 
-## Roadmap ideas
+## Content & Roadmap (May 2026+)
 
-- [ ] Add a `/prompts/` section with copy-paste prompt templates
-- [ ] Enable [pagefind](https://pagefind.app) (Starlight uses it by default) for great search
+**What's covered:**
+- ✅ Complete May 2026 AI landscape (Claude 4.7, GPT-5.5, DeepSeek, Gemini 3.1 Pro, reasoning models)
+- ✅ Agentic AI systems (Cursor, Claude Code, Windsurf, AutoGen, CrewAI)
+- ✅ Real-time AI and multimodal systems
+- ✅ 11 interview cheatsheets (LLM, product, system design, banking, behavioral)
+- ✅ 30+ AI misconceptions debunked
+- ✅ 7 guiding principles + deep AI safety/ethics section
+
+**Roadmap ideas:**
+- [ ] Add a `/prompts/` section with copy-paste prompt templates by domain
+- [ ] Track model releases dynamically (auto-update pricing tables)
 - [ ] Add an RSS feed for public readers
-- [ ] Plug in [Giscus](https://giscus.app) for comments (GitHub-powered)
-- [ ] Add a `/changelog/` page auto-generated from git history
+- [ ] Plug in [Giscus](https://giscus.app) for GitHub-powered comments
+- [ ] Add a `/changelog/` page tracking updates by month
+- [ ] Create interactive tool comparison filters (cost, context window, speed)
 
 ---
 
