@@ -80,7 +80,7 @@ export default defineConfig({
         },
         {
           label: 'Productivity & Creative',
-          link: '/productivity-tools/',
+          link: '/productivity/',
         },
         {
           label: 'Open Source',
