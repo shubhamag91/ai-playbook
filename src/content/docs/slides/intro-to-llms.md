@@ -3,8 +3,8 @@ title: Intro to LLMs (Slide Deck)
 description: A ~15-minute lunch-and-learn intro to large language models.
 sidebar:
   label: Slide Decks
-lastUpdated: 2026-05-08
   order: 1
+lastUpdated: 2026-05-08
 ---
 
 This is a placeholder for the Intro to LLMs slide deck. The deck needs to be exported from Slidev and placed in `public/decks/intro-to-llms/`.
