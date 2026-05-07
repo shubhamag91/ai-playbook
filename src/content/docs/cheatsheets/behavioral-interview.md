@@ -20,7 +20,7 @@ lastUpdated: 2026-05-08
 | **Tell me about a time you dealt with ambiguous requirements.** | Describe: unclear success metrics, conflicting stakeholder needs, changing data availability. Show how you navigated ambiguity, asked clarifying questions, made reasonable assumptions. |
 | **Describe a project where the first approach didn't work.** | Explain why initial approach seemed reasonable, what you learned from failure, how you pivoted. Focus on iteration and learning, not just failure. |
 | **Tell me about a time you had to explain technical concepts to non-technical people.** | Show: simplified explanation without jargon, tailored to audience, checked understanding, adapted. |
-| **How do you stay current with rapidly changing AI technology?** | Mention: papers (ArXiv, distill.pub), newsletters (The Rundown AI, The Batch), conferences (NeurIPS, ICML), implementing papers, community participation. |
+| **How do you stay current with rapidly changing AI technology (May 2026)?** | Mention: papers (ArXiv, OpenReview), newsletters (The Rundown AI, The Batch), hands-on: building with Claude Code/Cursor, testing new models (Claude 4.7, GPT-5.5, Gemini 3.1), conferences (NeurIPS, ICML), Twitter/X communities. Show depth: reading blogs from researchers, not just headlines. |
 | **Tell me about a time you overcame a challenge.** | Show: problem identification, creative solution, persistence, measurable outcome. |
 | **Describe a time you had a conflict with a teammate.** | Show: different perspectives, how you found common ground, what you learned. Focus on resolution, not blame. |
 | **Tell me about a time you had to meet a tight deadline.** | Show: prioritization, resource allocation, trade-offs made, what you'd do differently. |

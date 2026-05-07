@@ -12,12 +12,12 @@ lastUpdated: 2026-05-08
 | **What is the difference between GPT-3 and GPT-3.5?** | GPT-3.5 is GPT-3 fine-tuned with RLHF (InstructGPT). This made it follow instructions better, be more helpful, and safer. Also added ChatGPT interface. |
 | **What is the difference between GPT-3.5 and GPT-4?** | GPT-4 is multimodal (accepts images), has larger context (32K/128K), is more capable at reasoning, and uses mixture of experts architecture (rumored). GPT-4 is more accurate and has better instruction following. |
 | **What is GPT-4o vs GPT-4?** | GPT-4o ("omni") is faster and cheaper while matching GPT-4 capability. It natively processes text, audio, and vision. GPT-4o mini is the efficient version. |
-| **What is the difference between GPT-4 and Claude 3?** | Claude 3 has stronger safety alignment, excellent long context (200K), and excels at complex reasoning. GPT-4 has larger ecosystem, more fine-tuned tools. Both are top-tier. |
-| **What is the difference between GPT-4 and Gemini 1.5?** | Gemini has 1M token context (larger than GPT-4's 128K), excellent multimodal, native Google integration. GPT-4 has more mature API ecosystem. |
-| **What is LLaMA vs GPT?** | LLaMA is Meta's open-weight model (can run locally). GPT is OpenAI's API (closed). LLaMA enables fine-tuning and self-hosting but requires more setup. |
-| **What is Mistral vs LLaMA?** | Mistral is a French startup with competitive open models (Mistral 7B, Mixtral). Mixtral uses mixture of experts. Comparable to LLaMA, sometimes faster. |
-| **What is DeepSeek?** | Chinese model with open weights (MIT license). DeepSeek R1 matches OpenAI o1 on reasoning, very affordable API. Strong open-source alternative. |
-| **PM**: How do you compare LLM pricing? | Check per-1M-token costs for input/output. GPT-4o mini ~$0.15/$0.60, Claude Sonnet ~$3/$15, Gemini Flash ~$0.075/$0.30. Factor in token efficiency (some models need fewer tokens for same task). |
+| **What is Claude 4.7 vs GPT-5.5 (May 2026)?** | Claude 4.7: Best reasoning, 400K context, $15/$75 per 1M. GPT-5.5: Strong all-arounder, 128K context, $2/$8. Claude for complex reasoning, GPT for speed/cost balance. |
+| **What is Gemini 3.1 vs Claude/GPT?** | Gemini 3.1 Pro: Largest context (1M tokens), $2/$12. Best for long-document research. Claude/GPT faster for short tasks. Choose based on context needs. |
+| **What is DeepSeek V4 (May 2026)?** | Chinese open-weight model, $0.55/$2.19 per 1M tokens (most affordable). Competitive with Claude/GPT on many tasks. MIT license = commercial use OK. Great for cost-sensitive production. |
+| **What is LLaMA 4 vs proprietary models?** | LLaMA 4: Open-weight, MIT license, run locally. No API costs but needs infrastructure. Trade-off: control/cost vs convenience. DeepSeek offers middle ground (affordable API). |
+| **What is Grok 3 vs other models?** | Grok 3: Real-time X/Twitter data access, good for current events. Slower than Claude/GPT on general tasks. Niche use case: real-time information. |
+| **PM**: How do you compare LLM pricing (May 2026)? | Per-1M-token input/output costs: DeepSeek V4 Flash $0.14/$0.28 (cheapest), GPT-5.5 Instant $0.05/$0.15, Claude Haiku $0.80/$4, Claude Sonnet $3/$15, Claude Opus $15/$75. Also factor token efficiency. |
 
 ## LLM Basics (Fundamentals)
 
