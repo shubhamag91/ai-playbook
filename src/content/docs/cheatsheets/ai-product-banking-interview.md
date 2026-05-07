@@ -137,6 +137,16 @@ lastUpdated: 2026-05-08
 - Unclear AI decisions → customer trust loss
 - Over-reliance on AI → operational risk
 
+## Agents & Real-Time AI in Banking (May 2026)
+
+| Question | Answer |
+|----------|--------|
+| **Design an AI agent for anti-money laundering (AML).** | Multi-step: analyze transactions → cross-check sanctions lists → flag patterns → escalate to analyst. Agent uses multiple data sources in parallel. Key: explainability (required by RBI), audit trail, human approval mandatory. |
+| **What are regulatory implications of agentic AI in banking?** | Explainability critical (fair lending laws, GDPR). Audit trails mandatory (SOX). Human oversight for significant decisions. Model approval from risk committee. Document all autonomous actions. Agents = more compliance burden. |
+| **Design a real-time fraud detection system (May 2026).** | Stream processing: <100ms decision latency, cached feature lookups, flag + hold suspicious transactions, escalate to analyst. Use ensemble (rules + ML). Real-time = must be 99.9% reliable. |
+| **What makes agentic AI risky in banking?** | Cascading failures (one bad decision affects customers). Regulatory liability (if agent harms someone). Lack of transparency (regulators require explainability). System complexity (more failure modes). Benefit: handles repetitive tasks well. |
+| **Engineer**: How do you audit agentic AI in banking? | Log every decision: input, rule/model used, decision, outcome. Timestamp. Store model version. Enable replay for debugging. Quarterly audit of agent actions. Regulatory reporting. |
+
 ## See Also
 
 - [AI Product Interview Prep](/cheatsheets/ai-product-interview/)
