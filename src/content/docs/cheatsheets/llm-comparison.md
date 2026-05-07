@@ -1,45 +1,70 @@
 ---
-title: LLM Model Comparison
-description: A living table of models I've actually used, with my own notes.
+title: LLM Model Comparison (May 2026)
+description: Current LLM models with pricing, context windows, and tradeoffs.
 sidebar:
   order: 2
+lastUpdated: 2026-05-08
 ---
 
 :::note
 Keep this table opinionated — it's **your** notes, not a benchmark leaderboard. Update the "My notes" column as you learn.
 :::
 
-| Model | Context | Strengths | My notes |
-|---|---:|---|---|
-| Claude Sonnet 4.6 | 200k | Long-context reasoning, coding | Default for agentic tasks. |
-| Claude Opus 4.6 | 200k | Deep reasoning, nuance | Use when Sonnet gets it wrong. |
-| Claude Haiku 4.5 | 200k | Fast, cheap | Great for classification + routing. |
-| GPT-4-class | 128k+ | General, strong tools | — |
-| Open-source (Llama/Mistral/Qwen) | varies | On-prem, privacy | Start here when data can't leave. |
+| Model | Context | Input/Output | Best for | Notes |
+|---|---:|---|---|---|
+| **Claude Sonnet 4.6** | 200k | $3/$15 per 1M | Default reasoning, coding | Best balance of speed & quality. Default pick. |
+| **Claude Opus 4.7** | 400k | $15/$75 per 1M | Complex multi-step reasoning | Use when Sonnet struggles. Most capable. |
+| **Claude Haiku 4.5** | 200k | $0.80/$4 per 1M | Classification, routing, summaries | Ultra-fast, cheapest option. |
+| **GPT-5.5** | 128k | $2/$8 per 1M | General tasks, web search | Strong all-around. Good context. |
+| **GPT-5.5 Instant** | 128k | $0.05/$0.15 per 1M | Routing, simple tasks | Embarrassingly cheap for basic work. |
+| **Gemini 3.1 Pro** | 1M | $2/$12 per 1M | Long-context research, docs | Best context window. Excellent for RAG. |
+| **DeepSeek V4** | 128k | $0.55/$2.19 per 1M | **Cost-conscious prod** | Surprisingly capable. MIT license. |
+| **DeepSeek V4 Flash** | 128k | $0.14/$0.28 per 1M | **Ultra-cheap routing** | Absurdly affordable. Good enough for many tasks. |
+| **Llama 4** | varies | Free (self-host) | On-prem, privacy-critical | Open weights. MIT license. Run locally. |
 
-## How I pick
+## How I pick (May 2026 edition)
 
 ```text
-1. Does this need to run on-prem or handle sensitive data?
-   └─ yes → open-source + local inference
+1. Data privacy / must stay on-prem?
+   └─ yes → Llama 4 (self-host) or DeepSeek V4 (via API)
    └─ no  → continue
 
-2. Is latency the bottleneck (chatbot UX)?
-   └─ yes → small/fast model + RAG
+2. Need to minimize cost?
+   └─ yes → DeepSeek V4 Flash ($0.14 input) or GPT-5.5 Instant
    └─ no  → continue
 
-3. Does the task need deep multi-step reasoning?
-   └─ yes → frontier model
-   └─ no  → mid-tier frontier model
+3. Need very long context (research, docs)?
+   └─ yes → Gemini 3.1 Pro (1M tokens)
+   └─ no  → continue
+
+4. Need deep reasoning (complex logic)?
+   └─ yes → Claude Opus 4.7 or o3
+   └─ no  → Claude Sonnet 4.6 (default)
 ```
 
-## Cost sanity checks
+## Cost examples (real scenarios)
 
-Before rolling anything to prod, multiply:
+**Scenario 1: Customer support chatbot (100 requests/day, 500 input tokens avg, 200 output tokens avg)**
+- Claude Sonnet: ~$15/month
+- GPT-5.5 Instant: ~$4/month
+- DeepSeek V4 Flash: ~$2/month ✅ Best value
+
+**Scenario 2: RAG + research (10 requests/day, 8000 input tokens avg, 1000 output)**
+- Gemini 3.1 Pro: ~$16/month (handles 1M context)
+- Claude Sonnet: ~$120/month
+- DeepSeek V4: ~$35/month
+
+**Scenario 3: Reasoning + code generation (50 requests/day, 2000 input, 1500 output)**
+- Claude Opus 4.7: ~$675/month
+- Claude Sonnet: ~$225/month ✅ Best balance
+- DeepSeek V4: ~$53/month (if quality sufficient)
+
+## Cost sanity check formula
 
 ```
-daily requests × avg input tokens × input $/Mtok
-+ daily requests × avg output tokens × output $/Mtok
+daily_requests × avg_input_tokens × (input_price / 1M)
++ daily_requests × avg_output_tokens × (output_price / 1M)
+= monthly_cost × 30
 ```
 
-If the number scares you, add caching, a router, or a smaller model for the cheap path.
+If the number surprises you: add caching, batch process, use cheaper model for routing, or add RAG to reduce context.

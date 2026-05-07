@@ -1,6 +1,7 @@
 ---
 title: AI Product Interview Prep
 description: AI Product Manager interview questions — product design, metrics, technical depth, ethics, and case studies.
+lastUpdated: 2026-05-08
 ---
 
 ## AI Product Design
@@ -35,7 +36,7 @@ description: AI Product Manager interview questions — product design, metrics,
 | **Explain the quality/latency/cost trade-off in model selection.** | Better models = more expensive, slower. Need to balance based on use case: critical tasks use best model, simple tasks use fast/cheap. |
 | **What is model drift and why should PMs care?** | Model performance degrades over time as data changes. Impact: quality drops silently. Need monitoring and retraining strategy. |
 | **What is the difference between supervised and unsupervised learning for product context?** | Supervised: learn from labeled data (can define "correct" answer). Unsupervised: find patterns without labels (exploratory). Choose based on data availability and problem type. |
-| **How do you decide between API vs self-hosted models?** | API: easy, latest models, pay-per-use. Self-host: control, no per-token cost at scale, custom. Break-even ~10M tokens/month. |
+| **How do you decide between API vs self-hosted models (May 2026)?** | API: easy, latest (Claude 4.7, GPT-5.5, Gemini 3.1). Self-host: control, no per-token cost at scale, custom (Llama 4, Qwen 3.5). Break-even ~10-20M tokens/month depending on model. |
 | **What is a vector database and why is it relevant for AI products?** | Stores embeddings for semantic search. Enables RAG, recommendations. Choose based on scale, filtering needs, latency requirements. |
 | **What is fine-tuning and when is it worth the cost?** | Continuing training on specific data to learn patterns. Worth it when: need specific style/tasks, lots of examples, base model doesn't fit. Expensive — often RAG suffices. |
 
