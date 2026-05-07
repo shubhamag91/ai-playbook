@@ -58,6 +58,10 @@ This page answers: "I want to [task]. What should I use?"
 
 **Cost:** Midjourney for serious work, DALL-E for quick iterations
 
+**For real design work:**
+- **Figma + Claude** — Describe design in Claude, paste into Figma. Iterate fast.
+- **Cursor** — Design tokens, components, CSS generation. Great for code-based design.
+
 ---
 
 ### I want to create videos
@@ -79,6 +83,12 @@ This page answers: "I want to [task]. What should I use?"
 3. **Make** — More powerful than Zapier, steeper learning curve
 
 **Reality check:** Start with Zapier for speed, move to n8n if you need control
+
+**Example flows (Zapier):**
+- Slack message with keyword → Save to Google Sheet + send to Notion database
+- Email from important contact → Slack notification + AI summary (via ChatGPT)
+- Form submission → Google Sheet + thank-you email (auto-personalized with Claude)
+- Calendar event created → Auto-generate prep document using Claude
 
 ---
 
@@ -112,6 +122,36 @@ This page answers: "I want to [task]. What should I use?"
 3. **Google Sheets + Gemini** — Quick sheet analysis
 
 **Cost:** Pay-per-token for Claude, free for NotebookLM
+
+---
+
+### I want to manage my knowledge or take notes
+
+**Best tools, ranked:**
+1. **Obsidian + Claude** — Local-first notes. Paste into Claude for synthesis, insights. Private.
+2. **Notion AI** — Integrated AI. $20/mo Notion Plus adds AI features.
+3. **Coda** — Doc + database + AI. $12+/mo. Best for complex knowledge.
+
+**Workflow:** Obsidian for thinking, Claude for synthesis, Notion for team sharing.
+
+**For teams:**
+- **Notion** — Still the standard for team wikis and documentation.
+- **Coda** — Nimbler than Notion. Better formulas, stronger AI support.
+
+---
+
+### I want to capture and manage meetings
+
+**Best tools, ranked:**
+1. **Otter.ai** — Record → transcribe → summarize automatically. $10-30/mo. Best quality.
+2. **Fathom** — Zoom + Teams recorder + AI summaries. Free + paid tiers.
+3. **ChatGPT** — Paste meeting transcript, ask for highlights. Simple but effective.
+
+**Pro move:** Record meeting → Otter.ai → share summary in Slack. Saves 30 min per meeting.
+
+**For email:**
+- **Gmail + Claude** — Paste email thread into Claude, ask it to draft a response.
+- **Grammarly** — Tone suggestions right in Gmail. Makes writing faster.
 
 ---
 
@@ -190,6 +230,44 @@ What's your goal?
 | ElevenLabs | $5+/mo | Voice-overs |
 
 Most people need: 1 chat tool ($20) + 1 coding tool ($20) = $40/mo baseline
+
+---
+
+## The 90% Stack (By Role)
+
+**For writers/analysts:**
+- Claude.ai Pro ($20)
+- NotebookLM (free)
+- Grammarly ($12)
+- **Total:** $32/mo
+
+**For developers:**
+- Cursor ($20)
+- Claude Code (pay-per-token, ~$20/mo)
+- GitHub Copilot (free tier or $20/mo)
+- **Total:** $20-40/mo
+
+**For creators (design/video):**
+- Midjourney ($20)
+- Runway ($12)
+- Cursor ($20)
+- **Total:** $52/mo
+
+**For small teams:**
+- Notion AI ($20/mo per seat)
+- Zapier ($20)
+- Slack (free/paid)
+- **Total:** $40/mo baseline
+
+---
+
+## General Productivity Principles
+
+1. **Batch similar tasks** — Write all summaries at once, not one-by-one
+2. **Use Claude for thinking, ChatGPT for doing** — Claude for strategy, ChatGPT for quick execution
+3. **Automate the repetitive** — If you do it twice, automate it
+4. **Don't optimize tools, optimize workflows** — The best tool is useless if it doesn't fit your process
+5. **Free tiers first** — Try NotebookLM, Suno, Figma free before paying
 
 ---
 
