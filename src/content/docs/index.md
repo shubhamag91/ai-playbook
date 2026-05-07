@@ -12,17 +12,16 @@ A personal reference for navigating the modern AI ecosystem — tools, workflows
 
 ## Explore the Playbook
 
-- **Tools** — Conversational AI, coding assistants, automation platforms and more.
-- **Productivity** — Microsoft Copilot, Notion AI, Grammarly, Otter.ai and more.
-- **Hardware** — Chips, cloud ML, and today's most capable frontier models.
-- **Creative & Hubs** — Image, video, voice generation tools and model marketplaces.
-- **Workflows** — Five AI workflows plus industry verticals — healthcare, finance, legal, and more.
-- **Glossary** — 30+ key terms explained in plain English.
-- **Principles** — Six guiding rules plus AI safety, ethics, and practical guardrails.
-- **Confusions** — 20+ misconceptions that trip up early adopters — debunked.
-- **History** — Key milestones from 1950s to the present.
-- **Open Source** — Open-weight models you can run, fine-tune, or build on.
-- **Follow** — People, newsletters, YouTube channels and podcasts worth your time.
+- **Tools** — Conversational AI, coding assistants, automation platforms, and real-time AI (May 2026).
+- **Workflows** — Five AI workflows plus industry verticals — healthcare, finance, legal, autonomous vehicles, and more.
+- **Agents & Agentic AI** — Autonomous systems, multi-agent coordination, tool use patterns (Cursor, Claude Code, Windsurf).
+- **Open Source** — Open-weight models you can run, fine-tune, or build on (Llama 4, DeepSeek, Qwen).
+- **Glossary** — 60+ key terms organized by complexity (Beginner, Intermediate, Advanced, May 2026 Highlights).
+- **History** — Key milestones from 1950s through May 2026 — Agentic AI era, frontier model developments.
+- **Confusions** — 30+ misconceptions debunked (agents won't replace you, reasoning models have trade-offs, cost collapsed).
+- **Principles** — Seven guiding rules plus AI safety, ethics, agentic AI risks, and practical guardrails.
+- **Follow** — Researchers, practitioners, industry leaders, newsletters, YouTube, and podcasts (May 2026 edition).
+- **Cheatsheets** — Interview prep (LLM, ML, product, system design, banking), tool comparisons, prompt engineering.
 
 ---
 
@@ -39,16 +38,16 @@ Founded 2021 · Safety-focused · San Francisco
 **Products:**
 - claude.ai — Chat interface (web & mobile)
 - Anthropic API — Direct model access for developers
-- Claude Code — Agentic CLI for coding tasks in terminal
-- Claude for Teams / Enterprise — Business plans with data privacy
+- Claude Code — Agentic CLI for complex coding tasks and refactoring
+- Claude for Teams / Enterprise — Business plans with data privacy and compliance
 - Powering other apps — Cursor, Windsurf use Claude under the hood
 
 **Model Tiers (cheapest → most capable):**
 - Claude Haiku 4.5 — Fast & cheap ($0.80/$4 per 1M tokens)
 - Claude Sonnet 4.6 — Balanced (default) ($3/$15 per 1M tokens)
-- Claude Opus 4.7 — Most capable ($15/$75 per 1M tokens)
+- Claude Opus 4.7 — Most capable, 400K context ($15/$75 per 1M tokens)
 
-All tiers share the same 200K token context window (Opus supports up to 400K).
+All tiers share 200K token context window; Opus extends to 400K for long-document reasoning.
 
 ---
 
@@ -57,23 +56,23 @@ All tiers share the same 200K token context window (Opus supports up to 400K).
 Founded 2015 · Microsoft-backed · San Francisco
 
 **Model Families:**
-- GPT series — General purpose
-- o-series — Reasoning models
+- GPT-5.5 — General purpose (including instant variant for cost-efficiency)
+- o3 — Test-time compute reasoning (spends tokens on hidden "thinking" before answering)
 
 **Products:**
-- ChatGPT — Chat interface (web, mobile, desktop)
+- ChatGPT — Chat interface (web, mobile, desktop); includes web search, code execution, image generation
 - OpenAI API — Direct model access for developers
-- Codex — Code-specialised model powering GitHub Copilot
-- DALL-E — Image generation (inside ChatGPT Plus)
+- GitHub Copilot — Code-powered IDE integration (powered by OpenAI models)
+- DALL-E 3 — Image generation (inside ChatGPT Plus)
 - Sora — Video generation (ChatGPT Pro)
-- ChatGPT Enterprise — Business plan, data privacy
+- ChatGPT Enterprise — Business plan, data privacy, org-wide deployment
 
 **Model Tiers (cheapest → most capable):**
-- GPT-5.5 Instant — Fast & cost-effective ($0.05/$0.15 per 1M tokens)
+- GPT-5.5 Instant — Cost-effective, fast ($0.05/$0.15 per 1M tokens)
 - GPT-5.5 — Balanced (default) ($2/$8 per 1M tokens)
-- o3 — Deep reasoning (reasoning model, slower) ($8/$32 per 1M tokens)
+- o3 — Reasoning model with test-time compute ($8/$32 per 1M tokens)
 
-Note: o-series "thinks" before answering — slower but significantly smarter on complex problems.
+Note: o3 allocates compute at inference time ("thinking" before answering) — slower but dramatically smarter on math, coding, reasoning problems. Trade-off: speed vs. accuracy.
 
 ---
 
@@ -81,42 +80,43 @@ Note: o-series "thinks" before answering — slower but significantly smarter on
 
 Founded 1998 (Google) · Alphabet subsidiary · Mountain View
 
-**Model Family:** Gemini + Imagen
+**Model Family:** Gemini + Imagen + Veo (video)
 
 **Products:**
-- Gemini.google.com — Chat interface (web & mobile)
+- Gemini.google.com — Chat interface (web & mobile); includes Deep Research mode for extended exploration
 - Google AI Studio — Free API access for developers
 - Vertex AI — Enterprise API with Google Cloud integration
 - Gemini in Workspace — AI inside Docs, Gmail, Sheets, Slides
-- Imagen / ImageFX — Photorealistic image generation
-- Gemini on Android — On-device assistant replacing Google Assistant
+- Imagen / ImageFX — Image generation with editing
+- Veo 3.1 — Video generation (cinematic quality)
+- Gemini on Android — Native assistant replacing Google Assistant
 
 **Model Tiers (cheapest → most capable):**
-- Gemini 2 Flash — Fast & free
-- Gemini 3.1 Pro — Balanced (1M context) ($2/$12 per 1M tokens)
-- Gemini 3.1 Ultra — Most capable (advanced reasoning)
+- Gemini 2 Flash — Fast & free tier
+- Gemini 3.1 Pro — Balanced, 1M context window ($2/$12 per 1M tokens)
+- Gemini 3.1 Ultra — Most capable (advanced reasoning, agentic capabilities)
 
-Gemini 3.1 Pro has a 1M-token context window — tied with largest in the market.
+Gemini 3.1 Pro's 1M-token context is the largest among all major models — enables processing of entire research papers, codebases, or document archives in a single request.
 
 ---
 
 ### DeepSeek (High-Flyer)
 
-Founded 2023 · Hangzhou, China · Open weights
+Founded 2023 · Hangzhou, China · Open weights (MIT license)
 
-**Model Family:** DeepSeek R1 & V3
+**Model Family:** DeepSeek V4 + R1 (reasoning)
 
 **Products:**
-- chat.deepseek.com — Chat interface
-- DeepSeek API — Very affordable pricing
-- Open weights — Run via Ollama or Hugging Face
+- chat.deepseek.com — Chat interface (free)
+- DeepSeek API — Direct access with enterprise pricing
+- Open weights — Run locally via Ollama, Hugging Face, or LM Studio (fully self-hosted)
 
 **Model Tiers (cheapest → most capable):**
 - V4 Flash — General purpose ($0.14/$0.28 per 1M tokens)
 - V4 — Balanced (default) ($0.55/$2.19 per 1M tokens)
-- R1 — Reasoning (matches o3) ($0.55/$2.19 per 1M tokens)
+- R1 — Reasoning model (matches o3 capabilities) ($0.55/$2.19 per 1M tokens)
 
-MIT license — free for commercial use. **Most cost-effective option by far.** Trained at a fraction of Western model costs.
+MIT license = free for commercial use. **Most cost-effective option by far** (15-50x cheaper than Claude/GPT). Trained with optimized techniques on consumer hardware — proves you don't need trillion-dollar budgets for frontier models.
 
 ---
 
@@ -141,15 +141,16 @@ These companies release model weights publicly but don't operate a major consume
 
 ### Sits on top of the big three
 
-Perplexity, Microsoft Copilot, GitHub Copilot, Cursor, Windsurf
+Perplexity, Microsoft Copilot, GitHub Copilot, Cursor, Windsurf, Aider
 
-These products don't build their own foundation models. They call the OpenAI, Anthropic or Google APIs and wrap them in a specialised experience.
+These products don't build their own foundation models. They call the OpenAI, Anthropic, or Google APIs and wrap them in specialized experiences (often agentic ones).
 
-- **Perplexity** → uses Claude, GPT-4o + its own search stack
-- **Microsoft Copilot** → powered by OpenAI GPT-4o
-- **GitHub Copilot** → powered by OpenAI Codex / GPT-4o
-- **Cursor** → uses Claude Sonnet or GPT-4o (you choose)
-- **Windsurf** → uses Claude or its own Codeium models
+- **Perplexity** → Uses Claude + GPT-4o + proprietary search and synthesis
+- **Microsoft Copilot** → Powered by OpenAI GPT-4o with web integration
+- **GitHub Copilot** → Powered by OpenAI models (code-optimized)
+- **Cursor** → Agentic IDE using Claude Sonnet or GPT-4o (you choose); 78% SWE-bench
+- **Windsurf** → Agentic IDE with cascading AI; uses Claude or Codeium models; 75% SWE-bench
+- **Aider** → Git-native AI coding agent; terminal-based, works with Claude or GPT-4o
 
 ---
 
@@ -168,17 +169,18 @@ These tools don't provide AI themselves — they help you build systems that con
 
 ## Quick Comparison: Top Conversational AI (May 2026)
 
-| Feature | ChatGPT (GPT-5.5) | Claude (Sonnet 4.6) | Gemini (3.1 Pro) | DeepSeek (V4) | Perplexity |
+| Feature | ChatGPT (GPT-5.5) | Claude (Opus 4.7) | Gemini (3.1 Pro) | DeepSeek (V4) | Perplexity |
 |---------|------------------|-------------------|------------------|------------|-----------------|
-| **Context window** | 128K tokens | 200K tokens | 1M tokens | 128K tokens | Varies by model |
+| **Context window** | 128K tokens | 200K (Opus: 400K) | 1M tokens | 128K tokens | Varies by model |
 | **Image input** | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **Web browsing** | ✅ | ✅ (claude.ai) | ✅ | ❌ | ✅ Core feature |
 | **Code execution** | ✅ (Code Interpreter) | ✅ (Artifacts) | ✅ | ✅ | ❌ |
-| **API pricing** | $2/$8 per 1M tokens | $3/$15 per 1M tokens | $2/$12 per 1M tokens | **$0.55/$2.19** | ~$8/month API |
-| **Web/Mobile** | ✅ Plus $20/mo | ✅ Pro $20/mo | ✅ $20/mo | ✅ Free + API | ✅ Pro $20/mo |
-| **Free daily limit** | Generous (GPT-5.5 Instant) | ~20–40 msgs/day | Generous Flash tier | Unlimited | 5 Pro searches/day |
-| **Privacy** | Data to OpenAI | Data to Anthropic | Data to Google | Private training focus | Data to Perplexity |
-| **Best for** | General tasks, web search | Writing, long docs, reasoning | Very long research | **Cost-conscious users** | Real-time research + citations |
+| **Reasoning model** | o3 ($8/$32) | ❌ | ❌ | R1 ($0.55/$2.19) | Uses partner models |
+| **API pricing** | $2/$8 (GPT-5.5) | $3/$15 (Sonnet 4.6) | $2/$12 | **$0.14/$0.28 Flash** | ~$8/month |
+| **Web/Mobile** | ChatGPT Plus $20/mo | Claude Pro $20/mo | $20/mo | Free + API | Pro $20/mo |
+| **Free daily limit** | GPT-5.5 Instant generous | ~20–40 msgs/day | Generous Flash | Unlimited | 5 Pro/day |
+| **Agentic tools** | Integrations | Claude Code, Cursor, Windsurf | Integrations | Open weights | Research synthesis |
+| **Best for** | General + reasoning (o3) | Writing, long docs, complex reasoning | Very long context research | Cost-conscious teams | Real-time + cited sources |
 
 **Tip:** If you hit free limits often, the **API** is often cheaper for heavy use — you pay per token with no daily cap. For regular personal use, a $20/mo Pro plan on your most-used tool pays for itself quickly.
 
@@ -210,10 +212,11 @@ Before adding more tools, spend 30 minutes understanding the basics. It changes 
 
 Don't sign up for everything. Pick the one that removes real friction from your day:
 
-- Too many meetings → Otter.ai or Fathom
-- Research-heavy work → NotebookLM
-- Lots of writing → Grammarly
-- Need web answers with sources → Perplexity
+- Coding / refactoring → Cursor ($20/mo) or Claude Code (pay-per-token)
+- Too many meetings → Otter.ai or Fathom (transcription + summaries)
+- Research-heavy work → NotebookLM (free, excellent for synthesis)
+- Lots of writing → Grammarly or Claude.ai Pro
+- Need web answers with sources → Perplexity ($20/mo Pro)
 
 ### 4. Month 2 — Stay current without getting overwhelmed
 
@@ -226,13 +229,14 @@ AI moves fast. You don't need to read everything — just stay loosely informed.
  
 Go deeper based on what you actually care about. Once you have the basics, use this playbook as your reference. Pick the path that fits your interest:
 
-- **Creative work** — Midjourney → Runway → Suno → Creative page
-- **Building products** — Cursor → Lovable → n8n → Tools page
-- **Business & automation** — Microsoft Copilot → Zapier → Workflows page
-- **How it works** — fast.ai → Karpathy's YouTube → Hardware & Models
-- **Privacy / self-hosting** — Ollama → LM Studio → run Llama locally → Open Source
-- **Ethics & Safety** — Read the Principles page — guardrails, alignment, responsible use
+- **Agentic AI & Coding** — Cursor (78% SWE-bench) → Claude Code → Windsurf (75%) → Agents page
+- **Creative work** — Midjourney → Runway (video) → Suno (music) → Creative workflows
+- **Building products** — Cursor → Lovable → n8n automation → Tools page
+- **Business & automation** — Microsoft Copilot → Zapier → n8n workflows → Workflows page
+- **How AI works** — fast.ai → Karpathy's YouTube → Read the Glossary & History pages
+- **Privacy / self-hosting** — Ollama → LM Studio → run Llama locally → Open Source page
+- **Ethics & Safety** — Read the Principles page — agentic AI risks, alignment, responsible deployment
 
-**The biggest mistake beginners make:** signing up for 10 tools in week one. Master one thing first.
+**The biggest mistake beginners make:** signing up for 10 tools in week one. Master one thing first. Focus on agentic AI tools (Cursor, Claude Code) if you code — they're transformative in 2026.
 
 ---
