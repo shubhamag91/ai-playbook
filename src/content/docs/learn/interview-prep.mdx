@@ -1,0 +1,548 @@
+---
+title: Interview Prep - 2 Week Curriculum
+description: Comprehensive 2-week interview preparation for AI/ML roles including LLM fundamentals, system design, product management, and behavioral skills.
+sidebar:
+  order: 2
+lastUpdated: 2026-05-08
+---
+
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import SeeAlso from '../../../components/SeeAlso.astro';
+
+<Breadcrumb />
+
+# Interview Prep: 2-Week Structured Curriculum
+
+A complete interview preparation guide consolidating LLM fundamentals, system design, product management, and behavioral skills. Designed for roles: AI Engineer, ML Engineer, AI Product Manager, AI Systems Designer.
+
+**Estimated Time:** 40-50 hours over 2 weeks (4-5 hours/day)  
+**Format:** Q&A with role-based perspectives (Engineer, PM, Scientist)
+
+---
+
+## Week 1: Fundamentals
+
+Master the essentials of LLMs, how they work, and soft skills needed for interviews.
+
+### Day 1-2: LLM Landscape & Evolution (8-10 hours)
+
+**Context:** Understand the current (May 2026) LLM ecosystem and how models evolved.
+
+#### LLM Landscape (May 2026)
+
+| Model | Company | Key Specs | Use Case | Cost |
+|-------|---------|-----------|----------|------|
+| Claude Opus 4.7 | Anthropic | 400K context, reasoning | Complex reasoning, long docs | $15/$75 per 1M tokens |
+| GPT-5.5 | OpenAI | 128K context, fast | General purpose, speed | $2/$8 per 1M tokens |
+| Gemini 3.1 Pro | Google | 1M context, multimodal | Long document research | $2/$12 per 1M tokens |
+| DeepSeek V4 | DeepSeek | 128K context, affordable | Cost-conscious teams | $0.55/$2.19 per 1M tokens |
+| Llama 4 | Meta | Open-weight, MIT | Self-hosted, control | Infrastructure costs |
+
+**Key Questions:**
+
+- **What is the difference between GPT-3.5 and GPT-4?** — GPT-4 is multimodal, has larger context (32K/128K), better reasoning, and improved instruction following. Rumored mixture-of-experts architecture.
+- **Claude 4.7 vs GPT-5.5?** — Claude: best reasoning, 400K context. GPT: strong all-arounder, cheaper. Choose Claude for complex reasoning, GPT for speed/cost balance.
+- **Why is DeepSeek so cheap?** — MIT-licensed open-weight model trained with optimized techniques on consumer hardware. Proves frontier capability doesn't require trillion-dollar budgets.
+- **When would you use open-weight (Llama) over API?** — Self-hosted: control, no per-token cost at scale, custom fine-tuning. API: easy, latest, no infrastructure. Break-even ~10-20M tokens/month.
+- **What is in-context learning?** — Model adapts to task during a single conversation using examples in the prompt. No weight updates, just context.
+- **Explain zero-shot vs few-shot learning.** — Zero-shot: task without examples (relies on pretraining). Few-shot: 2-5 examples in prompt to show task format.
+
+#### Model Evolution
+
+**GPT-2 → GPT-3:** 1.5B → 175B parameters. Introduced in-context learning (can learn from prompt). Better pretraining data, longer context (1K → 2K), improved training.
+
+**GPT-3 → GPT-3.5 (InstructGPT):** Fine-tuned with RLHF. Better instruction following, safer, more helpful. Introduced ChatGPT interface.
+
+**GPT-3.5 → GPT-4:** Multimodal (images), larger context (32K/128K), better reasoning, mixture-of-experts (rumored).
+
+**GPT-4 → GPT-5.5:** Faster, cheaper, improved reasoning. Remains competitive on most benchmarks.
+
+---
+
+### Day 3-4: How LLMs Work (10-12 hours)
+
+**Context:** Understand the internal mechanisms: transformers, attention, tokenization, training.
+
+#### Transformer Architecture (The Foundation)
+
+**What is a Transformer?**
+
+- Introduced in "Attention Is All You Need" (2017)
+- Replaces RNNs with self-attention mechanism
+- Processes sequences in parallel (vs sequential in RNNs)
+- Consists of: Multi-head attention, feed-forward networks, positional encodings, residual connections, layer normalization
+
+**Why Transformers replaced RNNs:**
+
+| Aspect | RNNs | Transformers |
+|--------|------|--------------|
+| **Processing** | Sequential (slow) | Parallel (fast) |
+| **Long-range dependencies** | Vanishing gradients | Attention mechanism |
+| **Scalability** | Limited by sequence length | Scales better |
+| **Pretraining** | Harder to pretrain | Natural fit for pretraining |
+
+**Model Architectures:**
+
+- **Encoder-only (BERT):** Processes input, good for understanding tasks (classification, NER)
+- **Decoder-only (GPT):** Generates output token-by-token, good for generation (ChatGPT is decoder-only)
+- **Encoder-Decoder (T5, BART):** Both encode input and decode output, good for seq-to-seq (translation, summarization)
+
+Most modern LLMs (GPT, Claude, Gemini) are decoder-only.
+
+#### Self-Attention Mechanism (The Core Innovation)
+
+**How Attention Works:**
+
+1. **Query (Q):** What the current token is looking for
+2. **Key (K):** What each token offers
+3. **Value (V):** What each token contains
+
+**Attention Score = Softmax(Q · K^T / √d_k) · V**
+
+**Why scale by √d_k?** Without scaling, dot products grow with dimension, pushing softmax into regions with tiny gradients. Scaling maintains reasonable variance.
+
+**Multi-Head Attention:**
+
+- Multiple attention "heads" in parallel
+- Each head has separate Q/K/V projections
+- Allows modeling different relationship types simultaneously
+- Example: head 1 captures syntactic relations, head 2 captures semantics
+
+**Causal (Masked) Attention:**
+
+- In decoder-only models, each token attends only to previous tokens
+- Prevents model from "cheating" during training by peeking at future tokens
+- Implemented via masking: set attention scores for future positions to -∞
+
+**Cross-Attention:**
+
+- In encoder-decoder models, decoder attends to encoder's output
+- Query from decoder, Key/Value from encoder
+- Allows generation to condition on input (e.g., machine translation)
+
+#### Tokenization & Embeddings
+
+**Tokenization:** Converting raw text into token IDs that the model processes.
+
+**Tokenization Methods:**
+
+| Method | Approach | Pros | Cons |
+|--------|----------|------|------|
+| **BPE** | Merges most frequent adjacent byte pairs | Balanced vocabulary | Depends on training data |
+| **WordPiece** | Like BPE but uses likelihood | Works well for English | Less universal |
+| **SentencePiece** | Treats text as byte stream | Handles Unicode, multilingual | Harder to interpret tokens |
+
+**Why Subword Tokenization?**
+
+- Character-level: too verbose (100s of tokens for one word)
+- Word-level: too many OOV issues (unknown words)
+- Subword: balanced trade-off
+
+**Vocabulary Size Impact:**
+
+- Larger vocab: more parameters (embedding matrix), better coverage
+- Smaller vocab: fewer tokens = cheaper inference, less expressiveness
+- Typical: 50K-100K tokens for English
+
+**Token Embeddings:**
+
+Each token ID maps to a learned dense vector (~768-4096 dimensions depending on model size).
+
+**Positional Embeddings:**
+
+Since attention has no inherent notion of position, we add position information:
+- **Sinusoidal (original):** Fixed functions, don't require learning
+- **Learned:** Embeddings learned during training
+- **RoPE (Rotary Position Embeddings):** Newer, better for long contexts
+
+#### Training vs Inference (Product Impact)
+
+| Phase | Goal | Cost | Time | Environment |
+|-------|------|------|------|-------------|
+| **Training** | Learn parameters from data | High (compute-intensive) | Days to months | GPUs/TPUs, research clusters |
+| **Inference** | Use trained model | Per-token or per-request | Milliseconds | Optimized servers or APIs |
+
+**Key Product Implications:**
+
+- Training is one-time; inference is ongoing
+- Inference latency and cost drive product decisions (model selection, caching, batching)
+- Inference-optimized models (Llama, Mistral) trade some quality for speed/cost
+
+#### Key Metrics
+
+- **Perplexity:** How "surprised" the model is by test data (lower is better)
+- **Loss:** Training objective (cross-entropy loss)
+- **Throughput:** Tokens/second (inference speed)
+- **FLOPS:** Floating-point operations per second
+
+---
+
+### Day 5: Behavioral & Soft Skills (4-6 hours)
+
+**Context:** Master the non-technical interview component (storytelling, teamwork, leadership).
+
+#### STAR Method (Situation, Task, Action, Result)
+
+Structure every behavioral answer:
+
+1. **Situation:** Set the context (problem, team, stakes)
+2. **Task:** What you were responsible for
+3. **Action:** Specific steps you took (I, not we, to take responsibility)
+4. **Result:** Quantified outcome (faster, cheaper, more users)
+
+**Example:** "At my startup (Situation), we had a model that was slow in production (Task). I profiled the inference code and found we were doing unnecessary recomputation (Action). After adding a caching layer, latency dropped 60% and cost dropped 40% (Result)."
+
+#### Common Behavioral Questions for AI Roles
+
+| Question | Focus | STAR Structure |
+|----------|-------|-----------------|
+| **Tell me about a time you failed.** | Growth, accountability, learning | Problem (Situation) → owned mistake (Action) → learned/improved (Result) |
+| **Describe a conflict with a coworker.** | Communication, collaboration | Different viewpoint (Situation) → listened and understood (Action) → aligned (Result) |
+| **Walk me through a difficult technical decision.** | Trade-offs, analysis, judgment | Multiple options (Situation) → evaluated pros/cons (Action) → chose and monitored (Result) |
+| **Tell me about a project you're proud of.** | Impact, initiative, quality | Problem (Situation) → led solution (Action) → measurable impact (Result) |
+| **Describe your most challenging project.** | Resilience, problem-solving | Obstacles (Situation) → creative solutions (Action) → succeeded despite challenges (Result) |
+
+#### Company & Role Research
+
+- **Why us?** Know the company's AI strategy, recent announcements, product roadmap
+- **Why this role?** Understand the team's priorities and how your skills fit
+- **Why you?** Have 2-3 concrete examples of relevant work
+- **Prepare questions:** Ask about team structure, current challenges, how success is measured
+
+#### Red Flags to Avoid
+
+❌ "I don't know" without thinking  
+❌ Blaming others (say "we")  
+❌ Memorized, scripted answers  
+❌ Negative comments about past employers  
+❌ Overstating your role  
+❌ Not asking questions about the role
+
+#### Green Flags to Show
+
+✅ Thoughtful answers with specific examples  
+✅ Own your decisions (mistakes included)  
+✅ Show curiosity about the role and company  
+✅ Communicate clearly and concisely  
+✅ Ask smart questions about impact and challenges  
+✅ Demonstrate growth mindset
+
+---
+
+## Week 2: Advanced Topics
+
+Master system design, product thinking, and domain-specific knowledge.
+
+### Day 6-7: AI System Design (10-12 hours)
+
+**Context:** Design production AI systems end-to-end. Common interviews: "Design a recommendation system using LLMs" or "Build a real-time fraud detection system."
+
+#### System Design Framework
+
+1. **Understand Requirements (5-10 min)**
+   - Functional: What does the system do?
+   - Non-functional: Latency, throughput, accuracy, cost
+   - Scale: Users, QPS, data volume
+
+2. **High-Level Architecture (10 min)**
+   - Data pipeline (collection, preprocessing, storage)
+   - Model (training, serving, monitoring)
+   - Application layer (API, caching, fallbacks)
+
+3. **Deep Dive (15-20 min)**
+   - Model selection (accuracy/latency/cost trade-off)
+   - Inference optimization (batching, caching, quantization)
+   - Data quality and labeling
+   - Monitoring and retraining
+
+4. **Discuss Trade-offs (5-10 min)**
+   - Accuracy vs latency vs cost
+   - Complexity vs maintainability
+   - Model size vs throughput
+
+#### Example: Real-Time Fraud Detection
+
+**Functional Requirements:**
+- Detect fraudulent transactions in real-time
+- Flag suspicious activity with explanations
+- Manual review queue for ambiguous cases
+
+**Non-Functional Requirements:**
+- Latency: under 100ms per transaction
+- Accuracy: above 95% recall (catch fraud), below 5% false positive rate
+- Throughput: 10,000 transactions/second
+- Cost: under $0.001 per transaction
+
+**Architecture:**
+
+```
+User Transaction
+    ↓
+Input Validation → Feature Extraction → Model Inference → Post-Processing
+    ↓                      ↓                    ↓              ↓
+   (Rules)         (Real-time features)  (Small model)  (Thresholds)
+                        ↓
+                   [Feature Cache]
+                        ↓
+                   [Time-series DB]
+                   
+Output: Risk Score, Explanation, Manual Review Queue
+```
+
+**Model Selection:**
+
+- **Fast model:** Gradient-boosted tree (XGBoost) for baseline (under 10ms)
+- **Accurate model:** Neural network or LLM for complex patterns
+- **Ensemble:** Combine both for accuracy + speed
+
+**Feature Engineering:**
+
+- Amount, merchant category, user history
+- Temporal features (time of day, day of week)
+- Aggregated features (user's avg transaction, frequency)
+- Graph features (is this merchant connected to known fraudsters?)
+
+**Monitoring:**
+
+- Alert if fraud rate changes (data drift)
+- Alert if model performance degrades (model drift)
+- Track false positives to avoid user frustration
+
+#### LLM-Specific System Design
+
+**RAG vs Fine-tuning:**
+
+| Aspect | RAG | Fine-tuning |
+|--------|-----|-------------|
+| **Use Case** | Up-to-date info, large knowledge base | Specific style/tasks, limited data |
+| **Cost** | Retrieval + inference | Expensive training, then inference |
+| **Latency** | Retrieval adds time | Standard inference |
+| **Flexibility** | Update knowledge without retraining | Slow to update |
+| **Best For** | Q&A systems, documentation assistants | Writing style, domain-specific terminology |
+
+**RAG Architecture:**
+
+```
+User Question
+    ↓
+[Query Embedding]
+    ↓
+[Vector DB Search] → Top-K Documents
+    ↓
+[Combine Query + Documents]
+    ↓
+[LLM Inference]
+    ↓
+Answer with Citations
+```
+
+**Inference Optimization:**
+
+- **Token Caching:** Cache KV values to reuse for follow-up queries
+- **Batching:** Group requests to improve GPU utilization
+- **Quantization:** Reduce model precision (32-bit → 8-bit) for speed/cost
+- **Distillation:** Train smaller model to mimic larger one
+- **Speculative Decoding:** Draft tokens with small model, verify with large
+
+---
+
+### Day 8-9: AI Product Management (10-12 hours)
+
+**Context:** Design and ship AI features. Think like a product manager: user needs, metrics, trade-offs, launch.
+
+#### Design an AI Feature (Framework)
+
+**1. Understand the User Problem (Not the Technology)**
+
+- What is the user's pain point?
+- How do they solve it today? (manual, other tools)
+- What would delightful look like?
+- Who is the user? (job to be done)
+
+❌ *Wrong:* "Let's add a ChatGPT API to our app"  
+✅ *Right:* "Users spend 2 hours/week summarizing reports. An AI assistant could do it in 30 seconds."
+
+**2. Define Success Metrics**
+
+| Metric Type | Examples |
+|-------------|----------|
+| **Business** | Conversion rate, retention, time saved, revenue |
+| **AI-specific** | Accuracy, relevance, hallucination rate, latency |
+| **Guardrails** | Error rate, cost/user, p95 latency |
+
+**3. Design the Experience**
+
+- **MVP:** Minimum viable product to test the assumption
+- **Fallback:** What happens when AI fails? (manual input, other tools)
+- **Trust:** How do we build confidence in AI predictions?
+  - Show confidence score
+  - Allow easy correction
+  - Explain when it's wrong
+  - Track improvement over time
+
+**4. Choose the Technical Approach**
+
+| Approach | Cost | Accuracy | Speed | When to Use |
+|----------|------|----------|-------|------------|
+| **API (GPT-5.5)** | Highest | High | Variable | MVP, low volume |
+| **Self-hosted (Llama)** | Medium | Medium-High | Fast | Scale, control |
+| **Fine-tuned** | High setup | High | Medium | Domain-specific |
+| **RAG** | Medium | High | Medium | Knowledge-heavy |
+
+**5. Build Feedback Loop**
+
+```
+Collect Feedback (implicit + explicit)
+    ↓
+Analyze: What went wrong? When? Why?
+    ↓
+Retrain/Fine-tune (weekly/monthly)
+    ↓
+Monitor: Did it improve?
+    ↓
+(Repeat)
+```
+
+#### When NOT to Use AI
+
+❌ **Don't use AI when:**
+- Problem is well-solved with rules (use a config)
+- Data is insufficient (ground truth needed)
+- Cost exceeds benefit (spend $10 to save $1)
+- Explainability is critical (medical, legal)
+- User trust is fragile
+
+✅ **Use AI when:**
+- Problem is complex/ambiguous (many edge cases)
+- Enough training data exists
+- Benefits >> costs
+- Users accept some uncertainty
+- Continuous improvement is valuable
+
+#### A/B Testing AI Features
+
+**Challenge:** Non-deterministic outputs (random sampling, model updates)
+
+**Solution:**
+
+- **User-level randomization** (50% control, 50% treatment)
+- **Track aggregated metrics** (engagement, completion, not individual outputs)
+- **Long-term metrics** (avoid novelty effect)
+- **Hold-out groups** (some users always on control)
+
+**What to measure:**
+
+- Does the AI feature improve primary metric? (conversion, time saved)
+- Adoption rate (do users actually use it?)
+- Override rate (how often do users ignore AI's suggestion?)
+- Correction rate (how often is the AI wrong?)
+
+---
+
+### Day 9-10: Domain-Specific Deep-Dives (8-10 hours)
+
+#### ML Fundamentals (for Engineers/Scientists)
+
+**Supervised vs Unsupervised Learning:**
+
+| Type | Input | Output | Example |
+|------|-------|--------|---------|
+| **Supervised** | Features (X) + Labels (Y) | Predict Y | Email classification (spam/not spam) |
+| **Unsupervised** | Features (X) only | Find patterns | Customer segmentation, anomaly detection |
+| **Semi-supervised** | Mix of labeled + unlabeled | Leverage both | Limited labeled data, lots of unlabeled |
+
+**Evaluation Metrics (Classification):**
+
+- **Accuracy:** (TP + TN) / Total (good when balanced classes)
+- **Precision:** TP / (TP + FP) (what % of predictions are correct?)
+- **Recall:** TP / (TP + FN) (what % of actual positives did we find?)
+- **F1:** 2 × (Precision × Recall) / (Precision + Recall) (harmonic mean)
+
+**When to optimize which:**
+- High precision (suggestions): Ad recommendations (irrelevant ads → user annoyance)
+- High recall (detection): Fraud, spam (miss fraud → loss)
+- Balance both: Medical diagnosis (precision = safety, recall = don't miss cases)
+
+**Overfitting vs Underfitting:**
+
+| Problem | Cause | Symptoms | Solution |
+|---------|-------|----------|----------|
+| **Overfitting** | Too complex for data | High train acc, low test acc | Regularization, more data, simpler model |
+| **Underfitting** | Too simple | Both train and test low | More complex model, more features |
+
+#### Banking & Product-Specific Questions
+
+**Key Banking Concepts:**
+
+- **Credit Risk:** Will borrower repay? (LTV, debt-to-income, payment history)
+- **Fraud Detection:** Is transaction legitimate? (velocity checks, pattern matching)
+- **Customer Segmentation:** Group by value/risk (mass market, affluent, SME)
+- **Cross-sell Opportunity:** What products should we recommend? (next-best-offer)
+
+**AI in Banking:**
+
+- **Loan Approval:** Risk assessment (accept/reject/review)
+- **Fraud Detection:** Real-time scoring + human review
+- **Customer Service:** AI assistant + human fallback
+- **Personalization:** Tailored offers based on behavior + propensity models
+
+**Case Study: Design AI-Powered Loan Approval**
+
+**Constraints:**
+- Regulatory (explainability, bias auditing)
+- Speed (decision within hours, not weeks)
+- Accuracy (minimize bad debt, avoid rejecting good customers)
+- Cost (automate 70% of decisions, 30% manual review)
+
+**Solution:**
+
+1. **Feature Engineering:** Income, debt, credit score, employment history, behavioral signals
+2. **Model:** Gradient-boosted tree (interpretable) + neural net (ensemble)
+3. **Decision Logic:** 
+   - High risk → Reject (fast)
+   - Low risk → Approve (instant)
+   - Medium risk → Manual review (2-4 hours)
+4. **Fairness:** Audit by demographic group, ensure similar approval rates
+5. **Monitoring:** Track default rate, approval rate, review queue
+
+---
+
+## Interview Tips & Tricks
+
+### Communication
+
+✅ **Think out loud:** Explain your reasoning as you go  
+✅ **Clarify before solving:** Ask about scale, requirements, constraints  
+✅ **Trade-off analysis:** "We could do X (fast) or Y (accurate). X is better because..."  
+✅ **Ask for feedback:** "Does this direction make sense?"  
+
+❌ **Don't:** Jump to code/design without clarification  
+❌ **Don't:** Give generic answers (personalize to the company/role)  
+
+### Common Mistakes
+
+| Mistake | Impact | Fix |
+|---------|--------|-----|
+| **Assume requirements** | Design for wrong problem | Ask clarifying questions |
+| **Over-engineer MVP** | Spend time on non-critical features | Scope ruthlessly; iterate |
+| **Ignore monitoring** | Miss data/model drift | Include observability from day 1 |
+| **Assume accuracy = success** | Miss latency/cost/fairness | Define all metrics upfront |
+| **No fallback plan** | Breaks when AI fails | Design graceful degradation |
+
+### Preparation Checklist
+
+- [ ] Understand the company's AI strategy and recent announcements
+- [ ] Study the role: team structure, product area, seniority level
+- [ ] Prepare 3-5 behavioral stories using STAR method
+- [ ] Practice system design: 2-3 walkthroughs (interview questions are open-ended)
+- [ ] Know your technical depth: what papers, projects, tools?
+- [ ] Prepare thoughtful questions about the role/team
+- [ ] Sleep well the night before 😴
+
+---
+
+<SeeAlso links={[
+  { label: 'Reference Cheatsheets', href: '/reference/cheatsheets', description: 'Quick lookup tables and summaries' },
+  { label: 'Deep Dive: How LLMs Work', href: '/deep-dive/how-llms-work', description: 'Expand technical understanding' },
+  { label: 'AI Product Interview Cheatsheet', href: '/reference/cheatsheets/ai-product-interview', description: 'Detailed Q&A reference' }
+]} />
