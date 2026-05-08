@@ -1,0 +1,423 @@
+---
+title: RAG Architecture Deep Dive
+description: Retrieval-Augmented Generation — building knowledge systems that teach LLMs your data
+sidebar:
+  order: 2
+lastUpdated: 2026-05-08
+---
+
+import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import SeeAlso from '../../../components/SeeAlso.astro';
+
+<Breadcrumb />
+
+# RAG Architecture: Complete Guide
+
+Retrieval-Augmented Generation (RAG) is how you make LLMs answer questions about your data. This guide covers everything from basic concepts to production patterns.
+
+---
+
+## What Is RAG?
+
+**The Problem:** LLMs have a training cutoff. Claude was trained until April 2024. Ask it about events in May 2026 and it won't know.
+
+**The Solution:** RAG teaches the LLM your data by searching for relevant documents first, then adding them to the prompt as context.
+
+**The Flow:**
+
+```
+User Question
+    ↓
+Search Your Knowledge Base
+    ↓
+Retrieve Relevant Documents
+    ↓
+Add Documents to Prompt
+    ↓
+Send to LLM with Full Context
+    ↓
+LLM Generates Answer (now informed by your data)
+```
+
+**Why It Works:** LLMs are excellent at reasoning over provided context. You just need to provide the right context.
+
+---
+
+## The Three Stages of RAG
+
+### Stage 1: Indexing (Offline, happens once)
+
+Take your documents and prepare them for search:
+
+1. **Chunking** — Break documents into manageable pieces (chunks)
+   - Why: LLMs have context limits; you can't send a 1000-page document
+   - How: Split by paragraph, sentence, or fixed size (e.g., 512 tokens)
+   - Tradeoff: Smaller chunks = more precise retrieval, but harder for LLM to understand context
+
+2. **Embedding** — Convert text into numerical vectors
+   - Why: Numbers are what vector databases understand
+   - How: Pass each chunk through an embedding model (e.g., `text-embedding-3-small`)
+   - Result: Each chunk becomes a 1536-dimensional vector
+
+3. **Storage** — Store vectors in a vector database
+   - Why: Fast similarity search
+   - How: Use Pinecone, Weaviate, Qdrant, Chroma, or pgvector
+   - Result: Searchable knowledge base
+
+---
+
+### Stage 2: Retrieval (At query time)
+
+When a user asks a question:
+
+1. **Convert question to vector** — Use same embedding model
+2. **Find similar vectors** — Vector database does similarity search (cosine, L2, etc.)
+3. **Return top-K chunks** — Usually top 3-5 most similar chunks
+4. **Rank if needed** — Re-rank results if you have a better ranker
+
+**Example:**
+
+User asks: "What's our return policy?"
+
+- Query vector: [0.34, -0.12, 0.89, ... 1536 dimensions total]
+- Database search: Finds chunks about "returns", "refunds", "exchange policy"
+- Return: Top 3 chunks about returns
+
+---
+
+### Stage 3: Generation (At query time)
+
+Send context + question to LLM:
+
+```python
+prompt = """
+Here is context about our company:
+{retrieved_chunks}
+
+User question: {user_question}
+
+Answer the question based on the context above.
+"""
+
+answer = llm(prompt)
+```
+
+The LLM now has context and can answer accurately.
+
+---
+
+## Chunking Strategies
+
+Your chunking strategy dramatically affects RAG quality.
+
+### Strategy 1: Fixed-Size Chunks
+**Example:** Split every 512 tokens
+
+```
+Chunk 1: tokens 0-512
+Chunk 2: tokens 512-1024
+Chunk 3: tokens 1024-1536
+```
+
+**Pros:** Simple, predictable  
+**Cons:** May split sentences, loses context at boundaries  
+**Use when:** You have unstructured text (PDFs, web scrapes)
+
+### Strategy 2: Semantic Chunks
+**Example:** Split when topic changes
+
+```
+Chunk 1: "Introduction and Background"
+Chunk 2: "Methods and Approach"
+Chunk 3: "Results"
+```
+
+**Pros:** Preserves meaning, better context  
+**Cons:** Harder to implement, requires analysis  
+**Use when:** You control the source (your documentation)
+
+### Strategy 3: Overlapping Chunks
+**Example:** Chunks with 50-token overlap
+
+```
+Chunk 1: tokens 0-512
+Chunk 2: tokens 256-768 (overlaps with chunk 1)
+Chunk 3: tokens 512-1024 (overlaps with chunk 2)
+```
+
+**Pros:** Preserves context across boundaries  
+**Cons:** Requires more storage (2x), slower search  
+**Use when:** Context at boundaries matters (legal docs, technical specs)
+
+---
+
+## Retrieval Strategies
+
+How you search matters.
+
+### Strategy 1: Dense Retrieval (Most Common)
+
+**How:** Convert question to vector, find similar vectors
+
+```python
+query_vector = embedding_model.embed("What's your return policy?")
+results = vector_db.search(query_vector, top_k=5)
+```
+
+**Pros:** Fast, good for semantic search  
+**Cons:** Fails on keyword-specific queries  
+**When to use:** Most RAG systems
+
+### Strategy 2: BM25 (Keyword Search)
+
+**How:** Traditional text search (like Elasticsearch)
+
+```python
+results = bm25_index.search("return policy refund", top_k=5)
+```
+
+**Pros:** Excellent for keywords, fast  
+**Cons:** Fails on semantic meaning  
+**When to use:** When keywords are important (product searches)
+
+### Strategy 3: Hybrid (Best)
+
+**How:** Combine dense + BM25, re-rank results
+
+```python
+dense_results = vector_db.search(query_vector, top_k=10)
+bm25_results = bm25_index.search(query_text, top_k=10)
+combined = reciprocal_rank_fusion(dense_results, bm25_results)
+final = rerank_with_llm(combined, query, top_k=5)
+```
+
+**Pros:** Best of both worlds  
+**Cons:** More complex, slower  
+**When to use:** Production systems where accuracy matters
+
+---
+
+## Vector Databases Compared
+
+| DB | Best For | Cost | Complexity |
+|---|----------|------|------------|
+| Chroma | Prototyping, local | Free | Easiest |
+| Pinecone | Production, managed | $0.04/1K vectors | Medium |
+| Weaviate | Self-hosted, scale | Free or paid | Medium |
+| Qdrant | High performance | Free or cloud | Medium |
+| pgvector | SQL integration | Database cost | Hard |
+
+---
+
+## Common RAG Patterns
+
+### Pattern 1: Simple Q&A (Naive RAG)
+
+```
+User Question
+    ↓ (embed)
+Vector Search
+    ↓
+Top 3 Chunks
+    ↓ (add to prompt)
+Send to LLM with Context
+    ↓
+Answer
+```
+
+**Pros:** Simple, fast  
+**Cons:** Fails on complex questions needing multiple documents  
+**Use:** Customer support, simple FAQ
+
+### Pattern 2: Multi-Document (Fusion)
+
+```
+User Question
+    ↓
+Retrieve from Multiple Sources
+    ↓
+Combine & Re-rank
+    ↓
+Generate with Full Context
+    ↓
+Answer Synthesized from Multiple Docs
+```
+
+**Pros:** Handles complex questions  
+**Cons:** More expensive, longer context  
+**Use:** Research, analysis tasks
+
+### Pattern 3: Iterative RAG (with Questions)
+
+```
+User Question
+    ↓
+Initial Retrieval
+    ↓
+LLM Generates Follow-up Questions
+    ↓
+Retrieve Again (for follow-ups)
+    ↓
+Generate Final Answer with All Context
+```
+
+**Pros:** Handles multi-step reasoning  
+**Cons:** Multiple LLM calls, expensive  
+**Use:** Complex research, troubleshooting
+
+---
+
+## Production Considerations
+
+### 1. Chunking Size
+
+**Too small (100 tokens):**
+- Pro: Precise retrieval
+- Con: LLM loses context
+
+**Too large (2000 tokens):**
+- Pro: Full context
+- Con: Retrieves irrelevant stuff
+
+**Goldilocks (512-1024 tokens):** Usually best
+
+### 2. Overlap (if using)
+
+**No overlap:** Fast search, but boundaries lose context  
+**50-token overlap:** Extra storage, better results
+
+### 3. Reranking
+
+After retrieving top-10 from vector DB, rerank with:
+- Cross-encoder: Slow but accurate
+- Query likelihood: Fast, decent
+- LLM-based: Expensive but smart
+
+### 4. Context Window
+
+Always leave room for the question + response:
+
+```python
+max_context_size = model_context_window - buffer
+# buffer = 1000 tokens (for question + answer)
+
+retrieved_chunks = retrieve_up_to(max_context_size - buffer)
+```
+
+### 5. Error Handling
+
+**What if no documents match?**
+- Return "No information found"
+- Fall back to general LLM knowledge
+- Ask user for clarification
+
+**What if too many documents match?**
+- Take top-K (usually 3-5)
+- Re-rank and keep best
+- Use filtering if available
+
+---
+
+## Common Mistakes
+
+❌ **No overlap between chunks** → Context lost at boundaries  
+✅ **Use 50-token overlap**
+
+❌ **Chunks too large (>1500 tokens)** → Includes irrelevant content  
+✅ **Use 512-1024 tokens**
+
+❌ **Only using vector search** → Fails on keywords  
+✅ **Use hybrid (vector + BM25)**
+
+❌ **Not re-ranking results** → Suboptimal retrieval  
+✅ **Re-rank top-10 to top-3**
+
+❌ **Stale embeddings** → Miss new documents  
+✅ **Re-embed regularly or use live embeddings**
+
+---
+
+## Implementation Checklist
+
+- [ ] Collect your documents
+- [ ] Parse documents (PDFs, web, etc.)
+- [ ] Split into chunks (512-1024 tokens, 50-token overlap)
+- [ ] Generate embeddings (use `text-embedding-3-small`)
+- [ ] Store in vector DB (start with Chroma for prototyping)
+- [ ] Build retrieval function (dense + BM25 if possible)
+- [ ] Add re-ranking (cross-encoder or LLM)
+- [ ] Test on known questions
+- [ ] Monitor retrieval quality
+- [ ] Iterate on chunk size / retrieval strategy
+
+---
+
+## Example: From Zero to RAG
+
+```python
+# 1. Load documents
+documents = load_pdfs("./docs/")
+
+# 2. Split into chunks
+chunks = split_into_chunks(documents, chunk_size=512, overlap=50)
+
+# 3. Embed
+embeddings = [embed_model.embed(chunk) for chunk in chunks]
+
+# 4. Store in vector DB
+vector_db = Chroma()
+for chunk, embedding in zip(chunks, embeddings):
+    vector_db.add(text=chunk, embedding=embedding)
+
+# 5. Build retrieval
+def retrieve(query, top_k=5):
+    query_vector = embed_model.embed(query)
+    results = vector_db.search(query_vector, top_k=top_k)
+    return results
+
+# 6. Build RAG chain
+def answer_question(question):
+    context = retrieve(question)
+    prompt = f"Context:\n{context}\n\nQuestion: {question}"
+    answer = llm.generate(prompt)
+    return answer
+
+# 7. Use it
+print(answer_question("What's our return policy?"))
+```
+
+---
+
+## Measuring RAG Quality
+
+**Retrieval Metrics:**
+- Precision: % of retrieved docs relevant
+- Recall: % of relevant docs retrieved
+- MRR (Mean Reciprocal Rank): How high is first relevant doc?
+
+**Answer Metrics:**
+- Relevance: Does answer address the question?
+- Accuracy: Is answer correct?
+- Groundedness: Is answer based on provided context?
+
+**User Metrics:**
+- Helpfulness: Did user get what they needed?
+- Satisfaction: Would they use this again?
+- Time to resolution: How quickly did they get answer?
+
+---
+
+## When RAG Isn't Enough
+
+- **You need reasoning:** Add agents/chains (tool use for follow-ups)
+- **You need multi-hop questions:** Iterative RAG or graph-based retrieval
+- **You need structured data:** Add SQL / structured query capability
+- **You need real-time data:** Stream updates or use live APIs
+
+---
+
+See Also:
+- [Builder Path](/learn/builder) — Hands-on RAG implementation
+- [Frameworks Guide](/decide/frameworks/guide) — LangChain for RAG
+- [How LLMs Work](/deep-dive/how-llms-work) — Understanding embeddings
