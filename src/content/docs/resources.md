@@ -24,7 +24,7 @@ What LLMs are, how they work, and when to use each one.
 - Real capabilities vs hype
 - 3 ways to adapt models (prompting, RAG, fine-tuning)
 
-**[📥 Download PDF](/cheatsheets/llm-primer.html)** (Print-friendly, A4)
+**[📥 Download PDF](https://ai-playbook.pages.dev/cheatsheets/llm-primer.html)** (Print-friendly, A4)
 
 ---
 
@@ -39,7 +39,7 @@ Which tool to use for what — chat, coding, content creation, APIs.
 - Quick picker guide
 - Speed vs quality vs price tradeoffs
 
-**[📥 Download PDF](/cheatsheets/tools-comparison.html)** (Print-friendly, A4)
+**[📥 Download PDF](https://ai-playbook.pages.dev/cheatsheets/tools-comparison.html)** (Print-friendly, A4)
 
 ---
 
@@ -54,7 +54,7 @@ Which tool to use for what — chat, coding, content creation, APIs.
 - Common mistakes to avoid
 - How to test your prompts
 
-**[📥 Download PDF](/cheatsheets/prompt-engineering.html)** (Print-friendly, A4)
+**[📥 Download PDF](https://ai-playbook.pages.dev/cheatsheets/prompt-engineering.html)** (Print-friendly, A4)
 
 ---
 
