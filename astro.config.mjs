@@ -69,66 +69,70 @@ export default defineConfig({
       customCss: ['./src/styles/custom.css'],
       sidebar: [
         {
-          label: 'Start here',
+          label: 'Start Here',
           items: [
             { label: 'Welcome', slug: 'index' },
+            { label: 'Quick Start', slug: 'start/quick-start' },
           ],
         },
         {
-          label: 'Tools',
-          link: '/tools/',
+          label: 'Learn',
+          items: [
+            { label: 'Beginner Path', slug: 'learn/beginner' },
+            { label: 'Interview Prep', slug: 'learn/interview-prep' },
+            { label: 'Builder Path', slug: 'learn/builder' },
+            { label: 'Researcher Path', slug: 'learn/researcher' },
+          ],
         },
         {
-          label: 'Open Source',
-          link: '/opensource/',
+          label: 'Decide',
+          items: [
+            { label: 'Tools Guide', slug: 'decide/tools/guide' },
+            { label: 'Models Guide', slug: 'decide/models/guide' },
+            { label: 'Frameworks Guide', slug: 'decide/frameworks/guide' },
+            { label: 'Cost Calculator', slug: 'decide/cost-calculator' },
+          ],
         },
         {
-          label: 'Glossary',
-          link: '/glossary/',
+          label: 'Reference',
+          items: [
+            { label: 'Glossary', slug: 'reference/glossary' },
+            { label: 'Cheatsheets', autogenerate: { directory: 'reference/cheatsheets' } },
+            { label: 'Benchmarks', slug: 'reference/benchmarks' },
+            { label: 'Model Specs', slug: 'reference/model-specs' },
+            { label: 'Confusions', slug: 'reference/confusions' },
+            { label: 'Principles', slug: 'reference/principles' },
+          ],
         },
         {
-          label: 'History',
-          link: '/history/',
+          label: 'Research',
+          items: [
+            { label: 'What\'s New', slug: 'research/whats-new' },
+            { label: 'Model Releases', slug: 'research/model-releases' },
+            { label: 'Trends', slug: 'research/emerging-trends' },
+            { label: 'Open-Source Models', slug: 'research/models/guide' },
+          ],
         },
         {
-          label: 'Confusions',
-          link: '/confusions/',
+          label: 'Deep Dives',
+          items: [
+            { label: 'How LLMs Work', slug: 'deep-dive/how-llms-work' },
+            { label: 'RAG Architecture', slug: 'deep-dive/rag-architecture' },
+            { label: 'Agents & Frameworks', slug: 'deep-dive/agents-frameworks' },
+            { label: 'Training & Fine-tuning', slug: 'deep-dive/training-finetuning' },
+            { label: 'Prompt Engineering', slug: 'deep-dive/prompt-engineering' },
+          ],
         },
         {
-          label: 'Follow',
-          link: '/follow/',
+          label: 'Resources',
+          autogenerate: { directory: 'resources' },
         },
         {
-          label: 'Workflows',
-          link: '/workflows/',
-        },
-        {
-          label: 'Principles',
-          link: '/principles/',
-        },
-        {
-          label: 'Cheatsheets',
-          autogenerate: { directory: 'cheatsheets' },
-        },
-        {
-          label: 'Guides',
-          autogenerate: { directory: 'guides' },
-        },
-        {
-          label: 'Diagrams',
-          autogenerate: { directory: 'diagrams' },
-        },
-        {
-          label: 'Mind Maps',
-          autogenerate: { directory: 'mind-maps' },
-        },
-        {
-          label: 'Slide Decks',
-          autogenerate: { directory: 'slides' },
-        },
-        {
-          label: 'Infographics',
-          autogenerate: { directory: 'infographics' },
+          label: 'Community',
+          items: [
+            { label: 'Contributing', slug: 'community/contributing' },
+            { label: 'Report Outdated', slug: 'community/report' },
+          ],
         },
       ],
     }),

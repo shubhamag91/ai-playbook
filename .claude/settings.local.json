@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "mcp__claude_ai_Linear__save_issue",
+      "mcp__claude_ai_Linear__get_issue",
+      "Bash(git add *)",
+      "Bash(git commit -m 'MOS-207: Design new information architecture for scalability *)"
+    ]
+  }
+}
