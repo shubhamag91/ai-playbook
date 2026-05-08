@@ -79,8 +79,8 @@ export default defineConfig({
           label: 'Learn',
           items: [
             { label: 'Beginner Path', slug: 'learn/beginner' },
-            { label: 'Interview Prep', slug: 'learn/interview-prep' },
             { label: 'Builder Path', slug: 'learn/builder' },
+            { label: 'Interview Prep', slug: 'learn/interview-prep' },
             { label: 'Researcher Path', slug: 'learn/researcher' },
           ],
         },
@@ -98,10 +98,10 @@ export default defineConfig({
           items: [
             { label: 'Glossary', slug: 'reference/glossary' },
             { label: 'Cheatsheets', autogenerate: { directory: 'reference/cheatsheets' } },
-            { label: 'Benchmarks', slug: 'reference/benchmarks' },
-            { label: 'Model Specs', slug: 'reference/model-specs' },
             { label: 'Confusions', slug: 'reference/confusions' },
             { label: 'Principles', slug: 'reference/principles' },
+            { label: 'Benchmarks', slug: 'reference/benchmarks' },
+            { label: 'Model Specs', slug: 'reference/model-specs' },
           ],
         },
         {
@@ -109,10 +109,10 @@ export default defineConfig({
           items: [
             { label: 'What\'s New', slug: 'research/whats-new' },
             { label: 'Model Releases', slug: 'research/model-releases' },
-            { label: 'Trends', slug: 'research/emerging-trends' },
-            { label: 'Vocabulary', slug: 'research/vocabulary' },
-            { label: 'History', slug: 'research/history' },
             { label: 'Open-Source Models', slug: 'research/models/guide' },
+            { label: 'Trends', slug: 'research/emerging-trends' },
+            { label: 'History', slug: 'research/history' },
+            { label: 'Vocabulary', slug: 'research/vocabulary' },
           ],
         },
         {
