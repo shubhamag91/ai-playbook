@@ -44,17 +44,15 @@ Which tool to use for what — chat, coding, content creation, APIs.
 ---
 
 ### ✍️ Prompt Engineering (1 page)
-5 techniques to get better outputs from any LLM.
+Core patterns, templates, and anti-patterns for effective prompting.
 
 **Includes:**
-- 3 golden rules (be specific, give context, show examples)
-- 5 quick wins (role, constraints, format, step-by-step, examples)
-- Prompt template (steal this!)
-- Advanced techniques (chain-of-thought, few-shot, decomposition)
-- Common mistakes to avoid
-- How to test your prompts
+- The core patterns (Zero-shot, Few-shot, Chain-of-Thought, ReAct, Self-consistency, Reflection)
+- A reusable prompt template
+- Anti-patterns to avoid
+- Token cost formula for optimization
 
-**[📥 Download PDF](/cheatsheets/prompt-engineering.html)** (Print-friendly, A4)
+**[📥 Download PDF](https://ai-playbook.pages.dev/cheatsheets/prompt-engineering.html)** (Print-friendly, A4)
 
 ---
 
