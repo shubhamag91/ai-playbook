@@ -1,0 +1,413 @@
+---
+title: Multi-Agent Crew Template
+description: CrewAI example with agents collaborating on complex tasks
+sidebar:
+  order: 4
+lastUpdated: 2026-05-08
+---
+
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+
+<Breadcrumb />
+
+# Multi-Agent Crew Template
+
+Multiple AI agents working together with defined roles and responsibilities. Uses CrewAI for orchestration.
+
+---
+
+## Quick Start
+
+### 1. Install Dependencies
+
+```bash
+pip install crewai python-dotenv anthropic
+```
+
+### 2. Set Up Environment
+
+Create `.env`:
+```
+ANTHROPIC_API_KEY=your-key-here
+```
+
+### 3. Run the Example
+
+```bash
+python crew.py
+```
+
+---
+
+## Full Implementation
+
+```python
+import os
+from anthropic import Anthropic
+
+client = Anthropic()
+
+class Agent:
+    """Simplified agent class (CrewAI-like interface)"""
+    def __init__(self, role: str, goal: str, backstory: str = ""):
+        self.role = role
+        self.goal = goal
+        self.backstory = backstory
+        self.conversation = []
+    
+    def think(self, context: str, task: str) -> str:
+        """Agent thinks about the task given context"""
+        system = f"""You are a {self.role}.
+Goal: {self.goal}
+Backstory: {self.backstory}
+
+You are part of a team working on a task. Think carefully and contribute your expertise."""
+        
+        prompt = f"""Context from team:\n{context}\n\nTask: {task}
+
+Provide your analysis and recommendations based on your expertise."""
+        
+        response = client.messages.create(
+            model="claude-3-5-sonnet-20241022",
+            max_tokens=1024,
+            system=system,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        
+        thought = response.content[0].text
+        self.conversation.append({"role": self.role, "thought": thought})
+        return thought
+
+class Crew:
+    """Multi-agent crew coordinator"""
+    def __init__(self, agents: list, task: str):
+        self.agents = agents
+        self.task = task
+        self.context = ""
+        self.final_result = ""
+    
+    def kickoff(self) -> str:
+        """Execute crew to complete task"""
+        print(f"\nTask: {self.task}\n")
+        print("=" * 50)
+        
+        # Agent 1: Researcher
+        print(f"\n[{self.agents[0].role}] Thinking...")
+        thought1 = self.agents[0].think(self.context, self.task)
+        self.context = thought1
+        print(thought1[:200] + "..." if len(thought1) > 200 else thought1)
+        
+        # Agent 2: Analyst
+        print(f"\n[{self.agents[1].role}] Thinking...")
+        thought2 = self.agents[1].think(self.context, self.task)
+        self.context = thought1 + "\n\n" + thought2
+        print(thought2[:200] + "..." if len(thought2) > 200 else thought2)
+        
+        # Agent 3: Writer
+        print(f"\n[{self.agents[2].role}] Thinking...")
+        thought3 = self.agents[2].think(self.context, self.task)
+        self.final_result = thought3
+        print(thought3[:200] + "..." if len(thought3) > 200 else thought3)
+        
+        print("\n" + "=" * 50)
+        print("\nFinal Result:")
+        print(self.final_result)
+        
+        return self.final_result
+
+def example_research_crew():
+    """Example: Research team analyzing a topic"""
+    
+    # Define agents
+    researcher = Agent(
+        role="Research Analyst",
+        goal="Find and synthesize information from multiple sources",
+        backstory="Expert at gathering and organizing complex information"
+    )
+    
+    analyst = Agent(
+        role="Data Analyst",
+        goal="Identify patterns and draw insights from research",
+        backstory="Skilled at finding patterns and extracting meaning"
+    )
+    
+    writer = Agent(
+        role="Report Writer",
+        goal="Create clear, compelling narratives from analysis",
+        backstory="Excellent communicator who explains complex ideas clearly"
+    )
+    
+    # Create crew
+    crew = Crew(
+        agents=[researcher, analyst, writer],
+        task="Analyze the current state of AI in 2026 and predict future trends"
+    )
+    
+    # Run crew
+    result = crew.kickoff()
+    return result
+
+def example_blog_crew():
+    """Example: Blog writing team"""
+    
+    outline_writer = Agent(
+        role="Content Strategist",
+        goal="Create compelling blog post outlines",
+        backstory="Expert at planning content that engages readers"
+    )
+    
+    writer = Agent(
+        role="Blog Writer",
+        goal="Write engaging, well-structured blog posts",
+        backstory="Professional writer with experience in tech blogs"
+    )
+    
+    editor = Agent(
+        role="Editor",
+        goal="Refine and improve blog post quality",
+        backstory="Meticulous editor focused on clarity and impact"
+    )
+    
+    crew = Crew(
+        agents=[outline_writer, writer, editor],
+        task="Write a blog post about 'The Future of AI Agents' for technical audience"
+    )
+    
+    return crew.kickoff()
+
+def example_product_crew():
+    """Example: Product development team"""
+    
+    pm = Agent(
+        role="Product Manager",
+        goal="Understand market needs and define product requirements",
+        backstory="Strategic PM with experience in AI products"
+    )
+    
+    engineer = Agent(
+        role="Technical Architect",
+        goal="Design scalable technical solutions",
+        backstory="Senior engineer with 15 years experience"
+    )
+    
+    designer = Agent(
+        role="UX Designer",
+        goal="Create user-centered design solutions",
+        backstory="Design lead focused on user experience"
+    )
+    
+    crew = Crew(
+        agents=[pm, engineer, designer],
+        task="Plan a new AI-powered customer support tool"
+    )
+    
+    return crew.kickoff()
+
+if __name__ == "__main__":
+    print("Multi-Agent Crew Examples")
+    print("=" * 50)
+    
+    # Run examples
+    print("\n1. RESEARCH CREW")
+    example_research_crew()
+    
+    print("\n2. BLOG WRITING CREW")
+    example_blog_crew()
+    
+    print("\n3. PRODUCT DEVELOPMENT CREW")
+    example_product_crew()
+```
+
+---
+
+## Using Real CrewAI
+
+For production, use the actual CrewAI library:
+
+```bash
+pip install crewai
+```
+
+```python
+from crewai import Agent, Task, Crew
+
+# Define agents
+researcher = Agent(
+    role="Research Analyst",
+    goal="Find and synthesize information",
+    tools=[search_tool, web_scraper],
+    verbose=True,
+    llm=client.messages.create,  # Use Claude
+    memory=True
+)
+
+analyst = Agent(
+    role="Data Analyst",
+    goal="Identify patterns and insights",
+    tools=[data_analysis_tool],
+    verbose=True,
+    memory=True
+)
+
+# Define tasks
+research_task = Task(
+    description="Research AI trends in 2026",
+    agent=researcher,
+    expected_output="Comprehensive research summary"
+)
+
+analysis_task = Task(
+    description="Analyze findings and identify patterns",
+    agent=analyst,
+    expected_output="Pattern analysis and insights"
+)
+
+# Create crew
+crew = Crew(
+    agents=[researcher, analyst],
+    tasks=[research_task, analysis_task],
+    verbose=True
+)
+
+# Execute
+result = crew.kickoff()
+```
+
+---
+
+## Customization Patterns
+
+### 1. Sequential vs Parallel Execution
+
+```python
+class Crew:
+    def kickoff_sequential(self) -> str:
+        """Agents work one after another"""
+        for agent in self.agents:
+            thought = agent.think(self.context, self.task)
+            self.context += "\n" + thought
+        return self.context
+    
+    def kickoff_parallel(self) -> str:
+        """Agents work simultaneously"""
+        import concurrent.futures
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            thoughts = list(executor.map(
+                lambda a: a.think(self.context, self.task),
+                self.agents
+            ))
+        return "\n".join(thoughts)
+```
+
+### 2. Hierarchical Agent Structure
+
+```python
+class HierarchicalCrew:
+    def __init__(self, manager_agent, team_agents):
+        self.manager = manager_agent
+        self.team = team_agents
+    
+    def kickoff(self, task):
+        # Manager delegates to team
+        delegations = self.manager.think(task)
+        
+        # Team executes delegations
+        results = {}
+        for agent in self.team:
+            results[agent.role] = agent.think(delegations, task)
+        
+        # Manager synthesizes results
+        final = self.manager.think(str(results), "Synthesize team results")
+        return final
+```
+
+### 3. Memory Persistence
+
+```python
+class CrewWithMemory:
+    def __init__(self, agents):
+        self.agents = agents
+        self.memory_db = {}
+    
+    def save_memory(self, key, value):
+        self.memory_db[key] = value
+    
+    def retrieve_memory(self, key):
+        return self.memory_db.get(key, "")
+    
+    def kickoff_with_memory(self, task):
+        # Retrieve relevant past knowledge
+        context = "\n".join([
+            f"{k}: {v}" for k, v in self.memory_db.items()
+        ])
+        
+        # Run task with memory
+        result = self.run(task, context)
+        
+        # Store new knowledge
+        self.save_memory(task, result)
+        return result
+```
+
+---
+
+## Testing Multi-Agent Systems
+
+```python
+def test_crew():
+    """Test crew functionality"""
+    crew = create_crew()
+    result = crew.kickoff()
+    
+    # Verify result quality
+    assert "AI" in result
+    assert len(result) > 100
+    print("Crew test passed!")
+
+def benchmark_crew():
+    """Compare sequential vs parallel"""
+    import time
+    
+    crew = create_crew()
+    
+    start = time.time()
+    result_seq = crew.kickoff_sequential()
+    seq_time = time.time() - start
+    
+    start = time.time()
+    result_par = crew.kickoff_parallel()
+    par_time = time.time() - start
+    
+    print(f"Sequential: {seq_time:.2f}s")
+    print(f"Parallel: {par_time:.2f}s")
+    print(f"Speedup: {seq_time/par_time:.2f}x")
+```
+
+---
+
+## Best Practices
+
+- **Clear role definitions** — Each agent should have specific expertise
+- **Minimize agent count** — 2–5 agents usually sufficient
+- **Provide context** — Pass work between agents so they build on each other
+- **Define outputs** — Be explicit about expected output format
+- **Monitor quality** — Log agent thoughts to debug if needed
+- **Test interactions** — Ensure agents complement each other
+
+---
+
+## Common Patterns
+
+| Pattern | Use Case | Agents |
+|---------|----------|--------|
+| Researcher → Analyst → Writer | Report generation | 3 |
+| Code Reviewer → Fixer → Tester | Code quality | 3 |
+| Ideator → Developer → Critic | Creative work | 3 |
+| Planner → Executor → Monitor | Project management | 3 |
+
+---
+
+See Also:
+- [Agents & Frameworks](/deep-dive/agents-frameworks) — Multi-agent architecture
+- [Case Study: Research Analysis](/case-studies/research-analysis) — Real multi-agent system
+- [Frameworks Guide](/decide/frameworks/guide) — CrewAI vs alternatives

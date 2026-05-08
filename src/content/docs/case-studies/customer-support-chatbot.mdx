@@ -1,0 +1,331 @@
+---
+title: Customer Support Chatbot
+description: Building a RAG-powered support bot that deflects 40% of tickets while costing under $100/day
+sidebar:
+  order: 2
+lastUpdated: 2026-05-08
+---
+
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+
+<Breadcrumb />
+
+# Case Study: Customer Support Chatbot
+
+**Company:** Ecommerce platform with 100K+ active customers  
+**Problem:** 10K support tickets/day; response time 8+ hours; support costs $500K/year  
+**Solution:** RAG-powered chatbot with human handoff  
+**Results:** 40% ticket deflection; $50K/year savings; 15-minute average response time
+
+---
+
+## The Challenge
+
+Every day:
+- 10,000 customer support tickets arrive
+- 70% are routine questions (returns, shipping, billing)
+- 20-person support team, working around the clock
+- Average resolution time: 8-12 hours
+- Customers complain about wait times in reviews
+
+**The business problem:** Support costs are growing faster than revenue. Need to handle 3x volume by next year without hiring 3x staff.
+
+---
+
+## Initial Approach (What Didn't Work)
+
+**First attempt: Simple LLM prompt**
+
+```
+System: "You are a helpful support agent. Answer customer questions."
+User: "I ordered 3 weeks ago and haven't received my package"
+Model: "I understand your frustration. Most packages arrive within 5-7 business days. 
+        I'd recommend waiting a bit longer, or you could contact customer service..."
+Problem: Hallucinated—customer ordered 3 weeks ago, clearly overdue.
+```
+
+**Why it failed:**
+- No access to customer data (order history, shipping status)
+- Model had no way to check order status
+- Generated generic, unhelpful responses
+- Customers still had to contact support anyway
+
+---
+
+## Final Architecture (RAG + Handoff)
+
+```
+Customer Question
+    ↓
+1. Search Knowledge Base
+   (FAQs, return policy, shipping info)
+    ↓
+2. Retrieve Top 3 Documents
+    ↓
+3. Search Customer Database
+   (Order status, past tickets, account info)
+    ↓
+4. Combine Context + Question
+    ↓
+5. Generate Response with Claude
+    ↓
+6. Can Model Confidently Answer?
+   ├─ Yes → Send response to customer
+   └─ No → Hand off to human agent
+```
+
+### Key Components
+
+**1. Knowledge Base (RAG)**
+
+Indexed all customer-facing documentation:
+- Return policy (when/how returns work)
+- Shipping & delivery (how long, where to track)
+- Billing & payment (refunds, charges)
+- Account & login (password reset, 2FA)
+- Product FAQs (fits, materials, care)
+
+**Documents:** 500 pages (2-3K tokens each)  
+**Chunking:** 512-token chunks with 50-token overlap  
+**Embedding:** OpenAI's text-embedding-3-small  
+**Vector DB:** Pinecone (production-grade, fast)
+
+**2. Customer Data Integration**
+
+Connected to internal APIs:
+- Customer account (email, past orders, preferences)
+- Order status (when ordered, when shipped, tracking)
+- Return status (if applicable, when expected back)
+- Support history (past tickets, resolution)
+
+This wasn't indexed as embeddings—retrieved directly via API calls with the customer's ID.
+
+**3. LLM with Tool Use**
+
+Claude with 3 tools:
+```python
+tools = [
+    Tool(
+        name="search_knowledge_base",
+        description="Search company FAQs and policies"
+    ),
+    Tool(
+        name="get_order_status",
+        description="Get a customer's order status and tracking"
+    ),
+    Tool(
+        name="escalate_to_human",
+        description="Escalate complex issues to human agent"
+    )
+]
+```
+
+**4. Confidence Threshold**
+
+Model decides: can I answer this confidently?
+
+```python
+if confidence_score < 0.7:
+    # Complex issue, escalate
+    return escalate_to_human()
+else:
+    # Confident answer
+    return generate_response()
+```
+
+---
+
+## Implementation Details
+
+### Confidence Scoring
+
+Not just probability—actual heuristics:
+
+```python
+confidence = 0.0
+
+# +0.3 if we found relevant docs
+if retrieved_docs_score > 0.7:
+    confidence += 0.3
+
+# +0.3 if we have clear customer data
+if order_status == "shipped" or "delivered":
+    confidence += 0.3
+
+# +0.2 if question is factual (not emotional)
+if question_type == "factual":
+    confidence += 0.2
+
+# -0.2 if model generated uncertainty ("I don't know", "unclear")
+if "uncertain" in response:
+    confidence -= 0.2
+
+# Only respond if >= 0.7
+if confidence >= 0.7:
+    send_to_customer()
+else:
+    escalate_to_human()
+```
+
+### Response Format
+
+All responses follow a template:
+
+```
+Hi [Customer Name],
+
+Thank you for reaching out. [Personalized answer with specific info from order/docs]
+
+If this doesn't solve it, I'm escalating you to a specialist who'll reach out within 2 hours.
+
+Best,
+Support Bot
+```
+
+**Why the template?** Consistency, feels less like a bot, sets expectations.
+
+### Conversation Memory
+
+For multi-turn conversations:
+```
+Customer Q1: "Where's my package?"
+Bot: "[response + status]"
+Customer Q2: "When will it arrive?"
+Bot: "Based on tracking, it should arrive tomorrow..."
+```
+
+Kept last 5 messages in context (100-token budget).
+
+---
+
+## Rollout Strategy
+
+**Phase 1 (Week 1):** Pilot with 10% of tickets, monitor
+- Ran support team through bot responses before sending
+- Measured accuracy: 87% (benchmark: 100% human accuracy)
+- Identified edge cases manually
+
+**Phase 2 (Week 2-3):** Ramp to 50%, auto-send
+- Started auto-sending responses without review
+- Set escalation threshold high (70% confidence)
+- Monitored "follow-up" rate (customer asks again = failure)
+
+**Phase 3 (Week 4+):** Full rollout at 100%
+- Confident enough to fully automate
+- Ramped down escalation threshold to 60%
+- Monitored customer satisfaction
+
+---
+
+## Results
+
+### Metrics
+
+| Metric | Before | After | Change |
+|--------|--------|-------|--------|
+| Tickets/day | 10,000 | 10,000 | — |
+| Bot deflection rate | 0% | 40% | +40% |
+| Tickets handled by humans | 10,000 | 6,000 | -40% |
+| Avg response time | 8 hours | 15 min (bot), 2 hours (human) | -95% |
+| Customer satisfaction | 3.2/5 | 4.1/5 | +28% |
+| Support costs/year | $500K | $450K | -$50K |
+
+### What Worked
+
+1. **40% deflection is real**
+   - Most support is refundable (returns) or informational (tracking)
+   - Automated responses handle 90% of these instantly
+   - Humans freed up for complex issues
+
+2. **Customers prefer quick bot to slow human**
+   - Even if imperfect, 2-minute response from bot > 8-hour wait for human
+   - Satisfaction: quick generic answer > slow perfect answer
+
+3. **Escalation threshold critical**
+   - Too high (above 80%): bot sends wrong answers, harms trust
+   - Too low (below 50%): escalates too much, defeats purpose
+   - Sweet spot: 60-70%
+
+### What Surprised Everyone
+
+1. **Escalation rate lower than expected**
+   - Feared 30-50% escalation rate
+   - Actually 5-10% (meaning bot really confident)
+   - Shows model works *really well* with good context
+
+2. **Follow-up rate nearly zero**
+   - Expected 20% of customers to ask again (bad answer)
+   - Actually 2% (almost all from escalated issues = human handles it)
+   - Strong signal that bot responses were good
+
+3. **Cost of RAG less than expected**
+   - Vector DB + embeddings + LLM calls: ~$0.003 per ticket
+   - At 4000 tickets/day deflected: ~$12/day
+   - Human cost savings: ~$140/day
+   - ROI: 11:1
+
+---
+
+## Lessons Learned
+
+### What We'd Do Differently
+
+1. **Index documents earlier**
+   - Spent weeks manually writing FAQs mid-project
+   - Should have had 100% documentation before starting
+   - Implementation would have taken 2 weeks instead of 8
+
+2. **Test confidence thresholds with data**
+   - Guessed at 70% initially
+   - Should have run A/B tests (60% vs 70% vs 80%) first
+   - Final threshold (60%) was very different from initial guess
+
+3. **Monitor escalation reasons**
+   - Added analytics: why did we escalate?
+   - "Complex issue" (10%), "low confidence" (70%), "policy exception" (20%)
+   - Insights: could have tuned prompts for "low confidence" cases
+
+4. **Start with FAQ instead of full docs**
+   - 500 pages was overkill
+   - First 50 FAQ items covered 80% of questions
+   - Should have started with FAQ, added more gradually
+
+### For Others Building Support Bots
+
+**Do this first:**
+1. Audit your actual support tickets (last 1000)
+2. Categorize by type (tracking, returns, billing, etc.)
+3. Write FAQs for top 80% (usually 40-50 questions)
+4. Build bot with just those 50
+5. Expand gradually based on real escalations
+
+**Don't do this:**
+- Don't index 500 pages before testing
+- Don't build perfect documentation first
+- Don't aim for 95%+ confidence (overkill, less deflection)
+- Don't skip the escalation/human-in-the-loop piece
+
+---
+
+## Technical Stack
+
+- **LLM:** Claude 3 Sonnet (fast, accurate for retrieval)
+- **Vector DB:** Pinecone (production-ready, fast)
+- **Embedding:** OpenAI text-embedding-3-small
+- **Customer DB:** PostgreSQL (existing system)
+- **API:** Python FastAPI (handles requests from website)
+- **Frontend:** React chatbot widget on support.company.com
+
+**Cost breakdown (monthly):**
+- Pinecone: ~$30 (low volume)
+- Embeddings: ~$50 (ingestion + searches)
+- LLM calls: ~$350 (4000 deflected tickets × 1000 tokens avg)
+- Infrastructure: ~$100
+- **Total: ~$530/month** (vs $42K/month human support costs)
+
+---
+
+See Also:
+- [RAG Architecture](/deep-dive/rag-architecture) — How the knowledge base works
+- [Agents & Frameworks](/deep-dive/agents-frameworks) — Tool use pattern
+- [Prompt Engineering](/deep-dive/prompt-engineering) — Confidence-scoring prompts

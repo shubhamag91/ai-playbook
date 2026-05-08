@@ -1,0 +1,423 @@
+---
+title: Single Agent Template
+description: Agent with tools for autonomous task execution
+sidebar:
+  order: 3
+lastUpdated: 2026-05-08
+---
+
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+
+<Breadcrumb />
+
+# Single Agent Template
+
+An AI agent that can use tools to accomplish tasks autonomously. Includes error handling, tool validation, and conversation memory.
+
+---
+
+## Quick Start
+
+### 1. Install Dependencies
+
+```bash
+pip install anthropic python-dotenv pydantic
+```
+
+### 2. Set Up Environment
+
+Create `.env`:
+```
+ANTHROPIC_API_KEY=your-key-here
+```
+
+### 3. Run the Example
+
+```bash
+python agent.py
+```
+
+---
+
+## Full Implementation
+
+```python
+import json
+import os
+from typing import Any
+from anthropic import Anthropic
+from pydantic import BaseModel
+
+# Initialize client
+client = Anthropic()
+
+# Define tools
+TOOLS = [
+    {
+        "name": "get_weather",
+        "description": "Get current weather for a city",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "type": "string",
+                    "description": "City name"
+                },
+                "unit": {
+                    "type": "string",
+                    "enum": ["celsius", "fahrenheit"],
+                    "description": "Temperature unit"
+                }
+            },
+            "required": ["city"]
+        }
+    },
+    {
+        "name": "search_web",
+        "description": "Search the internet for information",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "Search query"
+                },
+                "max_results": {
+                    "type": "integer",
+                    "description": "Maximum number of results",
+                    "default": 5
+                }
+            },
+            "required": ["query"]
+        }
+    },
+    {
+        "name": "calculate",
+        "description": "Perform mathematical calculations",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "expression": {
+                    "type": "string",
+                    "description": "Math expression (e.g., '2 + 2 * 3')"
+                }
+            },
+            "required": ["expression"]
+        }
+    }
+]
+
+# Tool implementations
+def get_weather(city: str, unit: str = "celsius") -> dict:
+    """Simulate weather API call"""
+    # In production, call real weather API
+    weather_data = {
+        "New York": {"celsius": 22, "fahrenheit": 72},
+        "London": {"celsius": 18, "fahrenheit": 64},
+        "Tokyo": {"celsius": 25, "fahrenheit": 77},
+    }
+    
+    if city not in weather_data:
+        return {"error": f"City '{city}' not found"}
+    
+    temp = weather_data[city].get(unit, "Invalid unit")
+    return {
+        "city": city,
+        "temperature": temp,
+        "unit": unit,
+        "condition": "Partly cloudy"
+    }
+
+def search_web(query: str, max_results: int = 5) -> dict:
+    """Simulate web search"""
+    # In production, call real search API (Google, Bing, etc.)
+    results = [
+        {"title": f"Result {i+1} for '{query}'", "url": f"https://example.com/{i}"}
+        for i in range(max_results)
+    ]
+    return {"query": query, "results": results}
+
+def calculate(expression: str) -> dict:
+    """Evaluate mathematical expression safely"""
+    try:
+        # Only allow safe eval (numbers and operators)
+        safe_dict = {"__builtins__": {}}
+        result = eval(expression, safe_dict)
+        return {"expression": expression, "result": result}
+    except Exception as e:
+        return {"expression": expression, "error": str(e)}
+
+# Tool dispatcher
+def execute_tool(tool_name: str, tool_input: dict) -> Any:
+    """Execute a tool by name"""
+    tools = {
+        "get_weather": get_weather,
+        "search_web": search_web,
+        "calculate": calculate
+    }
+    
+    if tool_name not in tools:
+        return {"error": f"Unknown tool: {tool_name}"}
+    
+    try:
+        tool_func = tools[tool_name]
+        result = tool_func(**tool_input)
+        return result
+    except Exception as e:
+        return {"error": f"Tool error: {str(e)}"}
+
+class Agent:
+    def __init__(self, model: str = "claude-3-5-sonnet-20241022", max_iterations: int = 10):
+        self.model = model
+        self.max_iterations = max_iterations
+        self.messages = []
+    
+    def run(self, user_input: str) -> str:
+        """
+        Run agent to completion.
+        
+        Args:
+            user_input: Task for the agent
+            
+        Returns:
+            Final answer from the agent
+        """
+        # Add user message
+        self.messages.append({
+            "role": "user",
+            "content": user_input
+        })
+        
+        print(f"\nUser: {user_input}\n")
+        
+        # Agent loop
+        for iteration in range(self.max_iterations):
+            # Get next action from Claude
+            response = client.messages.create(
+                model=self.model,
+                max_tokens=1024,
+                system="""You are a helpful AI agent. You have access to tools to help accomplish tasks.
+When you need to use a tool, respond with:
+<tool_use>
+<invoke name="TOOL_NAME">
+<parameter name="param_name">value</parameter>
+</invoke>
+</tool_use>
+
+When you have the final answer, provide it directly.""",
+                tools=TOOLS,
+                messages=self.messages
+            )
+            
+            # Check if agent is done
+            if response.stop_reason == "end_turn":
+                # Extract final answer
+                final_answer = response.content[0].text
+                print(f"Agent: {final_answer}\n")
+                return final_answer
+            
+            # Process tool uses
+            tool_uses = [block for block in response.content if hasattr(block, 'type') and block.type == 'tool_use']
+            
+            if not tool_uses:
+                # No tools used, return response
+                final_answer = response.content[0].text
+                print(f"Agent: {final_answer}\n")
+                return final_answer
+            
+            # Add assistant response with tool uses
+            self.messages.append({
+                "role": "assistant",
+                "content": response.content
+            })
+            
+            # Execute tools and collect results
+            tool_results = []
+            for tool_use in tool_uses:
+                tool_name = tool_use.name
+                tool_input = tool_use.input
+                
+                print(f"Tool: {tool_name}({json.dumps(tool_input)})")
+                
+                # Execute tool
+                result = execute_tool(tool_name, tool_input)
+                
+                print(f"Result: {json.dumps(result)}\n")
+                
+                tool_results.append({
+                    "type": "tool_result",
+                    "tool_use_id": tool_use.id,
+                    "content": json.dumps(result)
+                })
+            
+            # Add tool results to conversation
+            self.messages.append({
+                "role": "user",
+                "content": tool_results
+            })
+        
+        return "Max iterations reached without completion"
+
+def main():
+    """Run example agent tasks"""
+    agent = Agent()
+    
+    # Example 1: Weather lookup
+    print("=" * 50)
+    print("Task 1: Check Weather")
+    print("=" * 50)
+    agent.run("What's the weather in London?")
+    
+    # Example 2: Calculation
+    print("=" * 50)
+    print("Task 2: Calculate")
+    print("=" * 50)
+    agent = Agent()  # Reset agent
+    agent.run("What's 15 * 47 + 23?")
+    
+    # Example 3: Multi-step task
+    print("=" * 50)
+    print("Task 3: Multi-step")
+    print("=" * 50)
+    agent = Agent()  # Reset agent
+    agent.run("Check weather in Tokyo and New York, then tell me which is warmer")
+
+if __name__ == "__main__":
+    main()
+```
+
+---
+
+## Customization Guide
+
+### Add a Custom Tool
+
+```python
+# 1. Define tool schema
+TOOLS.append({
+    "name": "get_stock_price",
+    "description": "Get current stock price",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "symbol": {
+                "type": "string",
+                "description": "Stock symbol (e.g., AAPL)"
+            }
+        },
+        "required": ["symbol"]
+    }
+})
+
+# 2. Implement tool
+def get_stock_price(symbol: str) -> dict:
+    # Call real stock API
+    prices = {"AAPL": 150, "GOOGL": 140, "MSFT": 380}
+    if symbol not in prices:
+        return {"error": f"Symbol not found: {symbol}"}
+    return {"symbol": symbol, "price": prices[symbol]}
+
+# 3. Register in dispatcher
+tools = {
+    "get_stock_price": get_stock_price,
+    # ... other tools
+}
+```
+
+### Add Conversation Memory
+
+```python
+class ConversationalAgent(Agent):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.conversation_history = []
+    
+    def run(self, user_input: str) -> str:
+        # Add context from previous conversation
+        if self.conversation_history:
+            history_context = "\n".join([
+                f"User: {h['user']}\nAgent: {h['agent']}"
+                for h in self.conversation_history[-5:]
+            ])
+            system_context = f"Previous conversation:\n{history_context}\n"
+        else:
+            system_context = ""
+        
+        # Store in history
+        result = super().run(user_input)
+        self.conversation_history.append({
+            "user": user_input,
+            "agent": result
+        })
+        
+        return result
+```
+
+### Add Tool Validation
+
+```python
+def execute_tool(tool_name: str, tool_input: dict) -> Any:
+    """Execute tool with validation"""
+    
+    # Find tool schema
+    tool_schema = next((t for t in TOOLS if t["name"] == tool_name), None)
+    if not tool_schema:
+        return {"error": f"Unknown tool: {tool_name}"}
+    
+    # Validate input
+    required_params = tool_schema["input_schema"].get("required", [])
+    for param in required_params:
+        if param not in tool_input:
+            return {"error": f"Missing required parameter: {param}"}
+    
+    # Execute tool
+    try:
+        return execute_tool(tool_name, tool_input)
+    except Exception as e:
+        return {"error": str(e)}
+```
+
+---
+
+## Testing
+
+```bash
+# Run interactive agent
+python agent.py
+
+# Test specific tasks
+python -c "
+from agent import Agent
+a = Agent()
+result = a.run('What is 25 + 75?')
+print('Result:', result)
+"
+```
+
+---
+
+## Best Practices
+
+- **Tool descriptions matter** — Clear descriptions help agent choose right tool
+- **Validate inputs** — Check tool inputs before executing
+- **Set max iterations** — Prevent infinite loops (default: 10)
+- **Log tool use** — Track which tools are called for debugging
+- **Handle errors gracefully** — Return informative error messages
+
+---
+
+## Common Issues
+
+| Issue | Solution |
+|-------|----------|
+| Agent gets stuck in loop | Lower `max_iterations` or improve tool descriptions |
+| Wrong tool called | Make tool descriptions more specific |
+| Tool errors crash agent | Add try-catch in execute_tool |
+| Agent ignores tool results | Ensure tool results in conversation context |
+
+---
+
+See Also:
+- [Agents & Frameworks](/deep-dive/agents-frameworks) — Technical concepts
+- [Prompt Engineering](/deep-dive/prompt-engineering) — System message design
+- [Case Study: Research Analysis](/case-studies/research-analysis) — Multi-agent example

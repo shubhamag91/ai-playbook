@@ -1,0 +1,527 @@
+---
+title: Chat API Template
+description: FastAPI server for a multi-turn chatbot with streaming and memory
+sidebar:
+  order: 5
+lastUpdated: 2026-05-08
+---
+
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+
+<Breadcrumb />
+
+# Chat API Template
+
+A production-ready FastAPI server for a multi-turn chatbot. Includes conversation memory, streaming responses, and error handling.
+
+---
+
+## Quick Start
+
+### 1. Install Dependencies
+
+```bash
+pip install fastapi uvicorn anthropic python-dotenv pydantic
+```
+
+### 2. Create Environment File
+
+Create `.env`:
+```
+ANTHROPIC_API_KEY=your-key-here
+```
+
+### 3. Run Server
+
+```bash
+python chat_api.py
+# Server runs at http://localhost:8000
+```
+
+### 4. Test the API
+
+```bash
+# Chat endpoint
+curl -X POST http://localhost:8000/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message":"Hello! What can you do?", "session_id":"test-1"}'
+
+# Get conversation history
+curl http://localhost:8000/history/test-1
+```
+
+---
+
+## Full Implementation
+
+```python
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
+from typing import Optional
+import os
+import json
+from datetime import datetime
+from anthropic import Anthropic
+
+# Initialize
+app = FastAPI(title="Chat API")
+client = Anthropic()
+
+# Store conversations (in production, use database)
+conversations = {}
+
+class ChatMessage(BaseModel):
+    """Chat message schema"""
+    message: str
+    session_id: str
+    system_prompt: Optional[str] = None
+
+class ChatResponse(BaseModel):
+    """Response schema"""
+    response: str
+    session_id: str
+    timestamp: str
+    turn_count: int
+
+class HistoryResponse(BaseModel):
+    """Conversation history"""
+    session_id: str
+    messages: list
+    turn_count: int
+
+# Endpoints
+
+@app.get("/")
+def root():
+    """Health check"""
+    return {"status": "ok", "service": "chat-api"}
+
+@app.post("/chat", response_model=ChatResponse)
+def chat(msg: ChatMessage):
+    """Chat endpoint - single turn"""
+    session_id = msg.session_id
+    user_message = msg.message
+    system_prompt = msg.system_prompt or "You are a helpful AI assistant."
+    
+    # Get or create conversation
+    if session_id not in conversations:
+        conversations[session_id] = {
+            "messages": [],
+            "created_at": datetime.now().isoformat(),
+            "system_prompt": system_prompt
+        }
+    
+    conv = conversations[session_id]
+    
+    # Add user message
+    conv["messages"].append({
+        "role": "user",
+        "content": user_message
+    })
+    
+    # Get response from Claude
+    try:
+        response = client.messages.create(
+            model="claude-3-5-sonnet-20241022",
+            max_tokens=1024,
+            system=conv["system_prompt"],
+            messages=conv["messages"]
+        )
+        
+        assistant_message = response.content[0].text
+        
+        # Add assistant response to history
+        conv["messages"].append({
+            "role": "assistant",
+            "content": assistant_message
+        })
+        
+        return ChatResponse(
+            response=assistant_message,
+            session_id=session_id,
+            timestamp=datetime.now().isoformat(),
+            turn_count=len(conv["messages"]) // 2
+        )
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/chat-stream")
+def chat_stream(msg: ChatMessage):
+    """Chat endpoint with streaming response"""
+    session_id = msg.session_id
+    user_message = msg.message
+    system_prompt = msg.system_prompt or "You are a helpful AI assistant."
+    
+    # Get or create conversation
+    if session_id not in conversations:
+        conversations[session_id] = {
+            "messages": [],
+            "created_at": datetime.now().isoformat(),
+            "system_prompt": system_prompt
+        }
+    
+    conv = conversations[session_id]
+    
+    # Add user message
+    conv["messages"].append({
+        "role": "user",
+        "content": user_message
+    })
+    
+    # Create streaming response
+    def generate():
+        try:
+            full_response = ""
+            
+            with client.messages.stream(
+                model="claude-3-5-sonnet-20241022",
+                max_tokens=1024,
+                system=conv["system_prompt"],
+                messages=conv["messages"]
+            ) as stream:
+                for text in stream.text_stream:
+                    full_response += text
+                    yield text
+            
+            # Store complete response
+            conv["messages"].append({
+                "role": "assistant",
+                "content": full_response
+            })
+            
+        except Exception as e:
+            yield f"\nError: {str(e)}"
+    
+    return StreamingResponse(generate(), media_type="text/plain")
+
+@app.get("/history/{session_id}", response_model=HistoryResponse)
+def get_history(session_id: str):
+    """Get conversation history"""
+    if session_id not in conversations:
+        raise HTTPException(status_code=404, detail="Session not found")
+    
+    conv = conversations[session_id]
+    
+    return HistoryResponse(
+        session_id=session_id,
+        messages=conv["messages"],
+        turn_count=len(conv["messages"]) // 2
+    )
+
+@app.delete("/history/{session_id}")
+def clear_history(session_id: str):
+    """Clear conversation history"""
+    if session_id in conversations:
+        del conversations[session_id]
+        return {"status": "cleared", "session_id": session_id}
+    return {"status": "not_found", "session_id": session_id}
+
+@app.get("/sessions")
+def list_sessions():
+    """List all active sessions"""
+    return {
+        "sessions": [
+            {
+                "session_id": sid,
+                "turns": len(conv["messages"]) // 2,
+                "created_at": conv["created_at"]
+            }
+            for sid, conv in conversations.items()
+        ]
+    }
+
+@app.post("/reset/{session_id}")
+def reset_session(session_id: str):
+    """Reset a conversation"""
+    if session_id in conversations:
+        old_messages = conversations[session_id]["messages"].copy()
+        conversations[session_id]["messages"] = []
+        return {
+            "status": "reset",
+            "session_id": session_id,
+            "previous_turns": len(old_messages) // 2
+        }
+    return {"status": "not_found", "session_id": session_id}
+
+# Utilities
+
+@app.get("/stats")
+def get_stats():
+    """Get server statistics"""
+    total_messages = sum(
+        len(conv["messages"])
+        for conv in conversations.values()
+    )
+    
+    return {
+        "total_sessions": len(conversations),
+        "total_messages": total_messages,
+        "avg_messages_per_session": (
+            total_messages / len(conversations)
+            if conversations else 0
+        )
+    }
+
+if __name__ == "__main__":
+    import uvicorn
+    
+    # Run server
+    uvicorn.run(
+        app,
+        host="0.0.0.0",
+        port=8000,
+        log_level="info"
+    )
+```
+
+---
+
+## JavaScript Client Example
+
+```javascript
+// Frontend client for the chat API
+class ChatClient {
+    constructor(baseUrl = 'http://localhost:8000') {
+        this.baseUrl = baseUrl;
+        this.sessionId = this.generateSessionId();
+    }
+    
+    generateSessionId() {
+        return 'session-' + Math.random().toString(36).substr(2, 9);
+    }
+    
+    async chat(message) {
+        const response = await fetch(`${this.baseUrl}/chat`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                message: message,
+                session_id: this.sessionId
+            })
+        });
+        
+        if (!response.ok) throw new Error('Chat failed');
+        return await response.json();
+    }
+    
+    async chatStream(message, onChunk) {
+        const response = await fetch(`${this.baseUrl}/chat-stream`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                message: message,
+                session_id: this.sessionId
+            })
+        });
+        
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        
+        while (true) {
+            const {value, done} = await reader.read();
+            if (done) break;
+            onChunk(decoder.decode(value));
+        }
+    }
+    
+    async getHistory() {
+        const response = await fetch(
+            `${this.baseUrl}/history/${this.sessionId}`
+        );
+        return await response.json();
+    }
+    
+    async reset() {
+        await fetch(
+            `${this.baseUrl}/reset/${this.sessionId}`,
+            {method: 'POST'}
+        );
+    }
+}
+
+// Usage in HTML
+const chat = new ChatClient();
+
+document.getElementById('send-btn').addEventListener('click', async () => {
+    const input = document.getElementById('message-input');
+    const message = input.value;
+    
+    // Display user message
+    displayMessage(message, 'user');
+    
+    // Get AI response (with streaming)
+    let response = '';
+    await chat.chatStream(message, (chunk) => {
+        response += chunk;
+        displayMessage(response, 'assistant');
+    });
+    
+    input.value = '';
+});
+```
+
+---
+
+## Production Configuration
+
+### 1. Use a Database
+
+Replace in-memory storage with PostgreSQL:
+
+```python
+from sqlalchemy import create_engine, Column, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from datetime import datetime
+
+Base = declarative_base()
+
+class Conversation(Base):
+    __tablename__ = "conversations"
+    
+    session_id = Column(String, primary_key=True)
+    messages = Column(String)  # JSON
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow)
+
+# Initialize DB
+engine = create_engine('postgresql://user:password@localhost/chatdb')
+Base.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)
+```
+
+### 2. Add Rate Limiting
+
+```python
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+
+@app.post("/chat")
+@limiter.limit("10/minute")
+def chat(request: Request, msg: ChatMessage):
+    # ... chat logic
+```
+
+### 3. Add Authentication
+
+```python
+from fastapi.security import HTTPBearer, HTTPAuthCredential
+from fastapi import Depends
+
+security = HTTPBearer()
+
+def verify_token(credentials: HTTPAuthCredential = Depends(security)):
+    if credentials.credentials != os.getenv("API_TOKEN"):
+        raise HTTPException(status_code=401, detail="Unauthorized")
+    return credentials
+
+@app.post("/chat")
+def chat(msg: ChatMessage, token = Depends(verify_token)):
+    # ... chat logic
+```
+
+---
+
+## Deployment
+
+### Docker
+
+Create `Dockerfile`:
+```dockerfile
+FROM python:3.11
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD ["uvicorn", "chat_api:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+Deploy:
+```bash
+docker build -t chat-api .
+docker run -p 8000:8000 \
+  -e ANTHROPIC_API_KEY=$API_KEY \
+  chat-api
+```
+
+### Cloud Deployment (Render, Railway, Heroku)
+
+```bash
+# requirements.txt
+fastapi==0.104.1
+uvicorn==0.24.0
+anthropic==0.7.0
+python-dotenv==1.0.0
+sqlalchemy==2.0.0
+psycopg2-binary==2.9.0
+slowapi==0.1.9
+```
+
+---
+
+## Testing
+
+```python
+from fastapi.testclient import TestClient
+
+client = TestClient(app)
+
+def test_chat():
+    response = client.post("/chat", json={
+        "message": "Hello",
+        "session_id": "test-1"
+    })
+    assert response.status_code == 200
+    assert "response" in response.json()
+
+def test_history():
+    # Add message first
+    client.post("/chat", json={
+        "message": "Test",
+        "session_id": "test-2"
+    })
+    
+    # Get history
+    response = client.get("/history/test-2")
+    assert response.status_code == 200
+    assert len(response.json()["messages"]) > 0
+
+# Run tests
+pytest test_chat_api.py
+```
+
+---
+
+## Best Practices
+
+- **Store conversations in DB** — Not memory
+- **Add authentication** — API token or OAuth
+- **Rate limit** — Prevent abuse
+- **Log requests** — For debugging
+- **Monitor latency** — Use APM tools
+- **Version your API** — `/v1/chat` for future compatibility
+- **Use async** — For better performance
+- **Document with OpenAPI** — FastAPI does this automatically
+
+---
+
+## Common Issues
+
+| Issue | Solution |
+|-------|----------|
+| Conversations lost on restart | Use persistent database |
+| API too slow | Add caching, use async |
+| Memory usage high | Clear old conversations periodically |
+| CORS errors in frontend | Add CORS middleware |
+| Token limit exceeded | Implement conversation truncation |
+
+---
+
+See Also:
+- [Case Study: Customer Support](/case-studies/customer-support-chatbot) — Chat API in production
+- [Agents & Frameworks](/deep-dive/agents-frameworks) — Advanced patterns

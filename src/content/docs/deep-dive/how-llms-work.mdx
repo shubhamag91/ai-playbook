@@ -1,38 +1,379 @@
 ---
 title: How LLMs Work
-description: Technical deep dive into large language models — transformers, attention, and training
+description: Technical deep dive — transformers, attention, embeddings, and training
 sidebar:
   order: 1
 lastUpdated: 2026-05-08
 ---
 
+import { Card, CardGrid } from '@astrojs/starlight/components';
 import Breadcrumb from '../../../components/Breadcrumb.astro';
 import SeeAlso from '../../../components/SeeAlso.astro';
 
 <Breadcrumb />
 
-# How LLMs Work
+# How LLMs Work: Technical Deep Dive
 
-A comprehensive technical guide to understanding how large language models work under the hood.
+Understanding the mechanics of Large Language Models — from tokens to transformers to training.
 
-## Coming Soon
+---
 
-This deep dive is being created as part of Phase 1 restructuring.
+## Part 1: Tokens and Tokenization
 
-**Planned sections:**
-1. Tokens and tokenization
-2. Embeddings and representations
-3. The attention mechanism
-4. Transformer architecture
-5. Training vs inference
-6. Scaling laws
+### What Are Tokens?
 
-For now, explore:
-- [Glossary](/reference/glossary) — Technical terms explained
-- [Resources](/resources/papers) — Key research papers
+LLMs don't understand words. They understand numbers. A **token** is a number representing a piece of text.
 
-<SeeAlso links={[
-  { label: 'Glossary', href: '/reference/glossary', description: 'Look up technical terms' },
-  { label: 'RAG Architecture', href: '/deep-dive/rag-architecture', description: 'Build AI systems with retrieval' },
-  { label: 'Model Specs', href: '/reference/model-specs', description: 'Compare different LLMs' }
-]} />
+**Examples:**
+- "Hello" → token 15234
+- "," → token 89
+- " world" → token 62
+
+One token ≈ 4 characters or 0.75 words.
+
+**Why tokens?**
+1. **Efficiency:** Numbers are faster to process than text
+2. **Consistency:** Same words always become same tokens
+3. **Compression:** Reduces context size
+
+### The Tokenizer
+
+A tokenizer is a lookup table (or learned algorithm) that converts text to tokens.
+
+```
+Text: "Hello, world!"
+  ↓ (tokenizer)
+Tokens: [15234, 89, 62]
+  ↓ (reverse lookup)
+Text: "Hello, world!"
+```
+
+**Common tokenizers:**
+- BPE (Byte Pair Encoding) — GPT uses this
+- SentencePiece — Used by many open models
+- WordPiece — Google's Bert
+
+**Key insight:** Different models use different tokenizers, so the same text has different token counts in different models.
+
+---
+
+## Part 2: Embeddings
+
+### What Is an Embedding?
+
+An **embedding** is a vector (list of numbers) representing the meaning of text.
+
+**Example:**
+- "king" embedding: [0.2, -0.1, 0.8, 0.3, ..., 0.1]
+- "queen" embedding: [0.25, -0.08, 0.75, 0.35, ..., 0.12]
+- "man" embedding: [0.1, 0.2, 0.6, 0.1, ..., 0.0]
+
+**Famous property (word2vec):**
+```
+king - man + woman ≈ queen
+```
+
+Embeddings capture semantic meaning. Similar words have similar embeddings.
+
+### How Embeddings Are Made
+
+LLMs have an **embedding layer** — a lookup table that converts tokens to vectors:
+
+```
+Token: 15234
+  ↓
+Embedding Layer (lookup table)
+  ↓
+Vector: [0.2, -0.1, 0.8, ..., 0.1] (768 dimensions for smaller models)
+```
+
+**Sizes vary:**
+- Small models: 768 dimensions
+- Medium models: 1024-2048 dimensions
+- Large models: 4096+ dimensions
+
+**Key insight:** Embeddings are learned during training. The model learns to create embeddings where similar words are close together.
+
+---
+
+## Part 3: Positional Encoding
+
+LLMs process all tokens in parallel, not sequentially. But order matters: "dog bites man" ≠ "man bites dog".
+
+**Solution:** Positional encoding
+
+Each token also gets a position vector:
+
+```
+Token 1: "The" → [0.2, -0.1, 0.8] + position_1
+Token 2: "dog" → [0.5, 0.3, 0.1] + position_2
+Token 3: "bites" → [0.1, 0.9, -0.2] + position_3
+```
+
+The model learns that position matters and uses it to understand sequence.
+
+---
+
+## Part 4: The Attention Mechanism
+
+This is the secret sauce. Attention is what makes transformers work.
+
+### The Problem Attention Solves
+
+**Without attention:** The model treats all tokens equally. "The **dog** bites man" — all tokens are equally relevant to predicting the next word.
+
+**With attention:** The model focuses on relevant tokens. When predicting the next word after "bites", it focuses on "dog" and "man", ignores "The".
+
+### How Attention Works (Simplified)
+
+For each token, compute:
+1. **Query (Q):** What am I looking for?
+2. **Key (K):** What information do I have?
+3. **Value (V):** What's the information?
+
+```
+Query for "bites": "I need info about the subject/object"
+  ↓
+Score each other token's Key:
+  "The" → low score (not important)
+  "dog" → high score (subject!)
+  "man" → medium score (object!)
+  ↓
+Use scores to weight Values:
+  dog's value (40%) + man's value (35%) + The's value (25%)
+  ↓
+Result: Weighted information = "attention output"
+```
+
+### Why It's Powerful
+
+Attention lets the model:
+- Focus on relevant context
+- Understand long-range dependencies
+- Handle ambiguity ("bank" - financial or river?)
+
+---
+
+## Part 5: The Transformer Architecture
+
+A transformer is built from attention blocks stacked on top of each other.
+
+### One Transformer Block
+
+```
+Input tokens (with embeddings)
+  ↓
+Multi-head Attention (8-16 attention heads in parallel)
+  ↓
+Feed-forward Network (neural network)
+  ↓
+Output (fed to next block or to prediction layer)
+```
+
+**Why multiple attention heads?** Each head can focus on different types of relationships:
+- Head 1: "focus on grammar"
+- Head 2: "focus on meaning"
+- Head 3: "focus on long-range dependencies"
+
+### Stacking Blocks
+
+A modern LLM has 12-96 transformer blocks stacked:
+
+```
+Input
+  ↓
+Block 1 (extract basic patterns)
+  ↓
+Block 2 (extract medium-level patterns)
+  ↓
+...
+  ↓
+Block 96 (extract complex semantic understanding)
+  ↓
+Output prediction
+```
+
+**Intuition:** Earlier blocks extract simple patterns (grammar, word relationships). Later blocks extract complex patterns (reasoning, meaning).
+
+---
+
+## Part 6: Training vs Inference
+
+### Training (Expensive, One-Time)
+
+**Goal:** Learn the embeddings, attention weights, and parameters
+
+**Process:**
+1. Start with random parameters
+2. Feed in text (billions of tokens)
+3. Predict next token (language modeling task)
+4. Compare prediction to actual
+5. Adjust parameters slightly to reduce error
+6. Repeat millions of times
+
+**Cost:**
+- GPT-4: ~$100M in compute
+- Claude Opus: Similar scale
+- Llama 70B: ~$5-10M
+
+**Time:** Weeks to months on clusters of GPUs/TPUs
+
+### Inference (Cheap, Happens Constantly)
+
+**Goal:** Use the trained model to predict text
+
+**Process:**
+1. Load trained parameters (frozen, don't change)
+2. For each token, predict the next one
+3. Pick (sample) next token
+4. Repeat until done
+
+**Cost:** ~$0.001 per thousand tokens (Claude)
+
+**Time:** Milliseconds to seconds
+
+**Key insight:** Training is expensive. Inference is cheap. That's why you don't fine-tune for simple tasks.
+
+---
+
+## Part 7: Generation (How Models Produce Output)
+
+### Greedy Decoding
+Always pick the most likely next token:
+
+```
+Prompt: "The capital of France is"
+Model thinks: 50% Paris, 20% Lyon, 10% Marseille
+Result: Always pick "Paris" (greedy)
+Output: "The capital of France is Paris"
+```
+
+**Pros:** Deterministic, fast  
+**Cons:** Boring, repetitive
+
+### Temperature Sampling
+Scale probabilities and sample randomly:
+
+**Temperature = 0.7 (common):**
+```
+Original: 50% Paris, 20% Lyon, 10% Marseille
+After: 48% Paris, 22% Lyon, 12% Marseille
+Sample: Randomly pick (usually Paris, sometimes Lyon)
+```
+
+**Temperature = 0.1 (deterministic):**
+Probabilities become more extreme → usually pick top choice
+
+**Temperature = 2.0 (creative):**
+Probabilities flatten → more random choices
+
+---
+
+## Part 8: Scaling Laws
+
+There's a predictable relationship between model size and performance:
+
+```
+Performance ∝ (Model Size) ^ (-0.074)
+```
+
+Or more simply:
+- 2x parameters → ~6% better performance
+- 10x parameters → ~20% better performance
+- 100x parameters → ~40% better performance
+
+**Implications:**
+- Bigger models are always better (up to a point)
+- But cost scales faster than performance
+- GPT-4 is 100x larger than GPT-3 but not 100x better
+
+**Compute Budget:**
+For fixed budget, the optimal ratio is:
+- Model size: 6B parameters
+- Training tokens: 6B × 20 = 120B tokens
+
+(Chinchilla scaling, 2022)
+
+---
+
+## Part 9: Context Window
+
+Models can only see a limited context:
+
+**Claude:** 200K tokens (≈150K words)  
+**GPT-4o:** 128K tokens (≈96K words)  
+**Gemini 3.1:** 1M tokens (≈750K words)
+
+### Why the Limit?
+
+Attention is O(n²) complexity:
+- 1000 tokens → 1M operations
+- 100K tokens → 10B operations (expensive!)
+
+### How It Matters
+
+With 200K context, you can:
+- Read a 150-page document
+- Have a 100-turn conversation
+- But not both simultaneously
+
+---
+
+## Part 10: Fine-tuning
+
+After training, you can fine-tune on your data:
+
+**How:**
+1. Start with trained model
+2. Train on your data (thousands to millions of examples)
+3. Update parameters slightly (only 0.1-1% change)
+
+**Cost:** 10-100x cheaper than pre-training
+
+**Use cases:**
+- Teach model your style (write like your brand)
+- Teach model specific task (classify documents)
+- Reduce hallucinations (ground in facts)
+
+**When NOT to fine-tune:**
+- You need your data private (fine-tune locally)
+- You have under 100 examples (use RAG instead)
+- You need custom reasoning (use agents instead)
+
+---
+
+## Common Misconceptions
+
+❌ **"Bigger models understand better"**  
+✅ **They have more parameters, but understanding is still pattern matching**
+
+❌ **"LLMs read sequentially"**  
+✅ **They process all tokens in parallel (that's why transformers are fast)**
+
+❌ **"Attention is human-interpretable"**  
+✅ **It's interpretable compared to other neural networks, but still opaque**
+
+❌ **"LLMs have memory"**  
+✅ **They have context window. Each conversation starts fresh**
+
+---
+
+## Key Takeaways
+
+1. **Tokens:** Text → numbers for processing
+2. **Embeddings:** Numbers → vectors representing meaning
+3. **Attention:** Focus on relevant context
+4. **Transformers:** Blocks of attention + feedforward layers
+5. **Training:** Expensive (done once), learn parameters
+6. **Inference:** Cheap (done constantly), use parameters
+7. **Scaling:** Bigger → better, but with diminishing returns
+8. **Context window:** Limits what the model can see
+9. **Fine-tuning:** Cheap adaptation to your data
+
+---
+
+See Also:
+- [Beginner Path](/learn/beginner) — Non-technical intro
+- [Builder Path](/learn/builder) — Hands-on implementation
+- [RAG Architecture](/deep-dive/rag-architecture) — Understanding embeddings in practice
+- [Prompt Engineering](/deep-dive/prompt-engineering) — Using transformers effectively

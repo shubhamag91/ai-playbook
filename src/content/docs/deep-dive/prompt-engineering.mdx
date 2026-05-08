@@ -1,0 +1,383 @@
+---
+title: Prompt Engineering
+description: Techniques to get better outputs from LLMs — structure, examples, and advanced patterns
+sidebar:
+  order: 4
+lastUpdated: 2026-05-08
+---
+
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+
+<Breadcrumb />
+
+# Prompt Engineering: Getting the Best from LLMs
+
+How to write prompts that reliably produce high-quality outputs.
+
+---
+
+## The Basics
+
+### Principle 1: Be Specific
+
+❌ **Bad:** "Write about AI"  
+✅ **Good:** "Write a 3-paragraph explanation of how transformers work for someone with a CS degree"
+
+**Why:** Specific prompts → specific outputs. Vague prompts → mediocre outputs.
+
+### Principle 2: Provide Context
+
+❌ **Bad:** "Is this a good product?"  
+✅ **Good:** "You are a UX designer. Evaluate this design for a mobile app. Focus on user experience and accessibility."
+
+**Why:** Context prevents the model from guessing what you want.
+
+### Principle 3: Show Examples
+
+❌ **Bad:** "Classify these reviews"  
+✅ **Good:** "Classify these reviews as positive or negative. Examples: 'Great product!' = positive. 'Terrible quality' = negative. Now classify: 'Amazing service!'"
+
+**Why:** Examples (few-shot learning) dramatically improve accuracy.
+
+---
+
+## Prompt Structures
+
+### Structure 1: Task-Based
+
+```
+You are a [role].
+Your goal is to [specific goal].
+Here's the context: [background info]
+
+Task: [what to do]
+Constraints: [what NOT to do]
+
+Input: [user input]
+Output format: [how to format answer]
+```
+
+**Example:**
+```
+You are a Python expert.
+Your goal is to write clean, efficient code.
+Context: I'm building a web scraper.
+
+Task: Write a function to extract email addresses from HTML.
+Constraints: Don't use regex. Use BeautifulSoup.
+Input: <html>Contact: john@example.com</html>
+Output format: Return a list of strings
+```
+
+### Structure 2: Chain-of-Thought
+
+Make the model think step-by-step:
+
+```
+Let's think step by step.
+
+Step 1: [understand the problem]
+Step 2: [identify constraints]
+Step 3: [brainstorm solutions]
+Step 4: [evaluate solutions]
+Step 5: [choose best solution]
+Step 6: [provide answer]
+
+Problem: [your question]
+```
+
+**Why:** Forces careful reasoning instead of quick guesses.
+
+### Structure 3: Comparison
+
+```
+Compare X and Y across these dimensions:
+- Dimension 1: [explain]
+- Dimension 2: [explain]
+- Dimension 3: [explain]
+
+Format the answer as a table.
+
+Compare: Claude vs GPT-4o
+```
+
+---
+
+## Advanced Techniques
+
+### Technique 1: Role Playing
+
+Give the model a persona:
+
+```
+You are a grumpy pirate who hates modern technology.
+Someone asks you to explain AI.
+```
+
+**Result:** Much more entertaining and character-consistent output.
+
+### Technique 2: Reverse Prompting
+
+Instead of asking for output, ask for requirements:
+
+```
+I want to write a prompt that gets high-quality code reviews.
+What should the prompt include?
+What constraints should it have?
+```
+
+**Result:** Model helps you design better prompts.
+
+### Technique 3: Decomposition
+
+Break complex tasks into simple subtasks:
+
+```
+Goal: Write a product launch plan
+
+Step 1: List all tasks needed
+Step 2: Order them by priority
+Step 3: Add timelines
+Step 4: Assign resources
+Step 5: Identify risks
+Step 6: Compile into final plan
+```
+
+**Result:** More thorough, better organized output.
+
+### Technique 4: Temperature Control
+
+Adjust creativity:
+
+```
+Temperature = 0.2 (deterministic)
+Prompt: "What's 2+2?"
+Output: Always "4"
+
+Temperature = 1.0 (balanced)
+Prompt: "Write a haiku about AI"
+Output: Different each time, but coherent
+
+Temperature = 2.0 (very creative)
+Prompt: "Write a haiku about AI"
+Output: Wild, unpredictable, sometimes nonsensical
+```
+
+---
+
+## Common Patterns
+
+### Pattern 1: Few-Shot Learning
+
+Give examples before asking the real question:
+
+```
+Classify the sentiment of movie reviews.
+
+Example 1: "Amazing film!" = positive
+Example 2: "Terrible waste of time" = negative
+Example 3: "It was okay, nothing special" = neutral
+
+Now classify: "Best movie I've seen in years" = ?
+```
+
+**Accuracy improvement:** Often 10-30%
+
+### Pattern 2: System vs User Messages
+
+Use system messages for instructions, user messages for input:
+
+```
+System: "You are a helpful AI assistant. Always be respectful."
+User: "What's the capital of France?"
+```
+
+**Why:** System messages are more reliable than putting instructions in user messages.
+
+### Pattern 3: Structured Output
+
+Ask for specific format:
+
+```
+Extract the following information from this text:
+- Name: [name]
+- Email: [email]
+- Phone: [phone]
+
+Return as JSON.
+
+Text: "John Smith, john@example.com, 555-1234"
+```
+
+**Result:** Easier to parse, more reliable extraction.
+
+### Pattern 4: Negative Examples
+
+Show what NOT to do:
+
+```
+Generate product names.
+Good examples: CloudFlare, Figma, Stripe
+Bad examples: Product1, MyApp, Tool
+
+Generate names for a design tool:
+```
+
+**Result:** Model understands your taste better.
+
+---
+
+## Optimization Techniques
+
+### Technique 1: Iterate & Measure
+
+1. Write initial prompt
+2. Test on 10 examples
+3. Measure accuracy
+4. Refine based on failures
+5. Repeat
+
+**Time:** 30 minutes can yield 20% improvement.
+
+### Technique 2: Prompt Compression
+
+Remove unnecessary words:
+
+❌ **Verbose:**
+```
+I would like you to carefully read through this text 
+and provide a comprehensive summary of the main points
+```
+
+✅ **Concise:**
+```
+Summarize: [text]
+```
+
+**Result:** Same output, cheaper (fewer tokens).
+
+### Technique 3: Dynamic Prompting
+
+Change the prompt based on input:
+
+```python
+if task_complexity == "simple":
+    prompt = "Brief answer: {input}"
+elif task_complexity == "complex":
+    prompt = "Think step-by-step. Detailed answer: {input}"
+```
+
+**Result:** Better quality + lower cost.
+
+---
+
+## Anti-Patterns (What NOT to Do)
+
+❌ **Rudeness:** "Just do what I ask!" → Model less helpful  
+✅ **Politeness:** "Could you help me with..." → Better results
+
+❌ **Ambiguity:** "Make it better" → Unclear output  
+✅ **Specificity:** "Make the text shorter and punchier"
+
+❌ **Overwhelming:** 1000-word prompt → Confusion  
+✅ **Focused:** 3-5 clear instructions
+
+❌ **Contradictions:** "Be creative but also accurate" → Conflicted  
+✅ **Clarity:** "Prioritize accuracy. Be creative within constraints."
+
+---
+
+## Real-World Examples
+
+### Example 1: Customer Support Response
+
+```
+You are a customer support agent for an online retailer.
+Your goal is to resolve the customer's issue quickly and politely.
+
+Tone: Professional, empathetic, helpful
+Length: 2-3 sentences
+Action: Offer a solution
+
+Customer email: "I received the wrong item"
+```
+
+### Example 2: Code Review
+
+```
+Review this Python code for:
+1. Correctness
+2. Performance
+3. Readability
+4. Security issues
+
+Format as numbered list with specific suggestions.
+Use before/after code examples for improvements.
+
+Code: [paste code here]
+```
+
+### Example 3: Data Extraction
+
+```
+Extract company information from this text.
+Return as JSON with fields: name, founded, industry, revenue
+
+Rules:
+- If field not found, use null
+- Revenue in USD millions
+- Founded year only (not full date)
+
+Text: [paste text here]
+```
+
+---
+
+## Testing Your Prompts
+
+1. **Consistency:** Run same prompt 5 times. Are results similar? (High consistency = good)
+2. **Accuracy:** Test on known examples. What's the error rate?
+3. **Edge cases:** Does it handle typos, unusual inputs, edge cases?
+4. **Cost:** Count tokens. Is it efficient?
+5. **Speed:** How long does it take? Acceptable?
+
+---
+
+## Prompt Versioning
+
+Keep a prompt library:
+
+```python
+PROMPTS = {
+    "summarize_v1": "Summarize: {text}",
+    "summarize_v2": "Summarize in 3 bullet points: {text}",
+    "summarize_v3": "Summarize for a 10-year-old: {text}",
+}
+```
+
+**Why:** Track what works, avoid rewriting.
+
+---
+
+## Tools for Prompt Engineering
+
+- **Prompt.com** — Test prompts side-by-side
+- **LangChain Playground** — Experiment with chains
+- **GitHub Copilot Labs** — Built-in prompt experiments
+- **Spreadsheets** — Track version history and results
+
+---
+
+## Key Takeaways
+
+1. **Specific prompts → specific outputs**
+2. **Examples dramatically improve accuracy**
+3. **Structure matters (step-by-step, roles, constraints)**
+4. **Iterate based on measurement**
+5. **Simplicity often beats complexity**
+
+---
+
+See Also:
+- [Builder Path](/learn/builder) — Using prompts with APIs
+- [How LLMs Work](/deep-dive/how-llms-work) — Understanding why prompts matter

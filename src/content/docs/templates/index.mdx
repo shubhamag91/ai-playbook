@@ -1,0 +1,58 @@
+---
+title: Implementation Templates
+description: Starter code for common AI patterns — copy-paste ready for RAG, agents, chatbots, and more
+sidebar:
+  order: 1
+lastUpdated: 2026-05-08
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+
+<Breadcrumb />
+
+# Implementation Templates
+
+Production-ready starter code you can copy and adapt. Each template includes:
+- Clean, commented code
+- Error handling
+- Configuration examples
+- Local testing setup
+
+---
+
+## Available Templates
+
+<CardGrid>
+  <Card title="RAG System" icon="open">
+    Load documents → embed → retrieve → answer. Full example with Chroma and Claude.
+  </Card>
+  <Card title="Single Agent" icon="rocket">
+    Agent with tools for real-world tasks. Includes tool definitions and error handling.
+  </Card>
+  <Card title="Multi-Agent Crew" icon="star">
+    Multiple agents working together with roles and tasks. CrewAI example with collaboration.
+  </Card>
+  <Card title="Chat API" icon="comment-square">
+    FastAPI server for a multi-turn chatbot. Includes conversation memory and streaming.
+  </Card>
+</CardGrid>
+
+---
+
+## How to Use These Templates
+
+1. **Copy the code** from the template you want
+2. **Install dependencies** listed at the top of each template
+3. **Set environment variables** (API keys, etc.)
+4. **Run locally** to test
+5. **Adapt** for your use case (change tools, data sources, etc.)
+
+---
+
+## Templates
+
+- [**RAG System**](./rag-system.mdx) — Complete retrieval-augmented generation example
+- [**Single Agent**](./single-agent.mdx) — AI with tool use and error handling
+- [**Multi-Agent Crew**](./multi-agent-crew.mdx) — CrewAI example with collaboration
+- [**Chat API**](./chat-api.mdx) — FastAPI backend for a chatbot

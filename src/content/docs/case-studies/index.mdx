@@ -1,0 +1,52 @@
+---
+title: Case Studies
+description: Real-world AI implementation examples — challenges, solutions, and lessons learned
+sidebar:
+  order: 1
+lastUpdated: 2026-05-08
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+
+<Breadcrumb />
+
+# Case Studies: AI in the Wild
+
+Real implementations that show how the concepts from this playbook work in production. Each case study covers the challenge, the approach, results, and what actually surprised everyone.
+
+---
+
+## Case Study Patterns
+
+Every case study follows the same structure:
+
+1. **The Challenge** — What problem needed solving
+2. **The Approach** — Architecture, model choice, key decisions
+3. **The Implementation** — What actually got built
+4. **The Results** — Metrics before/after
+5. **Lessons Learned** — What would you do differently?
+
+---
+
+<CardGrid>
+  <Card title="Customer Support Chatbot" icon="message">
+    E-commerce company built a RAG-powered chatbot to handle 10K+ daily support tickets. Achieved 40% ticket deflection while keeping costs under $100/day.
+  </Card>
+  <Card title="Content Classification Pipeline" icon="document">
+    SaaS platform needed to categorize user-generated documents in 12 categories. Used fine-tuned Claude with 5K examples. Increased accuracy from 72% to 94% while reducing inference time.
+  </Card>
+  <Card title="Research Paper Analysis" icon="smiley">
+    Academic lab built a multi-agent system to analyze medical research papers, extract key findings, and identify contradictions. Saved researchers 20 hours/week of manual work.
+  </Card>
+</CardGrid>
+
+---
+
+## Full Case Studies
+
+See individual case studies for detailed walkthroughs:
+
+- [**Customer Support Chatbot**](./customer-support-chatbot.mdx) — Building a production Q&A system with RAG
+- [**Document Classification**](./document-classification.mdx) — Fine-tuning for domain-specific categorization
+- [**Research Analysis System**](./research-analysis.mdx) — Multi-agent system for knowledge work

@@ -1,0 +1,508 @@
+---
+title: Training & Fine-tuning
+description: Pre-training, fine-tuning, and when to adapt models — building custom AI with your data
+sidebar:
+  order: 5
+lastUpdated: 2026-05-08
+---
+
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+
+<Breadcrumb />
+
+# Training & Fine-tuning: Adapting Models to Your Data
+
+When and how to customize large language models for your specific needs — from fine-tuning to training from scratch.
+
+---
+
+## The Training Spectrum
+
+**Do NOT fine-tune if:**
+- You just need the model to know facts (use RAG instead)
+- Your task is simple reasoning (use better prompting)
+- You have fewer than 100 examples (not enough data)
+- Cost is critical (fine-tuning is expensive)
+
+**DO fine-tune if:**
+- Model outputs don't match your style/tone
+- Model repeatedly makes the same mistakes
+- You have 1000+ examples of your use case
+- Inference cost savings justify training cost
+
+---
+
+## Pre-training (Foundation Model Training)
+
+### What Is Pre-training?
+
+Training a model from scratch (random weights) on massive text data:
+
+```
+Random Model
+  ↓
+Read 1 trillion tokens (GPT-4 scale)
+  ↓
+Learn to predict next token
+  ↓
+Billions of gradient updates
+  ↓
+Trained Foundation Model
+```
+
+### The Numbers
+
+| Model | Parameters | Training Tokens | Cost | Time | Organization |
+|-------|-----------|-----------------|------|------|---|
+| GPT-3 | 175B | 300B | $10-15M | 3+ months | OpenAI |
+| GPT-4 | 1.7T+ | 13T | $100M+ | 6+ months | OpenAI |
+| Claude 3 Opus | 200B+ | 2T+ | $50-100M | 4+ months | Anthropic |
+| Llama 3.1 405B | 405B | 15.6T | $50M+ | 6+ months | Meta |
+
+**Key insight:** Foundation model training is a one-time, expensive investment. But once trained, inference is cheap for millions of users.
+
+### Why Pre-train?
+
+1. **Better performance** — More tokens → better understanding
+2. **Broad knowledge** — Covers internet, books, research
+3. **General capability** — Can do many tasks (zero-shot, few-shot)
+
+### When to Pre-train
+
+**Only if:**
+- Building new model architecture
+- Designing closed ecosystem (can't use existing models)
+- Have 10B+ tokens of unique domain data
+- Budget: 100M+ in compute
+- Timeline: 6+ months
+
+**Almost never** for most organizations.
+
+---
+
+## Instruction Fine-tuning (Most Important)
+
+### What Is Instruction Fine-tuning?
+
+Taking a pre-trained model and training it on **instruction examples** (question-answer pairs):
+
+```
+Pre-trained Model (trained on next-token prediction)
+  ↓
+Fine-tune on 1000-100000 <instruction, response> pairs
+  ↓
+Model learns to follow instructions better
+```
+
+### How It Works
+
+**Before instruction fine-tuning:**
+```
+User: "Classify this: Great product!"
+Model: "Great product! is a great example of a positive review in the market. 
+        Let me tell you why products..."
+Problem: Rambles, doesn't answer the question
+```
+
+**After instruction fine-tuning:**
+```
+User: "Classify this: Great product!"
+Model: "Positive"
+Better: Direct, follows instruction
+```
+
+### Why It Works
+
+The model learns:
+1. **What instruction-following looks like** (Q→A format)
+2. **How to structure responses** (short, direct, relevant)
+3. **Diverse tasks** (classification, summarization, extraction)
+
+### Data Requirements
+
+| Quality | Examples Needed | Typical Cost | Effort |
+|---------|---|---|---|
+| Low (scraped, auto-generated) | 10K | $1K | 1 week |
+| Medium (human-reviewed) | 5-10K | $5-50K | 2-4 weeks |
+| High (expert-curated) | 1-5K | $50-200K | 4-12 weeks |
+
+**Rule of thumb:** 1000 good examples > 10000 mediocre examples.
+
+### Instruction Fine-tuning Checklist
+
+- [ ] Collect or curate instruction examples (Q→A pairs)
+- [ ] Split: 80% train, 10% validation, 10% test
+- [ ] Format consistently (system message → user → assistant)
+- [ ] Remove duplicates and near-duplicates
+- [ ] Verify quality (human review first 100)
+- [ ] Start with pre-trained model
+- [ ] Train 1-3 epochs (more risks overfitting)
+- [ ] Monitor validation loss (stop when it plateaus)
+- [ ] Evaluate on test set (accuracy, F1, human ratings)
+- [ ] A/B test: fine-tuned vs original model
+- [ ] Only deploy if test results clearly better
+
+---
+
+## Preference Fine-tuning (RLHF, DPO)
+
+### What Is Preference Fine-tuning?
+
+Training on preferences instead of gold answers:
+
+```
+Base Model generates: A1, A2, A3 (multiple responses)
+  ↓
+Human rater ranks: A2 > A1 > A3
+  ↓
+Model learns to predict preferred responses
+  ↓
+Better, more natural outputs
+```
+
+### The Difference: Instruction vs Preference
+
+**Instruction fine-tuning:**
+```
+Q: "What's 2+2?"
+A: "4"
+```
+
+**Preference fine-tuning:**
+```
+Q: "What's 2+2?"
+A1: "It equals 4"
+A2: "The sum is 4"
+A3: "2 plus 2 gives you 4"
+
+Preference: A1 = A2 > A3 (all correct, but A1/A2 better style)
+```
+
+### RLHF (Reinforcement Learning from Human Feedback)
+
+Standard approach used by OpenAI, Anthropic:
+
+```
+Base Model
+  ↓
+Generate multiple responses
+  ↓
+Collect human rankings
+  ↓
+Train reward model (predict which response humans prefer)
+  ↓
+Use reward model to fine-tune base model (RL)
+  ↓
+Aligned Model
+```
+
+**Cost:** $500K-10M (depends on scale)  
+**Time:** 2-4 months  
+**Examples needed:** 10K-100K human-rated pairs
+
+### DPO (Direct Preference Optimization)
+
+Newer, faster approach (2023):
+
+```
+Preference pairs only (no reward model needed)
+  ↓
+Direct loss function (compare preferred vs rejected)
+  ↓
+Simpler, cheaper than RLHF
+```
+
+**Cost:** $50-200K  
+**Time:** 2-4 weeks  
+**Examples needed:** 5-20K preference pairs
+
+### When to Use Preference Fine-tuning
+
+- Model outputs are **technically correct but wrong style**
+- You care about **tone, length, format**
+- You have **human raters available**
+- You need **reproducible quality**
+
+---
+
+## Domain Fine-tuning (Specialized Knowledge)
+
+### What Is Domain Fine-tuning?
+
+Training on domain-specific text to improve performance on that domain:
+
+```
+Base: GPT-4 (trained on internet text)
+  ↓
+Fine-tune on 10000 medical papers
+  ↓
+Result: Better at medical diagnosis, terminology, reasoning
+```
+
+### Example: Medical Domain
+
+**Before domain fine-tuning:**
+```
+Q: "Patient has elevated troponin, ECG shows ST elevation"
+Model: "Could be many things. Recommend seeing a doctor."
+Problem: Vague, misses obvious diagnosis (MI)
+```
+
+**After domain fine-tuning on medical literature:**
+```
+Q: "Patient has elevated troponin, ECG shows ST elevation"
+Model: "Classic presentation of acute myocardial infarction (AMI).
+        Likely STEMI. Needs immediate reperfusion therapy."
+Better: Correct diagnosis, uses proper terminology
+```
+
+### Data Requirements
+
+- **Structured data:** 5-50K domain documents
+- **Quality:** Higher is better (domain-relevant is key)
+- **Format:** Mix of Q&A, research papers, case studies
+
+### When to Use Domain Fine-tuning
+
+- Model lacks **domain-specific knowledge**
+- Domain has **specialized terminology**
+- High-stakes domain where **accuracy matters**
+- You have **domain-specific training data available**
+
+---
+
+## Adapter Models (Lightweight Fine-tuning)
+
+### What Are Adapters?
+
+Instead of fine-tuning all weights, add small trainable layers:
+
+```
+Pre-trained Model (frozen weights)
+  ↓
++ Adapter Layer 1 (small, trainable)
+  ↓
++ Adapter Layer 2 (small, trainable)
+  ↓
+Much cheaper to train, can have many adapters
+```
+
+### The Math
+
+**Full fine-tuning:**
+- Update all 7B parameters of a model
+- 1 model per task/domain
+- Storage: 7GB per model
+
+**Adapter fine-tuning:**
+- Update only 0.1-1% of parameters
+- Multiple adapters can share base model
+- Storage: 10-100MB per adapter
+
+### When to Use Adapters
+
+- Many domains/tasks (can't afford N × model size storage)
+- Limited compute (adapters train faster)
+- Need **quick deployment** of domain variants
+- Cost-sensitive fine-tuning
+
+---
+
+## Practical Fine-tuning Workflow
+
+### Step 1: Decide What to Fine-tune
+
+**Do you need to fine-tune?**
+
+```
+Is model output correct but wrong style/tone?
+├─ Yes → Instruction or preference fine-tuning
+├─ No → Go to next question
+
+Does model lack domain knowledge?
+├─ Yes → Domain fine-tuning or RAG
+├─ No → Go to next question
+
+Is your use case repetitive and defined?
+├─ Yes → Instruction fine-tuning makes sense
+└─ No → Use RAG or agents instead
+```
+
+### Step 2: Prepare Training Data
+
+```python
+# Format: JSONL (one example per line)
+{
+  "messages": [
+    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "user", "content": "What's 2+2?"},
+    {"role": "assistant", "content": "4"}
+  ]
+}
+```
+
+**Quality checks:**
+1. Sample 100 random examples (human review)
+2. Check for duplicates (remove if >5% dups)
+3. Verify output format consistency
+4. Check token distribution (aren't most examples too long/short)
+
+### Step 3: Run Fine-tuning
+
+**Option A: Using Anthropic's API (Easiest)**
+
+```python
+import anthropic
+
+client = anthropic.Anthropic()
+
+response = client.beta.model_management.beta.model_create(
+    model="claude-3-5-sonnet-20241022",
+    training_data=[
+        {
+            "messages": [
+                {"role": "user", "content": "What's 2+2?"},
+                {"role": "assistant", "content": "4"}
+            ]
+        },
+        # ... more examples
+    ]
+)
+
+fine_tuned_model = response.id
+```
+
+**Option B: Using Open Source (More Control)**
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer
+
+model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b")
+tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b")
+
+trainer = Trainer(
+    model=model,
+    train_dataset=train_dataset,
+    eval_dataset=eval_dataset,
+    args=TrainingArguments(
+        output_dir="./fine-tuned-model",
+        num_train_epochs=3,
+        learning_rate=2e-5,
+        per_device_train_batch_size=8,
+    )
+)
+
+trainer.train()
+```
+
+### Step 4: Evaluate
+
+**On test set (automated):**
+- Accuracy (for classification)
+- BLEU/ROUGE (for generation)
+- Exact match (for extraction)
+
+**Human evaluation (critical):**
+- Sample 50 outputs from fine-tuned + base model
+- Rate on: correctness, style, usefulness (1-5 scale)
+- If fine-tuned >base by 20%+, deploy
+
+### Step 5: Deploy
+
+```python
+# Use your fine-tuned model
+response = client.messages.create(
+    model=fine_tuned_model,  # Your custom model
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Your prompt"}]
+)
+```
+
+**Monitor:**
+- Cost per token (usually higher than base)
+- Latency (usually similar)
+- Error rates (should be lower)
+- User satisfaction (should improve)
+
+---
+
+## Common Mistakes
+
+❌ **Fine-tuning for knowledge** — Model won't memorize facts  
+✅ **Use RAG for knowledge, fine-tuning for style**
+
+❌ **Using too little data (10 examples)** — Overfits immediately  
+✅ **Collect 1000+ examples minimum**
+
+❌ **Fine-tuning base model** — Loses general knowledge  
+✅ **Fine-tune instruction-tuned models (Claude, GPT-4o)**
+
+❌ **Ignoring validation set** — Can't tell if you're overfitting  
+✅ **Monitor validation loss during training**
+
+❌ **Not comparing to baseline** — Can't tell if it's better  
+✅ **Always A/B test fine-tuned vs original model**
+
+---
+
+## Cost Comparison
+
+**Typical fine-tuning costs:**
+
+| Approach | Data Size | Training Cost | Inference Cost | Total (1 Year) |
+|----------|-----------|---|---|---|
+| Prompt engineering only | 0 | $0 | $1000 | $1000 |
+| RAG (basic) | 100 docs | $100 | $500 | $600 |
+| Instruction fine-tune | 5K examples | $500 | $1500 | $2000 |
+| Preference fine-tune | 10K pairs | $10K | $2000 | $12K |
+| Domain fine-tune | 10K docs | $1000 | $2000 | $3000 |
+
+**Breakeven analysis:**
+- If base model costs $1/1000 tokens and fine-tuned costs $1.50/1000 tokens
+- But fine-tuned reduces tokens needed by 20%
+- Breakeven: ~100K tokens of queries
+- ROI positive after 500K+ tokens
+
+---
+
+## When Each Approach Makes Sense
+
+### Just Prompt Engineering
+**Use when:** Simple tasks, clear instructions work  
+**Cost:** Minimal  
+**Example:** "Classify this review as positive/negative"
+
+### RAG (Knowledge)
+**Use when:** Model needs to know facts about your company  
+**Cost:** $100-500 one-time + hosting  
+**Example:** "What's our return policy?" (read current docs)
+
+### Fine-tuning
+**Use when:** Model outputs wrong style/tone, needs domain expertise  
+**Cost:** $500-10000 one-time + inference surcharge  
+**Example:** "Generate product descriptions in our brand voice"
+
+### Pre-training
+**Use when:** Building new model, huge unique dataset, huge budget  
+**Cost:** $50M+  
+**Example:** Only Google, OpenAI, Meta, Anthropic (nearly never for others)
+
+---
+
+## Key Takeaways
+
+1. **RAG > Fine-tuning for knowledge** — Simpler, cheaper, fresher
+2. **Fine-tune for style, not facts** — Model can't memorize
+3. **1000 examples >> 100 examples** — Quality and quantity both matter
+4. **Always baseline** — Compare to original model before deploying
+5. **Start simple** — Prompt engineering → RAG → fine-tuning (in that order)
+6. **Instruction fine-tuning ROI** — Clear if you have defined tasks and data
+7. **Preference fine-tuning is hard** — Needs human raters, expensive
+8. **Adapters for scale** — Multiple domains without model duplication
+
+---
+
+See Also:
+- [How LLMs Work](/deep-dive/how-llms-work) — Understanding pre-training
+- [RAG Architecture](/deep-dive/rag-architecture) — Alternative to fine-tuning for knowledge
+- [Prompt Engineering](/deep-dive/prompt-engineering) — Often better than fine-tuning

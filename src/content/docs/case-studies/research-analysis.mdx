@@ -1,0 +1,473 @@
+---
+title: Research Analysis System
+description: Multi-agent system for analyzing medical research — saved researchers 20 hours/week
+sidebar:
+  order: 4
+lastUpdated: 2026-05-08
+---
+
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+
+<Breadcrumb />
+
+# Case Study: Research Analysis System
+
+**Organization:** Medical research lab (10 researchers)  
+**Problem:** Researchers spend 20+ hours/week reading papers, extracting findings, comparing results  
+**Solution:** Multi-agent system with specialized agents for each task  
+**Results:** Saved 20 hours/week per researcher; Found contradictions humans missed; Faster literature review
+
+---
+
+## The Challenge
+
+**Typical research workflow:**
+
+```
+Monday:
+ → Read 20 new papers in field
+ → Extract key findings from each
+ → Compare findings across papers
+ → Look for contradictions
+ → Write summary for team
+
+Time: 15-20 hours
+By Friday: Team meets to discuss papers
+```
+
+**The pain point:**
+
+"We're drowning in papers. Every week 200+ new papers published in our area. We can maybe read 10-15 carefully. We know we're missing important contradictions and breakthroughs."
+
+**Key requirement:** The system must not just summarize, but **identify contradictions** between papers—when Study A says X and Study B says not X.
+
+---
+
+## Why Standard RAG Wasn't Enough
+
+**First attempt: RAG system**
+
+```
+Question: "What does research say about COVID-19 vaccine efficacy?"
+
+RAG Result:
+Study A: "Efficacy 95% against severe disease"
+Study B: "Efficacy 85% against hospitalization"
+
+Problem: No contradiction detected
+Worse: Studies measured different things (severe disease vs hospitalization)
+Result: Human reader missed the nuance
+```
+
+RAG is great for retrieval but bad at **reasoning over contradictions**. Needed agents.
+
+---
+
+## Multi-Agent Architecture
+
+**Three agents, each with specialized role:**
+
+```
+Researcher Agent
+├─ Input: New paper PDFs (5-20/day)
+├─ Job: Summarize, extract key findings
+└─ Output: Structured data for each paper
+
+Analyst Agent
+├─ Input: Findings from 2+ papers
+├─ Job: Compare findings, identify contradictions
+└─ Output: Contradiction report with explanations
+
+Writer Agent
+├─ Input: All findings + contradictions
+├─ Job: Create human-friendly report
+└─ Output: Weekly summary for researchers
+```
+
+### Agent 1: Researcher Agent
+
+**Job:** Read a paper, extract key information
+
+```python
+researcher_agent = Agent(
+    role="Research Paper Analyzer",
+    goal="Extract findings from medical research papers",
+    backstory="Expert at reading scientific papers..."
+)
+
+# Tools available:
+tools = [
+    Tool(
+        name="extract_abstract",
+        func=extract_pdf_abstract,
+        description="Get paper's abstract"
+    ),
+    Tool(
+        name="extract_methods",
+        func=extract_methods_section,
+        description="Extract methodology section"
+    ),
+    Tool(
+        name="extract_results",
+        func=extract_results_section,
+        description="Extract results/findings"
+    ),
+    Tool(
+        name="extract_limitations",
+        func=extract_limitations,
+        description="Find study limitations"
+    )
+]
+
+# Output format (JSON)
+{
+    "title": "...",
+    "authors": "...",
+    "year": 2024,
+    "study_type": "RCT" | "Observational" | "Meta-analysis",
+    "sample_size": 1000,
+    "findings": [
+        {
+            "claim": "COVID vaccine efficacy 95%",
+            "population": "Adults 18-65",
+            "conditions": "Against hospitalization",
+            "confidence": "High (95% CI)"
+        }
+    ],
+    "limitations": ["Small sample", "Geographic bias"],
+    "contradictions_noted": []
+}
+```
+
+### Agent 2: Analyst Agent
+
+**Job:** Compare papers, find contradictions
+
+```python
+analyst_agent = Agent(
+    role="Research Analyst",
+    goal="Find contradictions and conflicting findings",
+    backstory="Expert at comparing scientific claims..."
+)
+
+# Tools
+tools = [
+    Tool(
+        name="compare_findings",
+        func=compare_two_findings,
+        description="Compare findings from 2 papers"
+    ),
+    Tool(
+        name="assess_contradiction",
+        func=assess_if_contradiction,
+        description="Determine if findings actually contradict"
+    ),
+    Tool(
+        name="find_explanations",
+        func=find_explanation_for_difference,
+        description="Explain why studies differ"
+    )
+]
+
+# Output
+{
+    "contradictions": [
+        {
+            "claim_1": "Efficacy 95% (Study A, N=50000)",
+            "claim_2": "Efficacy 80% (Study B, N=5000)",
+            "severity": "Moderate",
+            "explanation": "Different populations (age groups)",
+            "followup_needed": "Need study in Study B's population"
+        }
+    ]
+}
+```
+
+### Agent 3: Writer Agent
+
+**Job:** Summarize findings for non-technical team members
+
+```python
+writer_agent = Agent(
+    role="Research Writer",
+    goal="Create clear summaries for researchers",
+    backstory="Excellent at explaining complex research..."
+)
+
+# Input: All findings + contradictions
+# Output: Human-friendly report
+
+# Sample output:
+"""
+## Weekly Research Summary (Week of May 1)
+
+### Top Findings
+1. COVID vaccine + recent variant protection: 85-95% (varies by prior immunity)
+2. Booster timing: 6-12 months optimal window
+
+### Key Contradictions Found
+⚠️ **Conflicting Evidence on Vaccine Efficacy Duration**
+- Study A (50K people): Efficacy drops to 70% after 6 months
+- Study B (5K people): Stays at 85% after 6 months
+- Explanation: Study B only included younger adults; Study A mixed ages
+- Action: Need study in older population to clarify
+
+### This Week's Papers (3 total)
+- Study A: [linked]
+- Study B: [linked]
+- Study C: [linked]
+"""
+```
+
+---
+
+## Workflow in Action
+
+**Day 1: New papers arrive**
+
+```
+1. Researcher Agent processes each paper
+   └─ Extracts findings, limitations
+   
+2. Papers added to knowledge base
+   
+3. Analyst Agent compares new findings to existing ones
+   └─ Identifies any contradictions
+   
+4. Writer Agent creates updated report
+   └─ Highlights contradictions, flags for follow-up
+
+Time: ~5 minutes for 5 papers
+(vs 5 hours manually)
+```
+
+**Example: Contradiction Detection**
+
+```
+Week 1: Study A published
+- Finding: "Efficacy 95% against hospitalization"
+- Stored in knowledge base
+
+Week 2: Study B published
+- Finding: "Efficacy 78% against hospitalization"
+- Analyst Agent: "These contradict. Why?"
+- Analysis: Different populations, different variants
+- Report: "⚠️ Conflicting evidence on efficacy..."
+
+Week 3: Study C published
+- Finding: "Efficacy 92% in Study A's population"
+- Analyst Agent: "Study C partially resolves contradiction"
+- Report: "Resolved: Efficacy varies by population"
+
+Result: Researchers caught pattern no human would see
+        (efficacy varies by variant AND population)
+```
+
+---
+
+## Implementation
+
+### Tech Stack
+
+```
+LLM Framework: CrewAI (designed for multi-agent)
+├─ 3 agents with defined roles/goals
+├─ Tool use for document analysis
+└─ Memory for comparing across papers
+
+Vector DB: Pinecone
+├─ Stores findings from all papers
+├─ Fast similarity search
+└─ Used to find similar findings to compare
+
+Backend: Python FastAPI
+├─ Endpoint for uploading papers
+├─ Orchestrates agent workflow
+└─ Stores findings in DB
+
+Document Processing:
+├─ PDF extraction (pdfplumber)
+├─ OCR for scanned papers (pytesseract)
+└─ Text chunking (512 tokens)
+```
+
+### Workflow Code (Simplified)
+
+```python
+from crewai import Agent, Task, Crew
+
+# Define agents
+researcher = Agent(
+    role="Research Paper Analyzer",
+    goal="Extract findings from papers",
+    llm=ChatAnthropic(model="claude-3-5-sonnet"),
+)
+
+analyst = Agent(
+    role="Research Analyst",
+    goal="Find contradictions",
+    llm=ChatAnthropic(model="claude-3-5-sonnet"),
+)
+
+writer = Agent(
+    role="Research Writer",
+    goal="Create weekly summary",
+    llm=ChatAnthropic(model="claude-3-5-sonnet"),
+)
+
+# Define tasks
+research_task = Task(
+    description="Analyze this paper and extract findings",
+    agent=researcher,
+    expected_output="JSON with findings, limitations, confidence"
+)
+
+analysis_task = Task(
+    description="Compare this finding to existing findings. Identify contradictions.",
+    agent=analyst,
+    expected_output="List of contradictions with explanations"
+)
+
+writing_task = Task(
+    description="Write weekly summary highlighting contradictions",
+    agent=writer,
+    expected_output="Human-readable report for researchers"
+)
+
+# Run workflow
+crew = Crew(
+    agents=[researcher, analyst, writer],
+    tasks=[research_task, analysis_task, writing_task],
+    verbose=True
+)
+
+result = crew.kickoff(inputs={
+    "new_papers": papers_this_week,
+    "existing_findings": knowledge_base
+})
+
+return result
+```
+
+---
+
+## Results
+
+### Time Savings
+
+| Task | Before | After | Savings |
+|------|--------|-------|---------|
+| Reading papers | 8 hours | 1 hour (review AI summaries) | 7 hours |
+| Extracting findings | 6 hours | 0.5 hours (verify AI extraction) | 5.5 hours |
+| Comparing papers | 4 hours | 0 hours (AI handles) | 4 hours |
+| Writing summary | 2 hours | 1 hour (edit AI draft) | 1 hour |
+| **Total/week** | **20 hours** | **2.5 hours** | **17.5 hours** |
+
+### Quality Improvements
+
+**Contradictions found by system that humans missed:**
+
+1. **Efficacy by variant:** System found Study A & B disagreed on vaccine efficacy. Root cause: They tested against different variants (missed by humans skimming papers).
+
+2. **Publication bias:** System compared efficacy in published vs preprint studies. Found significant difference (humans hadn't thought to look).
+
+3. **Age effect:** System noticed efficacy trends varied by age across papers. Humans didn't notice pattern across multiple papers.
+
+4. **Timeline shift:** System found efficacy decay rates inconsistent. Explanation: Studies used different measurement intervals.
+
+**Impact:**
+- 2 contradictions led to new follow-up studies
+- 1 contradiction resolved earlier than would happen manually
+- Team 99% caught up on all papers in field (vs 30% before)
+
+### Cost Analysis
+
+**System costs (monthly):**
+- LLM calls: 500 papers × 1000 tokens × $0.003 = $1,500
+- Vector DB: ~$50
+- Hosting: ~$100
+- **Total: $1,650/month**
+
+**Researcher costs saved:**
+- 17.5 hours/week × 10 researchers × $100/hour = $70,000/month
+
+**ROI: 42:1**
+
+---
+
+## Lessons Learned
+
+### What Worked
+
+1. **Multi-agent for different tasks**
+   - Tried single agent to do all three jobs
+   - Quality suffered (agent tried to be jack-of-all-trades)
+   - Specialized agents (researcher, analyst, writer) each much better at their job
+
+2. **Forcing structured output**
+   - Tried free-form summaries
+   - Agent would write paragraphs, humans couldn't parse
+   - JSON format forced clear, extractable data
+
+3. **Contradiction detection was the key**
+   - Initial system just summarized papers
+   - Low perceived value (researchers can read abstracts)
+   - When we added contradiction detection, suddenly valuable
+   - Lesson: Find the pain point (contradictions) and solve it directly
+
+### Unexpected Benefits
+
+1. **Literature review acceleration**
+   - System caught papers that seemed contradictory but actually weren't
+   - Helped teams understand why studies differed
+   - Shortened "what does literature say?" time from weeks to days
+
+2. **Pattern discovery**
+   - Across 1000+ papers, system found patterns humans missed
+   - Example: "All studies from lab X show higher efficacy"
+   - Led to investigation of potential publication bias in lab
+
+3. **New researcher onboarding**
+   - New team members could read AI summaries of 100+ papers in one day
+   - Caught up faster than reading manually
+   - Reduced 3-month ramp-up time to 2 weeks
+
+### What We'd Do Differently
+
+1. **Start with simpler system**
+   - Built 3 agents immediately
+   - Could have started with 1 agent doing summarization
+   - Added complexity incrementally
+
+2. **Test contradiction detection separately**
+   - Built full system, then discovered contradiction detection was valuable
+   - Should have validated that need earlier
+   - Almost removed it before launch
+
+3. **Human-in-the-loop earlier**
+   - Built fully autonomous system
+   - Only added human review after deployment
+   - Should have had humans review contradictions from day 1
+
+---
+
+## Conclusion
+
+Multi-agent systems make sense when:
+- **Task is naturally divisible** (research → analysis → writing)
+- **Specialization helps** (each agent is better in its domain)
+- **High value of quality** (researcher time expensive)
+
+They don't make sense when:
+- Task is single-step (just summarization)
+- System should be simple and fast (overhead of multiple agents)
+- You need guaranteed reliability (multiple agents = more places to fail)
+
+For this team: Value was clear ($70K/month saved), and contradiction detection required reasoning that single agent struggled with.
+
+---
+
+See Also:
+- [Agents & Frameworks](/deep-dive/agents-frameworks) — Agent architecture patterns
+- [RAG Architecture](/deep-dive/rag-architecture) — Knowledge base for findings
+- [Decide: Frameworks Guide](/decide/frameworks/guide) — Choosing CrewAI vs alternatives

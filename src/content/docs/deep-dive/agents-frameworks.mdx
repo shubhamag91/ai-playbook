@@ -1,0 +1,293 @@
+---
+title: Agents & Frameworks
+description: Building autonomous AI agents — architectures, patterns, and production considerations
+sidebar:
+  order: 3
+lastUpdated: 2026-05-08
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+
+<Breadcrumb />
+
+# Agents & Frameworks: Building Autonomous AI
+
+How to build AI systems that can make decisions, use tools, and work autonomously.
+
+---
+
+## What Is an Agent?
+
+An **agent** is an AI that can:
+1. **Observe** the environment (get information)
+2. **Decide** what to do (using reasoning)
+3. **Act** on that decision (use tools)
+4. **Repeat** until goal is achieved
+
+**Simple example:**
+
+```
+Goal: "Find the weather in NYC and book a flight if it's sunny"
+
+Agent Loop:
+1. Observe: Check weather API → "Sunny, 72°F"
+2. Decide: "Weather is good, should book"
+3. Act: Use flight booking API → Books flight
+4. Observe: Flight booked successfully
+5. Done: Goal achieved
+```
+
+---
+
+## The Agent Loop
+
+All agents follow this pattern:
+
+```
+1. User gives goal/task
+    ↓
+2. Agent thinks about what to do
+    ↓
+3. Agent decides which tool to use (if any)
+    ↓
+4. Agent calls the tool
+    ↓
+5. Agent observes the result
+    ↓
+6. Agent decides: "Is goal achieved?"
+    ├─ Yes → Return answer
+    └─ No → Go back to step 2
+```
+
+---
+
+## Tool Use (Function Calling)
+
+Agents interact with the world through **tools** (also called **functions**).
+
+### Example Tools
+
+```python
+# Tool 1: Search the web
+def search_web(query: str) -> str:
+    """Search the internet for information"""
+    return get_search_results(query)
+
+# Tool 2: Check weather
+def get_weather(city: str) -> dict:
+    """Get current weather for a city"""
+    return weather_api.get(city)
+
+# Tool 3: Do math
+def calculate(expression: str) -> float:
+    """Calculate a mathematical expression"""
+    return eval(expression)
+```
+
+### How Agent Uses Tools
+
+1. **Agent decides:** "I need to search for 'AI trends 2026'"
+2. **Agent calls:** `search_web("AI trends 2026")`
+3. **Tool executes:** Returns search results
+4. **Agent observes:** "I found 5 articles about AI trends"
+5. **Agent continues:** "I should read one of these..."
+
+---
+
+## Common Agent Architectures
+
+### Architecture 1: ReAct (Reasoning + Acting)
+
+**Think, Act, Observe cycle**
+
+```
+Agent: "I need to find the population of Tokyo"
+(thought)
+  ↓
+Agent: "I'll use search_web tool"
+(action)
+  ↓
+Tool: Returns "Tokyo population is 37.4 million"
+(observation)
+  ↓
+Agent: "I have the answer: 37.4 million"
+(final response)
+```
+
+**Pros:** Simple, transparent, works well  
+**Cons:** Doesn't work for multi-step reasoning  
+**Use:** Simple tasks with clear tools
+
+### Architecture 2: Tree of Thought
+
+**Explore multiple paths**
+
+```
+Goal: "Plan a trip to Japan"
+  ├─ Path 1: Tokyo → Kyoto → Osaka
+  │   Cost: $2000, Time: 10 days
+  ├─ Path 2: Tokyo → Hiroshima → Tokyo
+  │   Cost: $2500, Time: 7 days
+  └─ Path 3: Tokyo only
+      Cost: $1500, Time: 5 days
+
+Agent evaluates all paths and picks best
+```
+
+**Pros:** Finds better solutions, explores options  
+**Cons:** Expensive (multiple LLM calls), slower  
+**Use:** Complex planning tasks
+
+### Architecture 3: Hierarchical
+
+**Manager + Specialist Agents**
+
+```
+Manager Agent: "Plan a company event"
+  ├─ Delegate to Scheduling Agent
+  ├─ Delegate to Catering Agent
+  └─ Delegate to Budget Agent
+
+Each specialist solves their part
+Manager combines results
+```
+
+**Pros:** Scales to complex tasks, divides work  
+**Cons:** Coordination overhead  
+**Use:** Large projects, multiple domains
+
+---
+
+## Production Patterns
+
+### Pattern 1: Guardrails
+
+Prevent agents from taking dangerous actions:
+
+```python
+@agent_tool
+def delete_database():
+    """Delete the database"""
+    # NOT ALLOWED - blocked
+    raise PermissionError("Not allowed")
+
+@agent_tool
+def search_web(query):
+    """Search the web"""
+    # ALLOWED - checked
+    if "malicious" in query:
+        return "I can't search for that"
+    return search_results(query)
+```
+
+### Pattern 2: Memory
+
+Agents need to remember context:
+
+```
+Short-term memory: Current conversation
+Long-term memory: Learned from past tasks
+
+Agent: "We discussed AI trends yesterday. You mentioned..."
+(accessing long-term memory)
+```
+
+### Pattern 3: Human-in-the-Loop
+
+Sometimes agents should ask humans:
+
+```python
+if dangerous_action:
+    human_approval = ask_human("Should I delete this file?")
+    if human_approval:
+        delete_file()
+```
+
+---
+
+## Common Mistakes
+
+❌ **Agent uses wrong tool for the job**  
+✅ **Provide clear tool descriptions and examples**
+
+❌ **Agent gets stuck in loops**  
+✅ **Add maximum iteration limit**
+
+❌ **Agent hallucinates about tool results**  
+✅ **Use structured outputs (JSON)**
+
+❌ **Expensive (too many tool calls)**  
+✅ **Give agent good reasoning ability to minimize calls**
+
+---
+
+## Implementation Checklist
+
+- [ ] Define your goal
+- [ ] List required tools
+- [ ] Build/API the tools
+- [ ] Choose framework (LangChain, CrewAI, etc.)
+- [ ] Define agent behavior
+- [ ] Add max iterations limit
+- [ ] Add human approval for critical actions
+- [ ] Test on edge cases
+- [ ] Monitor tool usage (cost, latency)
+- [ ] Iterate on tools/instructions
+
+---
+
+## When Agents Make Sense
+
+**Use agents when:**
+- Task requires multiple steps
+- Unclear which steps upfront
+- Need to use external tools/APIs
+- Benefit from reasoning
+
+**Don't use agents when:**
+- Simple single-step task
+- Fixed workflow
+- Need guaranteed performance
+- Cost is critical
+
+---
+
+## Example Agent Implementation
+
+```python
+from langchain.agents import initialize_agent, Tool
+from langchain.llms import ChatAnthropic
+
+# Define tools
+tools = [
+    Tool(
+        name="Search",
+        func=search_web,
+        description="Search the web for information"
+    ),
+    Tool(
+        name="Weather",
+        func=get_weather,
+        description="Get weather for a city"
+    )
+]
+
+# Create agent
+agent = initialize_agent(
+    tools,
+    ChatAnthropic(),
+    agent="zero-shot-react-description",
+    max_iterations=5
+)
+
+# Use agent
+result = agent.run("What's the weather in NYC? Should I bring a jacket?")
+```
+
+---
+
+See Also:
+- [Frameworks Guide](/decide/frameworks/guide) — Choosing between CrewAI, LangChain, etc.
+- [Builder Path](/learn/builder) — Hands-on agent building
+- [RAG Architecture](/deep-dive/rag-architecture) — Combining agents with retrieval
