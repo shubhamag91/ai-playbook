@@ -1,11 +1,12 @@
 ---
 title: Beginner Learning Path
-description: A 4-hour guided introduction to AI and LLMs
+description: A 4-hour guided introduction to AI and LLMs — no background required
 sidebar:
   order: 1
 lastUpdated: 2026-05-08
 ---
 
+import { Card, CardGrid } from '@astrojs/starlight/components';
 import Breadcrumb from '../../../components/Breadcrumb.astro';
 import SeeAlso from '../../../components/SeeAlso.astro';
 
@@ -13,26 +14,275 @@ import SeeAlso from '../../../components/SeeAlso.astro';
 
 # Beginner Learning Path
 
-A comprehensive 4-hour introduction for complete beginners to AI and large language models.
+A complete 4-hour introduction to AI and large language models. No math or programming required — just curiosity.
 
-## Coming Soon
+**Time commitment:** 4 hours spread across 2–3 days  
+**No prerequisites:** This assumes zero prior knowledge
 
-This learning path is being created as part of the Phase 1 restructuring.
+---
 
-**Planned sections:**
-1. What is an LLM? (30 min)
-2. How do they work? (1 hour)
-3. What can they do? (1 hour)
-4. Your first experiment (1 hour)
-5. What's real vs hype? (30 min)
+## Section 1: What Is An LLM? (30 min)
 
-For now, explore these resources:
-- [Glossary](/reference/glossary) — Key terms explained
-- [Principles](/reference/principles) — Guiding rules for using AI
-- [Confusions](/reference/confusions) — Common misconceptions cleared up
+### The Simple Version
+
+An **LLM (Large Language Model)** is software that predicts the next word in a sentence, billions of times in a row. That's it. Not magic — just pattern matching.
+
+Think of autocomplete on your phone. When you type "What is the weather in...", your phone predicts "New York" or "London" because it's learned that people usually complete that phrase with a city name. ChatGPT, Claude, and Gemini work the same way, but they're *much* better at predicting what comes next because they've learned from billions of examples.
+
+### What Makes Them "Large"?
+
+The word "large" refers to three things:
+
+1. **Lots of training data** — These models learn from trillions of words (books, articles, websites, code, etc.)
+2. **Lots of parameters** — Think of these as "dials" the model uses to predict. GPT-4o has 1.76 trillion parameters. More dials = more nuance.
+3. **Lots of compute** — Training these models costs millions of dollars and takes weeks on powerful GPUs.
+
+### Why Do They Work?
+
+Because patterns repeat. If you've read 10,000 essays that start with "In conclusion, this research shows...", you can predict what comes next with decent accuracy. LLMs have read the entire internet, so they're very good at predicting.
+
+### What They Can Do
+
+- Write essays, code, emails
+- Answer questions (sometimes correctly)
+- Explain concepts
+- Summarize documents
+- Generate creative ideas
+- Catch grammar mistakes
+- Translate languages
+
+### What They Can't Do
+
+- Access the internet or real-time information (unless specifically designed to)
+- Know anything after their training date
+- Understand context beyond a few thousand words
+- Reliably do math (they predict text, not calculate)
+- Know the truth (they predict plausible text, not factual text)
+
+---
+
+## Section 2: How Do They Work? (1 hour)
+
+### The Building Blocks
+
+An LLM is made of three parts:
+
+**1. Tokenizer** (Converting words to numbers)
+- LLMs don't understand words; they understand numbers
+- A tokenizer breaks "Hello, world!" into tokens: [Hello], [,], [world], [!]
+- Each token becomes a number: [Hello]=15234, [,]=89, [world]=62, [!=40]
+
+**2. The Model** (The "brain")
+- A neural network with billions of parameters
+- Takes token numbers as input
+- Produces probability distributions for the next token
+- "Given these previous tokens, what's the next word? 45% 'the', 30% 'a', 15% 'is'..."
+
+**3. Decoder** (Converting numbers back to words)
+- Takes the predicted token numbers
+- Converts them back to text
+- Returns the answer to you
+
+### The Process (Simplified)
+
+```
+Input: "What is the meaning of"
+↓
+Tokenizer: [15023, 1234, 89, 5042, 234]
+↓
+Model: "Predicts next token is 42 (life)"
+↓
+Decoder: "life"
+↓
+Output: "What is the meaning of life"
+```
+
+Then it repeats. It predicted "life", so now it feeds back:
+
+```
+Input: "What is the meaning of life"
+↓
+(tokenize, predict, decode)
+↓
+Output adds: "?"
+```
+
+This repeats until it decides to stop.
+
+### Why Use Different Models?
+
+Different LLMs have different strengths because they're trained differently:
+
+- **Claude** — Trained to be thoughtful and safe; excellent for reasoning
+- **GPT-4o** — Trained on diverse data; good at everything; especially strong at vision (images)
+- **Gemini** — Trained by Google; integrated with Google services; handles very long documents (1M tokens)
+- **DeepSeek** — Trained by a Chinese company; open-source; very affordable
+
+### The Real Secret: Attention
+
+The breakthrough that made modern LLMs work is something called **attention**. It lets the model focus on relevant parts of the text.
+
+Example: In "The CEO of Apple, Tim Cook, announced...", the word "Tim Cook" is the subject, not "Apple". Attention learns to focus on "Tim Cook" when predicting what comes next.
+
+This is why newer models are better — they have better attention mechanisms that understand relationships between words.
+
+---
+
+## Section 3: What Can You Actually Do With Them? (1 hour)
+
+### Use Case 1: Writing (Replaces Grammarly + Draft)
+
+Instead of writing from scratch, describe what you need:
+- "Write a professional email declining a job offer, staying polite but firm"
+- "Explain quantum entanglement to a 10-year-old"
+- "Rewrite this paragraph to be 50% shorter without losing meaning"
+
+**Tools:** ChatGPT, Claude, Gemini (all free tier works)
+
+### Use Case 2: Learning (Replaces Google)
+
+Ask follow-up questions naturally:
+- "Explain photosynthesis... now explain the Calvin cycle... now how does that relate to the carbon cycle?"
+
+You get conversational explanations, not search results. Much faster learning.
+
+**Tools:** ChatGPT, Claude, Perplexity (Perplexity adds real-time web search)
+
+### Use Case 3: Coding (Game-changer for developers)
+
+- Describe what you want: "Write a Python function that takes a list of numbers and returns the even ones sorted"
+- Get working code instantly
+- Ask follow-up questions to modify it
+
+**Tools:** Claude Code (CLI), Cursor (IDE), GitHub Copilot (inline in VSCode)
+
+### Use Case 4: Automation (Replaces Zapier for simple tasks)
+
+- Extract data from unstructured text
+- Generate summaries for 100 documents at once
+- Categorize customer feedback automatically
+
+**Tools:** Use APIs (Anthropic, OpenAI) + write scripts, or use no-code tools like Zapier with AI plugins
+
+### Use Case 5: Analysis (Replaces hours of reading)
+
+- Upload a 100-page research paper; ask "What are the 5 key findings?"
+- Upload financial reports; ask "Which company is more profitable?"
+- Upload customer feedback; ask "What are the top 3 complaint categories?"
+
+**Tools:** ChatGPT (Plus), Claude (Pro), NotebookLM (Google; specialized for documents)
+
+### What Each Model Is Best For
+
+| Model | Best For | Why |
+|-------|----------|-----|
+| ChatGPT | Jack of all trades, master of most | Reliable, fast, good at everything |
+| Claude | Long analysis, reasoning, safety | Thoughtful; handles 200K tokens |
+| Gemini | Long documents, integration with Google | 1M token context (can read a whole book) |
+| Perplexity | Research with citations | Searches the web in real-time |
+| DeepSeek | Cost-conscious use | 10x cheaper, surprisingly good |
+
+---
+
+## Section 4: Your First Experiment (1 hour)
+
+### Option A: The Writing Experiment
+
+1. Go to **chatgpt.com** (free)
+2. Ask: "Write me a funny limerick about a confused programmer"
+3. Follow up: "Now make it about an AI researcher instead"
+4. Try: "Rewrite that as a haiku"
+
+**What you'll learn:** How to iterate. LLMs improve with clear follow-up questions.
+
+### Option B: The Learning Experiment
+
+1. Go to **claude.ai** (free)
+2. Ask: "Explain how neural networks learn. Use an analogy."
+3. Follow up: "Now explain how language models are different from other neural networks"
+4. Ask: "Give me a concrete example of a task that breaks language models"
+
+**What you'll learn:** How to dig deeper. Good follow-ups lead to better understanding.
+
+### Option C: The Analysis Experiment
+
+1. Copy-paste a paragraph from any news article
+2. Ask ChatGPT/Claude: "Summarize this in one sentence"
+3. Ask: "What are the key assumptions in this argument?"
+4. Ask: "Who would disagree with this perspective?"
+
+**What you'll learn:** LLMs can analyze text faster than you can read it.
+
+### Pro Tips
+
+- **Be specific.** "Write a poem" is less useful than "Write a poem about climate change in the style of Dr. Seuss"
+- **Iterate.** Your first output is rarely perfect. "Actually, make it shorter/longer/more humorous"
+- **Explain the context.** "I'm writing this for my boss" vs "I'm writing this for a 5-year-old" produces very different results
+- **Ask follow-ups.** "Why?" and "How?" and "Explain like I'm an expert" all work
+
+---
+
+## Section 5: What's Real vs Hype (30 min)
+
+### ✅ Real: What LLMs Actually Do Well
+
+- Writing and editing (better than most people)
+- Explaining concepts (can be very clear)
+- Coding assistance (saves hours)
+- Brainstorming (generates ideas fast)
+- Analysis of existing text (finding patterns, extracting info)
+
+### ⚠️ Partial: What's Getting Better
+
+- Math (they struggle, but new "reasoning" models like o3 are improving)
+- Factual accuracy (they hallucinate, but adding retrieval helps)
+- Real-time information (not built-in, but Perplexity/Gemini add it)
+- Specialized domains (they're improving with fine-tuning)
+
+### ❌ Hype: What LLMs Can't Do
+
+- Access your files or the internet (without explicit tools)
+- Know anything after their training date
+- Reason like humans (they pattern-match, not reason)
+- Understand context beyond ~200K tokens
+- Be guaranteed to be truthful (they generate plausible text, not facts)
+- Replace domain experts (they're tools for experts, not replacements)
+
+### The Reality Check
+
+An LLM is a **tool**, not an oracle. Use it like you'd use Google:
+- It's incredibly fast
+- It's often helpful
+- It's sometimes wrong
+- You need to verify important claims
+
+---
+
+## Key Takeaways
+
+1. LLMs predict the next word by learning from patterns
+2. Different models have different strengths
+3. They're best used iteratively (question → response → follow-up)
+4. They're excellent assistants but not replacements for thinking
+5. The future: they'll get cheaper, faster, and more integrated into tools you use daily
+
+---
+
+## What's Next?
+
+**If you want to go deeper:**
+- [How LLMs Work](/deep-dive/how-llms-work) — Technical deep-dive on transformers and attention
+- [Glossary](/reference/glossary) — Look up any AI terms you're unsure about
+
+**If you want to build something:**
+- [Builder Path](/learn/builder) — Get hands-on with tools and APIs
+
+**If you want to stay current:**
+- [Researcher Path](/learn/researcher) — Follow AI trends and new releases
 
 <SeeAlso links={[
-  { label: 'Quick Start', href: '/start/quick-start', description: 'Get up to speed in 30 minutes' },
-  { label: 'Glossary', href: '/reference/glossary', description: 'Look up key AI terms' },
-  { label: 'Builder Path', href: '/learn/builder', description: 'For hands-on learners' }
+  { label: 'How LLMs Work', href: '/deep-dive/how-llms-work', description: 'Technical deep-dive into transformers' },
+  { label: 'Tools Guide', href: '/decide/tools/guide', description: 'Which tools to use for what' },
+  { label: 'Builder Path', href: '/learn/builder', description: 'Hands-on for developers' },
+  { label: 'Glossary', href: '/reference/glossary', description: 'AI terminology explained' }
 ]} />
