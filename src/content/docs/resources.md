@@ -58,6 +58,25 @@ Which tool to use for what — chat, coding, content creation, APIs.
 
 ---
 
+## How to Use These Resources
+
+### Print & Pin
+- Print the 3 cheat sheets and pin near your desk
+- Share with colleagues starting with AI
+- Bookmark for quick reference
+
+### Share With Others
+- Share cheat sheets when onboarding teammates
+- Use as conversation starters in team meetings
+- Include in training materials
+
+### Stay Updated
+- Bookmark [What's New](/research/whats-new) for monthly updates
+- Follow [Who to Follow](/follow) for newsletters and researchers
+- Check [Model Releases](/research/model-releases) for new tool announcements
+
+---
+
 ## Other Resources
 
 ### Learning Paths
@@ -105,25 +124,6 @@ Which tool to use for what — chat, coding, content creation, APIs.
 - [What's New](/research/whats-new) — May 2026 releases and trends
 - [Model Releases](/research/model-releases) — Timeline of new models
 - [Emerging Trends](/research/emerging-trends) — 15 key trends
-
----
-
-## How to Use These
-
-### Print & Pin
-- Print the 3 cheat sheets and pin near your desk
-- Share with colleagues starting with AI
-- Bookmark for quick reference
-
-### Share With Others
-- Share cheat sheets when onboarding teammates
-- Use as conversation starters in team meetings
-- Include in training materials
-
-### Stay Updated
-- Bookmark [What's New](/research/whats-new) for monthly updates
-- Follow [Who to Follow](/follow) for newsletters and researchers
-- Check [Model Releases](/research/model-releases) for new tool announcements
 
 ---
 
