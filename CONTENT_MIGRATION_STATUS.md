@@ -125,6 +125,50 @@
 
 ---
 
+### ✅ MOS-245: Create Substantive Learning Paths (Complete)
+
+#### Beginner Path (`/learn/beginner.mdx` - 1,800+ words)
+- **Target audience:** Complete beginners, no AI background
+- **Content:**
+  - Section 1: What is an LLM (tokens, parameters, why they work)
+  - Section 2: How they work (tokenizer, model, decoder, attention)
+  - Section 3: What you can do (5 practical use cases)
+  - Section 4: First experiments (3 hands-on options)
+  - Section 5: Real vs hype (what's real, partial, hype)
+- **Time:** 4 hours
+- **Status:** ✅ Complete, HTTP 200, 242KB
+
+#### Builder Path (`/learn/builder.md` - 2,400+ words)
+- **Target audience:** Developers new to LLM APIs
+- **Content:**
+  - Day 1-2: Choose your stack (API selection, environment setup)
+  - Day 3: Multi-turn conversations (state management)
+  - Day 4: Add retrieval (RAG with Chroma example)
+  - Day 5-6: Structured output (JSON extraction, Pydantic)
+  - Day 7: Production patterns (caching, costs, async, errors)
+- **Code:** Python and JavaScript examples throughout
+- **Time:** 1 week (10-15 hours)
+- **Status:** ✅ Complete, HTTP 200, 255KB
+
+#### Researcher Path (`/learn/researcher.md` - 2,200+ words)
+- **Target audience:** Researchers, trend-watchers staying current
+- **Content:**
+  - Daily reading (3 recommended briefings, 10-15 min)
+  - Weekly deep-dives (4 newsletters by interest, 1 hour)
+  - Monthly reviews (papers, releases, trends)
+  - Quarterly deep dives (focused research topics, 6 hours)
+  - Following researchers (X/Twitter, podcasts)
+  - Community engagement (Reddit, Discord)
+  - Time allocation breakdown (5-6 hours/week, or 3 hours/month minimum)
+- **Resources:** 20+ specific sources listed
+- **Status:** ✅ Complete, HTTP 200, 228KB
+
+**Build Status:** ✅ Passes (42 pages, 3.34s build time)  
+**Search Index:** All 3 paths indexed  
+**Mobile Responsive:** ✅ Tested
+
+---
+
 ## In Progress / Pending Tasks
 
 ### 🔄 MOS-245: Create Learning Paths Content (Not Started)
@@ -178,6 +222,6 @@
 - Mobile: Responsive
 
 **Optional Future Tasks:**
-1. MOS-245: Create substantive learning path content (beginner, builder, researcher)
-2. MOS-A: Expand "Who to Follow" to `/learn/researcher.md`
-3. MOS-B: Additional content enhancements as needed
+1. ✅ MOS-245: Create substantive learning path content (Complete)
+2. Future: Expand "Who to Follow" (follow.mdx) as additional resource
+3. Future: Additional content enhancements as needed
