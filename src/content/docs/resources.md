@@ -52,7 +52,7 @@ Core patterns, templates, and anti-patterns for effective prompting.
 - Anti-patterns to avoid
 - Token cost formula for optimization
 
-**[📥 Download PDF](https://ai-playbook-9y9.pages.dev/cheatsheets/prompt-engineering.html)** (Print-friendly, A4)
+**[📥 Download PDF](/cheatsheets/prompt-engineering.html)** (Print-friendly, A4)
 
 ---
 
