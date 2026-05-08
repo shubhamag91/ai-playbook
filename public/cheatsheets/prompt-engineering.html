@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Engineering - One Page Guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; line-height: 1.3; color: #333; background: #f5f5f5; }
+        @page { size: A4; margin: 0.4in; }
+        @media print { body { background: white; } }
+        .container { background: white; padding: 0.4in; max-width: 8.5in; height: 11in; margin: 0 auto; display: flex; flex-direction: column; gap: 0.08in; }
+        h1 { font-size: 22px; margin-bottom: 0.05in; color: #1a1a1a; }
+        .subtitle { font-size: 10px; color: #666; margin-bottom: 0.08in; }
+        .section { border: 1px solid #ddd; padding: 0.08in; background: #fafafa; }
+        h2 { font-size: 11px; font-weight: 600; margin-bottom: 0.03in; color: #222; border-bottom: 2px solid #FF9800; padding-bottom: 0.02in; }
+        p { font-size: 10px; margin-bottom: 0.02in; }
+        .key { font-weight: 600; color: #d32f2f; }
+        .good { color: #2e7d32; font-weight: 500; }
+        .bad { color: #c62828; font-weight: 500; }
+        .example { background: #f0f0f0; padding: 0.05in; margin: 0.03in 0; border-left: 2px solid #FF9800; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.08in; }
+        .footer { font-size: 8px; color: #999; text-align: center; margin-top: auto; }
+        ul { margin-left: 0.1in; font-size: 10px; }
+        li { margin-bottom: 0.02in; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <h1>Prompt Engineering</h1>
+            <div class="subtitle">Get Better Outputs from LLMs (Tested Techniques)</div>
+        </div>
+
+        <div class="grid">
+            <div class="section">
+                <h2>The 3 Golden Rules</h2>
+                <p><span class="key">1. Be Specific</span></p>
+                <div class="example">
+                    <p class="bad">Bad:</p> Write about AI
+                    <p class="good">Good:</p> Explain transformers in 3 paragraphs for a CS student
+                </div>
+                <p><span class="key">2. Give Context</span></p>
+                <div class="example">
+                    <p class="bad">Bad:</p> Classify this
+                    <p class="good">Good:</p> You're a UX reviewer. Rate this design for mobile.
+                </div>
+                <p><span class="key">3. Show Examples</span></p>
+                <div class="example">
+                    <p class="good">Good:</p> "Like this (example). Now do this (task)."
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>5 Quick Wins</h2>
+                <ul>
+                    <li><strong>Add role:</strong> "You're a Python expert..."</li>
+                    <li><strong>Add constraints:</strong> "Keep it under 100 words"</li>
+                    <li><strong>Add format:</strong> "Return as JSON"</li>
+                    <li><strong>Think step-by-step:</strong> "Explain your reasoning"</li>
+                    <li><strong>Few examples:</strong> Show 2-3 input/output pairs</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Prompt Template (Steal This!)</h2>
+            <div class="example">
+You are a [ROLE].
+Your goal is to [GOAL].
+Context: [BACKGROUND]
+
+Task: [WHAT TO DO]
+Constraints: [WHAT NOT TO DO]
+Format: [HOW TO ANSWER]
+
+Input: [USER INPUT]
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="section">
+                <h2>Advanced Techniques</h2>
+                <p><span class="key">Chain-of-Thought:</span> "Let's think step by step"</p>
+                <p><span class="key">Few-Shot:</span> Examples before the real question</p>
+                <p><span class="key">Role-Play:</span> "You are..."</p>
+                <p><span class="key">Decomposition:</span> Break into smaller tasks</p>
+                <p><span class="key">Iteration:</span> Ask follow-ups ("refine this" / "shorter")</p>
+            </div>
+
+            <div class="section">
+                <h2>Common Mistakes</h2>
+                <p class="bad">✗ Being rude</p> → Be polite
+                <p class="bad">✗ Vague</p> → Be specific
+                <p class="bad">✗ Too long</p> → Keep focused
+                <p class="bad">✗ Contradictions</p> → Clear priorities
+                <p style="margin-top: 0.05in;"><strong>Fix:</strong> Rerun with better prompt.</p>
+            </div>
+        </div>
+
+        <div class="section" style="flex: 1;">
+            <h2>Testing Your Prompt</h2>
+            <ul>
+                <li><strong>Consistency:</strong> Run 3x. Are results similar?</li>
+                <li><strong>Accuracy:</strong> Test on 5 known examples</li>
+                <li><strong>Edge cases:</strong> Try unusual inputs</li>
+                <li><strong>Cost:</strong> Count tokens (cheaper = fewer tokens)</li>
+            </ul>
+        </div>
+
+        <div class="footer">AI Playbook Cheat Sheet | May 2026 | Print-friendly, one page | Read deep dive on playbook.com</div>
+    </div>
+</body>
+</html>
