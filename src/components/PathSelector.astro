@@ -1,0 +1,119 @@
+---
+import './PathSelector.css';
+
+const paths = [
+  {
+    id: 'start',
+    emoji: '🎯',
+    title: 'Start Here',
+    description: 'New to AI? Begin with orientation and quick start guides.',
+    links: [
+      { label: 'Welcome', href: '/' },
+      { label: 'Quick Start', href: '/start/quick-start' }
+    ]
+  },
+  {
+    id: 'learn',
+    emoji: '📚',
+    title: 'Learn',
+    description: 'Follow a guided learning path based on your role and goals.',
+    links: [
+      { label: 'Beginner Path', href: '/learn/beginner' },
+      { label: 'Builder Path', href: '/learn/builder' },
+      { label: 'Researcher Path', href: '/learn/researcher' },
+      { label: 'Interview Prep', href: '/learn/interview-prep' }
+    ]
+  },
+  {
+    id: 'decide',
+    emoji: '🛠️',
+    title: 'Decide',
+    description: 'Compare tools, models, and frameworks. Make informed choices.',
+    links: [
+      { label: 'Tools Guide', href: '/decide/tools/guide' },
+      { label: 'Models Guide', href: '/decide/models/guide' },
+      { label: 'Frameworks Guide', href: '/decide/frameworks/guide' },
+      { label: 'Cost Calculator', href: '/decide/cost-calculator' }
+    ]
+  },
+  {
+    id: 'reference',
+    emoji: '📖',
+    title: 'Reference',
+    description: 'Glossary, cheatsheets, and quick lookups.',
+    links: [
+      { label: 'Glossary', href: '/reference/glossary' },
+      { label: 'Cheatsheets', href: '/reference/cheatsheets' },
+      { label: 'Model Specs', href: '/reference/model-specs' },
+      { label: 'Confusions', href: '/reference/confusions' }
+    ]
+  },
+  {
+    id: 'research',
+    emoji: '🔬',
+    title: 'Research',
+    description: 'Latest trends, model releases, and open-source developments.',
+    links: [
+      { label: "What's New", href: '/research/whats-new' },
+      { label: 'Model Releases', href: '/research/model-releases' },
+      { label: 'Emerging Trends', href: '/research/emerging-trends' },
+      { label: 'Open-Source Models', href: '/research/models/guide' }
+    ]
+  },
+  {
+    id: 'deep-dive',
+    emoji: '⚙️',
+    title: 'Deep Dives',
+    description: 'Technical deep dives: how LLMs work, RAG, agents, training.',
+    links: [
+      { label: 'How LLMs Work', href: '/deep-dive/how-llms-work' },
+      { label: 'RAG Architecture', href: '/deep-dive/rag-architecture' },
+      { label: 'Agents & Frameworks', href: '/deep-dive/agents-frameworks' },
+      { label: 'Prompt Engineering', href: '/deep-dive/prompt-engineering' }
+    ]
+  },
+  {
+    id: 'resources',
+    emoji: '🌐',
+    title: 'Resources',
+    description: 'Curated external resources, papers, tools, and communities.',
+    links: [
+      { label: 'Browse All Resources', href: '/resources' }
+    ]
+  },
+  {
+    id: 'community',
+    emoji: '🤝',
+    title: 'Community',
+    description: 'Contribute, report outdated info, and join the conversation.',
+    links: [
+      { label: 'Contributing Guide', href: '/community/contributing' },
+      { label: 'Report Outdated', href: '/community/report' }
+    ]
+  }
+];
+---
+
+<div class="path-selector">
+  <div class="path-selector-header">
+    <h2>Choose Your Path</h2>
+    <p>Pick where you want to go. Each path is organized for a different purpose.</p>
+  </div>
+
+  <div class="paths-grid">
+    {paths.map((path) => (
+      <div class="path-card">
+        <div class="path-emoji">{path.emoji}</div>
+        <h3>{path.title}</h3>
+        <p class="path-description">{path.description}</p>
+        <nav class="path-links">
+          {path.links.map((link) => (
+            <a href={link.href} class="path-link">
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    ))}
+  </div>
+</div>
