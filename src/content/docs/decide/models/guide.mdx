@@ -1,0 +1,325 @@
+---
+title: Models Decision Guide
+description: Choose the right LLM for your use case — reasoning, speed, cost, and capabilities
+sidebar:
+  order: 2
+lastUpdated: 2026-05-08
+---
+
+import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
+import Breadcrumb from '../../../../components/Breadcrumb.astro';
+import SeeAlso from '../../../../components/SeeAlso.astro';
+
+<Breadcrumb />
+
+# Models Decision Guide
+
+How to choose the right model for your specific task. Reasoning, speed, cost, and capabilities compared.
+
+---
+
+## Quick Decision Tree
+
+```
+1. What's your primary constraint?
+   ├─ Cost → DeepSeek V4 Flash or GPT-5.5 Instant
+   ├─ Speed → Claude Haiku or GPT-5.5 Instant
+   ├─ Reasoning/Quality → Claude Opus or o3
+   ├─ Long context → Gemini 3.1 Pro (1M tokens)
+   └─ Privacy/On-prem → Llama 4 self-hosted
+
+2. What's your use case?
+   ├─ Writing/Analysis → Claude Sonnet (default)
+   ├─ Code generation → Claude Sonnet or GPT-4o
+   ├─ Reasoning/Math → o3 or Claude Opus
+   ├─ Vision/Images → GPT-4o or Gemini 3.1
+   ├─ Document processing → Gemini 3.1 Pro (1M context)
+   └─ Real-time → Perplexity or Claude with web search
+```
+
+---
+
+## Model Categories
+
+### Tier 1: Reasoning Models (Slow but Brilliant)
+
+**Claude Opus 4.7** (Anthropic)
+- Context: 400K tokens (read a whole book)
+- Speed: Slow (think for 30+ seconds)
+- Cost: $15-75 per 1M tokens
+- Best for: Complex reasoning, multi-step logic, deep analysis
+- Why: Most capable model available. Use when Sonnet struggles.
+- When NOT to use: Simple tasks, real-time applications, cost-sensitive work
+
+**o3** (OpenAI)
+- Context: 128K tokens
+- Speed: Very slow (extended thinking)
+- Cost: Premium pricing
+- Best for: Extremely hard problems (math, coding competitions, logic puzzles)
+- Why: Breakthrough reasoning capability
+- When NOT to use: General tasks (overkill), any time-sensitive work
+
+**o1** (OpenAI)
+- Context: 128K tokens
+- Speed: Slow but faster than o3
+- Cost: $15 per 1M input, $60 per 1M output
+- Best for: Difficult reasoning without needing extended thinking
+- Why: Good reasoning at reasonable speed
+- When NOT to use: Simple tasks, real-time
+
+---
+
+### Tier 2: Default Models (Fast & Smart)
+
+**Claude 3.5 Sonnet 4.6** (Anthropic) ⭐ **Recommended Default**
+- Context: 200K tokens
+- Speed: Fast (2-5 seconds)
+- Cost: $3-15 per 1M tokens
+- Best for: Almost everything — writing, code, analysis
+- Why: Best balance of speed, quality, cost
+- When to use: Your first choice for any task
+
+**GPT-4o** (OpenAI)
+- Context: 128K tokens
+- Speed: Fast (2-5 seconds)
+- Cost: $2-8 per 1M tokens
+- Best for: All-around work, especially vision/images
+- Why: Extremely reliable, good at everything
+- When to use: When you need vision, or want OpenAI's reliability
+
+**Gemini 3.1 Pro** (Google)
+- Context: 1M tokens (!!)
+- Speed: Medium (5-10 seconds)
+- Cost: $2-12 per 1M tokens
+- Best for: Document analysis, long-context research
+- Why: Only model that can read entire books
+- When to use: When context window matters more than speed
+
+---
+
+### Tier 3: Speed-Focused (Fast & Cheap)
+
+**Claude 3.5 Haiku** (Anthropic)
+- Context: 200K tokens
+- Speed: Ultra-fast (under 1 second)
+- Cost: $0.80-4 per 1M tokens
+- Best for: Classification, routing, summaries, high volume
+- Why: Surprisingly capable despite being the smallest
+- When to use: When speed is critical or volume is high
+
+**GPT-4 Turbo** (OpenAI)
+- Context: 128K tokens
+- Speed: Fast
+- Cost: $0.01-0.03 per 1K tokens
+- Best for: Production systems, high volume
+- Why: Reliable, cheap
+- When to use: Cost-sensitive production
+
+**DeepSeek V4 Flash** (China)
+- Context: 128K tokens
+- Speed: Fast
+- Cost: $0.14-0.28 per 1M tokens (!!)
+- Best for: Budget-conscious work, routing, high volume
+- Why: Shockingly cheap and good quality
+- When to use: Cost is the #1 constraint
+
+---
+
+### Tier 4: Specialized
+
+**GPT-4 Vision** (OpenAI)
+- Best for: Image analysis, OCR, visual understanding
+- Why: GPT-4o is better and cheaper now
+- When to use: Legacy systems
+
+**Claude 3 Opus** (Anthropic, previous version)
+- Replaced by Claude 4.7
+- When to use: Nowhere; use Opus 4.7 instead
+
+**Open-Source Models** (Llama, Mistral, DeepSeek)
+- Best for: Privacy, on-premise, fine-tuning
+- Why: Full control, no API costs
+- When to use: When data can't leave your infrastructure
+- How: Run locally with Ollama or LM Studio
+
+---
+
+## Decision Matrix By Use Case
+
+| Task | Model | Why | Cost |
+|------|-------|-----|------|
+| Customer support chatbot | Haiku | Fast, cheap | $2-5/month |
+| Blog post writing | Sonnet | Quality + speed balance | $1-3/month |
+| Code generation | Sonnet or GPT-4o | Both excellent | $2-5/month |
+| Complex reasoning | Opus or o3 | Need the power | $50-200/month |
+| Document analysis (100 pages) | Gemini 3.1 Pro | Only fits 1M context | $2-10/month |
+| Real-time Q&A | Perplexity | Web search built-in | Free-20/month |
+| Vision/image tasks | GPT-4o | Best at images | $2-5/month |
+| Routing/classification | Haiku | Speed + cheap | $1-2/month |
+| Data extraction | Sonnet + structured output | Reliable parsing | $2-5/month |
+| High volume (1000+ requests/day) | Haiku or V4 Flash | Need cheap inference | $10-50/month |
+
+---
+
+## Cost Comparison for Common Scenarios
+
+### Scenario 1: Personal Research Assistant
+**Use case:** 10 questions/day, 2000 input tokens avg, 500 output tokens
+
+| Model | Monthly Cost | Speed | Quality |
+|-------|--------------|-------|---------|
+| Claude Sonnet | $0.90 | Fast | Excellent |
+| GPT-4o | $0.60 | Fast | Excellent |
+| Gemini 3.1 Pro | $0.60 | Medium | Excellent |
+| DeepSeek V4 | $0.33 | Fast | Good |
+
+**Recommendation:** Sonnet or GPT-4o (negligible difference)
+
+### Scenario 2: High-Volume Classification (10,000 req/day)
+**Use case:** 500 input tokens, 50 output tokens per request
+
+| Model | Monthly Cost | Speed | Quality |
+|-------|--------------|-------|---------|
+| Claude Haiku | $45 | Ultra-fast | Good |
+| GPT-4 Turbo | $15 | Fast | Good |
+| DeepSeek Flash | $7 | Fast | Good |
+
+**Recommendation:** DeepSeek Flash (10x cheaper than Haiku)
+
+### Scenario 3: Complex Reasoning (50 req/day)
+**Use case:** 3000 input tokens, 2000 output tokens per request
+
+| Model | Monthly Cost | Speed | Quality |
+|-------|--------------|-------|---------|
+| Claude Opus | $675 | Slow | Excellent |
+| Claude Sonnet | $225 | Fast | Excellent |
+| o3 | $2000 | Very slow | Best-in-class |
+| o1 | $450 | Slow | Excellent |
+
+**Recommendation:** Sonnet (best balance), o3 (if you need the best and can wait)
+
+---
+
+## Which Model for Your Project?
+
+### If You're Building a Startup/Product
+**Start with:** Claude Sonnet + Haiku combo
+- Sonnet for complex tasks
+- Haiku for high-volume/cheap tasks
+- Reason: Cost-effective, reliable, good quality
+
+**Scale with:** Opus if you hit reasoning limits
+
+### If You're Prototyping/Learning
+**Start with:** GPT-4o or Claude Sonnet (free tier)
+- Both have good free credits
+- Reason: Simplest to get started
+
+**Explore:** Try multiple models on the same task to see tradeoffs
+
+### If Cost Is Your #1 Constraint
+**Use:** DeepSeek V4 Flash + Sonnet combo
+- Flash for everything possible
+- Sonnet when Flash isn't good enough
+- Reason: 10x cheaper overall
+
+### If You Need Long Context (1000+ page documents)
+**Use:** Gemini 3.1 Pro (only option with 1M context)
+- Reason: Nothing else can handle that much text
+
+### If You Need On-Premise/Privacy
+**Use:** Llama 4 (run locally with Ollama)
+- Cost: Free (just electricity)
+- Tradeoff: Slower, less capable
+- Reason: Data never leaves your machine
+
+### If Speed Matters Most
+**Use:** Haiku + use caching
+- Response time: under 1 second
+- Or: o1 if you need reasoning (slower but better)
+- Reason: Trade quality for speed when needed
+
+---
+
+## Optimization Strategies
+
+### Strategy 1: Routing (Mixture of Models)
+
+Use a cheap model to decide which model to use:
+
+```
+Input: User question
+  ↓
+Haiku: "Is this question simple? (yes/no)"
+  ├─ yes → Use Haiku for answer (cheap)
+  └─ no → Use Sonnet for answer (better)
+```
+
+**Savings:** 80% of questions use Haiku, 20% use Sonnet = 30% cost reduction
+
+### Strategy 2: Caching
+
+If you analyze the same document repeatedly:
+
+```
+First request: Analyze document X (full cost)
+Second request: Analyze document X (90% cheaper - cached)
+```
+
+**Savings:** With caching, 2nd-10th requests are 90% cheaper
+
+### Strategy 3: Batch Processing
+
+Don't ask questions one-at-a-time:
+
+```
+❌ Bad: 1000 questions, each call costs $0.01 = $10
+✅ Good: Batch 100 questions per call, 10 calls = $0.10
+```
+
+**Savings:** 100x for certain APIs
+
+---
+
+## What Changed Recently (May 2026)
+
+- o3 released (best reasoning ever, very expensive)
+- Claude 4.7 released (Opus version, improved reasoning)
+- DeepSeek V4 released (open-source reasoning, cheaper than ever)
+- Gemini 3.1 released (1M context window, multimodal)
+- GPT-5.5 released (minor improvements over 4o)
+
+**Implication:** 2026 is dominated by reasoning models and long-context models.
+
+---
+
+## Common Mistakes
+
+❌ **Using Opus for everything** — Overkill 95% of the time  
+✅ **Use Sonnet by default, Opus when needed**
+
+❌ **Ignoring cost** — Can add up fast with high volume  
+✅ **Calculate your actual usage, optimize routing**
+
+❌ **Assuming newer = better** — Sometimes not true  
+✅ **Test models on your actual task**
+
+❌ **Using same model for everything** — Suboptimal  
+✅ **Use a mix (Haiku for cheap, Sonnet for quality)**
+
+---
+
+## Where to Start
+
+1. **Pick a default:** Claude Sonnet (recommended) or GPT-4o
+2. **Use free credits** to test on your actual task
+3. **Measure cost:** How many tokens? How many requests?
+4. **Optimize:** Add Haiku for cheap tasks, Opus only when Sonnet fails
+5. **Monitor:** Track costs monthly
+
+---
+
+See Also:
+- [Model Specs & Pricing](/reference/model-specs) — Detailed pricing table
+- [Tools Guide](/decide/tools/guide) — Where to access models
+- [Builder Path](/learn/builder) — How to build with APIs

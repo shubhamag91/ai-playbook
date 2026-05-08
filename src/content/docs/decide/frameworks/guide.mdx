@@ -1,0 +1,484 @@
+---
+title: LLM Frameworks Decision Guide
+description: Compare LangChain, CrewAI, Autogen, and other frameworks for building AI apps
+sidebar:
+  order: 3
+lastUpdated: 2026-05-08
+---
+
+import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
+import Breadcrumb from '../../../../components/Breadcrumb.astro';
+import SeeAlso from '../../../../components/SeeAlso.astro';
+
+<Breadcrumb />
+
+# LLM Frameworks Decision Guide
+
+Which framework should you use to build your AI application? Comparison of LangChain, CrewAI, Autogen, and others.
+
+---
+
+## TL;DR Decision Tree
+
+```
+What are you building?
+├─ Simple Q&A or chat → No framework needed (use API directly)
+├─ Multi-step workflow with tools → LangChain or Langgraph
+├─ Multi-agent system → CrewAI or Autogen
+├─ Reasoning + research → Langgraph + LangChain
+└─ Production system → Langgraph (cleaner than LangChain)
+```
+
+---
+
+## When Do You Need a Framework?
+
+### ✅ Use a Framework If:
+- Your app needs multiple steps (retrieve docs → analyze → generate report)
+- You need tool calling (model decides which tools to use)
+- You're building agents (models working autonomously)
+- You have complex state management
+- You need production monitoring/logging
+
+### ❌ Don't Use a Framework If:
+- Simple question-answer (just call API directly)
+- Single LLM call per request
+- Prototyping or learning (use API directly first)
+- One-off scripts
+
+---
+
+## Framework Comparison
+
+### LangChain / Langgraph
+
+**What it is:** Orchestration library for building chains and graphs of LLM calls
+
+**Best for:** Multi-step workflows, RAG, tool chains, agents
+
+**Pros:**
+- Massive ecosystem (300+ integrations)
+- Well-documented
+- Handles RAG pipeline out of box
+- Good for building chains
+
+**Cons:**
+- Very verbose (lots of boilerplate)
+- Steep learning curve
+- Easy to write inefficient code
+- Newer "Langgraph" is better but requires relearning
+
+**When to use:**
+- Building RAG systems
+- Complex workflows with many tools
+- Need specific integration (specific vector DB, etc.)
+
+**Code example:**
+```python
+from langchain.chains import RetrievalQA
+from langchain.vectorstores import Chroma
+
+qa = RetrievalQA.from_chain_type(
+    llm=ChatAnthropic(),
+    retriever=vectorstore.as_retriever(),
+    chain_type="stuff"
+)
+answer = qa.run("What is the capital of France?")
+```
+
+**Cost:** Free (open source)  
+**Learning curve:** 2-3 weeks  
+**Maturity:** Production-ready
+
+---
+
+### CrewAI
+
+**What it is:** Framework for building multi-agent systems with defined roles and tasks
+
+**Best for:** Multi-agent workflows, defined role-based systems
+
+**Pros:**
+- Designed for multi-agent (not just chains)
+- Clear API for agents + tasks
+- Agents have defined roles/backstories
+- Great for collaborative workflows
+
+**Cons:**
+- Smaller ecosystem than LangChain
+- Less flexible for custom logic
+- Not ideal for simple workflows
+- Newer (less battle-tested)
+
+**When to use:**
+- Building multi-agent systems (research team, etc.)
+- Want agents with specific roles
+- Agents should coordinate/communicate
+
+**Code example:**
+```python
+from crewai import Agent, Task, Crew
+
+researcher = Agent(
+    role="Research Analyst",
+    goal="Find insights",
+    backstory="Expert researcher..."
+)
+
+task = Task(
+    description="Research AI trends",
+    agent=researcher
+)
+
+crew = Crew(agents=[researcher], tasks=[task])
+result = crew.kickoff()
+```
+
+**Cost:** Free (open source), cloud API available  
+**Learning curve:** 1-2 weeks  
+**Maturity:** Growing, good for new projects
+
+---
+
+### Autogen (Microsoft)
+
+**What it is:** Framework for building agent conversations using group chat
+
+**Best for:** Multi-agent conversations with human-in-loop
+
+**Pros:**
+- Built-in human interaction
+- Good for "agents debating" scenarios
+- Handles agent-to-agent communication
+- Can include humans in the loop
+
+**Cons:**
+- Less suitable for autonomous workflows
+- Heavier than CrewAI
+- Slower (agents chat)
+- Overhead for simple tasks
+
+**When to use:**
+- Multi-agent conversations needed
+- Want agent debate/reasoning
+- Need human input at certain points
+
+**Code example:**
+```python
+from autogen import AssistantAgent, UserProxyAgent
+
+assistant = AssistantAgent(
+    name="researcher",
+    llm_config={"model": "gpt-4"}
+)
+
+user = UserProxyAgent(name="user")
+
+user.initiate_chat(
+    assistant,
+    message="Research AI trends this month"
+)
+```
+
+**Cost:** Free (open source)  
+**Learning curve:** 1-2 weeks  
+**Maturity:** Research-grade, production-viable
+
+---
+
+### Instructor (Jxnl)
+
+**What it is:** Library for getting structured outputs from LLMs
+
+**Best for:** Data extraction, classification, function calling
+
+**Pros:**
+- Extremely simple API
+- Built-in validation (Pydantic)
+- Handles retries automatically
+- Minimal overhead
+
+**Cons:**
+- Only handles single calls (not multi-step)
+- Not for complex workflows
+- Smaller ecosystem
+
+**When to use:**
+- Extract structured data from text
+- Classification / tagging
+- Don't need complex orchestration
+
+**Code example:**
+```python
+from instructor import Instructor
+from pydantic import BaseModel
+
+class Person(BaseModel):
+    name: str
+    age: int
+
+result = Instructor().chat.completions.create(
+    model="claude-3-5-sonnet",
+    messages=[{"role": "user", "content": "Extract: John is 28"}],
+    response_model=Person
+)
+```
+
+**Cost:** Free (open source)  
+**Learning curve:** under 1 week  
+**Maturity:** Production-ready, simple
+
+---
+
+### Pydantic AI (Newer)
+
+**What it is:** Simple framework for building AI agents with tools
+
+**Best for:** Single-agent systems, tool calling
+
+**Pros:**
+- Super clean API
+- Built-in tool decorators
+- Minimal boilerplate
+- Modern Python patterns
+
+**Cons:**
+- Newer (less battle-tested)
+- Less ecosystem than LangChain
+- Not ideal for multi-agent
+
+**When to use:**
+- Building single agents with tools
+- Want clean, modern code
+- Not building RAG (not built-in)
+
+**Code example:**
+```python
+from pydantic_ai import Agent
+from pydantic import BaseModel
+
+agent = Agent("claude-3-5-sonnet")
+
+@agent.tool
+def get_weather(city: str) -> str:
+    return f"Weather in {city}..."
+
+result = agent.run_sync(
+    "What's the weather in NYC?"
+)
+```
+
+**Cost:** Free (open source)  
+**Learning curve:** under 1 week  
+**Maturity:** New, rapidly improving
+
+---
+
+## Comparison Matrix
+
+| Framework | Best For | Complexity | Ecosystem | Learning Curve | Production Ready |
+|-----------|----------|-----------|-----------|-----------------|------------------|
+| LangChain | RAG, complex workflows | High | Massive | 2-3 weeks | ✅ Yes |
+| Langgraph | State machines, workflows | Medium | Growing | 1-2 weeks | ✅ Yes |
+| CrewAI | Multi-agent (roleplay) | Medium | Growing | 1-2 weeks | ✅ Yes |
+| Autogen | Agent conversations | Medium | Medium | 1-2 weeks | ✅ Yes |
+| Instructor | Structured output | Low | Small | under 1 week | ✅ Yes |
+| Pydantic AI | Single agents + tools | Low | Growing | under 1 week | 🟡 Beta |
+| No framework | Simple API calls | Lowest | N/A | None | ✅ Yes |
+
+---
+
+## Real-World Scenarios
+
+### Scenario 1: Customer Support Chatbot
+
+**What you need:**
+- Multi-turn conversation
+- Access to customer DB (tool calling)
+- Retrieval from past tickets (RAG)
+
+**Framework:** LangChain + Langgraph  
+**Why:** RAG + tool calling built-in  
+**Code:** ~200 lines
+
+```python
+# Langgraph graph with:
+# - Retrieval node (get past tickets)
+# - Tool node (look up customer)
+# - Generation node (answer)
+```
+
+---
+
+### Scenario 2: Research Team (Multi-Agent)
+
+**What you need:**
+- 3 agents (researcher, analyst, writer)
+- Agents communicate
+- Defined roles
+
+**Framework:** CrewAI  
+**Why:** Built for multi-agent with roles  
+**Code:** ~100 lines
+
+```python
+# CrewAI with 3 agents:
+# - Researcher (task: find sources)
+# - Analyst (task: analyze data)
+# - Writer (task: write report)
+```
+
+---
+
+### Scenario 3: Data Extraction from Documents
+
+**What you need:**
+- Extract fields from documents
+- Validate structure
+- Handle errors
+
+**Framework:** Instructor  
+**Why:** Minimal code, built-in validation  
+**Code:** ~50 lines
+
+```python
+# Simple request with Pydantic model
+# Automatic retries if invalid
+```
+
+---
+
+### Scenario 4: Simple Chatbot
+
+**What you need:**
+- Just chat with model
+- No tools, no RAG, no agents
+
+**Framework:** None (use API directly)  
+**Why:** Overhead isn't worth it  
+**Code:** ~10 lines
+
+```python
+# Just call anthropic.client.messages.create()
+# Done.
+```
+
+---
+
+## Integration Checklist
+
+### For LangChain:
+- Vector DB (Pinecone, Weaviate, Chroma)?
+- Memory backend (Redis, SQL)?
+- Logging (LangSmith)?
+- Tools / agent framework?
+
+### For CrewAI:
+- How many agents?
+- Do they need memory?
+- Do they need human input?
+
+### For Instructor:
+- What's your Pydantic model?
+- Do you need retries?
+- How many fields?
+
+---
+
+## Performance Considerations
+
+**Latency (first response):**
+- No framework: 1-2 seconds
+- Instructor: 2-3 seconds
+- LangChain: 3-5 seconds
+- CrewAI (multi-agent): 5-10 seconds
+- Autogen (group chat): 10+ seconds
+
+**Cost (per request):**
+- No framework: Baseline ($0.001)
+- Instructor: Baseline (minimal overhead)
+- LangChain: +5-10% (logging, routing)
+- CrewAI: +10-20% (extra calls)
+- Autogen: +30-50% (many agent calls)
+
+**Memory:**
+- No framework: ~50MB
+- Instructor: ~100MB
+- LangChain: ~300MB
+- CrewAI: ~200MB
+
+---
+
+## Migration Paths
+
+### If you start with no framework:
+1. Add Instructor when you need structured output
+2. Add LangChain when you need multi-step workflows
+3. Switch to Langgraph for cleaner code at scale
+
+### If you start with LangChain:
+1. Consider Langgraph (simpler DAG approach)
+2. Use Instructor for validation layers
+3. Stay with LangChain if RAG is important
+
+### If you start with CrewAI:
+1. Switch to Langgraph if you need more control
+2. Add Instructor for validation
+3. Stay if multi-agent with roles is your core need
+
+---
+
+## Recommendations By Situation
+
+### Building a Production MVP
+**Use:** Langgraph + LangChain integration  
+**Why:** Best balance of features + cleanliness  
+**Timeline:** 2-4 weeks
+
+### Building a Prototype
+**Use:** No framework, just API directly  
+**Why:** Fastest to see results  
+**Timeline:** 1 week
+
+### Building a Research Project
+**Use:** CrewAI or Autogen  
+**Why:** Great for exploration  
+**Timeline:** 1-2 weeks
+
+### Building a Data Pipeline
+**Use:** Instructor + simple orchestration  
+**Why:** Structured outputs + validation  
+**Timeline:** 1 week
+
+---
+
+## Common Mistakes
+
+❌ **Using LangChain for simple tasks** — Overkill  
+✅ **Call API directly for simple cases**
+
+❌ **Ignoring RAG complexity** — It's not free  
+✅ **Budget time for chunking, retrieval tuning**
+
+❌ **Building multi-agent with single-agent framework** — Pain  
+✅ **Use CrewAI or Autogen for multi-agent**
+
+❌ **Not testing latency early** — Find out too late it's slow  
+✅ **Profile before optimizing**
+
+---
+
+## Next Steps
+
+1. **Define your requirements** (simple? multi-agent? RAG?)
+2. **Choose a framework** from the decision tree
+3. **Prototype for 1 day** with that framework
+4. **Measure latency and cost**
+5. **Decide to commit or switch**
+
+---
+
+See Also:
+- [Builder Path](/learn/builder) — Hands-on code examples
+- [RAG Architecture](/deep-dive/rag-architecture) — Deep dive on retrieval
+- [Agents & Frameworks](/deep-dive/agents-frameworks) — Technical deep dive
