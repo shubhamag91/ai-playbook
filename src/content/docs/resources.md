@@ -43,19 +43,6 @@ Which tool to use for what — chat, coding, content creation, APIs.
 
 ---
 
-### ✍️ Prompt Engineering (1 page)
-Core patterns, templates, and anti-patterns for effective prompting.
-
-**Includes:**
-- The core patterns (Zero-shot, Few-shot, Chain-of-Thought, ReAct, Self-consistency, Reflection)
-- A reusable prompt template
-- Anti-patterns to avoid
-- Token cost formula for optimization
-
-**[📥 Download PDF](/cheatsheets/prompt-engineering.html)** (Print-friendly, A4)
-
----
-
 ## How to Use These Resources
 
 ### Print & Pin
