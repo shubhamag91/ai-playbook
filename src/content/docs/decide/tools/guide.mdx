@@ -1,15 +1,20 @@
 ---
-title: Developer & AI Tools
-description: The core tools powering modern AI workflows — from chat interfaces to coding and automation.
+title: AI Tools & Platforms Decision Guide
+description: Comprehensive guide to choosing AI tools across conversational AI, coding, automation, content creation, research, and infrastructure.
+sidebar:
+  order: 1
+lastUpdated: 2026-05-08
 ---
 
 import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
 
-The core tools powering modern AI workflows — from chat interfaces to coding and automation.
+A comprehensive guide to the AI tools and platforms reshaping work — from conversational assistants to infrastructure. Organized by use case, not technology.
 
-> Free tier limits and full pricing comparison are on the [Home page](index.md).
+> Free tier limits and full pricing comparison are on the [Home page](../../index.md).
 
 ## Conversational AI
+
+The foundation layer — where you start. These tools handle research, brainstorming, writing and reasoning across domains.
 
 <CardGrid>
   <Card title="ChatGPT" icon="open-book">
@@ -34,6 +39,10 @@ The core tools powering modern AI workflows — from chat interfaces to coding a
     Google's research assistant: upload papers/docs and have conversations with them.
     <Badge text="Free" variant="success" />
   </Card>
+  <Card title="Kimi" icon="magnifier">
+    Long-context AI with web browsing and agentic capabilities — strong for research in all languages.
+    <Badge text="Freemium" variant="note" />
+  </Card>
   <Card title="Ollama" icon="laptop">
     Run open-source LLMs (Llama, Mistral, etc.) locally — fully private, no API needed.
     <Badge text="Free" variant="success" />
@@ -47,9 +56,11 @@ The core tools powering modern AI workflows — from chat interfaces to coding a
 
 ## Frontier Models
 
+The current frontier of AI capabilities — used for complex reasoning, multimodal understanding and state-of-the-art performance.
+
 <CardGrid>
-  <Card title="Claude 3.5 / 4 Sonnet" icon="open-book">
-    Anthropic's flagship: 200K context, excellent coding & reasoning, safety-focused.
+  <Card title="Claude 3.5 Sonnet / 4 Opus" icon="open-book">
+    Anthropic's flagship: 200K context, excellent coding and reasoning, safety-focused.
     <Badge text="Paid" variant="danger" />
   </Card>
   <Card title="GPT-4o" icon="seti:openai">
@@ -89,7 +100,9 @@ The core tools powering modern AI workflows — from chat interfaces to coding a
   </Card>
 </CardGrid>
 
-## Coding Tools
+## Code & Build
+
+Tools for developers and builders — from IDE integrations to no-code builders to deployment.
 
 <CardGrid>
   <Card title="Cursor" icon="seti:json">
@@ -101,10 +114,6 @@ The core tools powering modern AI workflows — from chat interfaces to coding a
     Agentic IDE by Codeium — Cascade model understands your full project context.
     <Badge text="Freemium" variant="note" />
   </Card>
-  <Card title="Lovable" icon="rocket">
-    Build full-stack React apps from natural language. No coding required.
-    <Badge text="Freemium" variant="note" />
-  </Card>
   <Card title="GitHub Copilot" icon="github">
     AI pair programmer by GitHub/OpenAI — integrates into any editor, best GitHub workflow tool.
     <Badge text="Paid" variant="danger" />
@@ -112,6 +121,19 @@ The core tools powering modern AI workflows — from chat interfaces to coding a
   <Card title="Claude Code" icon="terminal">
     Anthropic's agentic coding CLI — edits files, runs tests, opens PRs from your terminal.
     <Badge text="Paid" variant="danger" />
+  </Card>
+  <Card title="OpenCode" icon="terminal">
+    Open-source terminal AI coding agent — works with any AI provider. Run locally, point at any model.
+    <Badge text="Free" variant="success" />
+    <Badge text="Open Source" variant="tip" />
+  </Card>
+  <Card title="Lovable" icon="rocket">
+    Build full-stack React apps from natural language. No coding required.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Bolt.new" icon="rocket">
+    Full-stack AI app builder by StackBlitz — runs entirely in the browser.
+    <Badge text="Freemium" variant="note" />
   </Card>
   <Card title="Replit" icon="laptop">
     Browser-based IDE with AI coding assistant, instant deployment and multiplayer.
@@ -121,22 +143,11 @@ The core tools powering modern AI workflows — from chat interfaces to coding a
     Generate shadcn/Tailwind UI components from text. Copy-paste into your project.
     <Badge text="Freemium" variant="note" />
   </Card>
-  <Card title="Bolt.new" icon="rocket">
-    Full-stack AI app builder by StackBlitz — runs entirely in the browser.
-    <Badge text="Freemium" variant="note" />
-  </Card>
-  <Card title="Codex" icon="seti:openai">
-    OpenAI's code-focused model powering GitHub Copilot. Available via API.
-    <Badge text="Paid" variant="danger" />
-  </Card>
-  <Card title="OpenCode" icon="terminal">
-    Open-source terminal AI coding agent — works with any AI provider. The provider-agnostic alternative to Claude Code. Run locally, point at any model.
-    <Badge text="Free" variant="success" />
-    <Badge text="Open Source" variant="tip" />
-  </Card>
 </CardGrid>
 
-## Automation
+## Automate & Orchestrate
+
+Build workflows and agents that work 24/7 — from simple automation to multi-agent systems.
 
 <CardGrid>
   <Card title="Zapier" icon="puzzle">
@@ -167,7 +178,199 @@ The core tools powering modern AI workflows — from chat interfaces to coding a
   </Card>
 </CardGrid>
 
-## Hardware
+## Create Content
+
+Tools for writers, creators and designers — text, images, video, audio and voice.
+
+### Writing & Documentation
+
+<CardGrid>
+  <Card title="Microsoft Copilot" icon="document">
+    AI integrated across Word, Excel, PowerPoint, Outlook and Teams. Summarise emails, draft docs, analyse spreadsheets.
+    <Badge text="Paid" variant="danger" />
+  </Card>
+  <Card title="Notion AI" icon="notebook">
+    Write, brainstorm and summarise directly inside Notion pages. Great for notes and wikis.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Grammarly" icon="pencil">
+    AI writing assistant for grammar, tone, clarity and style — works everywhere in the browser.
+    <Badge text="Freemium" variant="note" />
+    <Badge text="Recommended" variant="tip" />
+  </Card>
+  <Card title="DeepL" icon="translate">
+    Neural machine translation with human-quality output across 30+ languages.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Wordtune" icon="pencil">
+    AI-powered rewriting and summarisation tool for any text.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Jasper" icon="pencil">
+    Long-form AI copywriting for marketing teams — brand voice, templates.
+    <Badge text="Paid" variant="danger" />
+  </Card>
+</CardGrid>
+
+### Images
+
+<CardGrid>
+  <Card title="Midjourney" icon="seti:image">
+    Photorealistic and artistic image generation via Discord / web. Unmatched aesthetics.
+    <Badge text="Recommended" variant="tip" />
+    <Badge text="Paid" variant="danger" />
+  </Card>
+  <Card title="DALL-E 3" icon="seti:image">
+    OpenAI's image generation — accessible inside ChatGPT Plus, strong prompt adherence.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Stable Diffusion / Flux" icon="seti:image">
+    Open-source image models you can run locally or via APIs. Massive community.
+    <Badge text="Open Source" variant="tip" />
+  </Card>
+  <Card title="Adobe Firefly" icon="seti:image">
+    Generative AI for images, vectors and textures — integrated into Photoshop & Illustrator.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Leonardo.ai" icon="seti:image">
+    Game-asset and concept-art focused image generation platform.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Ideogram" icon="seti:image">
+    Text-in-image generation — best at adding readable text inside images.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Imagen / ImageFX" icon="seti:image">
+    Google's photorealistic image generation model. Deeply integrated into Gemini and Google Workspace.
+    <Badge text="Free" variant="success" />
+  </Card>
+</CardGrid>
+
+### Video & Audio
+
+<CardGrid>
+  <Card title="Runway" icon="seti:video">
+    Video generation, editing and effects. Gen-3 Alpha is state-of-the-art.
+    <Badge text="Freemium" variant="note" />
+    <Badge text="Recommended" variant="tip" />
+  </Card>
+  <Card title="Suno" icon="seti:audio">
+    AI music generation — create complete songs with vocals and instruments.
+    <Badge text="Freemium" variant="note" />
+    <Badge text="Recommended" variant="tip" />
+  </Card>
+  <Card title="Udio" icon="seti:audio">
+    AI music creation with high-quality audio output.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="ElevenLabs" icon="seti:audio">
+    AI voice cloning and generation — best for voice-overs and audiobooks.
+    <Badge text="Freemium" variant="note" />
+    <Badge text="Recommended" variant="tip" />
+  </Card>
+  <Card title="HeyGen" icon="seti:video">
+    AI avatar video creation — talking head videos from text.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Pika" icon="seti:video">
+    Text-to-video generation for short-form video content.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Sora" icon="seti:video">
+    OpenAI's video generation — high quality but limited access.
+    <Badge text="Limited" variant="danger" />
+  </Card>
+</CardGrid>
+
+### Speech & Audio Processing
+
+<CardGrid>
+  <Card title="Descript" icon="seti:audio">
+    AI-powered audio/video editing with transcription, overdub and podcast tools.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Whisper" icon="microphone">
+    OpenAI's transcription model — open source and highly accurate.
+    <Badge text="Open Source" variant="tip" />
+  </Card>
+  <Card title="WellSaid Labs" icon="seti:audio">
+    Realistic AI voice generation for corporate training and content.
+    <Badge text="Paid" variant="danger" />
+  </Card>
+  <Card title="Murf AI" icon="seti:audio">
+    Studio-quality voiceovers with 120+ AI voices in 20 languages.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+</CardGrid>
+
+## Research & Learning
+
+Tools for researchers, students and lifelong learners — finding insights and understanding faster.
+
+<CardGrid>
+  <Card title="Perplexity" icon="magnifier">
+    AI-powered search engine with cited sources. Great for research and fact-finding.
+    <Badge text="Freemium" variant="note" />
+    <Badge text="Recommended" variant="tip" />
+  </Card>
+  <Card title="ChatGPT + Web Browsing" icon="open-book">
+    Browse the web directly inside ChatGPT for current information.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Claude" icon="open-book">
+    Anthropic's AI — excellent for long-form analysis, research and thoughtful responses.
+    <Badge text="Freemium" variant="note" />
+    <Badge text="Recommended" variant="tip" />
+  </Card>
+  <Card title="NotebookLM" icon="notebook">
+    Google's AI for your documents — creates summaries, podcasts and insights from your sources.
+    <Badge text="Free" variant="success" />
+  </Card>
+  <Card title="Kimi" icon="magnifier">
+    Long-context AI with web browsing — strong for research in non-English languages.
+    <Badge text="Free" variant="success" />
+  </Card>
+  <Card title="Elicit" icon="magnifier">
+    AI research assistant for academic papers — finds, summarises and extracts information.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+</CardGrid>
+
+## Work & Productivity
+
+Tools that integrate with your daily work — meetings, calendar, documents and communication.
+
+<CardGrid>
+  <Card title="Otter.ai" icon="seti:audio">
+    Real-time meeting notes, summaries and actionable insights. Automatic transcription.
+    <Badge text="Freemium" variant="note" />
+    <Badge text="Recommended" variant="tip" />
+  </Card>
+  <Card title="Fathom" icon="seti:audio">
+    Instant meeting summaries with speaker identification and smart highlights.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Fireflies.ai" icon="seti:audio">
+    Meeting transcription, search and analytics with AI-powered insights.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Clockwise" icon="calendar">
+    AI-powered calendar optimization — finds focused time and schedules meetings intelligently.
+    <Badge text="Paid" variant="danger" />
+  </Card>
+  <Card title="Reclaim" icon="calendar">
+    AI scheduler that automatically books focus time, meetings and breaks.
+    <Badge text="Freemium" variant="note" />
+  </Card>
+  <Card title="Motion" icon="rocket">
+    AI-powered project management and scheduling for teams.
+    <Badge text="Paid" variant="danger" />
+  </Card>
+</CardGrid>
+
+## Production Infrastructure
+
+The backbone for building at scale — models, compute, databases and model serving.
 
 <CardGrid>
   <Card title="NVIDIA (H100/B200)" icon="seti:gpu">
@@ -198,11 +401,6 @@ The core tools powering modern AI workflows — from chat interfaces to coding a
     Wafer-Scale Engine — single-chip AI training, eliminates inter-chip communication bottlenecks.
     <Badge text="Paid" variant="danger" />
   </Card>
-</CardGrid>
-
-## Databases & Storage
-
-<CardGrid>
   <Card title="Pinecone" icon="database">
     Managed vector database for semantic search and RAG applications. Cloud-hosted, scalable.
     <Badge text="Freemium" variant="note" />
@@ -229,13 +427,47 @@ The core tools powering modern AI workflows — from chat interfaces to coding a
   </Card>
 </CardGrid>
 
-## Chinese AI
+## Model Hubs & APIs
+
+Platforms for accessing, comparing and deploying models — your interface to the AI layer.
+
+<CardGrid>
+  <Card title="Hugging Face" icon="seti:json">
+    The main hub for open-source models, datasets and demos. Essential for AI work.
+    <Badge text="Free" variant="success" />
+    <Badge text="Recommended" variant="tip" />
+  </Card>
+  <Card title="Replicate" icon="cloud">
+    Run open-source models via API. Easy to integrate into apps.
+    <Badge text="Pay-per-use" variant="note" />
+  </Card>
+  <Card title="Together AI" icon="cloud">
+    Open-source models via API at competitive pricing. Fast inference.
+    <Badge text="Pay-per-use" variant="note" />
+  </Card>
+  <Card title="OpenRouter" icon="rocket">
+    Single API to access 100+ models. Good for routing and cost optimization.
+    <Badge text="Pay-per-use" variant="note" />
+  </Card>
+  <Card title="Ollama" icon="laptop">
+    Run LLMs locally on your Mac/PC. Great for privacy and experimentation.
+    <Badge text="Free" variant="success" />
+  </Card>
+  <Card title="LM Studio" icon="laptop">
+    Desktop app for running local LLMs with GUI. Easy model management.
+    <Badge text="Free" variant="success" />
+  </Card>
+</CardGrid>
+
+## Global AI Landscape
+
+### Chinese AI Ecosystem
 
 China has built a rapidly growing AI ecosystem largely independent of the US big three. These tools are worth knowing — several rival or exceed Western models in specific areas.
 
 > Some Chinese AI tools may have restricted access outside mainland China, or require a Chinese phone number to register. DeepSeek and Qwen models are the most accessible internationally via Ollama and Hugging Face.
 
-### DeepSeek
+#### DeepSeek
 
 Built by a Chinese quant hedge fund (High-Flyer). DeepSeek R1 shocked the world by matching OpenAI o1 reasoning quality at a fraction of the cost. V3 is their general-purpose model. Fully open weights under MIT license.
 
@@ -245,7 +477,7 @@ Built by a Chinese quant hedge fund (High-Flyer). DeepSeek R1 shocked the world 
 
 ---
 
-### Qwen / Tongyi (Alibaba)
+#### Qwen / Tongyi (Alibaba)
 
 Alibaba's model family — Qwen 2.5 series covers text, code and multimodal tasks. Tongyi Qianwen is their consumer chat app. Strong multilingual performance, especially Chinese-English.
 
@@ -255,7 +487,7 @@ Alibaba's model family — Qwen 2.5 series covers text, code and multimodal task
 
 ---
 
-### Kimi (Moonshot AI)
+#### Kimi (Moonshot AI)
 
 Chinese AI startup pushing the boundaries of context and agentic AI. Their latest Kimi K2.5 is a multimodal model with a 256K token context window, native vision, and an Agent Swarm system that coordinates up to 100 specialised AI agents simultaneously — cutting execution time by 4.5x. Kimi K2 Thinking is a 1-trillion-parameter open-source reasoning model (32B active via MoE) that can autonomously execute 200–300 sequential tool calls. Scores 50.2% on Humanity's Last Exam at 76% lower cost than Claude Opus.
 
@@ -265,7 +497,7 @@ Chinese AI startup pushing the boundaries of context and agentic AI. Their lates
 
 ---
 
-### ERNIE / Wenxin (Baidu)
+#### ERNIE / Wenxin (Baidu)
 
 Baidu's flagship AI — ERNIE Bot (Wenxin Yiyan) is China's most widely deployed consumer AI assistant. ERNIE 4.0 competes with GPT-4 on Chinese-language benchmarks. Deeply integrated with Baidu Search.
 
@@ -275,7 +507,7 @@ Baidu's flagship AI — ERNIE Bot (Wenxin Yiyan) is China's most widely deployed
 
 ---
 
-### Doubao (ByteDance)
+#### Doubao (ByteDance)
 
 ByteDance's (TikTok's parent company) AI assistant. Based on their Skylark model family. Fastest-growing AI app in China in 2024. Strong at creative writing and entertainment use cases.
 
@@ -285,7 +517,7 @@ ByteDance's (TikTok's parent company) AI assistant. Based on their Skylark model
 
 ---
 
-### ChatGLM / Zhipu AI
+#### ChatGLM / Zhipu AI
 
 Open-source model from Zhipu AI (spun out of Tsinghua University). GLM-4 is their flagship — bilingual, strong reasoning, widely used in Chinese enterprise AI deployments.
 
@@ -295,7 +527,7 @@ Open-source model from Zhipu AI (spun out of Tsinghua University). GLM-4 is thei
 
 ---
 
-### Kling AI (Kuaishou)
+#### Kling AI (Kuaishou)
 
 Video generation AI by Kuaishou (China's rival to TikTok). Kling produces high-quality, physically realistic video from text or images — widely regarded as matching or exceeding Sora for many use cases.
 
@@ -305,7 +537,7 @@ Video generation AI by Kuaishou (China's rival to TikTok). Kling produces high-q
 
 ---
 
-### Yi (01.AI)
+#### Yi (01.AI)
 
 Model series from 01.AI, founded by Kai-Fu Lee (former Google China head). Yi-34B was one of the strongest open-weight models when released. Focuses on bilingual English-Chinese performance.
 
@@ -315,7 +547,9 @@ Model series from 01.AI, founded by Kai-Fu Lee (former Google China head). Yi-34
 
 ---
 
-## Chat Interface vs API
+## Architecture: Chat Interface vs API
+
+Which interface you choose depends on whether you're the user or building something.
 
 ### Chat Interface
 
@@ -345,11 +579,11 @@ Model series from 01.AI, founded by Kai-Fu Lee (former Google China head). Yi-34
 
 ---
 
-For a full breakdown of how AI companies are structured and how other tools fit in, see the [Home page ecosystem section](index.md#ecosystem).
+For a full breakdown of how AI companies are structured and how other tools fit in, see the [Home page ecosystem section](../../index.md#ecosystem).
 
 ---
 
-## Deploying AI as an Individual
+## Getting Started: Deploy AI as an Individual
 
 You don't need a DevOps team or cloud infrastructure. For individuals, deploying AI means building a small app that calls an AI API — and hosting it somewhere always-on. Here's exactly how it works.
 

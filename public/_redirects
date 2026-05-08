@@ -1,0 +1,24 @@
+# Content Migration Redirects (May 2026)
+
+# Phase 2A File Moves to Reference Section
+/glossary /reference/glossary 301
+/confusions /reference/confusions 301
+/principles /reference/principles 301
+
+# Phase 2B Tools Consolidation
+/tools /decide/tools/guide 301
+/productivity-tools /decide/tools/guide 301
+
+# Phase 2A Research Moves
+/opensource /research/models/guide 301
+/history /research/whats-new 301
+
+# Legacy cheatsheet paths → new locations
+/cheatsheets/llm-comparison /reference/model-specs 301
+/cheatsheets/prompt-engineering /deep-dive/prompt-engineering 301
+
+# Catch-all for old cheatsheet paths that moved to reference
+/cheatsheets/ai-tools-landscape /reference/cheatsheets/ai-tools-landscape 301
+/cheatsheets/coding-assistants-agents /reference/cheatsheets/coding-assistants-agents 301
+/cheatsheets/llm-comparison /reference/model-specs 301
+/cheatsheets/prompt-engineering /deep-dive/prompt-engineering 301

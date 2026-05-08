@@ -1,33 +1,78 @@
 ---
-title: Model Specifications
-description: Detailed specs for major AI models — context, pricing, speed, capabilities
+title: Model Specifications & Pricing (May 2026)
+description: Detailed specs for major AI models — context windows, pricing, capabilities and tradeoffs
 sidebar:
   order: 4
 lastUpdated: 2026-05-08
 ---
 
-# Model Specifications
+:::note
+Keep this table opinionated — it's **your** notes, not an exhaustive database. Update the "Best for" and "Notes" columns as you learn.
+:::
 
-Detailed specifications for 15+ major AI models with current pricing and capabilities.
+## Model Comparison
 
-## Coming Soon
+| Model | Context | Input/Output | Best for | Notes |
+|---|---:|---|---|---|
+| **Claude Sonnet 4.6** | 200k | $3/$15 per 1M | Default reasoning, coding | Best balance of speed & quality. Default pick. |
+| **Claude Opus 4.7** | 400k | $15/$75 per 1M | Complex multi-step reasoning | Use when Sonnet struggles. Most capable. |
+| **Claude Haiku 4.5** | 200k | $0.80/$4 per 1M | Classification, routing, summaries | Ultra-fast, cheapest option. |
+| **GPT-5.5** | 128k | $2/$8 per 1M | General tasks, web search | Strong all-around. Good context. |
+| **GPT-5.5 Instant** | 128k | $0.05/$0.15 per 1M | Routing, simple tasks | Embarrassingly cheap for basic work. |
+| **Gemini 3.1 Pro** | 1M | $2/$12 per 1M | Long-context research, docs | Best context window. Excellent for RAG. |
+| **DeepSeek V4** | 128k | $0.55/$2.19 per 1M | **Cost-conscious prod** | Surprisingly capable. MIT license. |
+| **DeepSeek V4 Flash** | 128k | $0.14/$0.28 per 1M | **Ultra-cheap routing** | Absurdly affordable. Good enough for many tasks. |
+| **Llama 4** | varies | Free (self-host) | On-prem, privacy-critical | Open weights. MIT license. Run locally. |
 
-This reference page consolidates model information.
+## How to Choose (May 2026)
 
-**Models covered:**
-- Claude (all versions)
-- GPT-4, GPT-4 Turbo, GPT-3.5
-- Gemini (all versions)
-- Llama (open-source)
-- And more...
+```text
+1. Data privacy / must stay on-prem?
+   └─ yes → Llama 4 (self-host) or DeepSeek V4 (via API)
+   └─ no  → continue
 
-**For each model:**
-- Context window size
-- Pricing (input/output tokens)
-- Inference speed
-- Capabilities matrix (coding, reasoning, writing, etc.)
-- Where to use
+2. Need to minimize cost?
+   └─ yes → DeepSeek V4 Flash ($0.14 input) or GPT-5.5 Instant
+   └─ no  → continue
+
+3. Need very long context (research, docs)?
+   └─ yes → Gemini 3.1 Pro (1M tokens)
+   └─ no  → continue
+
+4. Need deep reasoning (complex logic)?
+   └─ yes → Claude Opus 4.7 or o3
+   └─ no  → Claude Sonnet 4.6 (default)
+```
+
+## Cost Scenarios (Real Use Cases)
+
+**Scenario 1: Customer support chatbot (100 requests/day, 500 input tokens avg, 200 output tokens avg)**
+- Claude Sonnet: ~$15/month
+- GPT-5.5 Instant: ~$4/month
+- DeepSeek V4 Flash: ~$2/month ✅ Best value
+
+**Scenario 2: RAG + research (10 requests/day, 8000 input tokens avg, 1000 output)**
+- Gemini 3.1 Pro: ~$16/month (handles 1M context)
+- Claude Sonnet: ~$120/month
+- DeepSeek V4: ~$35/month
+
+**Scenario 3: Reasoning + code generation (50 requests/day, 2000 input, 1500 output)**
+- Claude Opus 4.7: ~$675/month
+- Claude Sonnet: ~$225/month ✅ Best balance
+- DeepSeek V4: ~$53/month (if quality sufficient)
+
+## Cost Formula
+
+```
+daily_requests × avg_input_tokens × (input_price / 1M)
++ daily_requests × avg_output_tokens × (output_price / 1M)
+= monthly_cost × 30
+```
+
+If the number surprises you: add caching, batch process, use cheaper model for routing, or add RAG to reduce context.
+
+---
 
 See also:
-- [Models Decision Guide](/decide/models/guide) — How to choose
-- [Benchmarks](/reference/benchmarks) — Performance data
+- [Tools & Platforms Guide](/decide/tools/guide) — How to access models
+- [Benchmarks](/reference/benchmarks) — Performance on standard evaluations
