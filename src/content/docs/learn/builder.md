@@ -19,25 +19,25 @@ A practical 1-week path for developers building AI applications. We assume you c
 
 You have three choices:
 
-**Claude (Anthropic)**
+**Claude Opus 4.7 (Anthropic)**
 - Best for: Reasoning, writing, analysis
-- Context window: 200K tokens (read entire books)
-- Cost: $3-15 per 1M input tokens
+- Context window: 400K tokens (read entire books and codebases)
+- Cost: $15/$75 per 1M input/output tokens
 - When to use: Complex logic, long documents, nuanced writing
 
-**GPT-4o (OpenAI)**
-- Best for: All-around, especially vision
+**GPT-5.5 (OpenAI)**
+- Best for: Fast, all-around, balanced
 - Context window: 128K tokens
-- Cost: $2-8 per 1M tokens
-- When to use: You need the most popular model, vision/images
+- Cost: $2/$8 per 1M input/output tokens
+- When to use: Speed, cost-efficiency, general tasks
 
-**Gemini (Google)**
-- Best for: Long context, cheap
-- Context window: 1M tokens (books)
-- Cost: $2-12 per 1M tokens (free tier available)
-- When to use: Document processing, long-context tasks
+**Gemini 3.1 Pro (Google)**
+- Best for: Very long documents, research
+- Context window: 1M tokens (entire books, codebases, papers)
+- Cost: $2/$12 per 1M tokens (free tier available)
+- When to use: Document processing, massive context tasks
 
-**Recommendation for beginners:** Start with Claude or GPT-4o. Both have free tier + paid options. Claude's documentation is clearer.
+**Recommendation for beginners:** Start with Claude Opus or GPT-5.5. Both have free tier + paid options. Claude's documentation and API are excellent.
 
 ### Step 2: Set Up Your Environment (30 min)
 
@@ -56,8 +56,8 @@ npm install openai
 ```
 
 **Get an API key:**
-- Claude: console.anthropic.com (free credits)
-- GPT-4o: platform.openai.com (free credits)
+- Claude: console.anthropic.com (free credits, includes Opus 4.7)
+- GPT-5.5: platform.openai.com (free credits)
 - Gemini: aistudio.google.com (free tier)
 
 ### Step 3: Make Your First Call (1 hour)
@@ -143,7 +143,7 @@ This is why long conversations get expensive. Solution: context windows or summa
 
 Now you need your model to know about *your* data. Add a vector database.
 
-**Problem:** LLMs have a training cutoff. Claude was trained until April 2024. If you ask about events after that, it won't know.
+**Problem:** LLMs have a training cutoff. Claude Opus 4.7 was trained until April 2024. If you ask about events after that date, it won't know. Use RAG or web-search tools to cover current information.
 
 **Solution:** Upload your data. Then:
 1. User asks a question
