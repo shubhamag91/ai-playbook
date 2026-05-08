@@ -32,3 +32,122 @@
     margin: 0 auto;
   }
 }
+
+/* Mobile optimization — ensure proper touch targets and spacing */
+@media (max-width: 768px) {
+  /* Ensure all interactive elements have minimum 44px touch target */
+  button,
+  a,
+  input[type='checkbox'],
+  input[type='radio'] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Improve line height for readability on mobile */
+  p, li, dd {
+    line-height: 1.6;
+  }
+
+  /* Better spacing in lists */
+  ul, ol {
+    margin-bottom: 1.25rem;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Improve heading spacing */
+  h1, h2, h3, h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  h1 {
+    margin-top: 0;
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  /* Code block scrolling */
+  pre {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Table scrolling */
+  table {
+    overflow-x: auto;
+    display: block;
+    margin: 1rem 0;
+  }
+}
+
+/* Small mobile optimization */
+@media (max-width: 480px) {
+  /* Tighter spacing on very small screens */
+  body {
+    font-size: 0.95rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.625rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.625rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    margin-bottom: 0.75rem;
+  }
+
+  li {
+    margin-bottom: 0.375rem;
+  }
+
+  /* Ensure sidebar is usable on mobile */
+  nav {
+    font-size: 0.9rem;
+  }
+
+  /* Better spacing in content */
+  article {
+    padding: 0 0.5rem;
+  }
+}
+
+/* Ensure images scale properly on mobile */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Improve mobile form usability */
+@media (max-width: 768px) {
+  input[type='text'],
+  input[type='email'],
+  input[type='search'],
+  textarea,
+  select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 0.75rem;
+    min-height: 44px;
+  }
+}
