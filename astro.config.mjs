@@ -110,6 +110,8 @@ export default defineConfig({
             { label: 'What\'s New', slug: 'research/whats-new' },
             { label: 'Model Releases', slug: 'research/model-releases' },
             { label: 'Trends', slug: 'research/emerging-trends' },
+            { label: 'Vocabulary', slug: 'research/vocabulary' },
+            { label: 'History', slug: 'research/history' },
             { label: 'Open-Source Models', slug: 'research/models/guide' },
           ],
         },
@@ -125,7 +127,11 @@ export default defineConfig({
         },
         {
           label: 'Resources',
-          autogenerate: { directory: 'resources' },
+          items: [
+            { label: 'Overview & Downloads', slug: 'resources' },
+            { label: 'Case Studies', autogenerate: { directory: 'resources/case-studies' } },
+            { label: 'Templates', autogenerate: { directory: 'resources/templates' } },
+          ],
         },
         {
           label: 'Community',
