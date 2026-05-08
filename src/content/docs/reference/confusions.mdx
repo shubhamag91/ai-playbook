@@ -1,25 +1,173 @@
 ---
 title: Common Confusions
-description: 30+ misconceptions about AI cleared up
+description: 25+ misconceptions about AI, LLMs, and how they work
 sidebar:
-  order: 5
+  order: 4
 lastUpdated: 2026-05-08
 ---
 
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
 # Common Confusions
 
-30+ misconceptions about AI and LLMs — cleared up in plain English.
+Myths, misconceptions, and confusions about AI. Clearing these up helps you build better mental models.
 
-## Coming Soon
+---
 
-This reference section has been reorganized.
+## On LLMs & Understanding
 
-**Common confusions addressed:**
-- "AI is sentient/conscious"
-- "LLMs understand language"
-- "ChatGPT can learn from conversation"
-- "More parameters = smarter model"
-- "RAG is always better than fine-tuning"
-- And more...
+<Card title="❌ LLMs understand language like humans">
+**Reality:** LLMs are sophisticated pattern matchers, not thinkers. They learn statistical relationships in text. They don't "understand" in the human sense — they predict the next likely token based on patterns in training data. Very good at mimicking understanding without having it.
+</Card>
 
-Each confusion is explained clearly with examples.
+<Card title="❌ Bigger models are always better">
+**Reality:** Bigger models are usually better at general tasks, but smaller models can outperform larger ones on specific domains if fine-tuned. A 7B model trained on your data > a 175B model trained on generic data. Context and fit matter.
+</Card>
+
+<Card title="❌ LLMs have memory across conversations">
+**Reality:** Each conversation starts fresh. LLMs don't remember you from last week. They can only see the current conversation. They need to be told about past context if it matters. This is called the "context window."
+</Card>
+
+<Card title="❌ More parameters = more knowledge">
+**Reality:** Parameters are like a network's capacity to learn patterns. More parameters help with complex tasks, but parameters don't contain knowledge. Knowledge comes from training data. A 7B model trained on medical literature > a 175B model trained on random internet text for medical tasks.
+</Card>
+
+<Card title="❌ LLMs are truly creative">
+**Reality:** LLMs recombine patterns from training data in novel ways. True creativity (inventing something no human has made) is different. They're very good at remixing; they're not creating from nothing. Creative output = novel recombination, not true invention.
+</Card>
+
+<Card title="❌ LLMs reason like humans">
+**Reality:** LLMs follow probabilistic patterns. Chain-of-thought helps them, but it's not reasoning in the philosophical sense. They're doing sophisticated pattern matching over tokens, not logical deduction. Works well in practice, but not "reasoning" as philosophers define it.
+</Card>
+
+---
+
+## On Training & Data
+
+<Card title="❌ Training data is fully memorized">
+**Reality:** LLMs learn general patterns, not exact memorization (usually). Some famous data points appear verbatim (memorization happens), but most of what they learn is statistical patterns, not stored data. This is why they can generate novel combinations.
+</Card>
+
+<Card title="❌ Fine-tuning teaches new facts">
+**Reality:** Fine-tuning adapts style, behavior, and specialization — not factual knowledge. If the model never saw information during pre-training, fine-tuning won't teach it. Use RAG for knowledge. Fine-tuning for style/tone/domain.
+</Card>
+
+<Card title="❌ More training data always helps">
+**Reality:** Data quality matters more than quantity. 1000 high-quality examples > 1M low-quality/noisy examples. Bad data makes training worse. Curated datasets beat scraped-web-scale datasets for specialized tasks.
+</Card>
+
+<Card title="❌ Training is computationally cheap">
+**Reality:** Pre-training LLMs costs tens to hundreds of millions of dollars and takes months on massive GPU clusters. GPT-4 cost ~100M to train. Fine-tuning is cheap (100-10K). Inference is cheap (fractions of cents). Training is the expensive phase.
+</Card>
+
+<Card title="❌ You need to fine-tune to customize">
+**Reality:** Good prompting often beats fine-tuning. Few-shot examples in the prompt, chain-of-thought, system prompts — these work surprisingly well. Only fine-tune if prompting fails or you need to save tokens/latency.
+</Card>
+
+---
+
+## On Deployment & Production
+
+<Card title="❌ Deploying AI means running the model yourself">
+**Reality:** Most people use APIs (OpenAI, Anthropic, etc.). You deploy your app, not the model. The model runs on their servers. This is cheaper, simpler, and more reliable than self-hosting. Only self-host if you have security/privacy requirements.
+</Card>
+
+<Card title="❌ Hallucinations can be eliminated">
+**Reality:** Hallucinations are a fundamental property of language models. You can reduce them (RAG, grounding, careful prompting) but not eliminate them. Plan for occasional hallucinations in critical applications.
+</Card>
+
+<Card title="❌ More context window always helps">
+**Reality:** Larger context windows let you include more documents, but also increase latency and cost. 200K tokens unnecessary if your question answers in 10K. Optimal context = smallest window that includes all needed info.
+</Card>
+
+<Card title="❌ Temperature = how good the output is">
+**Reality:** Temperature controls randomness, not quality. Low temp = consistent/predictable. High temp = creative/random. Neither is "better" — depends on your use case. For customer support, low temp. For brainstorming, high temp.
+</Card>
+
+<Card title="❌ Using expensive models always gives better results">
+**Reality:** Claude Opus > Claude Haiku for complex reasoning, but Haiku often wins on simple tasks. Expensive model + bad prompt < cheap model + good prompt. Quality depends on model, prompt, and fit to task.
+</Card>
+
+<Card title="❌ AI is getting cheaper, so quality must be dropping">
+**Reality:** Competition drives down prices, but models keep improving. Claude 3.5 Sonnet is cheaper AND better than Claude 3 Opus. Scaling + efficiency improvements allow better quality at lower cost. Price and quality are independent.
+</Card>
+
+---
+
+## On Capabilities & Limitations
+
+<Card title="❌ LLMs can reason about logic perfectly">
+**Reality:** LLMs struggle with formal logic, math, and long chains of reasoning. They can attempt these but make errors. Use code execution or formal verification if precision matters. LLMs are better at language/writing/analysis than pure logic.
+</Card>
+
+<Card title="❌ LLMs understand images like humans">
+**Reality:** Multimodal models can analyze images (describe, answer questions) but don't "see" like humans. They process image embeddings. Ask "describe the image" and you get good results. Ask them to count objects in a crowd and they fail.
+</Card>
+
+<Card title="❌ Token limits are about words">
+**Reality:** Tokens are subword units. 1 token ≈ 4 characters or 0.75 words. "Understand" = 1 token. "Understanding" = 2 tokens. Different models have different tokenizers, so same text = different token counts. Relevant for planning context usage.
+</Card>
+
+<Card title="❌ LLMs are good at following exact instructions">
+**Reality:** LLMs follow instructions probabilistically, not exactly. "Output JSON only" → occasional non-JSON. "Don't mention X" → might mention X. Structured outputs (Pydantic schemas) and validation are more reliable than natural language constraints.
+</Card>
+
+<Card title="❌ Attention weights show what the model focuses on">
+**Reality:** Attention is interpretable relative to other attention mechanisms, but the mechanism is opaque. High attention to a token doesn't mean the model "understands" it. Attention is one piece of a complex computation. Don't over-interpret it.
+</Card>
+
+---
+
+## On Agents & Automation
+
+<Card title="❌ Agents are general-purpose robots">
+**Reality:** Agents are good at multi-step tasks with clear tool APIs. Give them unclear goals or bad tool descriptions → they fail. They're not autonomous in the sci-fi sense. They're tools that iterate until a goal is reached, sometimes helpfully, sometimes uselessly.
+</Card>
+
+<Card title="❌ More tools = better agents">
+**Reality:** Too many tools confuse agents. They pick the wrong tool, waste tokens, fail. 3-5 well-described tools > 20 poorly-described tools. Clear tool names, descriptions, and examples matter more than breadth.
+</Card>
+
+<Card title="❌ Agents will find optimal solutions">
+**Reality:** Agents are greedy optimizers, not exhaustive searchers. They find a solution, not the best solution. For critical applications, validate agent outputs. They're good for "automate this workflow" not "find the globally optimal answer."
+</Card>
+
+---
+
+## On Bias & Fairness
+
+<Card title="❌ AI is objective">
+**Reality:** AI reflects training data. Biased data → biased model. Biases can be subtle (demographic parity in arrests) and hard to spot. "Fair" depends on context (procedural fairness? demographic fairness?). No technical solution to fairness without defining what fairness means.
+</Card>
+
+<Card title="❌ Jailbreaks prove AI is dumb">
+**Reality:** Jailbreaks don't prove lack of capability; they show training alignment isn't perfect. It's hard to align a language model without breaking its capabilities. Jailbreaks are red-team feedback that helps improve systems, not evidence of fundamental weakness.
+</Card>
+
+---
+
+## On Safety & Security
+
+<Card title="❌ LLMs can keep secrets">
+**Reality:** LLMs have been shown to leak training data under certain conditions. Don't put API keys, passwords, or PII in prompts. If you need LLMs to access secrets, use tools/APIs with proper authentication, not prompts.
+</Card>
+
+<Card title="❌ Prompt injection is just a theory">
+**Reality:** Prompt injection is practical and dangerous. User data can override system instructions. "You are [role]" in system prompt → user input with "ignore all previous instructions" → system prompt gets overridden. Input validation is critical.
+</Card>
+
+<Card title="❌ Using Claude/ChatGPT means your data is public">
+**Reality:** API calls are private (encrypted in transit). Web chat conversations are stored (you can delete). Enterprise versions have data isolation. But don't send secrets to any cloud service unless you trust the provider with that data.
+</Card>
+
+---
+
+## On Economics & ROI
+
+<Card title="❌ AI pays for itself immediately">
+**Reality:** AI ROI varies wildly. Customer support chatbots: pay for themselves in weeks. Fine-tuning experiments: take months. Be specific about what you're measuring (cost savings? quality improvement? speed?) before assuming ROI.
+</Card>
+
+<Card title="❌ Expensive APIs are always better value">
+**Reality:** Cost-per-token means different things depending on your use case. Expensive model + 200 tokens/request < cheap model + 10K tokens/request. Measure total cost, not per-token rate. Sometimes cheaper models are better economics.
+</Card>

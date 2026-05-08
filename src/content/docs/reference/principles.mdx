@@ -1,26 +1,146 @@
 ---
-title: Principles for AI
-description: Seven guiding principles for using AI effectively
+title: AI Principles
+description: Guiding principles for building and using AI systems responsibly
 sidebar:
-  order: 6
+  order: 5
 lastUpdated: 2026-05-08
 ---
 
-# Principles for AI
+import { Card, CardGrid } from '@astrojs/starlight/components';
 
-Seven guiding principles for using AI effectively and responsibly.
+# AI Principles
 
-## Coming Soon
+Foundational principles for how to think about, build, and deploy AI systems. These aren't rules — they're guideposts for judgment calls.
 
-This reference section has been reorganized from the main principles page.
+---
 
-**Core principles:**
-1. Understand the tool's limitations
-2. Verify outputs, don't blindly trust
-3. Consider bias and fairness
-4. Respect privacy and data
-5. Use for augmentation, not replacement
-6. Stay informed about evolving capabilities
-7. Think critically about impact
+## Core Principles
 
-Each principle includes explanations and practical examples.
+<Card title="1. Clarity Over Power">
+A simple, understandable system that works predictably beats a powerful black box. When you understand what a system does, you can trust it, debug it, and improve it. In production, clarity wins.
+</Card>
+
+<Card title="2. Measure What Matters">
+Metrics drive behavior. If you optimize for accuracy but care about speed, you'll get accurate but slow. Define what "success" looks like before building. Measure it honestly. Wrong metrics → wrong outcomes.
+</Card>
+
+<Card title="3. Start Simple, Add Complexity Cautiously">
+Simple prompt > complex multi-step system. RAG > fine-tuning (usually). Single model > multi-agent crew. Each layer of complexity is a new place for bugs. Earn the right to complexity by proving simpler solutions fail first.
+</Card>
+
+<Card title="4. Data Quality Beats Data Quantity">
+1000 good examples > 1M bad examples. Garbage in, garbage out. Whether training, fine-tuning, or RAG, curate your data ruthlessly. Spending a day cleaning data saves a week debugging a broken system.
+</Card>
+
+<Card title="5. Test on Real Problems">
+Benchmark performance on academic tests, but validate on real user problems. Models that score well on benchmarks sometimes fail on actual use cases. Real feedback beats synthetic metrics.
+</Card>
+
+<Card title="6. Costs Compound">
+$0.10 per request × 1000 requests/day × 365 days = $36,500/year. Cheap per-unit costs add up fast at scale. Optimize for total cost, not per-token cost. Monitor spend like you monitor quality.
+</Card>
+
+<Card title="7. Humans in the Loop">
+For high-stakes decisions (hiring, medical, legal), keep humans involved. AI amplifies good judgment and bad judgment equally. Let AI do the heavy lifting (analyze 1000 candidates), let humans decide.
+</Card>
+
+<Card title="8. Transparency About Limitations">
+Be honest: "This model hallucinates sometimes," "This only works in English," "We haven't tested this on X." Users who know limits make better decisions than users fooled by false precision. Honesty builds trust.
+</Card>
+
+---
+
+## On Building Reliable Systems
+
+<Card title="9. Validate, Then Validate Again">
+Run your system on examples you care about before deploying. Real examples, edge cases, adversarial inputs. Performance on a test set ≠ performance on real users. Validate early and often.
+</Card>
+
+<Card title="10. Version Your Prompts Like Code">
+Treat prompts as artifacts that evolve. "Version 1" → "Version 2 (better at math)" → "Version 3 (faster)". Keep a history. Know what changed and why. Document successful patterns.
+</Card>
+
+<Card title="11. Logs Are Your Best Friend">
+Log what the model said, why it was used, what the user did next. Logs let you debug when things fail. "The model returned garbage" is useless. "The model returned [garbage] because the prompt was [prompt] given input [input]" is actionable.
+</Card>
+
+<Card title="12. Fail Gracefully">
+System is unsure? Say "I'm not sure" instead of confidently hallucinating. Model has no relevant documents? Say "I don't have that information" instead of making it up. Uncertainty acknowledged beats false certainty.
+</Card>
+
+---
+
+## On Working With Users
+
+<Card title="13. Meet Users Where They Are">
+Don't require users to learn AI jargon. "Increase randomness" is unclear. "Get more creative/varied responses" is clear. Design for users who don't know what temperature is. Make the simple case work.
+</Card>
+
+<Card title="14. Explain the Output">
+"Here's the answer" is less useful than "Here's the answer because [reasoning]." Show your work. If using RAG, cite sources. If using multi-step reasoning, show the steps. Users trust transparent outputs.
+</Card>
+
+<Card title="15. Give Users Control">
+Let users adjust temperature, context size, model, retrieval depth. Different users have different needs. Reasonable defaults + power-user knobs = happy users at all levels.
+</Card>
+
+<Card title="16. Feedback is Data">
+When users say the output is wrong, don't dismiss them. Collect that feedback. If 10 users report the same failure, that's a signal to investigate. User complaints are free R&D.
+</Card>
+
+---
+
+## On Ethics & Responsibility
+
+<Card title="17. Consider Harms Broadly">
+Building a hiring tool? Consider: bias in training data, feedback loops that amplify bias, which groups are harmed most. Consider not just accuracy but fairness, explainability, recourse for affected users.
+</Card>
+
+<Card title="18. Know Your Blindspots">
+You're probably biased toward your own use case. Get feedback from people different from you. People with disabilities, different languages, different cultures catch problems you won't. Diversity in testing prevents failures.
+</Card>
+
+<Card title="19. Deprecate Responsibly">
+If you're sunsetting a service, give users time and tools to migrate. Don't just turn it off. People rely on systems you build. Responsibility includes graceful exits.
+</Card>
+
+<Card title="20. Privacy ≠ Obscurity">
+Encrypting data in transit is table stakes, not the finish line. Know where data lives, who can access it, how long it's kept. Assume breaches happen and design accordingly.
+</Card>
+
+---
+
+## On Learning & Improvement
+
+<Card title="21. Iterate on What Works">
+If a prompt gets 90% accuracy, spend time on that 10%, not completely rewriting. If a system works well for 80% of users, understand the 20% before redesigning for everyone. Iterate from success.
+</Card>
+
+<Card title="22. Document Why, Not Just What">
+Code comments should explain WHY decisions were made, not WHAT the code does (the code itself says that). "We use Sonnet instead of Opus here because latency matters more than quality" is useful. "Calls Sonnet" is not.
+</Card>
+
+<Card title="23. Share Learnings">
+When you solve a hard problem, write it down. When you hit a dead end, document it. When you discover a pattern that works, tell someone. Knowledge multiplies when shared.
+</Card>
+
+<Card title="24. Admit When You're Wrong">
+Models are imperfect. Your understanding is imperfect. When something doesn't work, debug honestly. "This approach failed because X, so we tried Y" is how you get better. Ego-driven debugging leads to nowhere.
+</Card>
+
+---
+
+## On Long-Term Thinking
+
+<Card title="25. Today's Hacks Become Tomorrow's Debt">
+Quick fix now = tech debt later. Document hacks. Plan to revisit them. Sometimes quick fixes are right (ship to validate). But don't let them become the permanent architecture.
+</Card>
+
+<Card title="26. Tools Get Better; Rebuild Periodically">
+If you built your RAG system in 2024, revisit it in 2026. Better models, better embeddings, better retrieval strategies exist now. Dust off old projects. What didn't work before might work now.
+</Card>
+
+<Card title="27. The Cost of NOT Doing Something is Real">
+Perfect system in 6 months < pretty-good system in 2 weeks. 50% accurate automation saves more work than 0% automation (manual work). Don't let perfect be the enemy of good.
+</Card>
+

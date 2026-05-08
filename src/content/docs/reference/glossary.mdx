@@ -8,15 +8,214 @@ lastUpdated: 2026-05-08
 
 # AI Glossary
 
-A comprehensive glossary of 60+ AI and LLM terms, organized by difficulty level.
+Essential AI and LLM terms organized by difficulty level. Each term is explained clearly with context.
 
-## Coming Soon
+---
 
-This glossary has been moved to the Reference section. Content is being reorganized.
+## Beginner Level
 
-This glossary will include terms at three levels:
-- **Beginner**: Basic concepts (LLM, AI, token, etc.)
-- **Intermediate**: More technical (attention, embedding, RAG, etc.)
-- **Advanced**: Deep technical terms (LoRA, KV cache, etc.)
+### AI (Artificial Intelligence)
+Computer systems designed to perform tasks that normally require human intelligence. Includes learning from data, recognizing patterns, and making decisions.
 
-Each term links to applied content where it's used in context.
+### LLM (Large Language Model)
+A neural network trained on massive amounts of text to predict and generate language. Examples: Claude, GPT-4, Gemini. "Large" refers to billions of parameters.
+
+### Token
+A unit of text that an LLM processes. One token ≈ 4 characters. "Hello world" = 2 tokens. Models have a token limit (e.g., Claude: 200K tokens).
+
+### Prompt
+The text you send to an LLM to get a response. Quality of prompt directly affects quality of response. "Be specific" is the golden rule.
+
+### Context Window
+The maximum number of tokens an LLM can read at once. Claude 3.5: 200K tokens. Gemini 2.0: 1M tokens. Larger windows = can process longer documents.
+
+### Temperature
+A setting that controls randomness (creativity) of responses. Low (0.2) = predictable. High (1.5) = creative. Used to balance consistency vs variety.
+
+### Embedding
+A mathematical representation of text as numbers (a vector). Similar meanings = similar embeddings. Used for semantic search and RAG.
+
+### Fine-tuning
+Training an already-trained model on your own data to adapt it to your specific task or style. Cheaper than pre-training, faster than prompting.
+
+### API (Application Programming Interface)
+A way to access an LLM programmatically (from code, not chat). Claude API, OpenAI API, etc. You pay per token used.
+
+### Hallucination
+When an LLM confidently generates false information that sounds plausible but isn't true. Common issue — mitigated by RAG and grounding.
+
+### RAG (Retrieval-Augmented Generation)
+Technique where an LLM first searches for relevant documents, then generates an answer based on those documents. Fixes "knowledge cutoff" problem.
+
+---
+
+## Intermediate Level
+
+### Attention Mechanism
+The core component of transformers. Allows the model to focus on relevant parts of the input when generating each output token. Powers everything modern LLMs do.
+
+### Transformer
+Neural network architecture using attention. All modern LLMs (GPT, Claude, Gemini) are transformers. Processes text in parallel, not sequentially.
+
+### Tokenizer
+Algorithm that converts text to tokens. Different models use different tokenizers. Same text = different token counts in different models.
+
+### Few-Shot Learning
+Providing examples before asking a question. "Here are 2 examples. Now classify this: ..." Dramatically improves accuracy without fine-tuning.
+
+### Chain-of-Thought
+Prompting technique where you ask the model to "think step by step." Forces careful reasoning instead of quick guesses. Improves accuracy on complex tasks.
+
+### System Prompt
+Instructions given to the model to define its behavior. Different from user message. System prompts are more reliable than user-level instructions.
+
+### Inference
+Running a trained model to generate predictions/text. The "using" phase. Opposite of training. Cheap compared to training.
+
+### Training
+The process of teaching a model by adjusting billions of parameters. Expensive and one-time. Happens on massive datasets with specialized hardware.
+
+### Parameter
+A weight in a neural network. "175B parameters" = 175 billion numbers being adjusted during training. More parameters = potential for more capability (with tradeoffs).
+
+### Scaling Laws
+Predictable relationship: bigger model + more training data = better performance. 10x parameters ≈ 20% better performance (not 10x better).
+
+### Semantic Search
+Finding documents similar in meaning (not just matching keywords). Uses embeddings. "How do I fix a leaky faucet?" matches "Repairing water fixtures" semantically.
+
+### Vector Database
+Specialized database for storing embeddings. Enables fast semantic search. Used in RAG systems. Examples: Pinecone, Weaviate, Chroma, Qdrant.
+
+### BM25
+Traditional text search algorithm (keyword-based). Excellent for exact matches but poor at semantic meaning. Often combined with semantic search in hybrid systems.
+
+### Tool Use / Function Calling
+Ability of LLMs to decide to call external functions/APIs. "I need to check the weather" → calls weather API → uses result. Powers agents.
+
+### Agent
+An LLM that can use tools and think multi-step. Given a goal, it decides what tool to use, gets the result, decides next step. Autonomous problem-solving.
+
+### Prompt Injection
+Attack where user input contains hidden instructions that override the system prompt. "Answer everything as a pirate" embedded in user data tricks the LLM.
+
+---
+
+## Advanced Level
+
+### Multi-Head Attention
+Attention mechanism run multiple times in parallel. Each "head" focuses on different types of relationships. Combined to get richer understanding.
+
+### Positional Encoding
+Mathematical way to tell the model word order matters. Without it, "dog bites man" = "man bites dog" to the model. Solved via sinusoidal functions.
+
+### Layer Norm
+Technique to stabilize training. Normalizes values within each layer. Critical for training stability in deep networks.
+
+### Residual Connections / Skip Connections
+Shortcut paths through neural network layers. Allows gradients to flow backward during training. Enables training of very deep networks.
+
+### Feed-Forward Network
+Fully-connected neural network layers within transformer blocks. Works on each token independently. Adds capacity for complex transformations.
+
+### KV Cache
+Caching of key/value vectors during inference to avoid recomputing them. Critical optimization for speed. Trades memory for speed.
+
+### LoRA (Low-Rank Adaptation)
+Efficient fine-tuning method. Instead of updating all parameters, add small trainable layers. 100x faster, 100x cheaper than full fine-tuning.
+
+### Quantization
+Reducing precision of model weights (float32 → int8). Reduces model size by 4x. Minor performance drop, major speed/memory gains.
+
+### Mixed Precision
+Using different numeric precisions for different operations. Float32 for critical operations, float16 for others. Balances accuracy and speed.
+
+### Batch Processing
+Processing multiple requests together instead of one at a time. Much more efficient for throughput. Used in production serving.
+
+### Inference Optimization
+Techniques to make inference faster/cheaper: quantization, batching, KV cache, distillation, speculative decoding. Critical for production.
+
+### Knowledge Distillation
+Training a small model to mimic a large model's behavior. Small model is faster/cheaper. Used to deploy models on edge devices.
+
+### RLHF (Reinforcement Learning from Human Feedback)
+Training technique where humans rate model outputs, and model learns to prefer higher-rated outputs. How ChatGPT, Claude became more aligned.
+
+### DPO (Direct Preference Optimization)
+Modern alternative to RLHF. Simpler, faster. Directly optimizes for preferred responses without training a separate reward model.
+
+### In-Context Learning
+Model's ability to learn from examples in the prompt, without fine-tuning. "Here's how to do X, now do Y" — learns from context alone.
+
+### Grounding
+Tying model outputs to factual information. "Here are documents about X. Answer based on these." Forces model to cite sources, reduce hallucinations.
+
+### Sparse Attention
+Only attending to subset of tokens instead of all tokens. Reduces O(n²) complexity of attention. Enables longer context windows.
+
+### Mixture of Experts (MoE)
+Model with multiple expert subnetworks. For each input, router selects which experts to use. Efficient scaling without proportional cost increase.
+
+### Flash Attention
+Algorithm that reorders attention computation for better GPU efficiency. 2-4x faster, same results. Now standard in modern implementations.
+
+### Rotary Embeddings (RoPE)
+Modern positional encoding method. Better than traditional sinusoidal encodings. Used in Llama, Mistral, others.
+
+### Beam Search
+Decoding strategy that keeps multiple hypotheses and picks best at end. Better quality than greedy, slower. Used in translation, summarization.
+
+### Top-K / Top-P Sampling
+Decoding strategies for controlled randomness. Top-K: sample from K most likely tokens. Top-P: sample from tokens summing to P probability.
+
+### Cross-Entropy Loss
+Standard loss function for language modeling. Measures difference between predicted and actual token probabilities. What's optimized during training.
+
+### Perplexity
+Metric for language model quality. Lower = better. Exponential of average cross-entropy loss. Measure of surprise at actual text.
+
+### BLEU / ROUGE Score
+Metrics for evaluating generated text quality. Compare to reference outputs. Used for translation, summarization evaluation.
+
+### Benchmark
+Standardized test for model capabilities. MMLU (knowledge), HumanEval (coding), HellaSwag (reasoning), etc. Used to compare models fairly.
+
+### Zero-Shot vs Few-Shot
+Zero-shot: solve problem without examples. Few-shot: given examples, then solve. Few-shot dramatically improves accuracy for many tasks.
+
+### Retrieval Augmentation
+Augmenting LLM input with retrieved documents. Fixes knowledge cutoff, reduces hallucinations. Core technique for production AI apps.
+
+### Prompt Caching
+Caching prompt embeddings to avoid recomputing them. When using same context multiple times, huge latency/cost savings. Recent addition to Claude.
+
+### Synthetic Data
+AI-generated training data instead of human-created data. Used to scale training beyond human-labeled data availability. Trade-off: easier to scale, harder to ensure quality.
+
+### Constitutional AI
+Training method where model is given a constitution (set of principles) and optimizes to follow them. Used to reduce harmful outputs.
+
+---
+
+## Terminology Conventions
+
+### "Model" vs "LLM"
+- **Model**: Any trained neural network (image models, language models, etc.)
+- **LLM**: Specifically Large Language Model (language-focused)
+
+### Parameter Sizes
+- **B = Billion** (1,000,000,000). GPT-3 = 175B parameters
+- **Smaller models**: 7B, 13B, 70B
+- **Larger models**: 150B+
+
+### Efficiency Metrics
+- **Tokens/second**: Throughput measure
+- **Latency**: Time to first token (TTFT)
+- **Cost per 1M tokens**: Pricing model for APIs
+
+### Quality vs Speed Tradeoff
+- **High quality, slow**: Claude Opus (best reasoning)
+- **Medium quality, medium speed**: Claude Sonnet (balanced)
+- **Fast, lower quality**: Claude Haiku (cheap, fast)
+
