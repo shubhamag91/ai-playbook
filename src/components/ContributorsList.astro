@@ -1,0 +1,28 @@
+---
+import './ContributorsList.css';
+import { contributors } from '../data/contributors';
+---
+
+<div class="contributors">
+  <div class="contributors__grid">
+    {contributors.map(c => (
+      <div class="contributors__card">
+        <div class="contributors__avatar">
+          {c.github
+            ? <img src={`https://github.com/${c.github}.png?size=80`} alt={c.name} loading="lazy" />
+            : <span class="contributors__initials">{c.name.split(' ').map(n => n[0]).join('')}</span>
+          }
+        </div>
+        <div class="contributors__info">
+          <strong class="contributors__name">{c.name}</strong>
+          {c.github && <a href={`https://github.com/${c.github}`} class="contributors__github">@{c.github}</a>}
+        </div>
+        <div class="contributors__tags">
+          {c.contributions.map(tag => (
+            <span class="contributors__tag">{tag}</span>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

@@ -249,3 +249,9 @@ The playbook is open to structure your own reference. You can:
 ## License
 
 Content: CC BY 4.0 (attribution required). Code: MIT.
+
+## Contributors
+
+Built and maintained by [Shubham Agarwal](https://github.com/shubhamag91). See the [Contributors page](/community/contributors) for a full list.
+
+Contributions welcome — open a PR or [report outdated info](/community/report).
