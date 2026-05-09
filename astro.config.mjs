@@ -135,6 +135,9 @@ export default defineConfig({
           label: 'Resources',
           items: [
             { label: 'Overview & Downloads', slug: 'resources' },
+            { label: 'Papers', slug: 'resources/papers' },
+            { label: 'Communities', slug: 'resources/communities' },
+            { label: 'Tools & Frameworks', slug: 'resources/tools-frameworks' },
             { label: 'Case Studies', autogenerate: { directory: 'resources/case-studies' } },
             { label: 'Templates', autogenerate: { directory: 'resources/templates' } },
           ],
