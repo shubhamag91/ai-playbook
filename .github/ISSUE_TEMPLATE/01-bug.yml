@@ -1,0 +1,20 @@
+---
+name: Bug Report
+description: Report incorrect or broken content
+labels: [bug]
+---
+
+**Page URL**
+<!-- Which page has the issue? -->
+
+**What's wrong?**
+<!-- What's incorrect, broken, or missing? -->
+
+**Expected**
+<!-- What should it say or do instead? -->
+
+**Source**
+<!-- If it's a factual error, link to the correct source -->
+
+**Suggested fix**
+<!-- Optional: how would you fix it? -->

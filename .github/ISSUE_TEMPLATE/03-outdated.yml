@@ -1,0 +1,16 @@
+---
+name: Outdated Information
+description: Report stale pricing, model names, or capabilities
+labels: [outdated]
+---
+
+**Page URL**
+
+**What's outdated?**
+
+**Current value**
+
+**Correct value**
+
+**Source**
+<!-- Link to official pricing page, release notes, etc. -->

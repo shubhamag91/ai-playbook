@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: AI Playbook Discussion
+    url: https://github.com/shubhamag91/ai-playbook/discussions
+    about: For general questions and discussions
