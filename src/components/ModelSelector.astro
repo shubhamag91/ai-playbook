@@ -216,15 +216,16 @@ const models = [
 
 <script>
 {`
-  const models = ${JSON.stringify(models)};
+  function initModelSelector() {
+    const models = ${JSON.stringify(models)};
 
-  const filters = {
-    useCase: 'all',
-    speed: 'any',
-    cost: 'any'
-  };
+    const filters = {
+      useCase: 'all',
+      speed: 'any',
+      cost: 'any'
+    };
 
-  function updateModelDisplay() {
+    function updateModelDisplay() {
     const cards = document.querySelectorAll('[data-model-id]');
     let visibleCount = 0;
 
@@ -301,5 +302,13 @@ const models = [
     updateChipUI();
     updateModelDisplay();
   });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initModelSelector);
+  } else {
+    initModelSelector();
+  }
 `}
 </script>

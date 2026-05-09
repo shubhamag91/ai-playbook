@@ -108,12 +108,13 @@ const categories = [
 
 <script>
 {`
-  let currentCategory = 'chat';
-  let currentSort = { column: 'name', direction: 'asc' };
-  let currentSearch = '';
+  function initToolComparison() {
+    let currentCategory = 'chat';
+    let currentSort = { column: 'name', direction: 'asc' };
+    let currentSearch = '';
 
-  // Tab switching
-  document.querySelectorAll('.tool-comparison__tab').forEach(tab => {
+    // Tab switching
+    document.querySelectorAll('.tool-comparison__tab').forEach(tab => {
     tab.addEventListener('click', (e) => {
       const category = e.target.getAttribute('data-category');
 
@@ -214,5 +215,12 @@ const categories = [
       }
     });
   }
-`}
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initToolComparison);
+  } else {
+    initToolComparison();
+  }
+  `}
 </script>
