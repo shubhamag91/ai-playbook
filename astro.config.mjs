@@ -167,8 +167,8 @@ export default defineConfig({
           items: [
             { label: 'Beginner Path', slug: 'learn/beginner' },
             { label: 'Builder Path', slug: 'learn/builder' },
-            { label: 'Interview Prep', slug: 'learn/interview-prep' },
             { label: 'Researcher Path', slug: 'learn/researcher' },
+            { label: 'Interview Prep', slug: 'learn/interview-prep' },
           ],
         },
         {
