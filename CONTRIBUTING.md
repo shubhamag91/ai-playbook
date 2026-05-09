@@ -17,6 +17,29 @@ Thanks for helping keep this knowledge base accurate and useful! 🙌
 
 ---
 
+## 🆕 Good First Issues
+
+Looking for a place to start? These are well-scoped tasks suitable for first-time contributors:
+
+### Verification & Updates
+- **Verify a pricing table** — Pick one model provider, check their official pricing page against `/reference/model-specs.md`, submit a PR if anything changed. [Example change](https://github.com/shubhamag91/ai-playbook/commits/main)
+- **Check external links** — Pick a page, click every external link, report or fix broken ones
+- **Update a cheatsheet** — Add a new Q&A pair to one of the interview cheatsheets under `/reference/cheatsheets/`
+
+### Content
+- **Write a glossary term** — Add a term to `/reference/glossary.mdx` (check existing format)
+- **Improve a deep-dive** — Add a code example, diagram, or table to one of the `/deep-dive/` pages
+- **Translate a page** — Add multilingual notes to any page
+
+### Technical
+- **Fix a CSS bug** — Check for layout issues in dark/light mode or mobile view
+- **Improve accessibility** — Add alt text, aria labels, or keyboard navigation
+- **Add a unit test** — Create a simple test for one of the interactive components
+
+Look for issues labeled [`help wanted`](https://github.com/shubhamag91/ai-playbook/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) or [`good first issue`](https://github.com/shubhamag91/ai-playbook/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) on GitHub.
+
+---
+
 ## 🔧 How to Contribute Content Changes
 
 ### Before You Start

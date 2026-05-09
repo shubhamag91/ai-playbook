@@ -1,0 +1,20 @@
+---
+name: Help Wanted / Good First Issue
+description: A well-scoped task suitable for first-time contributors
+labels: [help wanted, good first issue]
+---
+
+## Task
+<!-- What needs to be done -->
+
+## Why
+<!-- Why this matters and how it helps users -->
+
+## Scope
+<!-- What files to change, roughly how many lines -->
+
+## Resources
+<!-- Links to relevant pages, docs, or examples -->
+
+## How to get help
+<!-- Where to ask questions (issue comments, discussions) -->

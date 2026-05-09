@@ -148,6 +148,7 @@ export default defineConfig({
           items: [
             { label: 'Contributing', slug: 'community/contributing' },
             { label: 'Report Outdated', slug: 'community/report' },
+            { label: 'Help Wanted', slug: 'community/help-wanted' },
             { label: 'Contributors', slug: 'community/contributors' },
           ],
         },
