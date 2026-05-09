@@ -77,7 +77,7 @@ git push origin fix/your-fix-name
 
 Want to add a new page or section? Create a discussion first:
 
-- **[Start a discussion](https://github.com/shubhamag91/ai-playbook/discussions)** — propose your idea
+- **[Open an issue](https://github.com/shubhamag91/ai-playbook/issues/new?template=02-content.yml)** — propose your idea
 - **Wait for feedback** — make sure it fits the playbook vision
 - **Write the content** — follow [Style Guide](#style-guide) below
 - **Submit a PR** — include your new file(s)
@@ -257,14 +257,14 @@ Before submitting:
 ## Getting Help
 
 **Questions?**
-- Create a GitHub [Discussion](https://github.com/shubhamag91/ai-playbook/discussions)
+- [Open an issue](https://github.com/shubhamag91/ai-playbook/issues/new)
 - Email: [shubhamag91@gmail.com](mailto:shubhamag91@gmail.com)
 
 **Technical issues?**
 - [GitHub Issues](https://github.com/shubhamag91/ai-playbook/issues)
 
 **Want to suggest a topic?**
-- [Discussions → Ideas](https://github.com/shubhamag91/ai-playbook/discussions/categories/ideas)
+- [Open a content request](https://github.com/shubhamag91/ai-playbook/issues/new?template=02-content.yml)
 
 ---
 
