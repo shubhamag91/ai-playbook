@@ -1,0 +1,140 @@
+.cost-calculator {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  padding: 2rem;
+  background-color: var(--sl-color-gray-6);
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+@media (max-width: 768px) {
+  .cost-calculator {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.cost-calculator__setup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cost-calculator__setup h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.cost-calculator__input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cost-calculator__label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.cost-calculator__slider {
+  width: 100%;
+  cursor: pointer;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--sl-color-gray-5);
+  outline: none;
+  border-radius: 3px;
+}
+
+.cost-calculator__slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--sl-color-accent);
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.cost-calculator__slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--sl-color-accent);
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+}
+
+.cost-calculator__value {
+  font-weight: 600;
+  color: var(--sl-color-accent);
+}
+
+.cost-calculator__results {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cost-calculator__results h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.cost-calculator__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.cost-calculator__card {
+  padding: 1.5rem;
+  background-color: var(--sl-color-gray-5);
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+
+.cost-calculator__card.sonnet {
+  border-left-color: #3b82f6;
+}
+
+.cost-calculator__card.haiku {
+  border-left-color: #10b981;
+}
+
+.cost-calculator__card.opus {
+  border-left-color: #f59e0b;
+}
+
+.cost-calculator__card.gpt {
+  border-left-color: #8b5cf6;
+}
+
+.cost-calculator__card.deepseek {
+  border-left-color: #06b6d4;
+}
+
+.cost-calculator__card.gemini {
+  border-left-color: #ec4899;
+}
+
+.cost-calculator__model {
+  font-size: 0.9rem;
+  color: var(--sl-color-gray-3);
+  margin-bottom: 0.5rem;
+}
+
+.cost-calculator__price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.cost-calculator__note {
+  font-size: 0.85rem;
+  color: var(--sl-color-gray-3);
+}

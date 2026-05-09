@@ -1,0 +1,132 @@
+---
+import './CostCalculator.css';
+---
+
+<div class="cost-calculator">
+  <div class="cost-calculator__setup">
+    <h3>Scenario Setup</h3>
+
+    <div class="cost-calculator__input-group">
+      <label class="cost-calculator__label">Daily Requests</label>
+      <input
+        type="range"
+        min="1"
+        max="100000"
+        value="100"
+        class="cost-calculator__slider"
+        data-field="requests"
+      />
+      <span class="cost-calculator__value" id="reqCount">100</span> requests/day
+    </div>
+
+    <div class="cost-calculator__input-group">
+      <label class="cost-calculator__label">Avg Input Tokens per Request</label>
+      <input
+        type="range"
+        min="100"
+        max="50000"
+        value="1000"
+        class="cost-calculator__slider"
+        data-field="inTokens"
+      />
+      <span class="cost-calculator__value" id="inTokens">1,000</span> tokens
+    </div>
+
+    <div class="cost-calculator__input-group">
+      <label class="cost-calculator__label">Avg Output Tokens per Request</label>
+      <input
+        type="range"
+        min="50"
+        max="10000"
+        value="500"
+        class="cost-calculator__slider"
+        data-field="outTokens"
+      />
+      <span class="cost-calculator__value" id="outTokens">500</span> tokens
+    </div>
+  </div>
+
+  <div class="cost-calculator__results">
+    <h3>Monthly Cost Estimates</h3>
+
+    <div class="cost-calculator__grid">
+      <div class="cost-calculator__card sonnet">
+        <div class="cost-calculator__model">Claude Sonnet</div>
+        <div class="cost-calculator__price" id="costSonnet">$90</div>
+        <div class="cost-calculator__note">Recommended default</div>
+      </div>
+
+      <div class="cost-calculator__card haiku">
+        <div class="cost-calculator__model">Claude Haiku</div>
+        <div class="cost-calculator__price" id="costHaiku">$13.50</div>
+        <div class="cost-calculator__note">Fast & cheap</div>
+      </div>
+
+      <div class="cost-calculator__card opus">
+        <div class="cost-calculator__model">Claude Opus</div>
+        <div class="cost-calculator__price" id="costOpus">$675</div>
+        <div class="cost-calculator__note">Most capable</div>
+      </div>
+
+      <div class="cost-calculator__card gpt">
+        <div class="cost-calculator__model">GPT-4o</div>
+        <div class="cost-calculator__price" id="costGPT">$60</div>
+        <div class="cost-calculator__note">All-around</div>
+      </div>
+
+      <div class="cost-calculator__card deepseek">
+        <div class="cost-calculator__model">DeepSeek Flash</div>
+        <div class="cost-calculator__price" id="costDeepSeek">$6.30</div>
+        <div class="cost-calculator__note">Budget friendly</div>
+      </div>
+
+      <div class="cost-calculator__card gemini">
+        <div class="cost-calculator__model">Gemini 3.1</div>
+        <div class="cost-calculator__price" id="costGemini">$60</div>
+        <div class="cost-calculator__note">Long context</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+document.addEventListener('DOMContentLoaded', function() {
+  const pricing = {
+    sonnet: { in: 3, out: 15 },
+    haiku: { in: 0.80, out: 4 },
+    opus: { in: 15, out: 75 },
+    gpt: { in: 2, out: 8 },
+    gemini: { in: 2, out: 12 },
+    deepseek: { in: 0.14, out: 0.28 }
+  };
+
+  function updateCosts() {
+    const requests = parseInt(document.getElementById('reqCount').textContent.replace(/,/g, '')) || 100;
+    const inTokens = parseInt(document.getElementById('inTokens').textContent.replace(/,/g, '')) || 1000;
+    const outTokens = parseInt(document.getElementById('outTokens').textContent.replace(/,/g, '')) || 500;
+
+    const calcCost = (inPrice, outPrice) => {
+      const dailyCost = (requests * inTokens * inPrice / 1000000) + (requests * outTokens * outPrice / 1000000);
+      return (dailyCost * 30).toFixed(2);
+    };
+
+    document.getElementById('costSonnet').textContent = '$' + calcCost(pricing.sonnet.in, pricing.sonnet.out);
+    document.getElementById('costHaiku').textContent = '$' + calcCost(pricing.haiku.in, pricing.haiku.out);
+    document.getElementById('costOpus').textContent = '$' + calcCost(pricing.opus.in, pricing.opus.out);
+    document.getElementById('costGPT').textContent = '$' + calcCost(pricing.gpt.in, pricing.gpt.out);
+    document.getElementById('costGemini').textContent = '$' + calcCost(pricing.gemini.in, pricing.gemini.out);
+    document.getElementById('costDeepSeek').textContent = '$' + calcCost(pricing.deepseek.in, pricing.deepseek.out);
+  }
+
+  document.querySelectorAll('.cost-calculator__slider').forEach(slider => {
+    slider.addEventListener('input', function() {
+      const field = this.getAttribute('data-field');
+      const value = parseInt(this.value).toLocaleString();
+      document.getElementById(field === 'requests' ? 'reqCount' : field === 'inTokens' ? 'inTokens' : 'outTokens').textContent = value;
+      updateCosts();
+    });
+  });
+
+  updateCosts();
+});
+</script>
