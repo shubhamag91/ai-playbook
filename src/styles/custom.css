@@ -33,6 +33,21 @@
   }
 }
 
+/* Visual separation between adjacent headings */
+h2 + h3 {
+  margin-top: 0.25rem;
+}
+
+h2 + h3::before {
+  content: '';
+  display: block;
+  width: 2rem;
+  height: 2px;
+  background: var(--sl-color-gray-5);
+  margin-bottom: 0.75rem;
+  border-radius: 1px;
+}
+
 /* Mobile optimization — ensure proper touch targets and spacing */
 @media (max-width: 768px) {
   /* Ensure all interactive elements have minimum 44px touch target */
