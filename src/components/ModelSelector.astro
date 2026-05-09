@@ -93,8 +93,7 @@ const models = [
   </div>
 </div>
 
-<script>
-{`
+<script is:inline>
 document.addEventListener('DOMContentLoaded', function() {
   const filters = { useCase: 'all', speed: 'any', cost: 'any' };
 
@@ -149,5 +148,4 @@ document.addEventListener('DOMContentLoaded', function() {
     updateDisplay();
   });
 });
-`}
 </script>

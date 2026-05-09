@@ -79,8 +79,7 @@ const toolsByCategory = {
   ))}
 </div>
 
-<script>
-{`
+<script is:inline>
 document.addEventListener('DOMContentLoaded', function() {
   let currentTab = 'chat';
   let currentSort = null;
@@ -146,5 +145,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
-`}
 </script>
