@@ -1,0 +1,30 @@
+---
+import './TrendingWidget.css';
+import { trendingTopics } from '../data/trends';
+
+export interface Props {
+  limit?: number;
+}
+
+const { limit = 5 } = Astro.props;
+const trends = trendingTopics.slice(0, limit);
+---
+
+<div class="trending-widget">
+  <div class="trending-widget__header">
+    <h3 class="trending-widget__title">Trending in AI</h3>
+    <a href="/research/whats-new" class="trending-widget__link">View all →</a>
+  </div>
+  <div class="trending-widget__list">
+    {trends.map(t => (
+      <a href={t.link} class="trending-widget__card">
+        <div class="trending-widget__card-header">
+          <span class="trending-widget__category">{t.category}</span>
+          <span class="trending-widget__date">{t.date}</span>
+        </div>
+        <strong class="trending-widget__card-title">{t.title}</strong>
+        <p class="trending-widget__card-desc">{t.description}</p>
+      </a>
+    ))}
+  </div>
+</div>
