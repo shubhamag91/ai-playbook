@@ -1,0 +1,232 @@
+.model-selector {
+  margin: 2rem 0;
+}
+
+.model-selector__filters {
+  background: var(--sl-color-gray-6);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.model-selector__filter-group {
+  margin-bottom: 1.5rem;
+}
+
+.model-selector__filter-group:last-of-type {
+  margin-bottom: 1rem;
+}
+
+.model-selector__filter-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.model-selector__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.model-selector__chip {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 20px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  color: var(--sl-color-text);
+}
+
+.model-selector__chip:hover {
+  background: var(--sl-color-gray-5);
+  border-color: var(--sl-color-gray-4);
+}
+
+.model-selector__chip.active {
+  background: var(--sl-color-accent);
+  border-color: var(--sl-color-accent);
+  color: white;
+  font-weight: 600;
+}
+
+.model-selector__clear {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--sl-color-gray-5);
+}
+
+.model-selector__clear-btn {
+  padding: 0.5rem 1rem;
+  background: var(--sl-color-accent-low);
+  border: 1px solid var(--sl-color-accent);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--sl-color-accent);
+  transition: all 0.2s ease;
+}
+
+.model-selector__clear-btn:hover {
+  background: var(--sl-color-accent);
+  color: white;
+}
+
+.model-selector__count {
+  font-size: 0.85rem;
+  color: var(--sl-color-gray-3);
+}
+
+.model-selector__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.model-selector__card {
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: var(--sl-color-gray-6);
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.model-selector__card:hover {
+  border-color: var(--sl-color-accent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.model-selector__card-header {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.model-selector__card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--sl-color-text);
+}
+
+.model-selector__card-provider {
+  font-size: 0.8rem;
+  background: var(--sl-color-accent-low);
+  color: var(--sl-color-accent);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.model-selector__card-specs {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.model-selector__spec {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.model-selector__spec-label {
+  color: var(--sl-color-gray-2);
+  font-weight: 500;
+}
+
+.model-selector__spec-value {
+  color: var(--sl-color-text);
+  font-weight: 600;
+}
+
+.model-selector__spec-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.model-selector__spec-badge[data-speed='ultra-fast'] {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.model-selector__spec-badge[data-speed='fast'] {
+  background: #bfdbfe;
+  color: #1e40af;
+}
+
+.model-selector__spec-badge[data-speed='medium'] {
+  background: #fcd34d;
+  color: #78350f;
+}
+
+.model-selector__spec-badge[data-speed='slow'] {
+  background: #fed7aa;
+  color: #7c2d12;
+}
+
+.model-selector__spec-badge[data-speed='very-slow'] {
+  background: #fecaca;
+  color: #7f1d1d;
+}
+
+.model-selector__card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.model-selector__tag {
+  display: inline-block;
+  background: var(--sl-color-accent-low);
+  color: var(--sl-color-accent);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.model-selector__card-description {
+  font-size: 0.9rem;
+  color: var(--sl-color-gray-2);
+  margin: 0;
+  margin-top: auto;
+}
+
+@media (max-width: 768px) {
+  .model-selector__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .model-selector__card-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .model-selector__chips {
+    gap: 0.4rem;
+  }
+
+  .model-selector__chip {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}

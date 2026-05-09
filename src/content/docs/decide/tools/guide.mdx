@@ -7,6 +7,7 @@ lastUpdated: 2026-05-08
 ---
 
 import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
+import SeeAlso from '../../../../components/SeeAlso.astro';
 
 A comprehensive guide to the AI tools and platforms reshaping work — from conversational assistants to infrastructure. Organized by use case, not technology.
 
@@ -662,6 +663,12 @@ Most people building personal AI tools today use these rather than writing code 
 > **Reality check:** A personal AI app serving a few hundred users costs roughly $10–30/month total — $5 for hosting + API fees based on usage. The complexity people associate with "AI infrastructure" is the enterprise problem of running models at massive scale on private hardware. That's not your problem as an individual.
 
 ---
+
+<SeeAlso links={[
+  { label: 'Tool Comparison (sortable, filterable)', url: '/decide/tools/comparison' },
+  { label: 'Models Decision Guide', url: '/decide/models/guide' },
+  { label: 'Cost Calculator', url: '/decide/cost-calculator' }
+]} />
 
 ---
 

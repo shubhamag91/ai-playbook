@@ -1,0 +1,219 @@
+---
+import './ToolComparison.css';
+
+const toolsByCategory = {
+  chat: [
+    { name: 'Claude', cost: '$20/mo', costSort: 20, speed: 'Medium', speedSort: 2, bestFor: 'Writing, long documents, analysis' },
+    { name: 'ChatGPT', cost: '$20/mo', costSort: 20, speed: 'Fast', speedSort: 1, bestFor: 'Web search, general tasks' },
+    { name: 'Gemini', cost: '$20/mo', costSort: 20, speed: 'Fast', speedSort: 1, bestFor: 'Research, massive documents' },
+    { name: 'Perplexity', cost: '$20/mo', costSort: 20, speed: 'Fast', speedSort: 1, bestFor: 'Real-time web search, citations' },
+    { name: 'DeepSeek', cost: 'Free/$10/mo', costSort: 5, speed: 'Fast', speedSort: 1, bestFor: 'Cost-conscious, reasoning' },
+    { name: 'NotebookLM', cost: 'Free', costSort: 0, speed: 'Medium', speedSort: 2, bestFor: 'PDF analysis, document synthesis' },
+    { name: 'Kimi', cost: 'Free/$10/mo', costSort: 5, speed: 'Medium', speedSort: 2, bestFor: 'Long context, web search' },
+    { name: 'Ollama', cost: 'Free', costSort: 0, speed: 'Varies', speedSort: 2, bestFor: 'Private, self-hosted' }
+  ],
+  coding: [
+    { name: 'Cursor', cost: '$20-40/mo', costSort: 30, speed: 'Medium', speedSort: 2, bestFor: 'Large codebases, multi-file refactors' },
+    { name: 'Claude Code', cost: 'Pay-per-use', costSort: 10, speed: 'Medium', speedSort: 2, bestFor: 'Terminal, automation, CLI workflows' },
+    { name: 'GitHub Copilot', cost: 'Free/$10-20/mo', costSort: 10, speed: 'Fast', speedSort: 1, bestFor: 'Widest IDE support' },
+    { name: 'Windsurf', cost: '$15-30/mo', costSort: 22, speed: 'Fast', speedSort: 1, bestFor: 'Agentic workflows' },
+    { name: 'JetBrains AI', cost: 'Free/$10-15/mo', costSort: 10, speed: 'Medium', speedSort: 2, bestFor: 'JetBrains IDEs' }
+  ],
+  content: [
+    { name: 'Midjourney', cost: '$10-120/mo', costSort: 50, speed: 'Medium', speedSort: 2, bestFor: 'Photorealistic images, illustrations' },
+    { name: 'Runway', cost: '$12-76/mo', costSort: 40, speed: 'Medium', speedSort: 2, bestFor: 'Video generation, post-production' },
+    { name: 'Suno', cost: 'Free/$8-32/mo', costSort: 15, speed: 'Medium', speedSort: 2, bestFor: 'Original music, background scores' },
+    { name: 'NotebookLM', cost: 'Free', costSort: 0, speed: 'Fast', speedSort: 1, bestFor: 'Document summarization' },
+    { name: 'ElevenLabs', cost: 'Free/$11-99/mo', costSort: 30, speed: 'Medium', speedSort: 2, bestFor: 'Voice synthesis, narration' }
+  ],
+  apis: [
+    { name: 'Anthropic API', cost: 'Pay-per-token', costSort: 10, speed: 'Medium', speedSort: 2, bestFor: 'Building with Claude' },
+    { name: 'OpenAI API', cost: 'Pay-per-token', costSort: 10, speed: 'Medium', speedSort: 2, bestFor: 'Building with GPT' },
+    { name: 'Google Vertex AI', cost: 'Pay-per-token', costSort: 10, speed: 'Medium', speedSort: 2, bestFor: 'Building with Gemini' },
+    { name: 'LangChain', cost: 'Open-source', costSort: 0, speed: 'Varies', speedSort: 2, bestFor: 'LLM app framework' },
+    { name: 'CrewAI', cost: 'Open-source', costSort: 0, speed: 'Varies', speedSort: 2, bestFor: 'Multi-agent orchestration' }
+  ]
+};
+
+const categories = [
+  { id: 'chat', label: 'Chat' },
+  { id: 'coding', label: 'Coding' },
+  { id: 'content', label: 'Content' },
+  { id: 'apis', label: 'APIs' }
+];
+---
+
+<div class="tool-comparison">
+  <div class="tool-comparison__controls">
+    <div class="tool-comparison__tabs">
+      {categories.map((cat) => (
+        <button class={`tool-comparison__tab ${cat.id === 'chat' ? 'active' : ''}`} data-category={cat.id}>
+          {cat.label}
+        </button>
+      ))}
+    </div>
+    <div class="tool-comparison__search">
+      <input
+        type="text"
+        class="tool-comparison__search-input"
+        id="toolSearch"
+        placeholder="🔍 Filter tools..."
+      />
+    </div>
+  </div>
+
+  {categories.map((cat) => (
+    <div class={`tool-comparison__table-wrapper ${cat.id === 'chat' ? 'active' : ''}`} data-category={cat.id}>
+      <table class="tool-comparison__table">
+        <thead>
+          <tr>
+            <th class="tool-comparison__header sortable" data-sort="name">
+              Tool <span class="tool-comparison__sort-arrow"></span>
+            </th>
+            <th class="tool-comparison__header sortable" data-sort="cost">
+              Cost <span class="tool-comparison__sort-arrow"></span>
+            </th>
+            <th class="tool-comparison__header sortable" data-sort="speed">
+              Speed <span class="tool-comparison__sort-arrow"></span>
+            </th>
+            <th class="tool-comparison__header sortable" data-sort="bestFor">
+              Best For <span class="tool-comparison__sort-arrow"></span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {toolsByCategory[cat.id].map((tool) => (
+            <tr class="tool-comparison__row" data-name={tool.name.toLowerCase()} data-best-for={tool.bestFor.toLowerCase()}>
+              <td class="tool-comparison__cell" data-sort-value={tool.name}>
+                <strong>{tool.name}</strong>
+              </td>
+              <td class="tool-comparison__cell" data-sort-value={tool.costSort}>
+                {tool.cost}
+              </td>
+              <td class="tool-comparison__cell" data-sort-value={tool.speedSort}>
+                <span class={`tool-comparison__speed-badge speed-${tool.speed.toLowerCase().replace(' ', '-')}`}>
+                  {tool.speed}
+                </span>
+              </td>
+              <td class="tool-comparison__cell" data-sort-value={tool.bestFor}>
+                {tool.bestFor}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ))}
+</div>
+
+<script>
+{`
+  const toolsData = ${JSON.stringify(toolsByCategory)};
+  let currentCategory = 'chat';
+  let currentSort = { column: 'name', direction: 'asc' };
+  let currentSearch = '';
+
+  // Tab switching
+  document.querySelectorAll('[data-category]').forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      const category = e.target.getAttribute('data-category');
+
+      document.querySelectorAll('.tool-comparison__tab').forEach(t => t.classList.remove('active'));
+      e.target.classList.add('active');
+
+      document.querySelectorAll('.tool-comparison__table-wrapper').forEach(w => {
+        w.classList.remove('active');
+      });
+      document.querySelector(\`[data-category="\${category}"].tool-comparison__table-wrapper\`).classList.add('active');
+
+      currentCategory = category;
+      currentSort = { column: 'name', direction: 'asc' };
+      renderTable();
+    });
+  });
+
+  // Search
+  document.getElementById('toolSearch').addEventListener('input', (e) => {
+    currentSearch = e.target.value.toLowerCase();
+    renderTable();
+  });
+
+  // Sort headers
+  document.querySelectorAll('.tool-comparison__header.sortable').forEach(header => {
+    header.addEventListener('click', (e) => {
+      const column = e.target.closest('[data-sort]').getAttribute('data-sort');
+
+      if (currentSort.column === column) {
+        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+      } else {
+        currentSort.column = column;
+        currentSort.direction = 'asc';
+      }
+
+      renderTable();
+    });
+  });
+
+  function renderTable() {
+    const wrapper = document.querySelector(\`.tool-comparison__table-wrapper[data-category="\${currentCategory}"]\`);
+    const rows = wrapper.querySelectorAll('.tool-comparison__row');
+
+    // Filter
+    const filteredRows = Array.from(rows).filter(row => {
+      if (!currentSearch) return true;
+      const name = row.getAttribute('data-name');
+      const bestFor = row.getAttribute('data-best-for');
+      return name.includes(currentSearch) || bestFor.includes(currentSearch);
+    });
+
+    // Sort
+    filteredRows.sort((a, b) => {
+      let aVal, bVal;
+
+      if (currentSort.column === 'name') {
+        aVal = a.querySelector('strong').textContent;
+        bVal = b.querySelector('strong').textContent;
+      } else {
+        const aCell = a.querySelector(\`[data-sort-value]\`);
+        const bCell = b.querySelector(\`[data-sort-value]\`);
+        const aCells = a.querySelectorAll('[data-sort-value]');
+        const bCells = b.querySelectorAll('[data-sort-value]');
+
+        if (currentSort.column === 'cost') {
+          aVal = parseFloat(aCells[1]?.getAttribute('data-sort-value') || 0);
+          bVal = parseFloat(bCells[1]?.getAttribute('data-sort-value') || 0);
+        } else if (currentSort.column === 'speed') {
+          aVal = parseInt(aCells[2]?.getAttribute('data-sort-value') || 0);
+          bVal = parseInt(bCells[2]?.getAttribute('data-sort-value') || 0);
+        } else if (currentSort.column === 'bestFor') {
+          aVal = aCells[3]?.getAttribute('data-sort-value') || '';
+          bVal = bCells[3]?.getAttribute('data-sort-value') || '';
+        }
+      }
+
+      if (typeof aVal === 'string') {
+        return currentSort.direction === 'asc'
+          ? aVal.localeCompare(bVal)
+          : bVal.localeCompare(aVal);
+      }
+      return currentSort.direction === 'asc' ? aVal - bVal : bVal - aVal;
+    });
+
+    // Update display
+    rows.forEach(row => row.style.display = 'none');
+    filteredRows.forEach(row => row.style.display = '');
+
+    // Update sort arrows
+    document.querySelectorAll('.tool-comparison__header.sortable').forEach(header => {
+      const arrow = header.querySelector('.tool-comparison__sort-arrow');
+      const column = header.getAttribute('data-sort');
+
+      if (column === currentSort.column) {
+        arrow.textContent = currentSort.direction === 'asc' ? ' ↑' : ' ↓';
+      } else {
+        arrow.textContent = '';
+      }
+    });
+  }
+`}
+</script>
