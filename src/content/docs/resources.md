@@ -36,10 +36,24 @@ Which tool to use for what — chat, coding, content creation, APIs.
 - Coding tools (Cursor, Claude Code, GitHub Copilot, Windsurf)
 - Content creation (Midjourney, Runway, Suno, NotebookLM)
 - API & building tools
-- Quick picker guide
-- Speed vs quality vs price tradeoffs
+- Quick picker guide (which tool for your use case)
+- Pricing & tradeoffs comparison
 
 **[📥 Download PDF](/cheatsheets/tools-comparison.html)** (Print-friendly, A4)
+
+---
+
+### 💬 Prompt Engineering (1 page)
+Advanced patterns and best practices for better LLM outputs.
+
+**Includes:**
+- Core patterns (zero-shot, few-shot, chain-of-thought, ReAct, reflection)
+- Reusable prompt template
+- Anti-patterns to avoid
+- Quick wins for immediate improvement
+- Token cost formula for optimization
+
+**[📥 Download PDF](/cheatsheets/prompt-engineering.html)** (Print-friendly, A4)
 
 ---
 

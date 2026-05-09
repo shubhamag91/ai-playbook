@@ -3,116 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prompt Engineering - Advanced Patterns</title>
+    <title>Prompt Engineering - One Page Guide</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.4; color: #e0e0e0; background: #1a1a1a; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; line-height: 1.4; color: #333; background: #f5f5f5; }
         @page { size: A4; margin: 0.4in; }
-        @media print { body { background: #1a1a1a; } .container { background: #1a1a1a; color: #e0e0e0; } }
-        .container { background: #1a1a1a; padding: 0.4in; max-width: 8.5in; height: 11in; margin: 0 auto; display: flex; flex-direction: column; gap: 0.1in; }
-        h1 { font-size: 28px; margin-bottom: 0.08in; color: #fff; font-weight: 700; }
-        h2 { font-size: 14px; font-weight: 700; margin-bottom: 0.08in; color: #fff; margin-top: 0.1in; }
-        p { font-size: 9px; margin-bottom: 0.02in; line-height: 1.3; }
-        table { width: 100%; font-size: 8.5px; border-collapse: collapse; margin-bottom: 0.08in; }
-        th { text-align: left; padding: 0.05in 0.04in; border-bottom: 1px solid #444; color: #fff; font-weight: 600; }
-        td { padding: 0.04in; border-bottom: 1px solid #333; }
-        tr:hover { background: rgba(255,255,255,0.05); }
-        .code { background: #0d0d0d; padding: 0.06in; border-left: 2px solid #4a9eff; font-family: 'Monaco', 'Menlo', monospace; font-size: 8px; line-height: 1.2; margin: 0.04in 0; color: #d4d4d4; white-space: pre-wrap; word-wrap: break-word; }
-        .pattern { font-weight: 600; color: #fff; }
-        .when { color: #b0b0b0; }
-        .anti { color: #ff6b6b; margin-bottom: 0.02in; }
-        ul { margin-left: 0.15in; margin-bottom: 0.04in; }
-        li { margin-bottom: 0.015in; font-size: 9px; }
-        .section { margin-bottom: 0.08in; }
-        .formula { text-align: center; font-family: 'Courier New', monospace; background: #0d0d0d; padding: 0.04in; margin: 0.04in 0; font-size: 9px; color: #d4d4d4; }
-        .footer { font-size: 7px; color: #666; text-align: center; margin-top: auto; }
+        @media print { body { background: white; } .container { page-break-inside: avoid; } .footer { display: none; } }
+        .container { background: white; padding: 0.4in; max-width: 8.5in; margin: 0 auto; display: flex; flex-direction: column; gap: 0.1in; }
+        h1 { font-size: 24px; margin-bottom: 0.08in; color: #1a1a1a; }
+        .subtitle { font-size: 11px; color: #666; margin-bottom: 0.1in; }
+        .section { border: 1px solid #ddd; padding: 0.08in; background: #fafafa; margin-bottom: 0.08in; }
+        h2 { font-size: 12px; font-weight: 600; margin-bottom: 0.04in; color: #222; border-bottom: 2px solid #2196F3; padding-bottom: 0.03in; }
+        p { font-size: 10px; margin-bottom: 0.04in; }
+        .key { font-weight: 600; }
+        .pattern { font-weight: 600; color: #1a1a1a; }
+        .when { color: #666; font-size: 10px; }
+        table { width: 100%; font-size: 9.5px; border-collapse: collapse; margin: 0.04in 0; }
+        th { background: #2196F3; color: white; padding: 0.04in; font-weight: 600; text-align: left; }
+        td { border: 1px solid #ddd; padding: 0.04in; }
+        .code { background: #f0f0f0; padding: 0.04in; border-left: 2px solid #2196F3; font-family: 'Monaco', monospace; font-size: 9px; margin: 0.03in 0; white-space: pre-wrap; word-wrap: break-word; }
+        .template { background: #fffacd; padding: 0.06in; margin: 0.04in 0; font-size: 9px; font-family: monospace; border-radius: 2px; }
+        ul { margin-left: 0.1in; margin-bottom: 0.04in; }
+        li { margin-bottom: 0.02in; font-size: 10px; }
+        .footer { font-size: 9px; color: #999; margin-top: 0.08in; text-align: center; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Prompt Engineering Cheatsheet</h1>
+        <div>
+            <h1>Prompt Engineering</h1>
+            <div class="subtitle">Advanced Patterns & Best Practices for Better LLM Outputs</div>
+        </div>
 
         <div class="section">
-            <h2>The core patterns</h2>
+            <h2>Core Patterns</h2>
             <table>
-                <thead>
-                    <tr>
-                        <th style="width: 20%;">Pattern</th>
-                        <th style="width: 40%;">When to use it</th>
-                        <th style="width: 40%;">Shape</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><span class="pattern">Zero-shot</span></td>
-                        <td><span class="when">Simple, well-defined tasks</span></td>
-                        <td>Just ask.</td>
-                    </tr>
-                    <tr>
-                        <td><span class="pattern">Few-shot</span></td>
-                        <td><span class="when">Anything where the output format is strict</span></td>
-                        <td>Show 2-5 examples before the real query.</td>
-                    </tr>
-                    <tr>
-                        <td><span class="pattern">Chain-of-Thought</span></td>
-                        <td><span class="when">Reasoning, math, multi-step planning</span></td>
-                        <td>Ask the model to "think step by step" before answering.</td>
-                    </tr>
-                    <tr>
-                        <td><span class="pattern">ReAct</span></td>
-                        <td><span class="when">Agent / tool-using flows</span></td>
-                        <td>Interleave Thought → Action → Observation steps.</td>
-                    </tr>
-                    <tr>
-                        <td><span class="pattern">Self-consistency</span></td>
-                        <td><span class="when">High-stakes reasoning where one sample isn't enough</span></td>
-                        <td>Sample n completions, take the majority answer.</td>
-                    </tr>
-                    <tr>
-                        <td><span class="pattern">Reflection</span></td>
-                        <td><span class="when">Editing or improving prior output</span></td>
-                        <td>Ask the model to critique its own draft, then revise.</td>
-                    </tr>
-                </tbody>
+                <tr><th style="width: 18%;">Pattern</th><th style="width: 30%;">When to Use</th><th style="width: 52%;">What to Do</th></tr>
+                <tr><td><span class="pattern">Zero-shot</span></td><td><span class="when">Simple, well-defined tasks</span></td><td>Just ask directly.</td></tr>
+                <tr><td><span class="pattern">Few-shot</span></td><td><span class="when">Strict output format needed</span></td><td>Show 2–5 examples before the real query.</td></tr>
+                <tr><td><span class="pattern">Chain-of-Thought</span></td><td><span class="when">Reasoning, math, multi-step</span></td><td>Ask to "think step by step" first.</td></tr>
+                <tr><td><span class="pattern">ReAct</span></td><td><span class="when">Agent/tool-using flows</span></td><td>Interleave Thought → Action → Observation.</td></tr>
+                <tr><td><span class="pattern">Reflection</span></td><td><span class="when">Editing/improving output</span></td><td>Ask model to critique, then revise.</td></tr>
             </table>
         </div>
 
         <div class="section">
-            <h2>A reusable template</h2>
-            <div class="code"># Role
+            <h2>Reusable Template</h2>
+            <div class="template"># Role
 You are a [ROLE] helping [AUDIENCE] with [TASK].
 
 # Context
-[background the model needs - pasted docs, prior turns, constraints]
+[background, docs, constraints]
 
 # Task
-[exactly what you want it to do]
+[exactly what you want]
 
 # Output format
-- Section 1: ...
-- Section 2: ...
-- Return as JSON with keys: foo, bar, baz
+[structure: sections, JSON keys, etc.]
 
 # Rules
-- Do not [thing to avoid]
-- If unsure, say "I don't know" instead of guessing.</div>
+- Do not [avoid this]
+- If unsure, say "I don't know"</div>
         </div>
 
         <div class="section">
-            <h2>Anti-patterns (things I stopped doing)</h2>
+            <h2>Anti-Patterns (Stop Doing These)</h2>
             <ul>
-                <li><span class="anti">Stuffing the system prompt with every rule you've ever thought of.</span> Keep it &lt; 400 tokens.</li>
-                <li><span class="anti">Using "Please" and "Thank you"</span> as a substitute for clear instructions.</li>
-                <li><span class="anti">Asking for JSON without giving a schema example</span> - you'll get creative keys.</li>
-                <li><span class="anti">Re-reading the whole conversation every turn</span> instead of summarizing + pruning.</li>
+                <li><span class="key">Stuffing system prompt with every rule.</span> Keep it &lt; 400 tokens.</li>
+                <li><span class="key">Using "Please" as a substitute for clarity.</span> Be direct and specific.</li>
+                <li><span class="key">Asking for JSON without a schema example.</span> You'll get creative keys.</li>
+                <li><span class="key">Re-reading full conversation every turn.</span> Summarize &amp; prune instead.</li>
+                <li><span class="key">Vague constraints like "be helpful."</span> State explicit dos and don'ts.</li>
             </ul>
         </div>
 
         <div class="section">
-            <h2>A quick math bit</h2>
-            <p>Token cost for a prompt of length n tokens run k times with self-consistency:</p>
-            <div class="formula">cost = k · (n · c<sub>in</sub> + m · c<sub>out</sub>)</div>
-            <p>...where m is the average completion length. Useful when deciding if 10× sampling is worth it.</p>
+            <h2>Quick Wins</h2>
+            <ul>
+                <li><span class="key">Use few-shot examples</span> — Most reliable way to fix output format.</li>
+                <li><span class="key">Add "think step by step"</span> — Improves reasoning on complex tasks.</li>
+                <li><span class="key">Break into subtasks</span> — Easier than one big ask.</li>
+                <li><span class="key">Specify output structure</span> — JSON schema, bullet lists, tables.</li>
+                <li><span class="key">Iterate, don't perfect</span> — Start simple, refine based on results.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Token Cost Formula</h2>
+            <p>For self-consistency sampling (n completions, average m tokens output):</p>
+            <div class="code">cost = n × (input_tokens × price_in + m × price_out)</div>
+            <p style="margin-top: 0.04in;"><span class="key">Example:</span> 100 input tokens, 10 samples × 50 output tokens with Claude Sonnet = 100×$3 + 500×$15 = $7.80 total.</p>
         </div>
 
         <div class="footer">AI Playbook Cheat Sheet | May 2026 | Print-friendly, one page</div>
