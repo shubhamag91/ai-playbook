@@ -3,6 +3,10 @@ title: Model Releases Timeline (2026)
 description: Chronological list of major model releases and updates in 2026
 sidebar:
   order: 2
+tags:
+  - research
+  - models
+  - releases
 lastUpdated: 2026-05-08
 ---
 

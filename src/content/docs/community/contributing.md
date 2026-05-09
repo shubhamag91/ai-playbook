@@ -3,6 +3,8 @@ title: Contributing Guide
 description: How to contribute to the AI Playbook
 sidebar:
   order: 1
+tags:
+  - community
 lastUpdated: 2026-05-08
 ---
 

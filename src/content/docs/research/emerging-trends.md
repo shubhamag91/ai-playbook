@@ -3,6 +3,9 @@ title: Emerging Trends (May 2026)
 description: Emerging patterns, technologies, and shifts in AI in 2026
 sidebar:
   order: 3
+tags:
+  - research
+  - trends
 lastUpdated: 2026-05-08
 ---
 

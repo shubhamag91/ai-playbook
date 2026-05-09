@@ -3,6 +3,9 @@ title: Model Benchmarks & Leaderboards
 description: Performance comparisons on standard benchmarks — coding, reasoning, knowledge
 sidebar:
   order: 3
+tags:
+  - reference
+  - benchmarks
 lastUpdated: 2026-05-08
 ---
 

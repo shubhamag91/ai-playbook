@@ -4,6 +4,8 @@ description: A ~15-minute lunch-and-learn intro to large language models.
 sidebar:
   label: Slide Decks
   order: 1
+tags:
+  - slides
 lastUpdated: 2026-05-08
 ---
 

@@ -3,6 +3,8 @@ title: Resources & Downloads
 description: Downloadable guides, cheat sheets, and reference materials
 sidebar:
   order: 7
+tags:
+  - resources
 lastUpdated: 2026-05-09
 ---
 

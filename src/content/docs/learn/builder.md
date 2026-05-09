@@ -3,6 +3,9 @@ title: Builder Learning Path
 description: 1-week hands-on guide for developers building AI applications
 sidebar:
   order: 3
+tags:
+  - learning
+  - builder
 lastUpdated: 2026-05-08
 ---
 

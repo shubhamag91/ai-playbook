@@ -3,6 +3,9 @@ title: What's New (May 2026)
 description: Latest developments and announcements in AI as of May 2026
 sidebar:
   order: 1
+tags:
+  - research
+  - whats-new
 lastUpdated: 2026-05-08
 ---
 

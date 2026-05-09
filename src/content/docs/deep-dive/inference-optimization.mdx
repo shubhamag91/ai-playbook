@@ -1,0 +1,205 @@
+---
+title: Inference Optimization
+description: Techniques to make LLM inference faster and cheaper — quantization, caching, batching, speculative decoding, and tooling.
+sidebar:
+  order: 6
+tags:
+  - deep-dive
+  - inference
+  - optimization
+lastUpdated: 2026-05-10
+---
+
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+
+<Breadcrumb />
+
+# Inference Optimization: Speed & Cost
+
+Making LLM inference fast and affordable — techniques that work at any scale.
+
+---
+
+## The Latency-Cost Tradeoff
+
+Every optimization is a tradeoff between latency, throughput, cost, and output quality. The best approach depends on your use case.
+
+| Goal | Optimize For | Key Techniques |
+|---|---|---|
+| Real-time chat | Low latency (`<1s`) | KV cache, smaller models, quantization |
+| Batch processing | High throughput | Batching, speculative decoding |
+| Budget constraint | Low cost | Quantization, smaller models, prompt caching |
+| Maximum quality | No compromise | Full precision, no quantization |
+
+---
+
+## Quantization
+
+Reducing model precision to shrink memory and speed up inference. Most models are trained in FP16 or FP32; quantization converts weights to lower precision.
+
+### Common Formats
+
+| Format | Bits/Weight | Speedup | Quality Impact | Use Case |
+|---|---|---|---|---|
+| FP16 | 16 | 1x | None | Baseline |
+| INT8 | 8 | ~2x | Minimal | Production default |
+| INT4 | 4 | ~3-4x | Small but noticeable | Local deployment |
+| NF4 | 4 | ~3-4x | Less loss than INT4 | QLoRA fine-tuning |
+| FP8 | 8 | ~2x | None (newer hardware) | H100/H200 optimized |
+
+**Rule of thumb:** INT8 for production APIs where quality matters. INT4 for local/edge deployment where memory is tight.
+
+### Code Example: Loading a Quantized Model (Transformers)
+
+```python
+from transformers import AutoModelForCausalLM, BitsAndBytesConfig
+import torch
+
+# INT4 quantization config
+quant_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_compute_dtype=torch.float16,
+    bnb_4bit_use_double_quant=True,
+)
+
+model = AutoModelForCausalLM.from_pretrained(
+    "meta-llama/Llama-3.2-8B",
+    quantization_config=quant_config,
+    device_map="auto",
+)
+```
+
+---
+
+## KV Caching
+
+The key-value cache stores attention vectors from previous tokens so they don't need to be recomputed with each new token. This is **the single most impactful optimization** for latency.
+
+### How It Works
+
+1. First token: compute full attention (slow, ~100ms)
+2. Subsequent tokens: reuse cached KV vectors (fast, ~10ms each)
+3. Tradeoff: KV cache grows with sequence length (~2MB per token for a 70B model)
+
+### Prompt Caching
+
+Some providers (Anthropic, OpenAI) offer **prompt caching** — if you send the same system prompt repeatedly, cached portions are billed at ~10% of the normal rate.
+
+```python
+# Anthropic prompt caching (automatic with repeated prefixes)
+response = client.messages.create(
+    model="claude-sonnet-4-20260510",
+    max_tokens=1000,
+    system=[{"type": "text", "text": LONG_SYSTEM_PROMPT, "cache_control": {"type": "ephemeral"}}],
+    messages=[{"role": "user", "content": "Analyze this document."}],
+)
+# Cached portions charged at 10% of normal rate
+```
+
+### KV Cache Strategy
+
+- **Short conversations** ({"<2K"} tokens): No special handling needed
+- **Long documents (10K+ tokens):** Enable prompt caching for repeated prefixes
+- **Very long contexts (100K+):** Consider sliding window attention or streaming LLMs
+
+---
+
+## Batching
+
+Processing multiple requests simultaneously improves GPU utilization and throughput.
+
+### Static vs Dynamic Batching
+
+| Type | How It Works | Best For |
+|---|---|---|
+| Static | Fixed batch size, all requests finish together | Predictable workloads |
+| Dynamic (continuous) | New requests join in-progress batches as others finish | Variable traffic, real-time |
+
+### Throughput Impact
+
+```
+Single request:    1 req → 10s → 0.1 req/s
+Batch of 8:        8 req → 12s → 0.67 req/s (6.7x throughput)
+Batch of 32:      32 req → 18s → 1.78 req/s (17.8x throughput)
+```
+
+**Key insight:** Batching increases throughput but increases latency for individual requests. Use batching for offline processing; avoid it for real-time chat.
+
+---
+
+## Speculative Decoding
+
+A smaller "draft" model predicts multiple tokens ahead, and the large model verifies them in parallel. When drafts are correct, you get multiple tokens for the cost of one verification step.
+
+### When It Works
+
+- **High-acceptance tasks:** Code generation, structured output (JSON, XML)
+- **Low-acceptance tasks:** Creative writing, nuanced reasoning
+- **Typical speedup:** 1.5x-3x for code, 1.2x-1.5x for general text
+
+### Implementation
+
+```python
+# Using vLLM with speculative decoding
+from vllm import LLM, SamplingParams
+
+llm = LLM(
+    model="meta-llama/Llama-3.2-70B",
+    speculative_model="meta-llama/Llama-3.2-8B",  # draft model
+    num_speculative_tokens=5,
+)
+```
+
+---
+
+## Cost Optimization Strategy
+
+| Technique | Cost Reduction | Implementation Effort |
+|---|---|---|
+| Prompt caching | 50-90% on repeated prefixes | Built into API (Anthropic, OpenAI) |
+| Model routing | 60-80% overall | Requires routing logic |
+| Batching | 5-10x throughput | Requires vLLM or similar |
+| Quantization | 2-4x memory reduction | One-time model conversion |
+| Smaller models for simple tasks | 10-100x cost difference | Task routing |
+
+### Practical Decision Tree
+
+```
+What's your priority?
+│
+├─ Lowest latency → KV cache + small model + no batching
+├─ Highest throughput → Large batches + speculative decoding
+├─ Lowest cost → Small model + INT4 + prompt caching + routing
+└─ Best quality → Large model + FP16 + no quantization
+```
+
+---
+
+## Production Tools
+
+| Tool | Best For | Key Feature |
+|---|---|---|
+| **vLLM** | High-throughput serving | PagedAttention, continuous batching |
+| **TensorRT-LLM** | NVIDIA GPU optimization | Kernel fusion, INT4/FP8 |
+| **Ollama** | Local experimentation | One-command setup |
+| **llama.cpp** | CPU + edge deployment | Extremely efficient CPU inference |
+| **TGI (Text Generation Inference)** | Hugging Face ecosystem | Token streaming, tensor parallelism |
+
+---
+
+## Quick Reference: Optimization by Scenario
+
+| Scenario | Recommended Setup | Estimated Cost/Month |
+|---|---|---|
+| Personal chatbot (`<1K` req/day) | Ollama + 7B INT4 model | $0 (local) |
+| Production API (10K req/day) | vLLM + 70B INT8 + prompt caching | $200-500 |
+| Batch processing (1M req/day) | TensorRT-LLM + FP8 + continuous batching | $1,000-3,000 |
+| Real-time voice (50ms SLA) | Lightweight model + KV cache + no batching | $500-2,000 |
+
+---
+
+## See Also
+
+- [How LLMs Work](/deep-dive/how-llms-work) — Foundation concepts
+- [Training & Fine-tuning](/deep-dive/training-finetuning) — Model adaptation
+- [Model Specs](/reference/model-specs) — Pricing reference

@@ -1,6 +1,9 @@
 ---
 title: Open Source AI & Self-Hosting
 description: Run AI models locally. No API costs, full privacy, own the weights.
+tags:
+  - open-source
+  - models
 lastUpdated: 2026-05-08
 ---
 

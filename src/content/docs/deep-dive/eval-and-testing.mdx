@@ -1,0 +1,279 @@
+---
+title: Evaluation & Testing
+description: How to evaluate LLM outputs — qualitative metrics, benchmark selection, A/B testing, guardrails, and LLM-as-judge patterns.
+sidebar:
+  order: 7
+tags:
+  - deep-dive
+  - evaluation
+  - testing
+lastUpdated: 2026-05-10
+---
+
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+
+<Breadcrumb />
+
+# Evaluation & Testing for LLMs
+
+How to know if your LLM application is actually working — from individual prompt tests to production monitoring.
+
+---
+
+## Why Evaluation Is Hard
+
+LLM outputs are non-deterministic. The same prompt can produce different results each time. Traditional software testing (assert equals) doesn't work. Instead, you need a **layered evaluation strategy**.
+
+```
+Tests that pass today may fail tomorrow after a model update.
+Tests that pass for Claude may fail for GPT.
+"Passing" depends on your quality bar, not a binary right/wrong.
+```
+
+---
+
+## Evaluation Layers
+
+### Layer 1: Unit Tests (Per Prompt)
+
+Test individual prompt templates against known inputs.
+
+```python
+def test_summary_prompt():
+    result = run_prompt("Summarize: The sky is blue because...")
+    assert "Raleigh scattering" in result or "wavelength" in result
+    assert len(result.split()) < 50  # summary should be concise
+    assert not contains_hallucination(result, source_text="The sky is blue because...")
+```
+
+**What to check:**
+- Required keywords or patterns present
+- Output length constraints met
+- Format/structure matches expected
+- No prohibited content (PII, hallucinations)
+
+### Layer 2: Property-Based Tests
+
+Test that outputs satisfy certain properties regardless of content.
+
+```python
+properties = [
+    ("starts_with_greeting", lambda o: o.startswith("Hello")),
+    ("ends_with_question", lambda o: o.strip().endswith("?")),
+    ("under_500_chars", lambda o: len(o) < 500),
+    ("contains_no_urls", lambda o: "http" not in o),
+]
+```
+
+### Layer 3: Semantic Evaluation
+
+Measure output quality using another LLM as judge.
+
+```
+Input: "Explain quantum computing to a 10-year-old"
+Output: "Quantum computers use qubits that can be 0 and 1 at the same time..."
+
+Eval checks:
+- Is the explanation age-appropriate?   ✓
+- Are there factual errors?              ✓ (none found)
+- Is it engaging for a child?            ✓
+- Length appropriate?                    ✓ (2 paragraphs)
+```
+
+---
+
+## LLM-as-Judge
+
+Using one LLM to evaluate another's output is the most practical evaluation method for production systems.
+
+### Structured Eval Prompt
+
+```
+You are a quality evaluator. Rate the following assistant response on:
+1. Accuracy (1-5): No factual errors
+2. Completeness (1-5): Addresses all parts of the query
+3. Clarity (1-5): Easy to understand
+4. Safety (1-5): No harmful or biased content
+
+Return ONLY a JSON object:
+{"accuracy": 5, "completeness": 4, "clarity": 5, "safety": 5, "pass": true}
+```
+
+### Implementation
+
+```python
+import json
+
+def evaluate_response(query, response, rubric):
+    eval_prompt = f"""
+    Rate this response on the following criteria:
+    {rubric}
+
+    Query: {query}
+    Response: {response}
+
+    Return JSON only.
+    """
+    eval_result = client.messages.create(
+        model="claude-sonnet-4-20260510",
+        max_tokens=200,
+        messages=[{"role": "user", "content": eval_prompt}],
+    )
+    return json.loads(eval_result.content[0].text)
+```
+
+### LLM-as-Judge Pitfalls
+
+| Issue | Mitigation |
+|---|---|
+| Judge prefers longer responses | Control for length in rubric |
+| Judge agrees with itself | Use a different model as judge |
+| Position bias (favors first/last) | Randomize comparison order |
+| Verbosity bias | Normalize responses before comparison |
+| Self-enhancement bias | Never use the same model as judge and generator |
+
+---
+
+## A/B Testing
+
+Compare two versions of a prompt, model, or system configuration.
+
+### Methodology
+
+1. **Split traffic** 50/50 between control (A) and variant (B)
+2. **Collect both** quantitative (latency, cost) and qualitative (eval scores) metrics
+3. **Statistical significance** — run until you have 100+ samples per variant
+4. **Decision** — switch if B is clearly better; keep A if uncertain
+
+### Sample Size Calculator
+
+```python
+import math
+
+def min_sample_size(effect_size=0.1, alpha=0.05, power=0.8):
+    z_alpha = 1.96  # for 95% confidence
+    z_beta = 0.84   # for 80% power
+    n = (2 * (z_alpha + z_beta)**2) / (effect_size**2)
+    return math.ceil(n)
+
+# To detect a 10% improvement: ~1,570 samples per variant
+# To detect a 5% improvement: ~6,283 samples per variant
+```
+
+---
+
+## Benchmark Selection
+
+Use existing benchmarks when choosing between models, and custom evals for your specific use case.
+
+| Benchmark | What It Measures | Best For |
+|---|---|---|
+| **HumanEval** | Code generation | Coding assistants |
+| **MATH** | Mathematical reasoning | Math tutoring, analysis |
+| **MMLU** | Broad knowledge | General-purpose QA |
+| **GPQA** | Graduate-level reasoning | Research, complex analysis |
+| **Bamboogle** | Multi-step reasoning | Agentic workflows |
+| **HellaSwag** | Commonsense reasoning | Chatbots, everyday tasks |
+
+**Custom benchmarks** — Create a dataset of 50-100 real user queries with gold-standard responses. Run all eval variants against this dataset. This is more valuable than any public benchmark.
+
+---
+
+## Guardrails & Safety Testing
+
+Automated checks that run on every output before showing it to users.
+
+### Types of Guardrails
+
+| Type | Example | Tool |
+|---|---|---|
+| Content filter | Block profanity, hate speech | NeMo Guardrails, Guardrails AI |
+| PII detection | Redact emails, phone numbers | Presidio, custom regex |
+| Hallucination check | Verify claims against source | Custom LLM-as-judge |
+| Format validation | Ensure JSON is valid | Pydantic, Zod |
+| Toxicity scoring | Rate harmful content | Perspective API |
+
+### Implementation Pattern
+
+```python
+def safety_check(output):
+    checks = [
+        check_pii(output),
+        check_toxicity(output),
+        check_hallucination(output, source_documents),
+        check_format(output),
+    ]
+    failed = [c for c in checks if not c["pass"]]
+    if failed:
+        return {"pass": False, "failures": failed, "output": "I cannot provide that response."}
+    return {"pass": True, "output": output}
+```
+
+---
+
+## Production Monitoring
+
+Continuous evaluation in production catches regressions that unit tests miss.
+
+### Metrics to Track
+
+| Metric | What It Detects | Alert Threshold |
+|---|---|---|
+| Eval pass rate | Overall quality drops | `<90%` pass rate |
+| Avg latency | Performance regression | `>2x` baseline |
+| Error rate | API failures | `>1%` errors |
+| User feedback score | Subjective quality | `<3.5/5` stars |
+| Cost per request | Budget issues | `>2x` baseline |
+
+### Automated Eval Pipeline
+
+```
+User Query → LLM → Output → Guardrails → User
+                              ↓
+                        Eval Queue (async)
+                              ↓
+                         Eval LLM (judge)
+                              ↓
+                   Metrics Dashboard + Alerts
+```
+
+---
+
+## Eval Frameworks Compared
+
+| Framework | Approach | Best For |
+|---|---|---|
+| **DeepEval** | LLM-as-judge, unit tests | Python-based eval pipelines |
+| **LangSmith** | Trace + evaluate | LangChain users, debugging |
+| **Weights & Biases** | Experiment tracking | Research, model comparison |
+| **Arize** | Production monitoring | ML observability at scale |
+| **Custom (your code)** | Full control | Specific business logic |
+
+---
+
+## Quick Start: Minimal Eval Suite
+
+```python
+# A minimal evaluation setup — adapt for your use case
+evals = [
+    {"query": "What is RAG?", "checks": ["retrieval", "augmented", "generation"]},
+    {"query": "Explain transformers", "checks": ["attention", "encoder", "decoder"]},
+    {"query": "Summarize this email", "checks": ["`<50` words"], "max_length": 50},
+]
+
+def run_evals(model, evals):
+    results = []
+    for eval_case in evals:
+        response = call_model(model, eval_case["query"])
+        passed = all(check in response for check in eval_case["checks"])
+        results.append({"query": eval_case["query"], "passed": passed, "response": response})
+    return results
+```
+
+---
+
+## See Also
+
+- [Benchmarks](/reference/benchmarks) — Public benchmark comparisons
+- [Training & Fine-tuning](/deep-dive/training-finetuning) — When evals show you need a better model
+- [Prompt Engineering](/deep-dive/prompt-engineering) — Iterate prompts before building evals

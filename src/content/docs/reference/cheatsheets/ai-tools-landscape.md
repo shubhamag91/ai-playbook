@@ -1,6 +1,10 @@
 ---
 title: AI Tools Landscape (2026)
 description: Curated map of AI tools by category — conversational, coding, automation, creative, and specialized tools.
+tags:
+  - reference
+  - cheatsheet
+  - tools
 lastUpdated: 2026-05-08
 sidebar:
   order: 4
@@ -47,7 +51,7 @@ sidebar:
 | **Midjourney** | Photorealistic, artistic | $10-60/mo | Marketing, concept art, social |
 | **DALL-E 3** | In ChatGPT | Included in Plus | Quick iterations, integrated |
 | **Runway** | Video + image generation | Free + $12+/mo | Video editing, motion graphics |
-| **Flux** | Open-source, fast | Free (self-host) | Local image generation |
+| **Flux** | Open-source, fast | Free (self-host) or $0.05-0.10/image via API | Local or API-based image generation |
 
 ## Video Generation
 
@@ -122,7 +126,7 @@ What do you want to do?
 ├─ Automate workflow → Zapier (easy) or n8n (flexible)
 ├─ Analyze data → NotebookLM (quick) or Claude (detailed)
 ├─ Music/audio → Suno (music) or ElevenLabs (voice-over)
-├─ Build web app → Lovable (fastest) or Vercel v0 (React)
+├─ Build web app → Lovable (full-stack, fastest) or Vercel v0 (React components only)
 └─ Everything → Use Claude daily + Cursor for coding
 ```
 

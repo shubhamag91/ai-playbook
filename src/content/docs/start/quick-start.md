@@ -3,6 +3,8 @@ title: Quick Start
 description: Get up to speed in 30 minutes
 sidebar:
   order: 2
+tags:
+  - getting-started
 lastUpdated: 2026-05-09
 ---
 

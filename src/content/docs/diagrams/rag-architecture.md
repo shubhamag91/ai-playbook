@@ -3,6 +3,9 @@ title: RAG Architecture
 description: A canonical Retrieval-Augmented Generation pipeline, drawn in Mermaid.
 sidebar:
   order: 1
+tags:
+  - diagrams
+  - architecture
 lastUpdated: 2026-05-08
 ---
 

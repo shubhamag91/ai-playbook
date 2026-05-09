@@ -3,6 +3,8 @@ title: How this playbook works
 description: The repo layout, authoring workflow, and publishing pipeline.
 sidebar:
   order: 1
+tags:
+  - guide
 lastUpdated: 2026-05-08
 ---
 

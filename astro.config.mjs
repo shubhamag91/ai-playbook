@@ -16,6 +16,9 @@ export default defineConfig({
 
   integrations: [
     starlight({
+      components: {
+        Content: './src/components/ContentOverride.astro',
+      },
       title: 'AI Playbook',
       description: 'A living playbook of AI & LLM knowledge — notes, cheatsheets, diagrams, and decks.',
       logo: {
@@ -124,6 +127,8 @@ export default defineConfig({
             { label: 'Agents & Frameworks', slug: 'deep-dive/agents-frameworks' },
             { label: 'Training & Fine-tuning', slug: 'deep-dive/training-finetuning' },
             { label: 'Prompt Engineering', slug: 'deep-dive/prompt-engineering' },
+            { label: 'Inference Optimization', slug: 'deep-dive/inference-optimization' },
+            { label: 'Evaluation & Testing', slug: 'deep-dive/eval-and-testing' },
           ],
         },
         {

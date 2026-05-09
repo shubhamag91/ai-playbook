@@ -3,6 +3,10 @@ title: Model Specifications & Pricing (May 2026)
 description: Detailed specs for major AI models — context windows, pricing, capabilities and tradeoffs
 sidebar:
   order: 4
+tags:
+  - reference
+  - models
+  - specs
 lastUpdated: 2026-05-08
 ---
 

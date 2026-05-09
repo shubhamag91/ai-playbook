@@ -1,6 +1,9 @@
 ---
 title: Build an LLM from Scratch — Book Summary
 description: Notes and summary from "Build a Large Language Model (From Scratch)" by Sebastian Raschka.
+tags:
+  - guide
+  - training
 lastUpdated: 2026-05-08
 ---
 

@@ -3,6 +3,9 @@ title: Researcher Learning Path
 description: Stay current with AI research, trends, and new models
 sidebar:
   order: 4
+tags:
+  - learning
+  - researcher
 lastUpdated: 2026-05-08
 ---
 

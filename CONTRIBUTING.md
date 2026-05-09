@@ -68,7 +68,22 @@ Bullet point summary.
 - `description` — Required, 60-160 chars (SEO)
 - `sidebar.order` — Required, controls nav position (lower = higher)
 - `lastUpdated` — Required, YYYY-MM-DD format
+- `tags` — Recommended, list of keywords for auto-generated related links
 - `sidebar.badge` — Optional, for "New" or "Updated" badges
+
+**Example:**
+```yaml
+---
+title: My New Page
+description: A short summary for SEO and search results.
+sidebar:
+  order: 3
+tags:
+  - reference
+  - guide
+lastUpdated: 2026-05-10
+---
+```
 
 ### Fact-Checking Your PR
 

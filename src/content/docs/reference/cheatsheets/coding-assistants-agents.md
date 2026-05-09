@@ -1,6 +1,10 @@
 ---
 title: AI Coding Assistants & Agents (2026)
 description: Comparison of coding editors, CLI agents, and agentic workflows. Benchmarks, pricing, and when to use each.
+tags:
+  - reference
+  - cheatsheet
+  - coding
 lastUpdated: 2026-05-08
 sidebar:
   order: 3

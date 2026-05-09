@@ -1,6 +1,9 @@
 ---
 title: AI Tools Navigator
 description: What tool to use for what job. Quick decision trees and tool pairings for every workflow.
+tags:
+  - tools
+  - reference
 lastUpdated: 2026-05-08
 ---
 
@@ -28,7 +31,7 @@ This page answers: "I want to [task]. What should I use?"
 
 **Best tools, ranked:**
 1. **Cursor** — IDE, largest codebases, multi-file refactors ($20-40/mo)
-2. **Claude Code** — Complex reasoning, paid per token (~$20-100/mo)
+2. **Claude Code** — Complex reasoning, included with Claude Pro ($20/mo) or Claude Max ($100-200/mo); also pay-per-use via API
 3. **GitHub Copilot** — Simplest setup, team-friendly (Free or $20/mo)
 4. **Aider** — Git-native, reliable commits (Free + API costs)
 
@@ -53,7 +56,7 @@ This page answers: "I want to [task]. What should I use?"
 **Best tools, ranked:**
 1. **Midjourney** — Highest quality, $10-60/mo
 2. **DALL-E 3** — In ChatGPT, included with Plus
-3. **Flux** — Open-source, free to run locally
+3. **Flux** — Open-source, free to run locally (API also available at $0.05-0.10/image)
 4. **Runway** — Video + image generation, $12+/mo
 
 **Cost:** Midjourney for serious work, DALL-E for quick iterations
@@ -106,11 +109,11 @@ This page answers: "I want to [task]. What should I use?"
 ### I want to build a web app fast
 
 **Best tools, ranked:**
-1. **Lovable** — AI-first web builder, pay per build
-2. **Vercel v0** — React components, free beta
+1. **Lovable** — Full-stack app builder, generates and hosts complete apps
+2. **Vercel v0** — UI component generator, copy-paste into existing project
 3. **Cursor + code** — Full control, steeper learning curve
 
-**Reality:** Lovable is fastest for MVP, code + Cursor for custom features
+**Reality:** Lovable for complete MVPs, v0 for UI components, Cursor + code for custom features
 
 ---
 
@@ -243,7 +246,7 @@ Most people need: 1 chat tool ($20) + 1 coding tool ($20) = $40/mo baseline
 
 **For developers:**
 - Cursor ($20)
-- Claude Code (pay-per-token, ~$20/mo)
+- Claude Code (included with Pro, ~$20/mo)
 - GitHub Copilot (free tier or $20/mo)
 - **Total:** $20-40/mo
 

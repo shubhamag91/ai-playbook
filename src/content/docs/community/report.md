@@ -3,6 +3,8 @@ title: Report Outdated Information
 description: How to report inaccurate, incomplete, or outdated content in the AI Playbook
 sidebar:
   order: 2
+tags:
+  - community
 lastUpdated: 2026-05-08
 ---
 

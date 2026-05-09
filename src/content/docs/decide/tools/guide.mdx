@@ -3,11 +3,14 @@ title: AI Tools & Platforms Decision Guide
 description: Comprehensive guide to choosing AI tools across conversational AI, coding, automation, content creation, research, and infrastructure.
 sidebar:
   order: 1
+tags:
+  - tools
+  - decision-guide
+  - reference
 lastUpdated: 2026-05-08
 ---
 
 import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
-import SeeAlso from '../../../../components/SeeAlso.astro';
 
 A comprehensive guide to the AI tools and platforms reshaping work — from conversational assistants to infrastructure. Organized by use case, not technology.
 
@@ -29,7 +32,7 @@ The foundation layer — where you start. These tools handle research, brainstor
     <Badge text="Freemium" variant="note" />
   </Card>
   <Card title="Gemini" icon="open-book">
-    Google's multimodal AI with a 1M-token context window. Deeply integrated with Google Workspace.
+    Google's multimodal AI — Gemini 3.1 Pro offers a 1M-token context window (largest among major models). Deeply integrated with Google Workspace.
     <Badge text="Freemium" variant="note" />
   </Card>
   <Card title="Perplexity" icon="magnifier">
@@ -120,7 +123,7 @@ Tools for developers and builders — from IDE integrations to no-code builders 
     <Badge text="Paid" variant="danger" />
   </Card>
   <Card title="Claude Code" icon="terminal">
-    Anthropic's agentic coding CLI — edits files, runs tests, opens PRs from your terminal.
+    Anthropic's agentic coding CLI — edits files, runs tests, opens PRs from your terminal. Included with Claude Pro ($20/mo) or pay-per-use via API.
     <Badge text="Paid" variant="danger" />
   </Card>
   <Card title="OpenCode" icon="terminal">
@@ -129,22 +132,16 @@ Tools for developers and builders — from IDE integrations to no-code builders 
     <Badge text="Open Source" variant="tip" />
   </Card>
   <Card title="Lovable" icon="rocket">
-    Build full-stack React apps from natural language. No coding required.
-    <Badge text="Freemium" variant="note" />
-  </Card>
-  <Card title="Bolt.new" icon="rocket">
-    Full-stack AI app builder by StackBlitz — runs entirely in the browser.
-    <Badge text="Freemium" variant="note" />
-  </Card>
-  <Card title="Replit" icon="laptop">
-    Browser-based IDE with AI coding assistant, instant deployment and multiplayer.
+    Build and deploy full-stack React apps from natural language — generates backend, frontend, and hosting. No coding required. Best for MVPs and complete apps.
     <Badge text="Freemium" variant="note" />
   </Card>
   <Card title="Vercel v0" icon="open-book">
-    Generate shadcn/Tailwind UI components from text. Copy-paste into your project.
+    Generate shadcn/Tailwind UI components from text — produces copy-paste code you integrate into your existing project. Best for UI design, not full apps.
     <Badge text="Freemium" variant="note" />
   </Card>
 </CardGrid>
+
+**Pro tip:** Cursor and Claude Code are complementary — use Cursor for your daily IDE work and Claude Code for complex refactors, CLI automation, and batch operations. Many developers use both.
 
 ## Automate & Orchestrate
 
@@ -226,8 +223,9 @@ Tools for writers, creators and designers — text, images, video, audio and voi
     <Badge text="Freemium" variant="note" />
   </Card>
   <Card title="Stable Diffusion / Flux" icon="seti:image">
-    Open-source image models you can run locally or via APIs. Massive community.
+    Open-source image models you can run locally or via APIs. Flux (Black Forest Labs) also has a paid API — $0.05/image for standard generation, $0.10/image for ultra quality. Massive community.
     <Badge text="Open Source" variant="tip" />
+    <Badge text="API Available" variant="note" />
   </Card>
   <Card title="Adobe Firefly" icon="seti:image">
     Generative AI for images, vectors and textures — integrated into Photoshop & Illustrator.
@@ -664,11 +662,6 @@ Most people building personal AI tools today use these rather than writing code 
 
 ---
 
-<SeeAlso links={[
-  { label: 'Tool Comparison (sortable, filterable)', href: '/decide/tools/comparison/' },
-  { label: 'Models Decision Guide', href: '/decide/models/guide/' },
-  { label: 'Cost Calculator', href: '/decide/cost-calculator/' }
-]} />
 
 ---
 

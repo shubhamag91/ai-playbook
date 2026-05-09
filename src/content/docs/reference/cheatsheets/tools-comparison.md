@@ -3,6 +3,11 @@ title: Tools Comparison (1 page)
 description: Which AI tool to use for what — chat, coding, content creation, APIs
 sidebar:
   order: 5
+tags:
+  - reference
+  - cheatsheet
+  - tools
+  - comparison
 lastUpdated: 2026-05-09
 ---
 

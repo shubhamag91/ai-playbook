@@ -3,6 +3,9 @@ title: AI Terminology & Definitions
 description: Clarify the difference between AI terms — what's what and why it matters
 sidebar:
   order: 5
+tags:
+  - research
+  - glossary
 lastUpdated: 2026-05-08
 ---
 

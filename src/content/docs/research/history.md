@@ -1,6 +1,9 @@
 ---
 title: AI History & Timeline
 description: Key milestones from 1950 to May 2026. How we got here and what's next.
+tags:
+  - research
+  - history
 lastUpdated: 2026-05-08
 ---
 

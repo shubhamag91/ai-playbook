@@ -3,6 +3,10 @@ title: LLM Primer (1 page)
 description: What LLMs are, how they work, and when to use each one
 sidebar:
   order: 2
+tags:
+  - reference
+  - cheatsheet
+  - primer
 lastUpdated: 2026-05-09
 ---
 

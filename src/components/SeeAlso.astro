@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import './SeeAlso.css';
 
 export interface Props {
@@ -7,40 +8,114 @@ export interface Props {
 
 const { links = [] } = Astro.props;
 
-// Default related links based on section
-const sectionRelations: Record<string, Array<{ label: string; href: string; description?: string }>> = {
-  '/learn': [
-    { label: 'Quick Start', href: '/start/quick-start', description: 'Get up to speed in 30 minutes' },
-    { label: 'Reference', href: '/reference/glossary', description: 'Look up key terms and concepts' }
-  ],
-  '/decide': [
-    { label: 'Research', href: '/research/whats-new', description: 'Latest model releases and trends' },
-    { label: 'Benchmarks', href: '/reference/benchmarks', description: 'Compare model performance' }
-  ],
-  '/reference': [
-    { label: 'Deep Dives', href: '/deep-dive/how-llms-work', description: 'Technical deep dives' },
-    { label: 'Cheatsheets', href: '/reference/cheatsheets', description: 'Quick reference cards' }
-  ],
-  '/research': [
-    { label: 'Deep Dives', href: '/deep-dive/how-llms-work', description: 'Technical deep dives' },
-    { label: 'Model Specs', href: '/reference/model-specs', description: 'Detailed model specifications' }
-  ],
-  '/deep-dive': [
-    { label: 'Research', href: '/research/whats-new', description: 'Latest trends and releases' },
-    { label: 'Cheatsheets', href: '/reference/cheatsheets', description: 'Quick reference guides' }
-  ]
-};
+let displayLinks: Array<{ label: string; href: string; description?: string }> = [];
 
-// Determine the current section
-const currentPath = Astro.url.pathname;
-const section = Object.keys(sectionRelations).find(s => currentPath.startsWith(s));
-const defaultLinks = section ? sectionRelations[section] : [];
+if (links.length > 0) {
+  displayLinks = links;
+} else {
+  const path = Astro.url.pathname.replace(/^\/|\/$/g, '');
+  const skipPaths = ['', '404', 'reference/glossary'];
 
-// Use provided links or fall back to defaults
-const displayLinks = links.length > 0 ? links : defaultLinks;
+  if (!skipPaths.includes(path)) {
+    const allDocs = await getCollection('docs');
+    const currentEntry = allDocs.find(entry => entry.slug === path);
+    const allLinks: Array<{ label: string; href: string; description?: string }> = [];
+
+    if (currentEntry?.data.tags && currentEntry.data.tags.length > 0) {
+      const currentTags: string[] = currentEntry.data.tags;
+      const scored: Array<{ entry: typeof allDocs[0]; score: number }> = [];
+
+      for (const entry of allDocs) {
+        if (entry.slug === path) continue;
+        const entryTags: string[] = (entry.data as Record<string, unknown>).tags as string[] || [];
+        const overlap = currentTags.filter(t => entryTags.includes(t)).length;
+        if (overlap > 0) {
+          scored.push({ entry, score: overlap });
+        }
+      }
+
+      scored.sort((a, b) => b.score - a.score);
+      for (const { entry } of scored.slice(0, 6)) {
+        allLinks.push({
+          label: entry.data.title,
+          href: `/${entry.slug}/`,
+          description: entry.data.description,
+        });
+      }
+    }
+
+    // Fallback to section-based defaults when no tag matches
+    if (allLinks.length === 0) {
+      const sectionRelations: Record<string, Array<{ label: string; href: string; description?: string }>> = {
+        '/learn': [
+          { label: 'Quick Start', href: '/start/quick-start', description: 'Get up to speed in 30 minutes' },
+          { label: 'Glossary', href: '/reference/glossary', description: 'Look up key terms and concepts' },
+        ],
+        '/decide': [
+          { label: "What's New", href: '/research/whats-new', description: 'Latest model releases and trends' },
+          { label: 'Benchmarks', href: '/reference/benchmarks', description: 'Compare model performance' },
+        ],
+        '/reference': [
+          { label: 'Deep Dives', href: '/deep-dive/how-llms-work', description: 'Technical deep dives' },
+          { label: 'Cheatsheets', href: '/reference/cheatsheets', description: 'Quick reference cards' },
+        ],
+        '/research': [
+          { label: 'Deep Dives', href: '/deep-dive/how-llms-work', description: 'Technical deep dives' },
+          { label: 'Model Specs', href: '/reference/model-specs', description: 'Detailed model specifications' },
+        ],
+        '/deep-dive': [
+          { label: "What's New", href: '/research/whats-new', description: 'Latest trends and releases' },
+          { label: 'Cheatsheets', href: '/reference/cheatsheets', description: 'Quick reference guides' },
+        ],
+        '/start': [
+          { label: 'Learning Paths', href: '/learn/beginner', description: 'Structured guides by level' },
+          { label: 'Glossary', href: '/reference/glossary', description: 'AI terminology explained' },
+        ],
+        '/tools': [
+          { label: 'Decide: Tools', href: '/decide/tools/guide', description: 'Comprehensive tools guide' },
+          { label: 'Cheatsheets', href: '/reference/cheatsheets', description: 'Quick reference cards' },
+        ],
+        '/opensource': [
+          { label: 'Model Specs', href: '/reference/model-specs', description: 'Detailed model specifications' },
+          { label: 'Decide: Models', href: '/decide/models/guide', description: 'Choose the right model' },
+        ],
+        '/community': [
+          { label: 'Quick Start', href: '/start/quick-start', description: 'Get started with AI' },
+          { label: 'Glossary', href: '/reference/glossary', description: 'AI terminology explained' },
+        ],
+        '/resources': [
+          { label: 'Deep Dives', href: '/deep-dive/how-llms-work', description: 'Technical deep dives' },
+          { label: 'Tools Guide', href: '/decide/tools/guide', description: 'Comprehensive tools guide' },
+        ],
+        '/slides': [
+          { label: 'How LLMs Work', href: '/deep-dive/how-llms-work', description: 'Technical deep dive' },
+          { label: 'Glossary', href: '/reference/glossary', description: 'AI terminology explained' },
+        ],
+        '/diagrams': [
+          { label: 'How LLMs Work', href: '/deep-dive/how-llms-work', description: 'Technical deep dive' },
+          { label: 'Glossary', href: '/reference/glossary', description: 'AI terminology explained' },
+        ],
+        '/mind-maps': [
+          { label: 'Tools Guide', href: '/decide/tools/guide', description: 'Comprehensive tools guide' },
+          { label: 'Glossary', href: '/reference/glossary', description: 'AI terminology explained' },
+        ],
+        '/infographics': [
+          { label: 'Deep Dives', href: '/deep-dive/how-llms-work', description: 'Technical deep dive' },
+          { label: 'Glossary', href: '/reference/glossary', description: 'AI terminology explained' },
+        ],
+      };
+
+      const section = Object.keys(sectionRelations).find(s => path.startsWith(s));
+      if (section) {
+        allLinks.push(...sectionRelations[section]);
+      }
+    }
+
+    displayLinks = allLinks.slice(0, 6);
+  }
+}
 
 if (displayLinks.length === 0) {
-  // Don't render if no links
   Astro.response.headers.set('X-No-See-Also', 'true');
 }
 ---
