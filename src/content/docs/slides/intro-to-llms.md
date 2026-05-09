@@ -7,6 +7,7 @@ sidebar:
 tags:
   - slides
 lastUpdated: 2026-05-08
+nextVerificationDue: 2027-05-08
 ---
 
 This is a placeholder for the Intro to LLMs slide deck. The deck needs to be exported from Slidev and placed in `public/decks/intro-to-llms/`.

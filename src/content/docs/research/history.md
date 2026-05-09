@@ -5,6 +5,7 @@ tags:
   - research
   - history
 lastUpdated: 2026-05-08
+nextVerificationDue: 2027-05-08
 ---
 
 import { Card, CardGrid, Badge } from '@astrojs/starlight/components';

@@ -6,6 +6,7 @@ sidebar:
 tags:
   - getting-started
 lastUpdated: 2026-05-09
+nextVerificationDue: 2026-08-07
 ---
 
 # Quick Start (30 minutes)

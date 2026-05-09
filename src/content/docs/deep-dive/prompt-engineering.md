@@ -4,6 +4,7 @@ description: Advanced prompting techniques and patterns
 sidebar:
   order: 5
 lastUpdated: 2026-05-08
+nextVerificationDue: 2026-08-06
 ---
 
 # Prompt Engineering

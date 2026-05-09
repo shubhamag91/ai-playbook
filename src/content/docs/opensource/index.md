@@ -5,6 +5,7 @@ tags:
   - open-source
   - models
 lastUpdated: 2026-05-08
+nextVerificationDue: 2026-08-06
 ---
 
 If you care about privacy, cost at scale, or control — open-source models let you own your AI stack.

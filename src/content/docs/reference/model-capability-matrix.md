@@ -8,6 +8,7 @@ tags:
   - models
   - comparison
 lastUpdated: 2026-05-10
+nextVerificationDue: 2026-08-08
 ---
 
 import ModelMatrix from '../../components/ModelMatrix.astro';

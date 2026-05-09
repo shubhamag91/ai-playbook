@@ -4,6 +4,7 @@ description: Training, fine-tuning, and optimization techniques
 sidebar:
   order: 4
 lastUpdated: 2026-05-08
+nextVerificationDue: 2026-08-06
 ---
 
 # Training & Fine-tuning

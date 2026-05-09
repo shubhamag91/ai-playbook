@@ -4,6 +4,7 @@ description: Retrieval-Augmented Generation architecture and patterns
 sidebar:
   order: 2
 lastUpdated: 2026-05-08
+nextVerificationDue: 2026-08-06
 ---
 
 # RAG Architecture Deep Dive

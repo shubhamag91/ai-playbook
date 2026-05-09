@@ -7,6 +7,7 @@ tags:
   - learning
   - researcher
 lastUpdated: 2026-05-08
+nextVerificationDue: 2026-08-06
 ---
 
 How to keep up with the rapidly evolving AI landscape without drowning in information.

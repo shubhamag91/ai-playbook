@@ -7,6 +7,7 @@ tags:
   - learning
   - builder
 lastUpdated: 2026-05-08
+nextVerificationDue: 2026-08-06
 ---
 
 A practical 1-week path for developers building AI applications. We assume you can code but might be new to LLM APIs.

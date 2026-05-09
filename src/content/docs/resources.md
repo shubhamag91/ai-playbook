@@ -6,6 +6,7 @@ sidebar:
 tags:
   - resources
 lastUpdated: 2026-05-09
+nextVerificationDue: 2026-08-07
 ---
 
 # Resources & Downloads

@@ -7,6 +7,7 @@ tags:
   - research
   - trends
 lastUpdated: 2026-05-08
+nextVerificationDue: 2026-08-06
 ---
 
 # Emerging Trends in AI (May 2026)

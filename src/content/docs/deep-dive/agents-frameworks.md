@@ -4,6 +4,7 @@ description: Agent systems, frameworks, and orchestration patterns
 sidebar:
   order: 3
 lastUpdated: 2026-05-08
+nextVerificationDue: 2026-08-06
 ---
 
 # Agents & Frameworks

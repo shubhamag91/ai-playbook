@@ -8,6 +8,7 @@ tags:
   - cheatsheet
   - primer
 lastUpdated: 2026-05-09
+nextVerificationDue: 2026-06-08
 ---
 
 ## What is an LLM? (one sentence)

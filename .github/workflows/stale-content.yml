@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check lastUpdated dates
+      - name: Check nextVerificationDue dates
         uses: actions/github-script@v7
         with:
           script: |
@@ -21,74 +21,92 @@ jobs:
 
             const docsDir = 'src/content/docs';
             const files = glob.sync(`${docsDir}/**/*.{md,mdx}`);
-            const stalePages = [];
+            const overduePages = [];
             const now = new Date();
-            const warningDays = 90;
-            const criticalDays = 180;
 
             for (const file of files) {
               const content = fs.readFileSync(file, 'utf8');
-              const match = content.match(/lastUpdated:\s*(\d{4}-\d{2}-\d{2})/);
+
+              // Check nextVerificationDue first (most precise)
+              let match = content.match(/nextVerificationDue:\s*(\d{4}-\d{2}-\d{2})/);
+              if (match) {
+                const dueDate = new Date(match[1]);
+                const daysOverdue = Math.floor((now - dueDate) / (1000 * 60 * 60 * 24));
+                if (daysOverdue > 0) {
+                  overduePages.push({
+                    file: file.replace(docsDir + '/', ''),
+                    days: daysOverdue,
+                    status: daysOverdue > 90 ? 'critical' : 'warning',
+                    dueDate: match[1],
+                    reason: 'Past verification due date',
+                  });
+                }
+                continue;
+              }
+
+              // Fallback: check lastUpdated
+              match = content.match(/lastUpdated:\s*(\d{4}-\d{2}-\d{2})/);
               if (!match) {
-                stalePages.push({ file, days: -1, status: 'missing' });
+                overduePages.push({ file: file.replace(docsDir + '/', ''), days: -1, status: 'missing', reason: 'Missing dates' });
                 continue;
               }
               const updated = new Date(match[1]);
               const daysSinceUpdate = Math.floor((now - updated) / (1000 * 60 * 60 * 24));
-              if (daysSinceUpdate > warningDays) {
-                stalePages.push({
+              if (daysSinceUpdate > 180) {
+                overduePages.push({
                   file: file.replace(docsDir + '/', ''),
                   days: daysSinceUpdate,
-                  status: daysSinceUpdate > criticalDays ? 'critical' : 'warning',
-                  updated: match[1],
+                  status: 'critical',
+                  dueDate: match[1],
+                  reason: 'lastUpdated >180 days ago',
                 });
               }
             }
 
-            if (stalePages.length === 0) {
-              console.log('No stale content found. All pages updated within ' + warningDays + ' days.');
+            if (overduePages.length === 0) {
+              console.log('No overdue content found. All pages are current.');
               return;
             }
 
-            let body = '## Stale Content Report\n\n';
+            let body = '## Content Verification Report\n\n';
             body += `Generated: ${now.toISOString().slice(0, 10)}\n\n`;
 
-            const critical = stalePages.filter(p => p.status === 'critical');
-            const warning = stalePages.filter(p => p.status === 'warning');
-            const missing = stalePages.filter(p => p.status === 'missing');
+            const critical = overduePages.filter(p => p.status === 'critical');
+            const warning = overduePages.filter(p => p.status === 'warning');
+            const missing = overduePages.filter(p => p.status === 'missing');
 
             if (critical.length > 0) {
-              body += '### 🔴 Critical (>180 days since update)\n\n';
-              body += '| Page | Last Updated | Days Ago |\n|---|---|---|\n';
+              body += '### 🔴 Overdue (>90 days past due date)\n\n';
+              body += '| Page | Due Date | Days Overdue |\n|---|---|---|\n';
               for (const p of critical) {
-                body += `| ${p.file} | ${p.updated} | ${p.days} |\n`;
+                body += `| ${p.file} | ${p.dueDate} | ${p.days} |\n`;
               }
               body += '\n';
             }
 
             if (warning.length > 0) {
-              body += '### 🟡 Warning (>90 days since update)\n\n';
-              body += '| Page | Last Updated | Days Ago |\n|---|---|---|\n';
+              body += '### 🟡 Due for Verification\n\n';
+              body += '| Page | Due Date | Days Overdue |\n|---|---|---|\n';
               for (const p of warning) {
-                body += `| ${p.file} | ${p.updated} | ${p.days} |\n`;
+                body += `| ${p.file} | ${p.dueDate} | ${p.days} |\n`;
               }
               body += '\n';
             }
 
             if (missing.length > 0) {
-              body += '### ⚪ Missing lastUpdated\n\n';
+              body += '### ⚪ Missing Verification Dates\n\n';
               for (const p of missing) {
                 body += `- ${p.file}\n`;
               }
               body += '\n';
             }
 
-            body += '---\n_Generated by stale content checker workflow_';
+            body += '---\n_Generated by content verification workflow_';
 
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: '📋 Stale content report - ' + now.toISOString().slice(0, 10),
+              title: '📋 Content verification report - ' + now.toISOString().slice(0, 10),
               body: body,
               labels: ['maintenance', 'automated'],
             });

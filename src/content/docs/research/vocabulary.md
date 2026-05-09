@@ -7,6 +7,7 @@ tags:
   - research
   - glossary
 lastUpdated: 2026-05-08
+nextVerificationDue: 2027-05-08
 ---
 
 # AI Terminology & Definitions

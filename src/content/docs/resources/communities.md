@@ -8,6 +8,7 @@ tags:
   - communities
   - reference
 lastUpdated: 2026-05-10
+nextVerificationDue: 2026-08-08
 ---
 
 # AI Communities & Events

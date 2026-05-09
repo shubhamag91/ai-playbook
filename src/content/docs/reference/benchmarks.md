@@ -7,6 +7,7 @@ tags:
   - reference
   - benchmarks
 lastUpdated: 2026-05-08
+nextVerificationDue: 2026-06-07
 ---
 
 import BenchmarkViz from '../../components/BenchmarkViz.astro';

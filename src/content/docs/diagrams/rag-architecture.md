@@ -7,6 +7,7 @@ tags:
   - diagrams
   - architecture
 lastUpdated: 2026-05-08
+nextVerificationDue: 2027-05-08
 ---
 
 A minimal RAG system has four moving parts: **ingest**, **index**, **retrieve**, and **generate**. By May 2026, most production systems add cost routing, agentic retrieval, and caching.

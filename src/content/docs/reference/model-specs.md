@@ -12,6 +12,7 @@ glossaryLinks:
   - context window
   - inference
 lastUpdated: 2026-05-10
+nextVerificationDue: 2026-06-09
 ---
 
 :::note

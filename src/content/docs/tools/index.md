@@ -9,6 +9,7 @@ glossaryLinks:
   - inference
   - prompt
 lastUpdated: 2026-05-10
+nextVerificationDue: 2026-06-09
 ---
 
 Finding the right AI tool is like choosing the right hammer — most tasks have a best tool, but many tools work.
