@@ -17,6 +17,7 @@ lastUpdated: 2026-05-10
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 import Breadcrumb from '../../../components/Breadcrumb.astro';
+import ProgressTracker from '../../../components/ProgressTracker.astro';
 
 <Breadcrumb />
 
@@ -26,6 +27,17 @@ A complete 4-hour introduction to AI and large language models. No math or progr
 
 **Time commitment:** 4 hours spread across 2–3 days  
 **No prerequisites:** This assumes zero prior knowledge
+
+<ProgressTracker
+  pathId="beginner"
+  sections={[
+    { id: "s1", label: "What Is An LLM?", time: "30 min" },
+    { id: "s2", label: "How Do They Work?", time: "1 hour" },
+    { id: "s3", label: "What Can You Actually Do With Them?", time: "1 hour" },
+    { id: "s4", label: "Your First Experiment", time: "1 hour" },
+    { id: "s5", label: "What's Real vs Hype", time: "30 min" },
+  ]}
+/>
 
 ---
 

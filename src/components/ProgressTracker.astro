@@ -1,0 +1,87 @@
+---
+import './ProgressTracker.css';
+
+export interface Props {
+  pathId: string;
+  sections: Array<{ id: string; label: string; time?: string }>;
+}
+
+const { pathId, sections } = Astro.props;
+---
+
+<div class="progress-tracker" data-path-id={pathId}>
+  <div class="progress-tracker__header">
+    <h3 class="progress-tracker__title">Your Progress</h3>
+    <button class="progress-tracker__reset" id={`reset-${pathId}`}>Reset</button>
+  </div>
+
+  <div class="progress-tracker__bar-wrapper">
+    <div class="progress-tracker__bar" id={`bar-${pathId}`} style="width: 0%"></div>
+  </div>
+  <div class="progress-tracker__stats">
+    <span id={`count-${pathId}`}>0/{sections.length}</span> complete
+  </div>
+
+  <ul class="progress-tracker__list">
+    {sections.map((s, i) => (
+      <li class="progress-tracker__item" id={`item-${pathId}-${s.id}`}>
+        <label class="progress-tracker__label">
+          <input type="checkbox" class="progress-tracker__checkbox" data-path={pathId} data-section={s.id} />
+          <span class="progress-tracker__checkmark"></span>
+          <span class="progress-tracker__section-label">
+            <span class="progress-tracker__step">{i + 1}</span>
+            {s.label}
+            {s.time && <span class="progress-tracker__time">({s.time})</span>}
+          </span>
+        </label>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<script is:inline>
+document.querySelectorAll('.progress-tracker').forEach(tracker => {
+  const pathId = tracker.getAttribute('data-path-id');
+  const checkboxes = tracker.querySelectorAll(`.progress-tracker__checkbox`);
+  const bar = document.getElementById(`bar-${pathId}`);
+  const count = document.getElementById(`count-${pathId}`);
+  const resetBtn = document.getElementById(`reset-${pathId}`);
+  const total = checkboxes.length;
+  const storageKey = `progress-${pathId}`;
+
+  function updateProgress() {
+    const checked = tracker.querySelectorAll(`.progress-tracker__checkbox:checked`).length;
+    const pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+    bar.style.width = pct + '%';
+    count.textContent = `${checked}/${total}`;
+
+    // Save to localStorage
+    const state = {};
+    checkboxes.forEach(cb => { state[cb.getAttribute('data-section')] = cb.checked; });
+    try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch {}
+  }
+
+  function resetProgress() {
+    checkboxes.forEach(cb => { cb.checked = false; });
+    updateProgress();
+  }
+
+  // Restore from localStorage
+  try {
+    const saved = JSON.parse(localStorage.getItem(storageKey));
+    if (saved) {
+      checkboxes.forEach(cb => {
+        const section = cb.getAttribute('data-section');
+        cb.checked = saved[section] === true;
+      });
+    }
+  } catch {}
+
+  // Initial render
+  updateProgress();
+
+  // Events
+  checkboxes.forEach(cb => cb.addEventListener('change', updateProgress));
+  resetBtn.addEventListener('click', resetProgress);
+});
+</script>
