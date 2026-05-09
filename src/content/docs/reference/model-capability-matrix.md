@@ -1,0 +1,35 @@
+---
+title: Model Capability Matrix
+description: Interactive heatmap comparing model capabilities across coding, math, reasoning, writing, and more.
+sidebar:
+  order: 6
+tags:
+  - reference
+  - models
+  - comparison
+lastUpdated: 2026-05-10
+---
+
+import ModelMatrix from '../../components/ModelMatrix.astro';
+
+# Model Capability Matrix
+
+How different models perform across key tasks — rated on a 1-5 scale based on benchmark scores and real-world performance.
+
+<ModelMatrix />
+
+## How to Read This
+
+- **Score 5 (dark green)** — Best in class. Top performer for this task.
+- **Score 4 (light green)** — Strong. Excellent for most use cases.
+- **Score 3 (yellow)** — Good. Capable but not top-tier.
+- **Score 2 (orange)** — Fair. Works for simple cases.
+- **Score 1 (red)** — Limited. Not recommended for this task.
+
+### Notes
+
+- Scores are based on a combination of public benchmarks and real-world usage as of May 2026.
+- "Speed" measures output latency, not throughput.
+- "Cost Efficiency" balances per-token price against output quality.
+- For detailed benchmark numbers, see the [Benchmarks page](/reference/benchmarks).
+- For complete pricing, see [Model Specs & Pricing](/reference/model-specs).

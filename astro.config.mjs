@@ -106,6 +106,7 @@ export default defineConfig({
             { label: 'Principles', slug: 'reference/principles' },
             { label: 'Benchmarks', slug: 'reference/benchmarks' },
             { label: 'Model Specs', slug: 'reference/model-specs' },
+            { label: 'Model Capability Matrix', slug: 'reference/model-capability-matrix' },
           ],
         },
         {

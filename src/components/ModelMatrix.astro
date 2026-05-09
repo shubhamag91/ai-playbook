@@ -1,0 +1,103 @@
+---
+import './ModelMatrix.css';
+import { capabilityData, taskCategories, models } from '../data/capabilities';
+---
+
+<div class="model-matrix" id="model-matrix">
+  <div class="model-matrix__controls">
+    <div class="model-matrix__legend">
+      <span class="model-matrix__legend-label">Strength:</span>
+      <span class="model-matrix__legend-swatch swatch-5">Best</span>
+      <span class="model-matrix__legend-swatch swatch-4">Strong</span>
+      <span class="model-matrix__legend-swatch swatch-3">Good</span>
+      <span class="model-matrix__legend-swatch swatch-2">Fair</span>
+      <span class="model-matrix__legend-swatch swatch-1">Limited</span>
+    </div>
+    <div class="model-matrix__legend">
+      <span class="model-matrix__legend-label">Filter:</span>
+      <select id="mm-family" class="model-matrix__select">
+        <option value="all">All Models</option>
+        <option value="Claude">Claude only</option>
+        <option value="GPT">GPT only</option>
+        <option value="Gemini">Gemini only</option>
+        <option value="DeepSeek">DeepSeek only</option>
+        <option value="OpenAI">OpenAI (o3) only</option>
+        <option value="Llama">Llama only</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="model-matrix__table-wrapper">
+    <table class="model-matrix__table">
+      <thead>
+        <tr>
+          <th class="model-matrix__corner">Task \ Model</th>
+          {models.map(m => (
+            <th class="model-matrix__col-header" data-family={m.family.toLowerCase()}>
+              <span class="model-matrix__col-label">{m.short}</span>
+              <span class="model-matrix__col-family">{m.family}</span>
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {taskCategories.map(cat => {
+          const scores = models.map(m => capabilityData.find(d => d.model === m.id && d.task === cat.id));
+          return (
+            <tr class="model-matrix__row">
+              <td class="model-matrix__row-header">
+                <span class="model-matrix__task-name">{cat.label}</span>
+                <span class="model-matrix__task-desc">{cat.description}</span>
+              </td>
+              {scores.map((s, i) => {
+                if (!s) return <td class="model-matrix__cell">—</td>;
+                return (
+                  <td class={`model-matrix__cell score-${s.score}`}
+                    data-family={models[i].family.toLowerCase()}
+                    title={`${models[i].label}\n${cat.label}: ${s.score}/5${s.benchmarkRef ? `\n${s.benchmarkRef}` : ''}\n${s.detail}`}
+                  >
+                    <span class="model-matrix__score">{s.score}</span>
+                    <div class="model-matrix__tooltip">
+                      <strong>{models[i].label}</strong>
+                      <span>{cat.label}: {s.score}/5</span>
+                      {s.benchmarkRef && <span class="model-matrix__ref">{s.benchmarkRef}</span>}
+                      <span class="model-matrix__detail">{s.detail}</span>
+                    </div>
+                  </td>
+                );
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script is:inline>
+document.addEventListener('DOMContentLoaded', () => {
+  const familySelect = document.getElementById('mm-family');
+  if (!familySelect) return;
+
+  familySelect.addEventListener('change', () => {
+    const fam = familySelect.value;
+    const rows = document.querySelectorAll('.model-matrix__row');
+    const headers = document.querySelectorAll('.model-matrix__col-header');
+
+    // Toggle column headers
+    headers.forEach(h => {
+      const matches = fam === 'all' || h.getAttribute('data-family') === fam;
+      h.style.display = matches ? '' : 'none';
+    });
+
+    // Toggle cells within each row
+    rows.forEach(row => {
+      const cells = row.querySelectorAll('.model-matrix__cell');
+      cells.forEach(c => {
+        const matches = fam === 'all' || c.getAttribute('data-family') === fam;
+        c.style.display = matches ? '' : 'none';
+      });
+    });
+  });
+});
+</script>
