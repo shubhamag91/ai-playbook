@@ -14,7 +14,17 @@ nextVerificationDue: 2026-08-08
 
 AI development tools organized by category — from app frameworks to production infrastructure.
 
+If you're new to this: think of building an AI app like building a house. Frameworks are your toolkit. SDKs talk to the model provider. Inference servers run the model yourself. Vector databases store your data's "memory." Monitoring tells you if it's working. Deployment platforms host it all.
+
 ---
+
+## LLM Frameworks
+
+**What this is:** Libraries that give you pre-built pieces for connecting your app to an LLM — like a starter kit for AI features. Instead of writing code to call an API from scratch, you use a framework that handles prompts, conversation history, and tool integration for you.
+
+**When you'd use it:** You're building a chatbot, a RAG system, or any app that talks to an LLM. Start here.
+
+| Framework | Language | Best For | Key Feature |
 
 ## LLM Frameworks
 
@@ -42,7 +52,9 @@ Building multi-agent systems?              → LangGraph
 
 ## Official SDKs
 
-Provider-maintained SDKs for their API.
+**What this is:** The official "phone line" to a model provider (Anthropic, OpenAI, Google). An SDK is a small library that handles authentication, request formatting, and error handling so you can focus on your app logic.
+
+**When you'd use it:** You're building something and know which provider you want. Skip the framework if your use case is simple — just use the SDK directly.
 
 | Provider | SDK | Key Features |
 |---|---|---|
@@ -56,7 +68,9 @@ Provider-maintained SDKs for their API.
 
 ## Model Serving & Inference
 
-Run and serve open-weight models.
+**What this is:** Software that lets you run an open-weight model (like Llama or DeepSeek) on your own hardware instead of calling a paid API. This gives you full control, privacy, and potentially lower cost at scale.
+
+**When you'd use it:** You need privacy (data can't leave your servers), you're processing millions of requests (API costs add up), or you want to run models offline.
 
 | Tool | Deployment | Key Feature |
 |---|---|---|
@@ -73,7 +87,9 @@ Run and serve open-weight models.
 
 ## Vector Databases
 
-For RAG: store embeddings and retrieve by semantic similarity.
+**What this is:** A special database that stores "embeddings" — mathematical representations of text meaning. When you search, it finds things by meaning rather than exact keywords. This is how RAG (Retrieval-Augmented Generation) works: you store your documents as vectors, then retrieve relevant ones when a user asks a question.
+
+**When you'd use it:** You're building RAG — an app that answers questions based on your own documents (knowledge base, support docs, research papers).
 
 | Database | Deployment | Key Feature |
 |---|---|---|
@@ -88,6 +104,10 @@ For RAG: store embeddings and retrieve by semantic similarity.
 
 ## Evaluation & Monitoring
 
+**What this is:** Tools that check whether your LLM app is working correctly. Evaluation tests individual responses ("did the answer contain the right information?"), while monitoring tracks production metrics ("are error rates going up?").
+
+**When you'd use it:** You have an LLM app in production and need to catch regressions before users notice. Or you're testing prompts and need to compare which version performs better.
+
 | Tool | Best For | Key Feature |
 |---|---|---|
 | **DeepEval** | LLM unit testing | LLM-as-judge, pytest integration |
@@ -100,7 +120,9 @@ For RAG: store embeddings and retrieve by semantic similarity.
 
 ## Deployment Platforms
 
-Host your AI app — from prototype to production.
+**What this is:** Services that host your AI app on the internet so anyone can use it. You write code on your laptop, push it to one of these platforms, and they give you a URL.
+
+**When you'd use it:** You've built an AI app and want to share it. Pick Vercel for web apps, Railway for backend APIs, Modal for GPU-heavy batch jobs.
 
 | Platform | Best For | Free Tier |
 |---|---|---|
