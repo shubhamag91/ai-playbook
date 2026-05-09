@@ -182,7 +182,7 @@ If you see something that doesn't match these standards, report it.
 
 ## Questions?
 
-- **GitHub Discussions:** Ask on [GitHub Discussions](https://github.com/shubhamag91/ai-playbook/discussions)
+- **GitHub Issues:** [Open an issue](https://github.com/shubhamag91/ai-playbook/issues/new)
 - **Email:** shubhamag91@gmail.com
 - **Emergency:** File a GitHub issue labeled `[urgent]`
 
