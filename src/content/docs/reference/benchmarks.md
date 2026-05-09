@@ -9,47 +9,13 @@ tags:
 lastUpdated: 2026-05-08
 ---
 
+import BenchmarkViz from '../../components/BenchmarkViz.astro';
+
 Standard benchmarks for evaluating model capabilities. Below are the most widely used measures for different types of tasks.
 
-## Standard Evaluation Benchmarks
+## Interactive Benchmark Explorer
 
-### Coding Ability
-**HumanEval** — Write functions to solve programming problems. Tests code generation quality.
-- Passing rate: % of problems solved
-- Used by: CodeLlama, GPT-4o, Claude, Codex
-- Interpretation: Higher = better code generation
-
-**LeetCode Hard** — Real coding interview problems.
-- Used by: Performance tracking in production settings
-- Interpretation: Real-world coding complexity
-
-### Mathematical Reasoning
-**MATH** — 12,500 high school math problems across all domains.
-- Accuracy: % of problems solved correctly
-- Used by: o1, GPT-4o, Claude for reasoning eval
-- Interpretation: Tests step-by-step reasoning ability
-
-**GSM8K** — Grade school math word problems.
-- Accuracy: % of problems solved
-- Used by: Baseline for reasoning models
-- Interpretation: Simpler than MATH; good for smaller models
-
-### Expert Knowledge
-**GPQA** — Graduate-level exam questions in biology, physics, and chemistry.
-- Accuracy: % correct, with human expert baseline
-- Used by: Frontier models (o1, Claude, GPT-4o)
-- Interpretation: Tests deep domain expertise
-
-**MMLU** — Massive Multitask Language Understanding (57,000+ questions across 57 domains).
-- Accuracy: % correct across all domains
-- Used by: All models — most common benchmark
-- Interpretation: General knowledge breadth
-
-### Multilingual & Reasoning
-**FLORES** — Translation between 200+ language pairs.
-- Accuracy: BLEU/COMET score
-- Used by: Testing multilingual models
-- Interpretation: Translation quality
+<BenchmarkViz />
 
 ---
 

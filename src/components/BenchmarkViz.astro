@@ -1,0 +1,115 @@
+---
+import './BenchmarkViz.css';
+import { benchmarkData, categories, families } from '../data/benchmarks';
+---
+
+const allData = benchmarkData;
+
+<div class="benchmark-viz" id="benchmark-viz">
+  <div class="benchmark-viz__controls">
+    <div class="benchmark-viz__filter-group">
+      <label for="bm-category">Category</label>
+      <select id="bm-category" class="benchmark-viz__select">
+        {categories.map(cat => (
+          <option value={cat.id}>{cat.label}</option>
+        ))}
+      </select>
+    </div>
+    <div class="benchmark-viz__filter-group">
+      <label for="bm-family">Family</label>
+      <select id="bm-family" class="benchmark-viz__select">
+        {families.map(f => (
+          <option value={f.toLowerCase()}>{f}</option>
+        ))}
+      </select>
+    </div>
+    <div class="benchmark-viz__filter-group">
+      <label for="bm-sort">Sort By</label>
+      <select id="bm-sort" class="benchmark-viz__select">
+        <option value="score-desc">Score (high to low)</option>
+        <option value="score-asc">Score (low to high)</option>
+        <option value="model">Model name</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="benchmark-viz__table-wrapper">
+    <table class="benchmark-viz__table">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Benchmark</th>
+          <th>Category</th>
+          <th>Score</th>
+          <th>Trend</th>
+        </tr>
+      </thead>
+      <tbody id="bm-tbody">
+        {allData.map(row => (
+          <tr class="benchmark-viz__row"
+            data-model={row.model}
+            data-family={row.family.toLowerCase()}
+            data-category={row.category}
+            data-score={row.score}
+            data-sort-model={row.model.toLowerCase()}
+          >
+            <td><span class="benchmark-viz__model-badge" data-family={row.family.toLowerCase()}>{row.model}</span></td>
+            <td>{row.benchmark}</td>
+            <td><span class="benchmark-viz__category-tag">{row.category}</span></td>
+            <td class="benchmark-viz__score">{row.score}%</td>
+            <td>
+              <div class="benchmark-viz__bar-track">
+                <div class="benchmark-viz__bar" style={`width: ${row.score}%`}></div>
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <p class="benchmark-viz__count" id="bm-count">Showing {allData.length} results</p>
+</div>
+
+<script is:inline>
+const viz = document.getElementById('benchmark-viz');
+if (viz) {
+  const categorySelect = document.getElementById('bm-category');
+  const familySelect = document.getElementById('bm-family');
+  const sortSelect = document.getElementById('bm-sort');
+  const tbody = document.getElementById('bm-tbody');
+  const countEl = document.getElementById('bm-count');
+
+  function filterAndSort() {
+    const cat = categorySelect.value;
+    const fam = familySelect.value;
+    const sort = sortSelect.value;
+
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const visible = rows.filter(row => {
+      const matchesCat = cat === 'all' || row.getAttribute('data-category') === cat;
+      const matchesFam = fam === 'all' || row.getAttribute('data-family') === fam;
+      return matchesCat && matchesFam;
+    });
+
+    visible.sort((a, b) => {
+      if (sort === 'model') {
+        return a.getAttribute('data-sort-model').localeCompare(b.getAttribute('data-sort-model'));
+      }
+      const aScore = parseFloat(a.getAttribute('data-score'));
+      const bScore = parseFloat(b.getAttribute('data-score'));
+      return sort === 'score-desc' ? bScore - aScore : aScore - bScore;
+    });
+
+    rows.forEach(row => row.remove());
+    visible.forEach(row => tbody.appendChild(row));
+
+    const hidden = rows.length - visible.length;
+    countEl.textContent = `Showing ${visible.length} of ${rows.length} results${hidden > 0 ? ` (${hidden} filtered)` : ''}`;
+  }
+
+  categorySelect.addEventListener('change', filterAndSort);
+  familySelect.addEventListener('change', filterAndSort);
+  sortSelect.addEventListener('change', filterAndSort);
+}
+</script>
