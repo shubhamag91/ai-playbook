@@ -1,0 +1,82 @@
+---
+import './ContentAudit.css';
+import { getCollection } from 'astro:content';
+
+const allDocs = await getCollection('docs');
+
+function getTier(slug: string): string {
+  const t1 = ['decide/', 'tools/', 'reference/model-specs', 'reference/benchmarks',
+    'reference/cheatsheets/tools-comparison', 'reference/cheatsheets/llm-primer',
+    'reference/cheatsheets/ai-tools-landscape', 'reference/cheatsheets/coding'];
+  const t3 = ['reference/glossary', 'reference/principles', 'reference/confusions',
+    'research/history', 'research/vocabulary', 'slides/', 'mind-maps/', 'infographics/', 'diagrams/', 'guides/'];
+  if (t1.some(p => slug.startsWith(p))) return 'T1';
+  if (t3.some(p => slug.startsWith(p))) return 'T3';
+  return 'T2';
+}
+
+interface PageRow {
+  slug: string;
+  title: string;
+  tier: string;
+  lastUpdated: string;
+  nextDue: string;
+}
+
+const rows: PageRow[] = [];
+const seen = new Set<string>();
+
+for (const entry of allDocs) {
+  const slug = entry.slug;
+  const slugKey = slug.replace(/\.(md|mdx)$/, '');
+  if (seen.has(slugKey)) continue;
+  seen.add(slugKey);
+
+  const data = entry.data as Record<string, unknown>;
+  const title = data.title as string || slug;
+  const tier = getTier(slug);
+  const lastUpdated = (data.lastUpdated as string) || '—';
+  const nextDue = (data.nextVerificationDue as string) || '—';
+  rows.push({ slug, title, tier, lastUpdated, nextDue });
+}
+
+rows.sort((a, b) => {
+  if (a.tier !== b.tier) return a.tier.localeCompare(b.tier);
+  return a.slug.localeCompare(b.slug);
+});
+---
+
+<div class="content-audit">
+  <div class="content-audit__summary">
+    <span><strong>T1 (Monthly):</strong> {rows.filter(r => r.tier === 'T1').length} pages</span>
+    <span><strong>T2 (Quarterly):</strong> {rows.filter(r => r.tier === 'T2').length} pages</span>
+    <span><strong>T3 (Annual):</strong> {rows.filter(r => r.tier === 'T3').length} pages</span>
+    <span><strong>Total:</strong> {rows.length} pages</span>
+  </div>
+
+  <div class="content-audit__table-wrapper">
+    <table class="content-audit__table">
+      <thead>
+        <tr>
+          <th>Page</th>
+          <th>Tier</th>
+          <th>Last Updated</th>
+          <th>Next Due</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map(row => (
+          <tr class="content-audit__row">
+            <td>
+              <a href={`/${row.slug}/`} class="content-audit__link">{row.title}</a>
+              <span class="content-audit__slug">{row.slug}</span>
+            </td>
+            <td><span class={`content-audit__tier tier-${row.tier.toLowerCase()}`}>{row.tier}</span></td>
+            <td class="content-audit__date">{row.lastUpdated}</td>
+            <td class="content-audit__date">{row.nextDue}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
