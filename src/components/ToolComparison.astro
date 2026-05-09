@@ -34,70 +34,43 @@ const toolsByCategory = {
     { name: 'CrewAI', cost: 'Open-source', costSort: 0, speed: 'Varies', speedSort: 2, bestFor: 'Multi-agent orchestration' }
   ]
 };
-
-const categories = [
-  { id: 'chat', label: 'Chat' },
-  { id: 'coding', label: 'Coding' },
-  { id: 'content', label: 'Content' },
-  { id: 'apis', label: 'APIs' }
-];
 ---
 
 <div class="tool-comparison">
   <div class="tool-comparison__controls">
     <div class="tool-comparison__tabs">
-      {categories.map((cat) => (
-        <button class={`tool-comparison__tab ${cat.id === 'chat' ? 'active' : ''}`} data-category={cat.id}>
-          {cat.label}
-        </button>
-      ))}
+      <button class="tool-comparison__tab active" data-tab="chat">Chat</button>
+      <button class="tool-comparison__tab" data-tab="coding">Coding</button>
+      <button class="tool-comparison__tab" data-tab="content">Content</button>
+      <button class="tool-comparison__tab" data-tab="apis">APIs</button>
     </div>
     <div class="tool-comparison__search">
-      <input
-        type="text"
-        class="tool-comparison__search-input"
-        id="toolSearch"
-        placeholder="🔍 Filter tools..."
-      />
+      <input type="text" class="tool-comparison__search-input" id="toolSearch" placeholder="🔍 Filter tools..." />
     </div>
   </div>
 
-  {categories.map((cat) => (
-    <div class={`tool-comparison__table-wrapper ${cat.id === 'chat' ? 'active' : ''}`} data-category={cat.id}>
+  {Object.entries(toolsByCategory).map(([category, tools]) => (
+    <div class={`tool-comparison__table-wrapper ${category === 'chat' ? 'active' : ''}`} data-category={category}>
       <table class="tool-comparison__table">
         <thead>
           <tr>
-            <th class="tool-comparison__header sortable" data-sort="name">
-              Tool <span class="tool-comparison__sort-arrow"></span>
-            </th>
-            <th class="tool-comparison__header sortable" data-sort="cost">
-              Cost <span class="tool-comparison__sort-arrow"></span>
-            </th>
-            <th class="tool-comparison__header sortable" data-sort="speed">
-              Speed <span class="tool-comparison__sort-arrow"></span>
-            </th>
-            <th class="tool-comparison__header sortable" data-sort="bestFor">
-              Best For <span class="tool-comparison__sort-arrow"></span>
-            </th>
+            <th class="tool-comparison__header" data-sort="name">Tool</th>
+            <th class="tool-comparison__header" data-sort="cost">Cost</th>
+            <th class="tool-comparison__header" data-sort="speed">Speed</th>
+            <th class="tool-comparison__header" data-sort="bestFor">Best For</th>
           </tr>
         </thead>
         <tbody>
-          {toolsByCategory[cat.id].map((tool) => (
+          {tools.map((tool) => (
             <tr class="tool-comparison__row" data-name={tool.name.toLowerCase()} data-best-for={tool.bestFor.toLowerCase()}>
-              <td class="tool-comparison__cell" data-sort-value={tool.name}>
-                <strong>{tool.name}</strong>
-              </td>
-              <td class="tool-comparison__cell" data-sort-value={tool.costSort}>
-                {tool.cost}
-              </td>
-              <td class="tool-comparison__cell" data-sort-value={tool.speedSort}>
+              <td class="tool-comparison__cell" data-value={tool.name}><strong>{tool.name}</strong></td>
+              <td class="tool-comparison__cell" data-value={tool.costSort}>{tool.cost}</td>
+              <td class="tool-comparison__cell" data-value={tool.speedSort}>
                 <span class={`tool-comparison__speed-badge speed-${tool.speed.toLowerCase().replace(' ', '-')}`}>
                   {tool.speed}
                 </span>
               </td>
-              <td class="tool-comparison__cell" data-sort-value={tool.bestFor}>
-                {tool.bestFor}
-              </td>
+              <td class="tool-comparison__cell" data-value={tool.bestFor}>{tool.bestFor}</td>
             </tr>
           ))}
         </tbody>
@@ -108,119 +81,70 @@ const categories = [
 
 <script>
 {`
-  function initToolComparison() {
-    let currentCategory = 'chat';
-    let currentSort = { column: 'name', direction: 'asc' };
-    let currentSearch = '';
+document.addEventListener('DOMContentLoaded', function() {
+  let currentTab = 'chat';
+  let currentSort = null;
+  let sortAsc = true;
 
-    // Tab switching
-    document.querySelectorAll('.tool-comparison__tab').forEach(tab => {
-    tab.addEventListener('click', (e) => {
-      const category = e.target.getAttribute('data-category');
+  // Tab switching
+  document.querySelectorAll('.tool-comparison__tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      const tabName = this.getAttribute('data-tab');
 
       document.querySelectorAll('.tool-comparison__tab').forEach(t => t.classList.remove('active'));
-      e.target.classList.add('active');
+      this.classList.add('active');
 
-      document.querySelectorAll('.tool-comparison__table-wrapper').forEach(w => {
-        w.classList.remove('active');
-      });
-      document.querySelector(\`[data-category="\${category}"].tool-comparison__table-wrapper\`).classList.add('active');
+      document.querySelectorAll('.tool-comparison__table-wrapper').forEach(w => w.classList.remove('active'));
+      document.querySelector('[data-category="' + tabName + '"]').classList.add('active');
 
-      currentCategory = category;
-      currentSort = { column: 'name', direction: 'asc' };
-      renderTable();
+      currentTab = tabName;
     });
   });
 
-  // Search
-  document.getElementById('toolSearch').addEventListener('input', (e) => {
-    currentSearch = e.target.value.toLowerCase();
-    renderTable();
-  });
-
-  // Sort headers
-  document.querySelectorAll('.tool-comparison__header.sortable').forEach(header => {
-    header.addEventListener('click', (e) => {
-      const column = e.target.closest('[data-sort]').getAttribute('data-sort');
-
-      if (currentSort.column === column) {
-        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
-      } else {
-        currentSort.column = column;
-        currentSort.direction = 'asc';
-      }
-
-      renderTable();
-    });
-  });
-
-  function renderTable() {
-    const wrapper = document.querySelector(\`.tool-comparison__table-wrapper[data-category="\${currentCategory}"]\`);
-    const rows = wrapper.querySelectorAll('.tool-comparison__row');
-
-    // Filter
-    const filteredRows = Array.from(rows).filter(row => {
-      if (!currentSearch) return true;
+  // Search filter
+  document.getElementById('toolSearch').addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+    const wrapper = document.querySelector('.tool-comparison__table-wrapper.active');
+    wrapper.querySelectorAll('tbody tr').forEach(row => {
       const name = row.getAttribute('data-name');
       const bestFor = row.getAttribute('data-best-for');
-      return name.includes(currentSearch) || bestFor.includes(currentSearch);
+      const match = name.includes(query) || bestFor.includes(query);
+      row.style.display = match ? '' : 'none';
     });
+  });
 
-    // Sort
-    filteredRows.sort((a, b) => {
-      let aVal, bVal;
+  // Sorting
+  document.querySelectorAll('.tool-comparison__header').forEach(header => {
+    header.addEventListener('click', function() {
+      const sortKey = this.getAttribute('data-sort');
+      const wrapper = document.querySelector('.tool-comparison__table-wrapper.active');
+      const tbody = wrapper.querySelector('tbody');
+      const rows = Array.from(tbody.querySelectorAll('tr'));
 
-      if (currentSort.column === 'name') {
-        aVal = a.querySelector('strong').textContent;
-        bVal = b.querySelector('strong').textContent;
+      if (currentSort === sortKey) {
+        sortAsc = !sortAsc;
       } else {
-        const aCell = a.querySelector(\`[data-sort-value]\`);
-        const bCell = b.querySelector(\`[data-sort-value]\`);
-        const aCells = a.querySelectorAll('[data-sort-value]');
-        const bCells = b.querySelectorAll('[data-sort-value]');
+        currentSort = sortKey;
+        sortAsc = true;
+      }
 
-        if (currentSort.column === 'cost') {
-          aVal = parseFloat(aCells[1]?.getAttribute('data-sort-value') || 0);
-          bVal = parseFloat(bCells[1]?.getAttribute('data-sort-value') || 0);
-        } else if (currentSort.column === 'speed') {
-          aVal = parseInt(aCells[2]?.getAttribute('data-sort-value') || 0);
-          bVal = parseInt(bCells[2]?.getAttribute('data-sort-value') || 0);
-        } else if (currentSort.column === 'bestFor') {
-          aVal = aCells[3]?.getAttribute('data-sort-value') || '';
-          bVal = bCells[3]?.getAttribute('data-sort-value') || '';
+      rows.sort((a, b) => {
+        let aVal = a.querySelector('[data-value]').getAttribute('data-value');
+        let bVal = b.querySelector('[data-value]').getAttribute('data-value');
+
+        const aNum = parseFloat(aVal);
+        const bNum = parseFloat(bVal);
+
+        if (!isNaN(aNum) && !isNaN(bNum)) {
+          return sortAsc ? aNum - bNum : bNum - aNum;
         }
-      }
 
-      if (typeof aVal === 'string') {
-        return currentSort.direction === 'asc'
-          ? aVal.localeCompare(bVal)
-          : bVal.localeCompare(aVal);
-      }
-      return currentSort.direction === 'asc' ? aVal - bVal : bVal - aVal;
+        return sortAsc ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+      });
+
+      rows.forEach(row => tbody.appendChild(row));
     });
-
-    // Update display
-    rows.forEach(row => row.style.display = 'none');
-    filteredRows.forEach(row => row.style.display = '');
-
-    // Update sort arrows
-    document.querySelectorAll('.tool-comparison__header.sortable').forEach(header => {
-      const arrow = header.querySelector('.tool-comparison__sort-arrow');
-      const column = header.getAttribute('data-sort');
-
-      if (column === currentSort.column) {
-        arrow.textContent = currentSort.direction === 'asc' ? ' ↑' : ' ↓';
-      } else {
-        arrow.textContent = '';
-      }
-    });
-  }
-
-  // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initToolComparison);
-  } else {
-    initToolComparison();
-  }
-  `}
+  });
+});
+`}
 </script>

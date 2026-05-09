@@ -2,138 +2,17 @@
 import './ModelSelector.css';
 
 const models = [
-  {
-    id: 'opus',
-    name: 'Claude Opus 4.7',
-    provider: 'Anthropic',
-    context: '400K',
-    inputCost: 15,
-    outputCost: 75,
-    speed: 'slow',
-    costTier: 'premium',
-    useCases: ['reasoning', 'writing', 'analysis', 'coding'],
-    bestFor: 'Complex reasoning, long documents'
-  },
-  {
-    id: 'sonnet',
-    name: 'Claude Sonnet 4.6',
-    provider: 'Anthropic',
-    context: '200K',
-    inputCost: 3,
-    outputCost: 15,
-    speed: 'fast',
-    costTier: 'mid',
-    useCases: ['writing', 'coding', 'analysis'],
-    bestFor: 'Default choice for most tasks'
-  },
-  {
-    id: 'haiku',
-    name: 'Claude Haiku 4.5',
-    provider: 'Anthropic',
-    context: '200K',
-    inputCost: 0.80,
-    outputCost: 4,
-    speed: 'ultra-fast',
-    costTier: 'budget',
-    useCases: ['routing', 'classification', 'speed'],
-    bestFor: 'Fast & cheap for simple tasks'
-  },
-  {
-    id: 'gpt55',
-    name: 'GPT-5.5',
-    provider: 'OpenAI',
-    context: '128K',
-    inputCost: 2,
-    outputCost: 8,
-    speed: 'fast',
-    costTier: 'mid',
-    useCases: ['writing', 'coding', 'vision'],
-    bestFor: 'All-purpose, fast'
-  },
-  {
-    id: 'gpt55-instant',
-    name: 'GPT-5.5 Instant',
-    provider: 'OpenAI',
-    context: '128K',
-    inputCost: 0.05,
-    outputCost: 0.15,
-    speed: 'ultra-fast',
-    costTier: 'budget',
-    useCases: ['speed', 'budget', 'routing'],
-    bestFor: 'Ultra-fast & ultra-cheap'
-  },
-  {
-    id: 'gemini',
-    name: 'Gemini 3.1 Pro',
-    provider: 'Google',
-    context: '1M',
-    inputCost: 2,
-    outputCost: 12,
-    speed: 'medium',
-    costTier: 'mid',
-    useCases: ['long-context', 'vision', 'research'],
-    bestFor: 'Massive documents & vision'
-  },
-  {
-    id: 'deepseek',
-    name: 'DeepSeek V4',
-    provider: 'DeepSeek',
-    context: '128K',
-    inputCost: 0.55,
-    outputCost: 2.19,
-    speed: 'fast',
-    costTier: 'budget',
-    useCases: ['reasoning', 'budget', 'coding'],
-    bestFor: 'Budget-conscious with good quality'
-  },
-  {
-    id: 'deepseek-flash',
-    name: 'DeepSeek V4 Flash',
-    provider: 'DeepSeek',
-    context: '128K',
-    inputCost: 0.14,
-    outputCost: 0.28,
-    speed: 'fast',
-    costTier: 'budget',
-    useCases: ['speed', 'budget', 'routing'],
-    bestFor: 'Extreme budget, minimal quality loss'
-  },
-  {
-    id: 'o3',
-    name: 'o3',
-    provider: 'OpenAI',
-    context: '128K',
-    inputCost: null,
-    outputCost: null,
-    speed: 'very-slow',
-    costTier: 'premium',
-    useCases: ['reasoning'],
-    bestFor: 'Hardest problems (math, logic)'
-  },
-  {
-    id: 'o1',
-    name: 'o1',
-    provider: 'OpenAI',
-    context: '128K',
-    inputCost: 15,
-    outputCost: 60,
-    speed: 'slow',
-    costTier: 'premium',
-    useCases: ['reasoning'],
-    bestFor: 'Hard reasoning at lower cost than o3'
-  },
-  {
-    id: 'llama',
-    name: 'Llama 4',
-    provider: 'Meta',
-    context: 'varies',
-    inputCost: 0,
-    outputCost: 0,
-    speed: 'varies',
-    costTier: 'budget',
-    useCases: ['open-source', 'privacy'],
-    bestFor: 'Private, self-hosted'
-  }
+  { id: 'opus', name: 'Claude Opus 4.7', provider: 'Anthropic', context: '400K', inputCost: 15, outputCost: 75, speed: 'slow', costTier: 'premium', useCases: ['reasoning', 'writing', 'analysis', 'coding'], bestFor: 'Complex reasoning, long documents' },
+  { id: 'sonnet', name: 'Claude Sonnet 4.6', provider: 'Anthropic', context: '200K', inputCost: 3, outputCost: 15, speed: 'fast', costTier: 'mid', useCases: ['writing', 'coding', 'analysis'], bestFor: 'Default choice for most tasks' },
+  { id: 'haiku', name: 'Claude Haiku 4.5', provider: 'Anthropic', context: '200K', inputCost: 0.80, outputCost: 4, speed: 'ultra-fast', costTier: 'budget', useCases: ['routing', 'classification', 'speed'], bestFor: 'Fast & cheap for simple tasks' },
+  { id: 'gpt55', name: 'GPT-5.5', provider: 'OpenAI', context: '128K', inputCost: 2, outputCost: 8, speed: 'fast', costTier: 'mid', useCases: ['writing', 'coding', 'vision'], bestFor: 'All-purpose, fast' },
+  { id: 'gpt55-instant', name: 'GPT-5.5 Instant', provider: 'OpenAI', context: '128K', inputCost: 0.05, outputCost: 0.15, speed: 'ultra-fast', costTier: 'budget', useCases: ['speed', 'budget', 'routing'], bestFor: 'Ultra-fast & ultra-cheap' },
+  { id: 'gemini', name: 'Gemini 3.1 Pro', provider: 'Google', context: '1M', inputCost: 2, outputCost: 12, speed: 'medium', costTier: 'mid', useCases: ['long-context', 'vision', 'research'], bestFor: 'Massive documents & vision' },
+  { id: 'deepseek', name: 'DeepSeek V4', provider: 'DeepSeek', context: '128K', inputCost: 0.55, outputCost: 2.19, speed: 'fast', costTier: 'budget', useCases: ['reasoning', 'budget', 'coding'], bestFor: 'Budget-conscious with good quality' },
+  { id: 'deepseek-flash', name: 'DeepSeek V4 Flash', provider: 'DeepSeek', context: '128K', inputCost: 0.14, outputCost: 0.28, speed: 'fast', costTier: 'budget', useCases: ['speed', 'budget', 'routing'], bestFor: 'Extreme budget, minimal quality loss' },
+  { id: 'o3', name: 'o3', provider: 'OpenAI', context: '128K', inputCost: null, outputCost: null, speed: 'very-slow', costTier: 'premium', useCases: ['reasoning'], bestFor: 'Hardest problems (math, logic)' },
+  { id: 'o1', name: 'o1', provider: 'OpenAI', context: '128K', inputCost: 15, outputCost: 60, speed: 'slow', costTier: 'premium', useCases: ['reasoning'], bestFor: 'Hard reasoning at lower cost than o3' },
+  { id: 'llama', name: 'Llama 4', provider: 'Meta', context: 'varies', inputCost: 0, outputCost: 0, speed: 'varies', costTier: 'budget', useCases: ['open-source', 'privacy'], bestFor: 'Private, self-hosted' }
 ];
 ---
 
@@ -216,99 +95,59 @@ const models = [
 
 <script>
 {`
-  function initModelSelector() {
-    const models = ${JSON.stringify(models)};
+document.addEventListener('DOMContentLoaded', function() {
+  const filters = { useCase: 'all', speed: 'any', cost: 'any' };
 
-    const filters = {
-      useCase: 'all',
-      speed: 'any',
-      cost: 'any'
-    };
-
-    function updateModelDisplay() {
+  function updateDisplay() {
     const cards = document.querySelectorAll('[data-model-id]');
-    let visibleCount = 0;
+    let visible = 0;
 
     cards.forEach(card => {
       const speed = card.getAttribute('data-speed');
       const cost = card.getAttribute('data-cost');
       const useCases = card.getAttribute('data-use-cases').split(',');
 
-      let visible = true;
+      let show = true;
 
-      // Speed filter
-      if (filters.speed !== 'any' && speed !== filters.speed) {
-        visible = false;
-      }
+      if (filters.speed !== 'any' && speed !== filters.speed) show = false;
+      if (filters.cost !== 'any' && cost !== filters.cost) show = false;
+      if (filters.useCase !== 'all' && !useCases.includes(filters.useCase)) show = false;
 
-      // Cost filter
-      if (filters.cost !== 'any' && cost !== filters.cost) {
-        visible = false;
-      }
-
-      // Use case filter
-      if (filters.useCase !== 'all' && !useCases.includes(filters.useCase)) {
-        visible = false;
-      }
-
-      card.style.display = visible ? '' : 'none';
-      if (visible) visibleCount++;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
     });
 
-    const totalCount = models.length;
-    document.getElementById('modelCount').textContent = 'Showing ' + visibleCount + ' of ' + totalCount + ' models';
+    document.getElementById('modelCount').textContent = 'Showing ' + visible + ' of ' + cards.length + ' models';
   }
 
-  function updateChipUI() {
+  function updateUI() {
     document.querySelectorAll('[data-filter]').forEach(chip => {
-      const filterType = chip.getAttribute('data-filter');
-      const filterValue = chip.getAttribute('data-value');
-      const currentValue = filters[filterType];
-
-      if (
-        (filterType === 'useCase' && (filterValue === 'all' ? currentValue === 'all' : currentValue === filterValue)) ||
-        (filterType === 'speed' && (filterValue === 'any' ? currentValue === 'any' : currentValue === filterValue)) ||
-        (filterType === 'cost' && (filterValue === 'any' ? currentValue === 'any' : currentValue === filterValue))
-      ) {
-        chip.classList.add('active');
-      } else {
-        chip.classList.remove('active');
-      }
+      const type = chip.getAttribute('data-filter');
+      const val = chip.getAttribute('data-value');
+      const active = (type === 'useCase' && (val === 'all' ? filters.useCase === 'all' : filters.useCase === val)) ||
+                     (type === 'speed' && (val === 'any' ? filters.speed === 'any' : filters.speed === val)) ||
+                     (type === 'cost' && (val === 'any' ? filters.cost === 'any' : filters.cost === val));
+      chip.classList.toggle('active', active);
     });
   }
 
   document.querySelectorAll('[data-filter]').forEach(chip => {
-    chip.addEventListener('click', (e) => {
-      const filterType = e.target.getAttribute('data-filter');
-      const filterValue = e.target.getAttribute('data-value');
-
-      if (filterType === 'useCase') {
-        filters.useCase = filterValue === 'all' ? 'all' : filterValue;
-      } else if (filterType === 'speed') {
-        filters.speed = filterValue === 'any' ? 'any' : filterValue;
-      } else if (filterType === 'cost') {
-        filters.cost = filterValue === 'any' ? 'any' : filterValue;
-      }
-
-      updateChipUI();
-      updateModelDisplay();
+    chip.addEventListener('click', function() {
+      const type = this.getAttribute('data-filter');
+      const val = this.getAttribute('data-value');
+      filters[type] = val;
+      updateUI();
+      updateDisplay();
     });
   });
 
-  document.getElementById('clearFilters').addEventListener('click', () => {
+  document.getElementById('clearFilters').addEventListener('click', function() {
     filters.useCase = 'all';
     filters.speed = 'any';
     filters.cost = 'any';
-    updateChipUI();
-    updateModelDisplay();
+    updateUI();
+    updateDisplay();
   });
-  }
-
-  // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initModelSelector);
-  } else {
-    initModelSelector();
-  }
+});
 `}
 </script>
