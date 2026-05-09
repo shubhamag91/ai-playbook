@@ -1,5 +1,10 @@
 # Content Migration Redirects (May 2026)
 
+# Print-friendly cheat sheets - serve directly (before legacy redirects)
+/cheatsheets/llm-primer.html          /cheatsheets/llm-primer.html          200
+/cheatsheets/tools-comparison.html    /cheatsheets/tools-comparison.html    200
+/cheatsheets/prompt-engineering.html  /cheatsheets/prompt-engineering.html  200
+
 # Phase 2A File Moves to Reference Section
 /glossary /reference/glossary 301
 /confusions /reference/confusions 301
