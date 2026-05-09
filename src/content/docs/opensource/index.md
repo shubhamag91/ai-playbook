@@ -37,7 +37,8 @@ This page is for people who want to run models locally or on their own infrastru
 | **Llama 4** | MIT | 70B | GPT-4-class reasoning | Ollama, local GPU |
 | **Qwen 3.5** | Custom | 72B | Strong reasoning, multilingual | Ollama, Hugging Face |
 | **Mistral Large** | Apache 2.0 | 123B | Instruction-following, fast | vLLM, SageMaker |
-| **DeepSeek V4** | MIT | 236B | o1-competitive reasoning | Local, Together AI |
+| **DeepSeek V4** | MIT | 236B | Strong general-purpose | Local, Together AI |
+| **DeepSeek R1** | MIT | 236B | o1-competitive reasoning | Local, Together AI |
 
 **Winner for general use:** Llama 4 (best balance of quality + ease)
 
@@ -72,14 +73,13 @@ This page is for people who want to run models locally or on their own infrastru
 ### Easiest: Ollama (Start here)
 
 ```bash
-
-ollama pull llama2
-ollama run llama2
+ollama pull llama4
+ollama run llama4
 ```
 
-Done. Chat with Llama 2 locally. That's it.
+Done. Chat with Llama 4 locally. That's it.
 
-**Supports:** Llama, Mistral, Qwen, Phi, and 100+ other models
+**Supports:** Llama, Mistral, DeepSeek, Qwen, Phi, and 100+ other models
 **Cost:** Free
 **Requirement:** 8GB+ RAM (more for 70B models)
 
@@ -239,9 +239,9 @@ model = AutoModelForCausalLM.from_pretrained(model_id)
 
 ### Example 2: Startup (Cost-Conscious)
 - **Goal:** Scale chatbot, minimize API costs
-- **Solution:** DeepSeek V4 API ($0.55/1M) + self-hosted fallback with Llama 3.2
+- **Solution:** DeepSeek V4 Flash API ($0.14/1M) for general chat + DeepSeek R1 for tough reasoning, with Llama 3.2 as self-hosted fallback
 - **Cost:** $100/month for 10M tokens + $200 GPU
-- **Result:** 5x cheaper than Claude/OpenAI
+- **Result:** 5x cheaper than Claude/OpenAI, same quality for most queries
 
 ---
 
@@ -253,12 +253,23 @@ model = AutoModelForCausalLM.from_pretrained(model_id)
 
 ---
 
+### Example 4: Multi-Model Architecture (Production)
+- **Goal:** Run a customer-facing chatbot with private data, no API dependency
+- **Solution:** Three-tier open-source stack:
+  - **Llama 4 (70B)** on vLLM — primary reasoning, handles 80% of queries
+  - **DeepSeek R1** via Together AI — fallback for complex edge cases
+  - **BGE Embeddings** + Qdrant — local RAG pipeline
+- **Cost:** $800/month GPU cloud + $150 API fallback = $950/month total
+- **Result:** Full data privacy, no API dependency for core flow, $950 vs $4K+ equivalent with Claude/GPT APIs
+
+---
+
 ## Getting Started (Beginner Path)
 
 ### Week 1: Try Locally
 ```bash
 # Install Ollama
-# Download Llama 2 or Llama 3.2 (8B is fast)
+# Download Llama 4 or Llama 3.2 (8B is fast)
 # Chat locally, see how it works
 ```
 
@@ -288,7 +299,8 @@ model = AutoModelForCausalLM.from_pretrained(model_id)
 
 **Breakthroughs:**
 - Llama 4 finally matches GPT-4 class quality
-- DeepSeek V4 showed you don't need to be Western lab to compete
+- DeepSeek V4 proved open-weight can compete at frontier pricing
+- DeepSeek R1 matched o1 reasoning quality at a fraction of the cost
 - Qwen 3.5 surpassed many proprietary models
 - Phi 4 brought GPT-4 quality to 14B models
 
