@@ -44,6 +44,16 @@ if (links.length > 0) {
       }
     }
 
+    // Add glossary link if page has glossaryLinks frontmatter
+    const glossaryTermSlugs: string[] = (currentEntry?.data as Record<string, unknown>).glossaryLinks as string[] || [];
+    if (glossaryTermSlugs.length > 0 && !allLinks.some(l => l.href.includes('/reference/glossary'))) {
+      allLinks.push({
+        label: 'Glossary',
+        href: '/reference/glossary',
+        description: `${glossaryTermSlugs.length} terms referenced on this page`,
+      });
+    }
+
     // Fallback to section-based defaults when no tag matches
     if (allLinks.length === 0) {
       const sectionRelations: Record<string, Array<{ label: string; href: string; description?: string }>> = {

@@ -4,7 +4,11 @@ description: What tool to use for what job. Quick decision trees and tool pairin
 tags:
   - tools
   - reference
-lastUpdated: 2026-05-08
+glossaryLinks:
+  - llm
+  - inference
+  - prompt
+lastUpdated: 2026-05-10
 ---
 
 Finding the right AI tool is like choosing the right hammer — most tasks have a best tool, but many tools work.

@@ -7,7 +7,11 @@ tags:
   - reference
   - models
   - specs
-lastUpdated: 2026-05-08
+glossaryLinks:
+  - token
+  - context window
+  - inference
+lastUpdated: 2026-05-10
 ---
 
 :::note
