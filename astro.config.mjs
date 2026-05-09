@@ -68,7 +68,6 @@ export default defineConfig({
         //     'data-cf-beacon': '{"token": "YOUR_TOKEN"}',
         //   },
         // },
-      head: [
         {
           tag: 'link',
           attrs: {
