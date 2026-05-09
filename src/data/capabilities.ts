@@ -27,6 +27,7 @@ export const models = [
   { id: 'gpt-instant', label: 'GPT-5.5 Instant', family: 'GPT', short: 'Instant' },
   { id: 'gemini-pro', label: 'Gemini 3.1 Pro', family: 'Gemini', short: 'Gemini' },
   { id: 'deepseek-v4', label: 'DeepSeek V4', family: 'DeepSeek', short: 'DS V4' },
+  { id: 'deepseek-vl', label: 'DeepSeek VL', family: 'DeepSeek', short: 'DS VL' },
   { id: 'o3', label: 'o3', family: 'OpenAI', short: 'o3' },
   { id: 'llama-4', label: 'Llama 4 405B', family: 'Llama', short: 'Llama 4' },
 ];
@@ -78,7 +79,8 @@ export const capabilityData: CapabilityScore[] = [
   { model: 'gpt-5.5', task: 'vision', score: 4, benchmarkRef: null, detail: 'Multimodal, strong image analysis' },
   { model: 'gpt-instant', task: 'vision', score: 3, benchmarkRef: null, detail: 'Basic vision support' },
   { model: 'gemini-pro', task: 'vision', score: 5, benchmarkRef: null, detail: 'Best-in-class multimodal' },
-  { model: 'deepseek-v4', task: 'vision', score: 2, benchmarkRef: null, detail: 'Limited vision capabilities' },
+  { model: 'deepseek-v4', task: 'vision', score: 0, benchmarkRef: null, detail: 'Text-only model. Use DeepSeek VL for vision.' },
+  { model: 'deepseek-vl', task: 'vision', score: 4, benchmarkRef: null, detail: 'DeepSeek\'s dedicated vision model. Strong image understanding.' },
   { model: 'o3', task: 'vision', score: 3, benchmarkRef: null, detail: 'Text-only reasoning model' },
   { model: 'llama-4', task: 'vision', score: 3, benchmarkRef: null, detail: 'Basic multimodal support' },
 

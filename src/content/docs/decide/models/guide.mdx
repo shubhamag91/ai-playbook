@@ -130,8 +130,17 @@ How to choose the right model for your specific task. Reasoning, speed, cost, an
 - Context: 128K tokens
 - Speed: Fast
 - Cost: $0.14-0.28 per 1M tokens (!!)
+- Vision: ❌ Text only. Use DeepSeek VL for image tasks.
 - Best for: Budget-conscious work, routing, high volume
 - Why: Shockingly cheap and good quality
+
+**DeepSeek VL** (China)
+- Context: 128K tokens
+- Speed: Medium
+- Cost: ~$0.55/$2.19 per 1M tokens
+- Vision: ✅ Images
+- Best for: Vision tasks within DeepSeek ecosystem
+- Why: DeepSeek's dedicated vision model. Use when you need image understanding at DeepSeek pricing.
 - When to use: Cost is the #1 constraint
 
 ---
@@ -289,6 +298,27 @@ Don't ask questions one-at-a-time:
 ```
 
 **Savings:** 100x for certain APIs
+
+---
+
+## Vision / Image Input Support
+
+Not all models can process images. Here's which ones can and what they support:
+
+| Model | Vision | Type | Notes |
+|---|---|---|---|
+| Claude Sonnet 4.6 | ✅ | Images | Strong image analysis, charts, documents |
+| Claude Opus 4.7 | ✅ | Images | Best for detailed visual reasoning |
+| GPT-5.5 | ✅ | Images | Solid multimodal |
+| GPT-5.5 Instant | ❌ | Text only | Fastest, no vision |
+| o3 | ❌ | Text only | Reasoning-only model |
+| Gemini 3.1 Pro | ✅ | Images + Video | Best multimodal support |
+| DeepSeek V4 | ❌ | Text only | Use DeepSeek VL for vision |
+| DeepSeek V4 Flash | ❌ | Text only | Use DeepSeek VL for vision |
+| DeepSeek VL | ✅ | Images | DeepSeek's dedicated vision model |
+| Llama 4 | ✅ | Images | Open-source multimodal |
+
+**Key takeaway:** If your task involves analyzing images, charts, or screenshots, pick a model with ✅. DeepSeek V4 and V4 Flash are excellent for text-only tasks but can't process images at all — use DeepSeek VL if you need vision in the DeepSeek ecosystem.
 
 ---
 
