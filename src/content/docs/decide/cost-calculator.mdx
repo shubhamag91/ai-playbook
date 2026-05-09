@@ -177,8 +177,7 @@ Monthly cost = Daily cost × 30
 
 </div>
 
-<script>
-{`
+<script is:inline>
 function updateCosts() {
   const requests = parseInt(document.getElementById('reqCount').textContent.replace(/,/g, '')) || 100;
   const inTokens = parseInt(document.getElementById('inTokens').textContent.replace(/,/g, '')) || 1000;
@@ -206,13 +205,7 @@ function updateCosts() {
   document.getElementById('costDeepSeek').textContent = '$' + calcCost(pricing.deepseek.in, pricing.deepseek.out);
 }
 
-// Initialize on page load
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', updateCosts);
-} else {
-  updateCosts();
-}
-`}
+document.addEventListener('DOMContentLoaded', updateCosts);
 </script>
 
 ---
