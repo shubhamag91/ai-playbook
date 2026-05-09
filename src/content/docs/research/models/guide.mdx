@@ -20,33 +20,37 @@ Open-weight models you can run, fine-tune and build on — often rivalling close
 ## Models
 
 <CardGrid>
-  <Card title="Llama 3.3 (Meta)" icon="open-book">
-    Meta's flagship open-weight family — 8B, 70B, 405B. The most widely deployed open model. Commercial use allowed.
+  <Card title="Llama 4 (Meta)" icon="open-book">
+    Meta's latest open-weight family — 8B, 70B, 405B. MoE architecture. Matches GPT-4 class quality. The most widely deployed open model.
     <Badge text="Recommended" variant="tip" />
   </Card>
+  <Card title="DeepSeek V4 / V4 Flash" icon="rocket">
+    Cost leader open-weight models — V4 ($0.55/1M) and Flash ($0.14/1M). MIT license. Surprisingly capable for the price.
+    <Badge text="Best Value" variant="note" />
+  </Card>
   <Card title="DeepSeek R1" icon="rocket">
-    Chinese open-weight reasoning model matching GPT-o1 quality at a fraction of the cost. MIT license.
+    Open-weight reasoning model matching OpenAI o1 quality at a fraction of the cost. MIT license.
     <Badge text="Free" variant="success" />
     <Badge text="Open Source" variant="tip" />
   </Card>
-  <Card title="Mistral 7B / Large" icon="open-book">
-    French AI lab producing excellent open-weight models. Mistral 7B punches far above its size.
+  <Card title="Mistral Large 3" icon="open-book">
+    French AI lab's largest open-weight model — 123B, MoE architecture, bilingual (EN/FR), excellent instruction-following.
     <Badge text="Recommended" variant="tip" />
   </Card>
-  <Card title="Gemma 2 / 3 (Google)" icon="seti:google">
-    Google's lightweight open models — 2B, 7B, 27B. Designed for on-device and edge inference.
+  <Card title="Gemma 3 (Google)" icon="seti:google">
+    Google's lightweight open models — 2B, 9B, 27B. MIT license. Designed for on-device and edge inference.
   </Card>
   <Card title="Phi-4 (Microsoft)" icon="seti:microsoft">
     14B parameter model outperforming many larger ones. Excellent for reasoning and math. MIT license.
   </Card>
-  <Card title="Falcon (TII)" icon="rocket">
-    UAE's Technology Innovation Institute open-weight models — strong multilingual capabilities.
+  <Card title="Qwen 3.5 (Alibaba)" icon="open-book">
+    Alibaba's latest open-weight family — strong multilingual, code, and reasoning performance. Surpassed many proprietary models.
   </Card>
-  <Card title="Qwen 2.5 (Alibaba)" icon="open-book">
-    Alibaba's open-weight family with strong code and multilingual performance.
+  <Card title="Falcon 3 (TII)" icon="rocket">
+    UAE's open-weight models — 7B to 180B. Strong multilingual capabilities, Apache 2.0 license.
   </Card>
-  <Card title="Command R (Cohere)" icon="seti:database">
-    Optimised for enterprise RAG applications — excellent at retrieval and reasoning over documents.
+  <Card title="Command R+ (Cohere)" icon="seti:database">
+    Optimised for enterprise RAG applications — 128K context, excellent at retrieval and reasoning over documents.
   </Card>
 </CardGrid>
 
@@ -81,30 +85,38 @@ Open-weight models you can run, fine-tune and build on — often rivalling close
   </Card>
 </CardGrid>
 
-## Example Architecture: AI Agent with WhatsApp Control
+## Example Architecture: Private RAG Chatbot
 
-A practical example of how to connect messaging, AI models, and automation into a working system. This pattern is commonly used for personal AI assistants, automated customer support, and agentic workflows.
+A practical example combining an open-weight model, a vector database, and a local interface. This pattern works for document Q&A, support bots, and knowledge retrieval — all running on your own hardware.
 
-### Messaging Interface
-**WhatsApp / Discord / Telegram** — User-facing chat interface. Users send messages, AI responds — familiar, accessible, no app install needed.
+### Architecture
 
-Alternatives:
-- **WhatsApp** — Most accessible globally
-- **Discord** — Best for communities, bots, voice
-- **Telegram** — Better bot API, privacy
+```
+User Question → Ollama (Llama 4) ← RAG pipeline (Chroma + embeddings)
+                          ↓
+                 Generated Answer → User
+```
 
-### Automation Layer
-**n8n / Zapier** — Connects the messaging platform to your AI. Receives messages, triggers workflows, sends responses.
+### Implementation
 
-### AI Layer
-**Ollama (local) or OpenAI / Anthropic API** — The brain. Processes user requests, generates responses.
+1. **Load documents** into Chroma vector DB (PDFs, markdown, code)
+2. **Convert question** to embedding using a local embedding model
+3. **Retrieve** top 3-5 relevant document chunks from Chroma
+4. **Send question + chunks** to Llama 4 (via Ollama API)
+5. **Return answer** to user
 
-### Example: Personal AI WhatsApp Assistant
+### Why This Matters
 
-1. User sends a message on WhatsApp
-2. n8n receives it via Twilio or WhatsApp Business API
-3. n8n sends the message to Ollama or OpenAI API
-4. Response comes back and n8n sends it to WhatsApp
+No data leaves your machine. No API costs. Full control over the model. This same pattern scales from a laptop to a production server by swapping Ollama for vLLM and Chroma for Qdrant.
+
+### Alternatives
+
+| Component | Starter | Production |
+|---|---|---|
+| LLM | Ollama + Llama 4 | vLLM + Llama 4 70B |
+| Vector DB | Chroma (embedded) | Qdrant or Weaviate |
+| Embeddings | Ollama built-in | BGE or Instructor |
+| Interface | CLI / Streamlit | Custom web app |
 
 ---
 
@@ -113,7 +125,7 @@ Alternatives:
 ![Visual walkthrough — running Ollama locally](/ollama_local_setup.png)
 
 1. **Install Ollama:** `curl -fsSL https://ollama.ai/install.sh | sh`
-2. **Pull a model:** `ollama pull llama3.3` or `ollama pull mistral`
-3. **Chat in terminal:** `ollama run llama3.3`
+2. **Pull a model:** `ollama pull llama4` or `ollama pull deepseek-r1`
+3. **Chat in terminal:** `ollama run llama4`
 4. **Use the API:** Ollama runs a local REST API at `http://localhost:11434` — OpenAI-compatible.
 5. **GUI option:** Install LM Studio for a desktop ChatGPT-like interface with model management.
