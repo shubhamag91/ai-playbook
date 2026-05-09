@@ -25,12 +25,6 @@ If you're new to this: think of building an AI app like building a house. Framew
 **When you'd use it:** You're building a chatbot, a RAG system, or any app that talks to an LLM. Start here.
 
 | Framework | Language | Best For | Key Feature |
-
-## LLM Frameworks
-
-The libraries that connect your app to LLMs — handle prompts, chains, agents, and tool integration.
-
-| Framework | Language | Best For | Key Feature |
 |---|---|---|---|
 | **LangChain** | Python, JS | General LLM apps | Chains, agents, tool integration, 100+ integrations |
 | **LlamaIndex** | Python | RAG and data | Data ingestion, indexing, query engines |
