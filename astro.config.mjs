@@ -9,6 +9,32 @@ export default defineConfig({
   // Change to your deployed URL when ready
   site: 'https://your-playbook.example.com',
 
+  compressHTML: true,
+
+  build: {
+    inlineStylesheets: 'auto',
+    assets: '_astro',
+  },
+
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('katex')) return 'katex';
+              if (id.includes('mermaid')) return 'mermaid';
+              return 'vendor';
+            }
+          },
+        },
+      },
+    },
+    ssr: {
+      noExternal: ['katex'],
+    },
+  },
+
   markdown: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],
@@ -31,6 +57,20 @@ export default defineConfig({
       },
       // KaTeX stylesheet + client-side Mermaid renderer
       head: [
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'preconnect',
+            href: 'https://cdn.jsdelivr.net',
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'dns-prefetch',
+            href: 'https://cdn.jsdelivr.net',
+          },
+        },
         {
           tag: 'link',
           attrs: {
