@@ -23,7 +23,7 @@ Found something outdated or wrong? Report it:
 
 - **On any page:** Click "Report Outdated" button (coming soon)
 - **On GitHub:** [Open an issue](https://github.com/shubhamag91/ai-playbook/issues)
-- **Via email:** [soumya.s.agarwal@gmail.com](mailto:soumya.s.agarwal@gmail.com)
+- **Via email:** [shubhamag91@gmail.com](mailto:shubhamag91@gmail.com)
 
 Include: What's wrong, where it is, why it's wrong.
 
@@ -258,7 +258,7 @@ Before submitting:
 
 **Questions?**
 - Create a GitHub [Discussion](https://github.com/shubhamag91/ai-playbook/discussions)
-- Email: [soumya.s.agarwal@gmail.com](mailto:soumya.s.agarwal@gmail.com)
+- Email: [shubhamag91@gmail.com](mailto:shubhamag91@gmail.com)
 
 **Technical issues?**
 - [GitHub Issues](https://github.com/shubhamag91/ai-playbook/issues)

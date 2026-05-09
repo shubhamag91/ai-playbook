@@ -79,7 +79,7 @@ Found something that's wrong, outdated, or incomplete? Help us keep the Playbook
 
 ### Option 2: Email
 
-Email details to **soumya.s.agarwal@gmail.com** with:
+Email details to **shubhamag91@gmail.com** with:
 - Page title or URL
 - What's inaccurate
 - What the correction should be
@@ -183,7 +183,7 @@ If you see something that doesn't match these standards, report it.
 ## Questions?
 
 - **GitHub Discussions:** Ask on [GitHub Discussions](https://github.com/shubhamag91/ai-playbook/discussions)
-- **Email:** soumya.s.agarwal@gmail.com
+- **Email:** shubhamag91@gmail.com
 - **Emergency:** File a GitHub issue labeled `[urgent]`
 
 Thanks for helping keep the Playbook accurate! 🙏
