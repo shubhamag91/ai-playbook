@@ -85,19 +85,30 @@ lastUpdated: 2026-05-10
 ---
 ```
 
-### Fact-Checking Your PR
+### Fact-Checking Requirements
+
+**All factual claims must cite a source.** See [MAINTENANCE.md](MAINTENANCE.md) for the full source reference table and citation format.
 
 Before submitting, verify:
-1. **Pricing** — Check vendor's official page (not reseller sites)
-2. **Model names** — Check official release notes
-3. **Benchmarks** — Check Papers with Code or official papers
-4. **Quotes/claims** — Link to primary source
-5. **Links** — Click each external link, verify it still exists
+
+| What | Where to Check | Critical For |
+|---|---|---|
+| Pricing | Vendor's official pricing page (not blogs, not social media) | Tier 1 pages |
+| Model names | Official release notes or model cards | All model references |
+| Benchmarks | Papers with Code or official paper | Comparison tables |
+| Capabilities | Vendor documentation | Deep dives, feature lists |
+| Dates | Release announcements | History, timeline pages |
+| External links | Click each one — verify it resolves | All pages |
 
 **Example:**
 ```
 ❌ WRONG: "Claude is the best model"
-✅ RIGHT: "Claude 3.5 Sonnet scores 93.7% on HumanEval (coding benchmarks)"
+✅ RIGHT: "Claude 3.5 Sonnet scores 93.7% on HumanEval (coding benchmark)"
+<!-- source: https://paperswithcode.com/sota/code-generation-on-humaneval -->
+
+❌ WRONG: "It costs $3 per million tokens"
+✅ RIGHT: "Claude Sonnet costs $3/1M input tokens"
+<!-- source: https://docs.anthropic.com/en/docs/about-claude/pricing -->
 ```
 
 ### PR Format
