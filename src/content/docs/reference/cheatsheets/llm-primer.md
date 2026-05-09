@@ -1,6 +1,6 @@
 ---
 title: LLM Primer (1 page)
-description: What LLMs are, how they work, and when to use each one
+description: One-page LLM primer covering what LLMs are, how they work, and when to use each major model — Claude, GPT, Gemini, and DeepSeek.
 sidebar:
   order: 2
 tags:

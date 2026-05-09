@@ -1,6 +1,6 @@
 ---
 title: Contributors
-description: People who have contributed to the AI Playbook.
+description: People who have helped build and maintain the AI Playbook — content, code, review, and design contributions.
 sidebar:
   order: 3
 tags:

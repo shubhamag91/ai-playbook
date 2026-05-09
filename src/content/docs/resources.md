@@ -1,6 +1,6 @@
 ---
 title: Resources & Downloads
-description: Downloadable guides, cheat sheets, and reference materials
+description: Downloadable guides, cheat sheets, templates, case studies, and reference materials for the AI Playbook.
 sidebar:
   order: 7
 tags:

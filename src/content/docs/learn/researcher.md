@@ -1,6 +1,6 @@
 ---
 title: Researcher Learning Path
-description: Stay current with AI research, trends, and new models
+description: Stay current with AI research, trends, and new model releases — a structured path for researchers and enthusiasts.
 sidebar:
   order: 4
 tags:

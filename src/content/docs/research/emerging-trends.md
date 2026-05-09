@@ -1,6 +1,6 @@
 ---
 title: Emerging Trends (May 2026)
-description: Emerging patterns, technologies, and shifts in AI in 2026
+description: Emerging patterns, technologies, and shifts in AI in 2026 — multi-agent systems, reasoning models, open-source acceleration, and more.
 sidebar:
   order: 3
 tags:

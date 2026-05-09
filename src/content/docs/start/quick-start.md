@@ -1,6 +1,6 @@
 ---
 title: Quick Start
-description: Get up to speed in 30 minutes
+description: A 30-minute guided introduction to AI concepts, tools, and workflows — no technical background required.
 sidebar:
   order: 2
 tags:

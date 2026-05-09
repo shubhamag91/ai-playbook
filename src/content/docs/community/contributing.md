@@ -1,6 +1,6 @@
 ---
 title: Contributing Guide
-description: How to contribute to the AI Playbook
+description: How to contribute content, report issues, and help maintain the AI Playbook knowledge base.
 sidebar:
   order: 1
 tags:

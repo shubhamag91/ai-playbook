@@ -7,7 +7,9 @@ import rehypeKatex from 'rehype-katex';
 // https://astro.build/config
 export default defineConfig({
   // Change to your deployed URL when ready
-  site: 'https://your-playbook.example.com',
+        // Uncomment and set your actual URL when deploying:
+        // site: 'https://ai-playbook.pages.dev',
+      site: 'https://your-playbook.example.com',
 
   compressHTML: true,
 
@@ -88,6 +90,37 @@ export default defineConfig({
             rel: 'stylesheet',
             href: 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css',
           },
+        },
+        // Open Graph image for social sharing
+        // Create a social card image at public/social-card.png (1200×630px)
+        // {
+        //   tag: 'meta',
+        //   attrs: { property: 'og:image', content: 'https://your-playbook.example.com/social-card.png' },
+        // },
+        // {
+        //   tag: 'meta',
+        //   attrs: { name: 'twitter:image', content: 'https://your-playbook.example.com/social-card.png' },
+        // },
+        // {
+        //   tag: 'meta',
+        //   attrs: { name: 'twitter:site', content: '@yourhandle' },
+        // },
+        // Schema.org structured data (WebSite + Organization)
+        {
+          tag: 'script',
+          attrs: { type: 'application/ld+json' },
+          content: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'AI Playbook',
+            description: 'A personal reference for navigating the modern AI ecosystem — tools, workflows, models, and principles.',
+            url: 'https://your-playbook.example.com',
+            potentialAction: {
+              '@type': 'SearchAction',
+              target: 'https://your-playbook.example.com/?q={search_term_string}',
+              'query-input': 'required name=search_term_string',
+            },
+          }),
         },
         {
           tag: 'script',
