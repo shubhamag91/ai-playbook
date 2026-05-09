@@ -11,8 +11,6 @@ nextVerificationDue: 2026-08-10
 
 import ContentAudit from '../../../components/ContentAudit.astro';
 
-# Content Audit
-
 Complete tracking of all pages, their tier assignments, and verification schedules. Updated automatically at build time.
 
 <ContentAudit />

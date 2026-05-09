@@ -74,7 +74,7 @@ The fastest loop for writing:
 
 ```bash
 npm run dev           # starts local preview at http://localhost:4321
-# edit a .md file — the site hot-reloads
+
 ```
 
 When you're happy:

@@ -11,8 +11,6 @@ nextVerificationDue: 2026-08-08
 
 import ContributorsList from '../../components/ContributorsList.astro';
 
-# Contributors
-
 People who have helped build and maintain the AI Playbook.
 
 <ContributorsList />

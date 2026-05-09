@@ -11,8 +11,6 @@ lastUpdated: 2026-05-08
 nextVerificationDue: 2026-08-06
 ---
 
-# Model Releases Timeline (2026)
-
 A chronological view of significant model releases, updates, and announcements through May 2026.
 
 ---

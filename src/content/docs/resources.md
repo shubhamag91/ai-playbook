@@ -9,8 +9,6 @@ lastUpdated: 2026-05-09
 nextVerificationDue: 2026-08-07
 ---
 
-# Resources & Downloads
-
 Quick-reference guides you can print, bookmark, or share.
 
 ---

@@ -13,8 +13,6 @@ nextVerificationDue: 2026-08-08
 
 import ModelMatrix from '../../components/ModelMatrix.astro';
 
-# Model Capability Matrix
-
 How different models perform across key tasks — rated on a 1-5 scale based on benchmark scores and real-world performance.
 
 <ModelMatrix />

@@ -72,7 +72,7 @@ This page is for people who want to run models locally or on their own infrastru
 ### Easiest: Ollama (Start here)
 
 ```bash
-# Install: ollama.ai
+
 ollama pull llama2
 ollama run llama2
 ```

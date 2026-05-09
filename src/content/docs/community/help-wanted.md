@@ -9,8 +9,6 @@ lastUpdated: 2026-05-10
 nextVerificationDue: 2026-08-08
 ---
 
-# Help Wanted
-
 Well-scoped tasks suitable for first-time contributors. Check the [`help wanted`](https://github.com/shubhamag91/ai-playbook/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) and [`good first issue`](https://github.com/shubhamag91/ai-playbook/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) labels on GitHub for the latest list.
 
 ---

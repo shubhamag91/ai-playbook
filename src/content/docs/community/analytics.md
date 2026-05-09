@@ -9,8 +9,6 @@ lastUpdated: 2026-05-10
 nextVerificationDue: 2026-08-10
 ---
 
-# Analytics
-
 The AI Playbook uses **Cloudflare Web Analytics** — a privacy-first analytics platform that doesn't use cookies or collect personal data. No consent banner needed.
 
 ---

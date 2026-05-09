@@ -48,7 +48,7 @@ You have three choices:
 **Python:**
 ```bash
 pip install anthropic
-# or
+
 pip install openai
 ```
 

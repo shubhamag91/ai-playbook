@@ -10,8 +10,6 @@ lastUpdated: 2026-05-08
 nextVerificationDue: 2027-05-08
 ---
 
-# AI Terminology & Definitions
-
 Confused by AI jargon? This page clarifies what terms actually mean and why the distinctions matter.
 
 ---

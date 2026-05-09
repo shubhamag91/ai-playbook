@@ -75,7 +75,7 @@ BPE is the most common tokenization method:
 4. Repeat until desired vocabulary size
 
 ```python
-# Simplified BPE concept
+
 vocab = {"a", "b", "c", ...}  # Start with characters
 while len(vocab) < target_size:
     pair = find_most_frequent_consecutive_pair(text)

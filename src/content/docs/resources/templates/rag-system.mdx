@@ -15,8 +15,6 @@ import Breadcrumb from '../../../../components/Breadcrumb.astro';
 
 <Breadcrumb />
 
-# RAG System Template
-
 A complete, production-ready RAG (Retrieval-Augmented Generation) implementation. Load documents, embed them, retrieve relevant chunks, and answer questions with Claude.
 
 ---
@@ -183,7 +181,6 @@ class RAGSystem:
             ]
         }
 
-
 def main():
     # Initialize RAG system
     rag = RAGSystem(collection_name="my_knowledge_base")
@@ -229,7 +226,6 @@ def main():
         result = rag.answer_question(question)
         print(f"Answer: {result['answer']}")
         print(f"Sources: {', '.join(result['sources'])}")
-
 
 if __name__ == "__main__":
     main()

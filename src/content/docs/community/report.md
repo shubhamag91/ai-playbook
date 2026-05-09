@@ -9,8 +9,6 @@ lastUpdated: 2026-05-08
 nextVerificationDue: 2026-08-06
 ---
 
-# Report Outdated Information
-
 Found something that's wrong, outdated, or incomplete? Help us keep the Playbook accurate and current.
 
 ---

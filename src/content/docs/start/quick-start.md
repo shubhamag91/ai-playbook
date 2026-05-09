@@ -1,5 +1,5 @@
 ---
-title: Quick Start
+title: Quick Start (30 minutes)
 description: A 30-minute guided introduction to AI concepts, tools, and workflows — no technical background required.
 sidebar:
   order: 2
@@ -8,8 +8,6 @@ tags:
 lastUpdated: 2026-05-09
 nextVerificationDue: 2026-08-07
 ---
-
-# Quick Start (30 minutes)
 
 Everything you need to know about AI and LLMs in 30 minutes. Pick a destination below.
 

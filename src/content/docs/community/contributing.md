@@ -9,8 +9,6 @@ lastUpdated: 2026-05-08
 nextVerificationDue: 2026-08-06
 ---
 
-# Contributing Guide
-
 The AI Playbook is community-driven. Contributions are welcome — whether corrections, new content, or improvements.
 
 ---

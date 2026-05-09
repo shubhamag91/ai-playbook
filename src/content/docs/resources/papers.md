@@ -1,5 +1,5 @@
 ---
-title: Research Papers & Publications
+title: Research Papers
 description: Curated collection of foundational and recent AI research papers with summaries and links.
 sidebar:
   order: 3
@@ -10,8 +10,6 @@ tags:
 lastUpdated: 2026-05-10
 nextVerificationDue: 2026-08-08
 ---
-
-# Research Papers
 
 Curated papers every AI practitioner should know — from foundations to frontier.
 

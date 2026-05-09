@@ -12,8 +12,6 @@ lastUpdated: 2026-05-10
 nextVerificationDue: 2026-08-08
 ---
 
-# Tools & Frameworks Reference
-
 AI development tools organized by category — from app frameworks to production infrastructure.
 
 ---
