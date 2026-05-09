@@ -55,7 +55,7 @@ Advanced patterns and best practices for better LLM outputs.
 - Quick wins for immediate improvement
 - Token cost formula for optimization
 
-**[📥 Download PDF](/cheatsheets/prompt-engineering.html)** (Print-friendly, A4)
+**[📥 Download PDF](/cheatsheets/prompt-engineering-ref.html)** (Print-friendly, A4)
 
 ---
 

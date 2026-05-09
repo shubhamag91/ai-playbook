@@ -1,10 +1,5 @@
 # Content Migration Redirects (May 2026)
 
-# Print-friendly cheat sheets - serve directly (before legacy redirects)
-/cheatsheets/llm-primer.html          /cheatsheets/llm-primer.html          200
-/cheatsheets/tools-comparison.html    /cheatsheets/tools-comparison.html    200
-/cheatsheets/prompt-engineering.html  /cheatsheets/prompt-engineering.html  200
-
 # Phase 2A File Moves to Reference Section
 /glossary /reference/glossary 301
 /confusions /reference/confusions 301
@@ -18,12 +13,6 @@
 /opensource /research/models/guide 301
 /history /research/whats-new 301
 
-# Legacy cheatsheet paths → new locations
-/cheatsheets/llm-comparison /reference/model-specs 301
-/cheatsheets/prompt-engineering /deep-dive/prompt-engineering 301
-
-# Catch-all for old cheatsheet paths that moved to reference
+# Legacy cheatsheet paths that moved to reference section
 /cheatsheets/ai-tools-landscape /reference/cheatsheets/ai-tools-landscape 301
 /cheatsheets/coding-assistants-agents /reference/cheatsheets/coding-assistants-agents 301
-/cheatsheets/llm-comparison /reference/model-specs 301
-/cheatsheets/prompt-engineering /deep-dive/prompt-engineering 301
