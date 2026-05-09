@@ -55,7 +55,19 @@ export default defineConfig({
         // Replace with your own
         github: 'https://github.com/your-handle/ai-playbook',
       },
-      // KaTeX stylesheet + client-side Mermaid renderer
+      // KaTeX stylesheet + client-side Mermaid renderer + analytics
+      head: [
+        // Cloudflare Web Analytics (privacy-first, no cookie consent needed)
+        // To enable: replace 'YOUR_TOKEN' with your Cloudflare Web Analytics token
+        // Get one at: https://dash.cloudflare.com/ → Web Analytics → Add site
+        // {
+        //   tag: 'script',
+        //   attrs: {
+        //     defer: true,
+        //     src: 'https://static.cloudflareinsights.com/beacon.min.js',
+        //     'data-cf-beacon': '{"token": "YOUR_TOKEN"}',
+        //   },
+        // },
       head: [
         {
           tag: 'link',
@@ -190,6 +202,7 @@ export default defineConfig({
             { label: 'Report Outdated', slug: 'community/report' },
             { label: 'Help Wanted', slug: 'community/help-wanted' },
             { label: 'Content Audit', slug: 'community/audit' },
+            { label: 'Analytics', slug: 'community/analytics' },
             { label: 'Contributors', slug: 'community/contributors' },
           ],
         },
