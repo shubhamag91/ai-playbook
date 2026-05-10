@@ -7,6 +7,7 @@
   border-radius: 8px;
   margin: 1.5rem 0;
   border: 1px solid var(--sl-color-gray-5);
+  align-items: start;
 }
 
 @media (max-width: 860px) {
@@ -94,14 +95,14 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   margin-top: 0.3rem;
 }
 
 .cost-calculator__preset-label {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--sl-color-gray-3);
-  margin-right: 0.2rem;
+  white-space: nowrap;
 }
 
 .cost-calculator__preset {
@@ -144,6 +145,16 @@
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
+  justify-content: space-between;
+}
+
+.cost-calculator__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3rem;
+  flex-wrap: nowrap;
+  margin-top: auto;
 }
 
 .cost-calculator__card.sonnet { border-left-color: #d4a574; }
