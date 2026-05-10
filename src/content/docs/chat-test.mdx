@@ -1,0 +1,38 @@
+---
+title: Chat Test
+description: Testing chat widget
+---
+
+<link rel="stylesheet" href="/chat/css/ChatWidget.css" />
+
+<div class="cw-root" id="cw-root">
+  <button class="cw-button" id="cw-button" aria-label="Open chat">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+    </svg>
+  </button>
+  <div class="cw-panel" id="cw-panel">
+    <div class="cw-header">
+      <strong>Ask the Playbook</strong>
+      <button class="cw-close" id="cw-close" aria-label="Close chat">&times;</button>
+    </div>
+    <div class="cw-messages" id="cw-messages">
+      <div class="cw-msg cw-bot">
+        <div class="cw-msg-content">Ask me anything.</div>
+      </div>
+    </div>
+    <div class="cw-input-area">
+      <input type="text" class="cw-input" id="cw-input" placeholder="Ask a question..." />
+      <button class="cw-send" id="cw-send" aria-label="Send">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+<script defer src="/chat-widget.js"></script>
+
+---
+
+This is a test page for the chat widget. If you see the button and it's clickable, the widget works.

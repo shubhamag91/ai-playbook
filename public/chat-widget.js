@@ -1,4 +1,6 @@
+console.log('[ChatWidget] Script loaded');
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('[ChatWidget] DOM ready');
   const root = document.getElementById('cw-root');
   const btn = document.getElementById('cw-button');
   const panel = document.getElementById('cw-panel');
@@ -7,7 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const send = document.getElementById('cw-send');
   const messages = document.getElementById('cw-messages');
 
-  if (!root || !btn) return;
+  console.log('[ChatWidget] root:', !!root, 'btn:', !!btn, 'panel:', !!panel);
+
+  if (!root || !btn) {
+    console.log('[ChatWidget] Elements not found, exiting');
+    return;
+  }
 
   let isOpen = false;
   let isAsking = false;
