@@ -1,28 +1,27 @@
 .cost-calculator {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 1.5rem;
   padding: 1.5rem;
-  background-color: var(--sl-color-gray-6);
+  background: var(--sl-color-gray-6);
   border-radius: 8px;
   margin: 1.5rem 0;
+  border: 1px solid var(--sl-color-gray-5);
 }
 
-@media (max-width: 768px) {
-  .cost-calculator {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
+@media (max-width: 860px) {
+  .cost-calculator { grid-template-columns: 1fr; }
 }
 
 .cost-calculator__setup {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.9rem;
 }
 
-.cost-calculator__setup h3 {
-  margin: 0 0 0.25rem 0;
+.cost-calculator__setup h3,
+.cost-calculator__results h3 {
+  margin: 0 0 0.15rem 0;
   font-size: 0.95rem;
   font-weight: 600;
 }
@@ -30,113 +29,195 @@
 .cost-calculator__input-group {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.2rem;
 }
 
 .cost-calculator__label {
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
+  color: var(--sl-color-gray-2);
 }
 
 .cost-calculator__slider {
   width: 100%;
   cursor: pointer;
-  height: 4px;
+  height: 5px;
   -webkit-appearance: none;
   appearance: none;
   background: var(--sl-color-gray-5);
   outline: none;
   border-radius: 3px;
-  margin: 0.25rem 0;
 }
 
 .cost-calculator__slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   background: var(--sl-color-accent);
   cursor: pointer;
   border-radius: 50%;
+  transition: transform 0.1s;
+}
+
+.cost-calculator__slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
 }
 
 .cost-calculator__slider::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   background: var(--sl-color-accent);
   cursor: pointer;
   border-radius: 50%;
   border: none;
 }
 
+.cost-calculator__range-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .cost-calculator__value {
-  font-weight: 600;
-  font-size: 0.85rem;
+  font-weight: 700;
+  font-size: 0.9rem;
   color: var(--sl-color-accent);
+}
+
+.cost-calculator__range-end {
+  font-size: 0.72rem;
+  color: var(--sl-color-gray-3);
+}
+
+.cost-calculator__presets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+}
+
+.cost-calculator__preset-label {
+  font-size: 0.75rem;
+  color: var(--sl-color-gray-3);
+  margin-right: 0.2rem;
+}
+
+.cost-calculator__preset {
+  font-size: 0.72rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 4px;
+  border: 1px solid var(--sl-color-gray-4);
+  background: var(--sl-color-gray-5);
+  color: var(--sl-color-white);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.cost-calculator__preset:hover {
+  border-color: var(--sl-color-accent);
+  background: var(--sl-color-gray-4);
 }
 
 .cost-calculator__results {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-}
-
-.cost-calculator__results h3 {
-  margin: 0;
-  font-size: 0.95rem;
-  font-weight: 600;
+  gap: 0.6rem;
 }
 
 .cost-calculator__grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.6rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .cost-calculator__grid { grid-template-columns: 1fr; }
 }
 
 .cost-calculator__card {
-  padding: 0.75rem;
-  background-color: var(--sl-color-gray-5);
+  padding: 0.6rem 0.75rem;
+  background: var(--sl-color-gray-5);
   border-radius: 6px;
-  border-left: 4px solid;
+  border-left: 3px solid;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
 }
 
-.cost-calculator__card.sonnet {
-  border-left-color: #3b82f6;
-}
+.cost-calculator__card.sonnet { border-left-color: #d4a574; }
+.cost-calculator__card.haiku { border-left-color: #10b981; }
+.cost-calculator__card.opus { border-left-color: #f59e0b; }
+.cost-calculator__card.gpt5 { border-left-color: #8b5cf6; }
+.cost-calculator__card.gpt { border-left-color: #a78bfa; }
+.cost-calculator__card.gemini { border-left-color: #4285f4; }
+.cost-calculator__card.deepseek { border-left-color: #06b6d4; }
+.cost-calculator__card.deepseek-v4 { border-left-color: #6366f1; }
 
-.cost-calculator__card.haiku {
-  border-left-color: #10b981;
-}
-
-.cost-calculator__card.opus {
-  border-left-color: #f59e0b;
-}
-
-.cost-calculator__card.gpt {
-  border-left-color: #8b5cf6;
-}
-
-.cost-calculator__card.deepseek {
-  border-left-color: #06b6d4;
-}
-
-.cost-calculator__card.gemini {
-  border-left-color: #ec4899;
+.cost-calculator__family {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--sl-color-gray-3);
+  font-weight: 600;
 }
 
 .cost-calculator__model {
-  font-size: 0.8rem;
-  color: var(--sl-color-gray-3);
-  margin-bottom: 0.2rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--sl-color-white);
 }
 
 .cost-calculator__price {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-bottom: 0.2rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
-.cost-calculator__note {
-  font-size: 0.75rem;
+.cost-calculator__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.cost-calculator__rate {
+  font-size: 0.68rem;
   color: var(--sl-color-gray-3);
+}
+
+.cost-calculator__badge {
+  font-size: 0.6rem;
+  font-weight: 600;
+  padding: 0.12rem 0.35rem;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cost-calculator__badge.default { background: #3b82f633; color: #3b82f6; }
+.cost-calculator__badge.fastest { background: #8b5cf633; color: #a78bfa; }
+.cost-calculator__badge.balanced { background: #10b98133; color: #10b981; }
+.cost-calculator__badge.context { background: #4285f433; color: #4285f4; }
+.cost-calculator__badge.cheap { background: #06b6d433; color: #06b6d4; }
+
+/* Light mode */
+:root[data-theme='light'] .cost-calculator {
+  background: var(--sl-color-gray-2);
+  border-color: var(--sl-color-gray-3);
+}
+
+:root[data-theme='light'] .cost-calculator__card {
+  background: var(--sl-color-white);
+}
+
+:root[data-theme='light'] .cost-calculator__preset {
+  background: var(--sl-color-gray-3);
+  color: var(--sl-color-black);
+}
+
+:root[data-theme='light'] .cost-calculator__model {
+  color: var(--sl-color-black);
 }

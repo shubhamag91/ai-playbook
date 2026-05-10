@@ -4,86 +4,121 @@ import './CostCalculator.css';
 
 <div class="cost-calculator">
   <div class="cost-calculator__setup">
-    <h3>Scenario Setup</h3>
+    <h3>Usage Scenario</h3>
 
     <div class="cost-calculator__input-group">
       <label class="cost-calculator__label">Daily Requests</label>
-      <input
-        type="range"
-        min="1"
-        max="2000"
-        value="100"
-        class="cost-calculator__slider"
-        data-field="requests"
-      />
-      <span class="cost-calculator__value" id="reqCount">100</span> requests/day
+      <input type="range" min="1" max="5000" value="100" class="cost-calculator__slider" data-field="requests" />
+      <div class="cost-calculator__range-labels">
+        <span id="reqCount" class="cost-calculator__value">100</span>
+        <span class="cost-calculator__range-end">5,000/day</span>
+      </div>
     </div>
 
     <div class="cost-calculator__input-group">
       <label class="cost-calculator__label">Avg Input Tokens per Request</label>
-      <input
-        type="range"
-        min="100"
-        max="50000"
-        value="1000"
-        class="cost-calculator__slider"
-        data-field="inTokens"
-      />
-      <span class="cost-calculator__value" id="inTokens">1,000</span> tokens
+      <input type="range" min="100" max="50000" value="1000" class="cost-calculator__slider" data-field="inTokens" />
+      <div class="cost-calculator__range-labels">
+        <span id="inTokens" class="cost-calculator__value">1,000</span>
+        <span class="cost-calculator__range-end">50,000</span>
+      </div>
     </div>
 
     <div class="cost-calculator__input-group">
       <label class="cost-calculator__label">Avg Output Tokens per Request</label>
-      <input
-        type="range"
-        min="50"
-        max="10000"
-        value="500"
-        class="cost-calculator__slider"
-        data-field="outTokens"
-      />
-      <span class="cost-calculator__value" id="outTokens">500</span> tokens
+      <input type="range" min="50" max="10000" value="500" class="cost-calculator__slider" data-field="outTokens" />
+      <div class="cost-calculator__range-labels">
+        <span id="outTokens" class="cost-calculator__value">500</span>
+        <span class="cost-calculator__range-end">10,000</span>
+      </div>
+    </div>
+
+    <div class="cost-calculator__presets">
+      <span class="cost-calculator__preset-label">Quick scenarios:</span>
+      <button class="cost-calculator__preset" data-req="100" data-in="500" data-out="200">Simple chat</button>
+      <button class="cost-calculator__preset" data-req="20" data-in="5000" data-out="500">Document QA</button>
+      <button class="cost-calculator__preset" data-req="500" data-in="300" data-out="50">Classification</button>
     </div>
   </div>
 
   <div class="cost-calculator__results">
-    <h3>Monthly Cost Estimates</h3>
-
+    <h3>Monthly Cost</h3>
     <div class="cost-calculator__grid">
       <div class="cost-calculator__card sonnet">
+        <span class="cost-calculator__family">Anthropic</span>
         <div class="cost-calculator__model">Claude Sonnet</div>
         <div class="cost-calculator__price" id="costSonnet">$90</div>
-        <div class="cost-calculator__note">Recommended default</div>
+        <div class="cost-calculator__row">
+          <span class="cost-calculator__rate">$3/$15 per 1M</span>
+          <span class="cost-calculator__badge default">Default</span>
+        </div>
       </div>
 
       <div class="cost-calculator__card haiku">
+        <span class="cost-calculator__family">Anthropic</span>
         <div class="cost-calculator__model">Claude Haiku</div>
         <div class="cost-calculator__price" id="costHaiku">$13.50</div>
-        <div class="cost-calculator__note">Fast & cheap</div>
+        <div class="cost-calculator__row">
+          <span class="cost-calculator__rate">$0.80/$4 per 1M</span>
+        </div>
       </div>
 
       <div class="cost-calculator__card opus">
+        <span class="cost-calculator__family">Anthropic</span>
         <div class="cost-calculator__model">Claude Opus</div>
         <div class="cost-calculator__price" id="costOpus">$675</div>
-        <div class="cost-calculator__note">Most capable</div>
+        <div class="cost-calculator__row">
+          <span class="cost-calculator__rate">$15/$75 per 1M</span>
+        </div>
+      </div>
+
+      <div class="cost-calculator__card gpt5">
+        <span class="cost-calculator__family">OpenAI</span>
+        <div class="cost-calculator__model">GPT-5.5 Instant</div>
+        <div class="cost-calculator__price" id="costGPTInstant">$90</div>
+        <div class="cost-calculator__row">
+          <span class="cost-calculator__rate">$0.05/$0.15 per 1M</span>
+          <span class="cost-calculator__badge fastest">Fastest</span>
+        </div>
       </div>
 
       <div class="cost-calculator__card gpt">
-        <div class="cost-calculator__model">GPT-4o</div>
+        <span class="cost-calculator__family">OpenAI</span>
+        <div class="cost-calculator__model">GPT-5.5</div>
         <div class="cost-calculator__price" id="costGPT">$60</div>
-        <div class="cost-calculator__note">All-around</div>
-      </div>
-
-      <div class="cost-calculator__card deepseek">
-        <div class="cost-calculator__model">DeepSeek Flash</div>
-        <div class="cost-calculator__price" id="costDeepSeek">$6.30</div>
-        <div class="cost-calculator__note">Budget friendly</div>
+        <div class="cost-calculator__row">
+          <span class="cost-calculator__rate">$2/$8 per 1M</span>
+          <span class="cost-calculator__badge balanced">Balanced</span>
+        </div>
       </div>
 
       <div class="cost-calculator__card gemini">
+        <span class="cost-calculator__family">Google</span>
         <div class="cost-calculator__model">Gemini 3.1</div>
         <div class="cost-calculator__price" id="costGemini">$60</div>
-        <div class="cost-calculator__note">Long context</div>
+        <div class="cost-calculator__row">
+          <span class="cost-calculator__rate">$2/$12 per 1M</span>
+          <span class="cost-calculator__badge context">1M ctx</span>
+        </div>
+      </div>
+
+      <div class="cost-calculator__card deepseek-v4">
+        <span class="cost-calculator__family">DeepSeek</span>
+        <div class="cost-calculator__model">DeepSeek V4</div>
+        <div class="cost-calculator__price" id="costDeepSeekV4">$6.30</div>
+        <div class="cost-calculator__row">
+          <span class="cost-calculator__rate">$0.55/$2.19 per 1M</span>
+        </div>
+      </div>
+
+      <div class="cost-calculator__card deepseek">
+        <span class="cost-calculator__family">DeepSeek</span>
+        <div class="cost-calculator__model">DeepSeek Flash</div>
+        <div class="cost-calculator__price" id="costDeepSeek">$6.30</div>
+        <div class="cost-calculator__row">
+          <span class="cost-calculator__rate">$0.14/$0.28 per 1M</span>
+          <span class="cost-calculator__badge cheap">Cheapest</span>
+        </div>
       </div>
     </div>
   </div>
@@ -96,34 +131,54 @@ document.addEventListener('DOMContentLoaded', function() {
     haiku: { in: 0.80, out: 4 },
     opus: { in: 15, out: 75 },
     gpt: { in: 2, out: 8 },
+    gptinstant: { in: 0.05, out: 0.15 },
     gemini: { in: 2, out: 12 },
-    deepseek: { in: 0.14, out: 0.28 }
+    deepseek: { in: 0.14, out: 0.28 },
+    deepseekv4: { in: 0.55, out: 2.19 },
   };
 
+  function getVal(id) {
+    return parseInt(document.getElementById(id).textContent.replace(/,/g, '')) || 0;
+  }
+
   function updateCosts() {
-    const requests = parseInt(document.getElementById('reqCount').textContent.replace(/,/g, '')) || 100;
-    const inTokens = parseInt(document.getElementById('inTokens').textContent.replace(/,/g, '')) || 1000;
-    const outTokens = parseInt(document.getElementById('outTokens').textContent.replace(/,/g, '')) || 500;
+    const requests = getVal('reqCount');
+    const inTokens = getVal('inTokens');
+    const outTokens = getVal('outTokens');
 
     const calcCost = (inPrice, outPrice) => {
-      const dailyCost = (requests * inTokens * inPrice / 1000000) + (requests * outTokens * outPrice / 1000000);
-      return (dailyCost * 30).toFixed(2);
+      const daily = (requests * inTokens * inPrice + requests * outTokens * outPrice) / 1000000;
+      return (daily * 30).toFixed(2);
     };
 
     document.getElementById('costSonnet').textContent = '$' + calcCost(pricing.sonnet.in, pricing.sonnet.out);
     document.getElementById('costHaiku').textContent = '$' + calcCost(pricing.haiku.in, pricing.haiku.out);
     document.getElementById('costOpus').textContent = '$' + calcCost(pricing.opus.in, pricing.opus.out);
     document.getElementById('costGPT').textContent = '$' + calcCost(pricing.gpt.in, pricing.gpt.out);
+    document.getElementById('costGPTInstant').textContent = '$' + calcCost(pricing.gptinstant.in, pricing.gptinstant.out);
     document.getElementById('costGemini').textContent = '$' + calcCost(pricing.gemini.in, pricing.gemini.out);
     document.getElementById('costDeepSeek').textContent = '$' + calcCost(pricing.deepseek.in, pricing.deepseek.out);
+    document.getElementById('costDeepSeekV4').textContent = '$' + calcCost(pricing.deepseekv4.in, pricing.deepseekv4.out);
+  }
+
+  function updateSlider(slider) {
+    const field = slider.getAttribute('data-field');
+    const val = parseInt(slider.value).toLocaleString();
+    const map = { requests: 'reqCount', inTokens: 'inTokens', outTokens: 'outTokens' };
+    document.getElementById(map[field]).textContent = val;
+    updateCosts();
   }
 
   document.querySelectorAll('.cost-calculator__slider').forEach(slider => {
-    slider.addEventListener('input', function() {
-      const field = this.getAttribute('data-field');
-      const value = parseInt(this.value).toLocaleString();
-      document.getElementById(field === 'requests' ? 'reqCount' : field === 'inTokens' ? 'inTokens' : 'outTokens').textContent = value;
-      updateCosts();
+    slider.addEventListener('input', function() { updateSlider(this); });
+  });
+
+  document.querySelectorAll('.cost-calculator__preset').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelector('input[data-field="requests"]').value = this.getAttribute('data-req');
+      document.querySelector('input[data-field="inTokens"]').value = this.getAttribute('data-in');
+      document.querySelector('input[data-field="outTokens"]').value = this.getAttribute('data-out');
+      document.querySelectorAll('.cost-calculator__slider').forEach(s => updateSlider(s));
     });
   });
 
