@@ -70,6 +70,14 @@ export default defineConfig({
         //     'data-cf-beacon': '{"token": "YOUR_TOKEN"}',
         //   },
         // },
+        // Chat widget script
+        {
+          tag: 'script',
+          attrs: {
+            defer: true,
+            src: '/chat-widget.js',
+          },
+        },
         {
           tag: 'link',
           attrs: {
