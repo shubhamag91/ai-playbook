@@ -1,96 +1,135 @@
-export async function onRequestPost({ request, env }) {
+// Cloudflare Pages Function — Chat API
+// POST /api/chat
+// Body: { question: string }
+// Response: streamed answer from Workers AI
+
+export async function onRequest(context) {
+  const { request, env } = context;
+
+  // CORS headers
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+
+  if (request.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
+
   if (request.method !== 'POST') {
-    return new Response(JSON.stringify({error: 'Method not allowed'}), {
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
       status: 405,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json', ...corsHeaders },
     });
-  }
-
-  const { message } = await request.json();
-  if (!message) {
-    return new Response(JSON.stringify({error: 'Message required'}), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' }
-    });
-  }
-
-  let apiKey = env.GEMINI_API_KEY;
-  if (!apiKey) {
-    return new Response(JSON.stringify({error: 'Server misconfigured: Missing GEMINI_API_KEY binding'}), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' }
-    });
-  }
-
-  // Remove any whitespace (including newline) that might have been accidentally included
-  apiKey = apiKey.replace(/\s/g, '');
-
-  // Basic validation of the API key format (Google API keys usually start with 'AIza' and are 39 characters)
-  // We'll do a soft check: if it doesn't start with 'AIza', we warn but still try (in case the format has changed)
-  if (!apiKey.startsWith('AIza')) {
-    // We'll still try, but log a warning in the error message (without exposing the key)
-    // We can return a hint in the error response in development, but in production we might not want to.
-    // For now, we'll include a hint in the error if the key looks suspicious.
-    // We'll check the length: typical Google API keys are around 39 characters.
-    if (apiKey.length < 30 || apiKey.length > 100) {
-      return new Response(JSON.stringify({error: `Server misconfigured: GEMINI_API_KEY has unexpected length (${apiKey.length}). Google API keys are typically 39 characters and start with 'AIza'. Please check your key in Google Cloud Console.`}), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
-    // If length is okay but doesn't start with AIza, we'll still try but warn in the error if the call fails.
   }
 
   try {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          contents: [{parts: [{text: message}]}],
-          generationConfig: {temperature: 0.2, maxOutputTokens: 512}
-        })
-      }
-    );
-
-    // If the response is not OK, we will try to get the error message from Gemini and return it.
-    if (!res.ok) {
-      let errorText = 'Unknown error';
-      try {
-        const errorData = await res.json();
-        // Gemini error response format: { error: { code, message, status } }
-        if (errorData.error && errorData.error.message) {
-          errorText = errorData.error.message;
-        } else if (errorData.message) {
-          errorText = errorData.message;
-        } else {
-          errorText = await res.text();
-        }
-      } catch (e) {
-        errorText = await res.text();
-      }
-      // If we suspect the key is invalid, we can add a hint.
-      if (res.status === 401 && !apiKey.startsWith('AIza')) {
-        errorText += ' Hint: The API key does not start with \"AIza\". Google API keys typically start with \"AIza\". Please verify your key in Google Cloud Console.';
-      }
-      return new Response(JSON.stringify({error: `Gemini API error: ${res.status} - ${errorText}`}), {
-        status: res.status,
-        headers: { 'Content-Type': 'application/json' }
+    const { question } = await request.json();
+    if (!question || typeof question !== 'string' || question.trim().length === 0) {
+      return new Response(JSON.stringify({ error: 'Question is required' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
       });
     }
 
-    const data = await res.json();
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '(No response)';
-    
-    return new Response(JSON.stringify({reply}), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
+    // Load search index (bundled as static asset in public/)
+    const indexUrl = new URL('/search-index.json', request.url);
+    const indexRes = await fetch(indexUrl.toString());
+    const index = await indexRes.json();
+
+    // Find relevant chunks
+    const query = question.toLowerCase();
+    const scored = [];
+
+    for (const entry of index) {
+      let score = 0;
+      const searchText = (entry.title + ' ' + entry.description + ' ' + entry.chunk).toLowerCase();
+
+      // Count keyword matches
+      const words = query.split(/\s+/).filter(w => w.length > 2);
+      for (const word of words) {
+        const regex = new RegExp(word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+        const matches = searchText.match(regex);
+        if (matches) score += matches.length;
+      }
+
+      // Bonus for title matches
+      if (entry.title.toLowerCase().includes(query)) score += 10;
+
+      if (score > 0) {
+        scored.push({ ...entry, score });
+      }
+    }
+
+    // Sort by relevance, take top 5
+    scored.sort((a, b) => b.score - a.score);
+    const topChunks = scored.slice(0, 5);
+
+    if (topChunks.length === 0) {
+      return new Response(JSON.stringify({ answer: "I couldn't find relevant information in the playbook to answer that question. Try rephrasing or asking about AI tools, models, concepts, or workflows covered in the playbook." }), {
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      });
+    }
+
+    // Build context
+    const contextStr = topChunks.map((c, i) =>
+      `[Source ${i + 1}: ${c.title} (/${c.slug}/)]
+${c.chunk}`
+    ).join('\n\n');
+
+    const sourceLinks = topChunks.map(c => `- [${c.title}](/${c.slug}/)`).filter((v, i, a) => a.indexOf(v) === i);
+
+    const systemPrompt = `You are a helpful assistant for the AI Playbook. Answer questions based ONLY on the provided context. If the context doesn't contain enough information to answer, say so. Keep answers concise (2-4 paragraphs). Include relevant source references.`;
+
+    const userPrompt = `Context from the AI Playbook:
+${contextStr}
+
+Question: ${question}
+
+Answer based only on the context above. Include source references.`;
+
+    // Call Workers AI (Llama 3.2 3B)
+    const aiResponse = await env.AI.run('@cf/meta/llama-3.2-3b-instruct', {
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt },
+      ],
+      stream: true,
     });
+
+    // Stream response back
+    const stream = new ReadableStream({
+      async start(controller) {
+        const encoder = new TextEncoder();
+        try {
+          for await (const chunk of aiResponse) {
+            const text = chunk.response || '';
+            if (text) {
+              controller.enqueue(encoder.encode(JSON.stringify({ type: 'text', content: text }) + '\n'));
+            }
+          }
+          // Send source links at the end
+          controller.enqueue(encoder.encode(JSON.stringify({ type: 'sources', sources: sourceLinks }) + '\n'));
+        } catch (e) {
+          controller.enqueue(encoder.encode(JSON.stringify({ type: 'error', content: 'Failed to generate answer.' }) + '\n'));
+        }
+        controller.close();
+      },
+    });
+
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        ...corsHeaders,
+      },
+    });
+
   } catch (e) {
-    return new Response(JSON.stringify({error: `Failed to reach Gemini: ${e.message}`}), {
-      status: 502,
-      headers: { 'Content-Type': 'application/json' }
+    return new Response(JSON.stringify({ error: 'Internal error' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json', ...corsHeaders },
     });
   }
 }

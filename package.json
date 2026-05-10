@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "description": "A personal + public playbook for AI & LLM knowledge.",
   "scripts": {
+    "prebuild": "node scripts/build-search-index.mjs",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
