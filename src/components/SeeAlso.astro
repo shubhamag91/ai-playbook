@@ -45,7 +45,8 @@ if (links.length > 0) {
     }
 
     // Add glossary link if page has glossaryLinks frontmatter
-    const glossaryTermSlugs: string[] = (currentEntry?.data as Record<string, unknown>).glossaryLinks as string[] || [];
+    const entryData = currentEntry?.data as Record<string, unknown> | undefined;
+    const glossaryTermSlugs: string[] = (entryData?.glossaryLinks as string[]) || [];
     if (glossaryTermSlugs.length > 0 && !allLinks.some(l => l.href.includes('/reference/glossary'))) {
       allLinks.push({
         label: 'Glossary',
