@@ -1,5 +1,8 @@
 # Content Migration Redirects (May 2026)
 
+# Self-hosting page moved to Research section
+/opensource /research/models/guide 301
+
 # Phase 2A File Moves to Reference Section
 /glossary /reference/glossary 301
 /confusions /reference/confusions 301
