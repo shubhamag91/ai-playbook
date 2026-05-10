@@ -1,6 +1,6 @@
 ---
 title: Contributors
-description: People who have helped build and maintain the AI Playbook — content, code, review, and design contributions.
+description: People who have helped build and maintain the AI Playbook  -  content, code, review, and design contributions.
 sidebar:
   order: 3
 tags:
@@ -19,9 +19,9 @@ People who have helped build and maintain the AI Playbook.
 
 Contributions of any size are welcome:
 
-- **Content** — new pages, corrections, updates
-- **Review** — fact-checking, proofreading, link verification  
-- **Code** — component improvements, workflow automation
-- **Design** — layout, infographics, accessibility
+- **Content**  -  new pages, corrections, updates
+- **Review**  -  fact-checking, proofreading, link verification  
+- **Code**  -  component improvements, workflow automation
+- **Design**  -  layout, infographics, accessibility
 
 Open a PR and add yourself to `src/data/contributors.ts` with your name, GitHub handle, and contribution types.

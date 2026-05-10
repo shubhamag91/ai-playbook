@@ -159,11 +159,11 @@ We're a small team maintaining a large playbook. Critical fixes get priority. Mi
 ## Fact-Checking Standards
 
 We verify claims against:
-1. **Official sources** — Model cards, API docs, announcements
-2. **Current research** — ArXiv papers, published benchmarks
-3. **Multiple sources** — Not relying on a single claim
-4. **Testing** — Running code examples when relevant
-5. **Community** — Feedback from people building with these tools
+1. **Official sources**  -  Model cards, API docs, announcements
+2. **Current research**  -  ArXiv papers, published benchmarks
+3. **Multiple sources**  -  Not relying on a single claim
+4. **Testing**  -  Running code examples when relevant
+5. **Community**  -  Feedback from people building with these tools
 
 If you see something that doesn't match these standards, report it.
 
@@ -171,10 +171,10 @@ If you see something that doesn't match these standards, report it.
 
 ## What Won't Get Fixed
 
-- Opinion disagreements ("I think X is better") — send to discussions instead
+- Opinion disagreements ("I think X is better")  -  send to discussions instead
 - Requests to link to your own product/blog
 - Typos in quoted material (we quote verbatim)
-- Very minor formatting (extra space, capitalization) — batch updates only
+- Very minor formatting (extra space, capitalization)  -  batch updates only
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Emerging Trends in AI (May 2026)
-description: Emerging patterns, technologies, and shifts in AI in 2026 — multi-agent systems, reasoning models, open-source acceleration, and more.
+description: Emerging patterns, technologies, and shifts in AI in 2026  -  multi-agent systems, reasoning models, open-source acceleration, and more.
 sidebar:
   order: 3
 tags:
@@ -167,7 +167,7 @@ Patterns and developments that are reshaping how AI is built and used.
 - Huge savings (90% off for second+ reference to same context)
 - Changes architecture (load docs once, query many times)
 
-**What's changing:** Long context no longer "cool feature" — it's economic necessity for cost-sensitive apps.
+**What's changing:** Long context no longer "cool feature"  -  it's economic necessity for cost-sensitive apps.
 
 **Watch:** Will databases shift to embedding + caching instead of traditional retrieval?
 
@@ -190,7 +190,7 @@ Patterns and developments that are reshaping how AI is built and used.
 
 ## 12. Longtail Use Cases Exploding
 
-**What's happening:** Not just big vendors building AI anymore — every small company building an AI product.
+**What's happening:** Not just big vendors building AI anymore  -  every small company building an AI product.
 
 **Why now:**
 - Low barrier to entry (APIs are cheap, easy)

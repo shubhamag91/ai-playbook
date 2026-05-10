@@ -1,6 +1,6 @@
 ---
 title: "RAG Architecture: Complete Guide"
-description: Retrieval-Augmented Generation — building knowledge systems that teach LLMs your data
+description: Retrieval-Augmented Generation  -  building knowledge systems that teach LLMs your data
 sidebar:
   order: 2
 tags:
@@ -57,17 +57,17 @@ LLM Generates Answer (now informed by your data)
 
 Take your documents and prepare them for search:
 
-1. **Chunking** — Break documents into manageable pieces (chunks)
+1. **Chunking**  -  Break documents into manageable pieces (chunks)
    - Why: LLMs have context limits; you can't send a 1000-page document
    - How: Split by paragraph, sentence, or fixed size (e.g., 512 tokens)
    - Tradeoff: Smaller chunks = more precise retrieval, but harder for LLM to understand context
 
-2. **Embedding** — Convert text into numerical vectors
+2. **Embedding**  -  Convert text into numerical vectors
    - Why: Numbers are what vector databases understand
    - How: Pass each chunk through an embedding model (e.g., `text-embedding-3-small`)
    - Result: Each chunk becomes a 1536-dimensional vector
 
-3. **Storage** — Store vectors in a vector database
+3. **Storage**  -  Store vectors in a vector database
    - Why: Fast similarity search
    - How: Use Pinecone, Weaviate, Qdrant, Chroma, or pgvector
    - Result: Searchable knowledge base
@@ -78,10 +78,10 @@ Take your documents and prepare them for search:
 
 When a user asks a question:
 
-1. **Convert question to vector** — Use same embedding model
-2. **Find similar vectors** — Vector database does similarity search (cosine, L2, etc.)
-3. **Return top-K chunks** — Usually top 3-5 most similar chunks
-4. **Rank if needed** — Re-rank results if you have a better ranker
+1. **Convert question to vector**  -  Use same embedding model
+2. **Find similar vectors**  -  Vector database does similarity search (cosine, L2, etc.)
+3. **Return top-K chunks**  -  Usually top 3-5 most similar chunks
+4. **Rank if needed**  -  Re-rank results if you have a better ranker
 
 **Example:**
 
@@ -425,6 +425,6 @@ print(answer_question("What's our return policy?"))
 ---
 
 See Also:
-- [Builder Path](/learn/builder) — Hands-on RAG implementation
-- [Frameworks Guide](/decide/frameworks/guide) — LangChain for RAG
-- [How LLMs Work](/deep-dive/how-llms-work) — Understanding embeddings
+- [Builder Path](/learn/builder)  -  Hands-on RAG implementation
+- [Frameworks Guide](/decide/frameworks/guide)  -  LangChain for RAG
+- [How LLMs Work](/deep-dive/how-llms-work)  -  Understanding embeddings

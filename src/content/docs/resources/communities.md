@@ -1,6 +1,6 @@
 ---
 title: AI Communities & Events
-description: Active AI communities, forums, and conferences — where to learn, share, and connect.
+description: Active AI communities, forums, and conferences  -  where to learn, share, and connect.
 sidebar:
   order: 4
 tags:
@@ -29,17 +29,17 @@ Where to connect with other AI builders, researchers, and enthusiasts.
 
 ### Discord
 
-- **Hugging Face Discord** — 50K+ members, active research and support channels
-- **Stability AI Discord** — Image generation community, model updates
-- **LangChain Discord** — Framework support, project showcases
-- **LlamaIndex Discord** — RAG architecture discussions
-- **Anthropic Discord** — Claude API users, prompt sharing
+- **Hugging Face Discord**  -  50K+ members, active research and support channels
+- **Stability AI Discord**  -  Image generation community, model updates
+- **LangChain Discord**  -  Framework support, project showcases
+- **LlamaIndex Discord**  -  RAG architecture discussions
+- **Anthropic Discord**  -  Claude API users, prompt sharing
 
 ### Slack / Workspaces
 
-- **MLOps Community** — Production ML, MLOps, infrastructure (~30K members)
-- **Rasa Community** — Conversational AI, open-source NLP
-- **Women in AI** — Networking, mentorship, events
+- **MLOps Community**  -  Production ML, MLOps, infrastructure (~30K members)
+- **Rasa Community**  -  Conversational AI, open-source NLP
+- **Women in AI**  -  Networking, mentorship, events
 
 ---
 
@@ -59,10 +59,10 @@ Where to connect with other AI builders, researchers, and enthusiasts.
 
 ## Meetups & Local Groups
 
-- **AI Tinkerers** — Hands-on meetups in 20+ cities (SF, NYC, London, etc.)
-- **Papers We Love** — Monthly paper reading groups worldwide
-- **Open Source AI Meetups** — Community-run, focused on local/self-hosted models
-- **PyData / Data Science Meetups** — Broader ML/AI community
+- **AI Tinkerers**  -  Hands-on meetups in 20+ cities (SF, NYC, London, etc.)
+- **Papers We Love**  -  Monthly paper reading groups worldwide
+- **Open Source AI Meetups**  -  Community-run, focused on local/self-hosted models
+- **PyData / Data Science Meetups**  -  Broader ML/AI community
 
 Check [Meetup.com](https://meetup.com) and [Luma](https://lu.ma) for AI events near you.
 

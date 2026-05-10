@@ -1,6 +1,6 @@
 ---
 title: AI Terminology & Definitions
-description: Clarify the difference between AI terms — what's what and why it matters
+description: Clarify the difference between AI terms  -  what's what and why it matters
 sidebar:
   order: 5
 tags:
@@ -119,7 +119,7 @@ Do you want to change how the model *behaves* (tone, style, format)?
 - Used as the *base* for other applications
 - Examples: GPT-3, Claude, Llama (the base versions before fine-tuning)
 - Not trained for any specific task; trained to understand language patterns broadly
-- **Key word:** "Foundation" — everything else builds on it
+- **Key word:** "Foundation"  -  everything else builds on it
 
 **The relationship:**
 - All LLMs are foundation models (trained broadly)
@@ -299,15 +299,15 @@ Do you want to change how the model *behaves* (tone, style, format)?
 
 ## Key Takeaways
 
-1. **AI ≠ AGI** — We have AI. AGI is future. ASI is speculation.
-2. **GenAI ≠ Traditional ML** — Different purposes (generate vs predict)
-3. **Fine-tuning ≠ RAG ≠ Prompt Engineering** — Different costs, different use cases
-4. **Training (expensive, one-time) ≠ Learning (free, instant)** — Crucial distinction
-5. **Hallucination ≠ Lie** — Model doesn't "know" truth; it pattern-matches
+1. **AI ≠ AGI**  -  We have AI. AGI is future. ASI is speculation.
+2. **GenAI ≠ Traditional ML**  -  Different purposes (generate vs predict)
+3. **Fine-tuning ≠ RAG ≠ Prompt Engineering**  -  Different costs, different use cases
+4. **Training (expensive, one-time) ≠ Learning (free, instant)**  -  Crucial distinction
+5. **Hallucination ≠ Lie**  -  Model doesn't "know" truth; it pattern-matches
 
 ---
 
 See Also:
-- [Glossary](/reference/glossary) — 60+ AI terms explained
-- [Common Confusions](/reference/confusions) — 25+ misconceptions debunked
-- [How LLMs Work](/deep-dive/how-llms-work) — Technical deep-dive
+- [Glossary](/reference/glossary)  -  60+ AI terms explained
+- [Common Confusions](/reference/confusions)  -  25+ misconceptions debunked
+- [How LLMs Work](/deep-dive/how-llms-work)  -  Technical deep-dive

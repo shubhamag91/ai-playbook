@@ -1,6 +1,6 @@
 ---
 title: "How LLMs Work: Technical Deep Dive"
-description: Technical deep dive — transformers, attention, embeddings, and training
+description: Technical deep dive  -  transformers, attention, embeddings, and training
 sidebar:
   order: 1
 tags:
@@ -21,7 +21,7 @@ import Breadcrumb from '../../../components/Breadcrumb.astro';
 
 <Breadcrumb />
 
-Understanding the mechanics of Large Language Models — from tokens to transformers to training.
+Understanding the mechanics of Large Language Models  -  from tokens to transformers to training.
 
 ---
 
@@ -58,9 +58,9 @@ Text: "Hello, world!"
 ```
 
 **Common tokenizers:**
-- BPE (Byte Pair Encoding) — GPT uses this
-- SentencePiece — Used by many open models
-- WordPiece — Google's Bert
+- BPE (Byte Pair Encoding)  -  GPT uses this
+- SentencePiece  -  Used by many open models
+- WordPiece  -  Google's Bert
 
 **Key insight:** Different models use different tokenizers, so the same text has different token counts in different models.
 
@@ -88,7 +88,7 @@ Embeddings capture semantic meaning. Similar words have similar embeddings.
 
 ### How Embeddings Are Made
 
-LLMs have an **embedding layer** — a lookup table that converts tokens to vectors:
+LLMs have an **embedding layer**  -  a lookup table that converts tokens to vectors:
 
 ```
 Token: 15234
@@ -131,7 +131,7 @@ This is the secret sauce. Attention is what makes transformers work.
 
 ### The Problem Attention Solves
 
-**Without attention:** The model treats all tokens equally. "The **dog** bites man" — all tokens are equally relevant to predicting the next word.
+**Without attention:** The model treats all tokens equally. "The **dog** bites man"  -  all tokens are equally relevant to predicting the next word.
 
 **With attention:** The model focuses on relevant tokens. When predicting the next word after "bites", it focuses on "dog" and "man", ignores "The".
 
@@ -388,7 +388,7 @@ After training, you can fine-tune on your data:
 ---
 
 See Also:
-- [Beginner Path](/learn/beginner) — Non-technical intro
-- [Builder Path](/learn/builder) — Hands-on implementation
-- [RAG Architecture](/deep-dive/rag-architecture) — Understanding embeddings in practice
-- [Prompt Engineering](/deep-dive/prompt-engineering) — Using transformers effectively
+- [Beginner Path](/learn/beginner)  -  Non-technical intro
+- [Builder Path](/learn/builder)  -  Hands-on implementation
+- [RAG Architecture](/deep-dive/rag-architecture)  -  Understanding embeddings in practice
+- [Prompt Engineering](/deep-dive/prompt-engineering)  -  Using transformers effectively

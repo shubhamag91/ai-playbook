@@ -50,7 +50,7 @@ import { capabilityData, taskCategories, models } from '../data/capabilities';
                 <span class="model-matrix__task-desc">{cat.description}</span>
               </td>
               {scores.map((s, i) => {
-                if (!s) return <td class="model-matrix__cell">—</td>;
+                if (!s) return <td class="model-matrix__cell"> - </td>;
                 return (
                   <td class={`model-matrix__cell score-${s.score}`}
                     data-family={models[i].family.toLowerCase()}

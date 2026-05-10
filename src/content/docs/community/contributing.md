@@ -9,7 +9,7 @@ lastUpdated: 2026-05-08
 nextVerificationDue: 2026-08-06
 ---
 
-The AI Playbook is community-driven. Contributions are welcome — whether corrections, new content, or improvements.
+The AI Playbook is community-driven. Contributions are welcome  -  whether corrections, new content, or improvements.
 
 ---
 
@@ -75,10 +75,10 @@ git push origin fix/your-fix-name
 
 Want to add a new page or section? Create a discussion first:
 
-- **[Open an issue](https://github.com/shubhamag91/ai-playbook/issues/new?template=02-content.yml)** — propose your idea
-- **Wait for feedback** — make sure it fits the playbook vision
-- **Write the content** — follow [Style Guide](#style-guide) below
-- **Submit a PR** — include your new file(s)
+- **[Open an issue](https://github.com/shubhamag91/ai-playbook/issues/new?template=02-content.yml)**  -  propose your idea
+- **Wait for feedback**  -  make sure it fits the playbook vision
+- **Write the content**  -  follow [Style Guide](#style-guide) below
+- **Submit a PR**  -  include your new file(s)
 
 New content typically focuses on:
 - New deep-dives on emerging topics (multimodal AI, real-time agents, etc.)
@@ -183,9 +183,9 @@ import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
 
 RAG adds documents to prompts. Three steps:
 
-1. **Retrieve** — search for relevant docs
-2. **Augment** — add docs to prompt
-3. **Generate** — LLM answers with context
+1. **Retrieve**  -  search for relevant docs
+2. **Augment**  -  add docs to prompt
+3. **Generate**  -  LLM answers with context
 ```
 
 **Avoid:**

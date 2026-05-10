@@ -1,6 +1,6 @@
 ---
 title: Analytics
-description: Site analytics setup and usage guide — privacy-first tracking with Cloudflare Web Analytics.
+description: Site analytics setup and usage guide  -  privacy-first tracking with Cloudflare Web Analytics.
 sidebar:
   order: 6
 tags:
@@ -9,7 +9,7 @@ lastUpdated: 2026-05-10
 nextVerificationDue: 2026-08-10
 ---
 
-The AI Playbook uses **Cloudflare Web Analytics** — a privacy-first analytics platform that doesn't use cookies or collect personal data. No consent banner needed.
+The AI Playbook uses **Cloudflare Web Analytics**  -  a privacy-first analytics platform that doesn't use cookies or collect personal data. No consent banner needed.
 
 ---
 
@@ -64,7 +64,7 @@ Your analytics dashboard is at [Cloudflare Web Analytics](https://dash.cloudflar
 
 Add this to your weekly maintenance routine:
 
-1. Check top 10 pages — do they reflect what's most useful?
-2. Check referrers — any new sources of traffic?
-3. Check mobile percentage — optimize if >50%
-4. Compare week-over-week — any sudden drops?
+1. Check top 10 pages  -  do they reflect what's most useful?
+2. Check referrers  -  any new sources of traffic?
+3. Check mobile percentage  -  optimize if >50%
+4. Compare week-over-week  -  any sudden drops?

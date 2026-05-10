@@ -11,7 +11,7 @@ lastUpdated: 2026-05-10
 nextVerificationDue: 2026-08-08
 ---
 
-If you care about privacy, cost at scale, or control — open-source models let you own your AI stack.
+If you care about privacy, cost at scale, or control  -  open-source models let you own your AI stack.
 
 This page is for people who want to run models locally or on their own infrastructure.
 
@@ -198,9 +198,9 @@ model = AutoModelForCausalLM.from_pretrained(model_id)
 
 ### Tools:
 
-- **Hugging Face TRL** — Simple, free
-- **Axolotl** — Popular for open-source community
-- **Unsloth** — Fast fine-tuning, saves VRAM
+- **Hugging Face TRL**  -  Simple, free
+- **Axolotl**  -  Popular for open-source community
+- **Unsloth**  -  Fast fine-tuning, saves VRAM
 
 ---
 
@@ -259,9 +259,9 @@ model = AutoModelForCausalLM.from_pretrained(model_id)
 ### Example 4: Multi-Model Architecture (Production)
 - **Goal:** Run a customer-facing chatbot with private data, no API dependency
 - **Solution:** Three-tier open-source stack:
-  - **Llama 4 (70B)** on vLLM — primary reasoning, handles 80% of queries
-  - **DeepSeek R1** via Together AI — fallback for complex edge cases
-  - **BGE Embeddings** + Qdrant — local RAG pipeline
+  - **Llama 4 (70B)** on vLLM  -  primary reasoning, handles 80% of queries
+  - **DeepSeek R1** via Together AI  -  fallback for complex edge cases
+  - **BGE Embeddings** + Qdrant  -  local RAG pipeline
 - **Cost:** $800/month GPU cloud + $150 API fallback = $950/month total
 - **Result:** Full data privacy, no API dependency for core flow, $950 vs $4K+ equivalent with Claude/GPT APIs
 
@@ -290,11 +290,11 @@ model = AutoModelForCausalLM.from_pretrained(model_id)
 
 ## Common Mistakes
 
-1. **Downloading 70B model on laptop with 8GB RAM** — Start with 7B-13B
-2. **Expecting open-source to match Claude/GPT exactly** — Llama 4 is excellent but ~10% less capable on average
-3. **Ignoring latency** — Local inference is slower than APIs (but more private)
-4. **Running 24/7 on consumer GPU** — Use cloud GPU, leave your laptop alone
-5. **Not version controlling your fine-tuning data** — Track what you trained on
+1. **Downloading 70B model on laptop with 8GB RAM**  -  Start with 7B-13B
+2. **Expecting open-source to match Claude/GPT exactly**  -  Llama 4 is excellent but ~10% less capable on average
+3. **Ignoring latency**  -  Local inference is slower than APIs (but more private)
+4. **Running 24/7 on consumer GPU**  -  Use cloud GPU, leave your laptop alone
+5. **Not version controlling your fine-tuning data**  -  Track what you trained on
 
 ---
 
@@ -319,9 +319,9 @@ model = AutoModelForCausalLM.from_pretrained(model_id)
 
 ## Resources
 
-- **Ollama** — ollama.ai (local inference, easiest start)
-- **Hugging Face** — huggingface.co/models (model marketplace)
-- **Llamaindex** — RAG framework
-- **vLLM** — Fast inference server
-- **Together AI** — Open-source model APIs (if you don't want to self-host)
-- **Replicate** — Run open models serverless
+- **Ollama**  -  ollama.ai (local inference, easiest start)
+- **Hugging Face**  -  huggingface.co/models (model marketplace)
+- **Llamaindex**  -  RAG framework
+- **vLLM**  -  Fast inference server
+- **Together AI**  -  Open-source model APIs (if you don't want to self-host)
+- **Replicate**  -  Run open models serverless

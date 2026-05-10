@@ -64,7 +64,7 @@ A chronological view of significant model releases, updates, and announcements t
 - Competitive with DeepSeek V3
 
 ### Open-Source Surge
-- Phi-5 (Microsoft) — small but strong
+- Phi-5 (Microsoft)  -  small but strong
 - Falcon 3.0 (TII UAE)
 - Internlm 3.0 (SenseTime)
 - All released as open weights

@@ -63,7 +63,7 @@ sidebar:
 
 - **Cursor**: Use `.cursorrules` file to teach it your codebase patterns (70% reduction in PR review comments)
 - **Claude Code**: Leverage 1M context for entire file/repo understanding before making changes
-- **Aider**: Best for structured git workflows — always commits cleanly
+- **Aider**: Best for structured git workflows  -  always commits cleanly
 - **Multi-tool**: Use Cursor for daily work + Claude Code for complex refactors (complementary strengths)
 
 ## Pricing Comparison (Monthly, for 1 dev)

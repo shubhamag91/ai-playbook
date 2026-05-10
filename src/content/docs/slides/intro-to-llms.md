@@ -27,7 +27,7 @@ This is a placeholder for the Intro to LLMs slide deck. The deck needs to be exp
 3. Export to HTML: `slidev export --format html`
 4. Copy output to `public/decks/intro-to-llms/`
 
-Commit `public/decks/intro-to-llms/`, push, done — the iframe above will load it.
+Commit `public/decks/intro-to-llms/`, push, done  -  the iframe above will load it.
 
 :::tip
 Prefer Reveal.js? Same idea: export to `public/decks/<name>/` and point the iframe at it. Markdown source stays the source of truth.

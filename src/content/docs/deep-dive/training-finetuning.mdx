@@ -1,6 +1,6 @@
 ---
 title: "Training & Fine-tuning: Adapting Models to Your Data"
-description: Pre-training, fine-tuning, and when to adapt models — building custom AI with your data
+description: Pre-training, fine-tuning, and when to adapt models  -  building custom AI with your data
 sidebar:
   order: 5
 tags:
@@ -19,7 +19,7 @@ import Breadcrumb from '../../../components/Breadcrumb.astro';
 
 <Breadcrumb />
 
-When and how to customize large language models for your specific needs — from fine-tuning to training from scratch.
+When and how to customize large language models for your specific needs  -  from fine-tuning to training from scratch.
 
 ---
 
@@ -70,9 +70,9 @@ Trained Foundation Model
 
 ### Why Pre-train?
 
-1. **Better performance** — More tokens → better understanding
-2. **Broad knowledge** — Covers internet, books, research
-3. **General capability** — Can do many tasks (zero-shot, few-shot)
+1. **Better performance**  -  More tokens → better understanding
+2. **Broad knowledge**  -  Covers internet, books, research
+3. **General capability**  -  Can do many tasks (zero-shot, few-shot)
 
 ### When to Pre-train
 
@@ -435,19 +435,19 @@ response = client.messages.create(
 
 ## Common Mistakes
 
-❌ **Fine-tuning for knowledge** — Model won't memorize facts  
+❌ **Fine-tuning for knowledge**  -  Model won't memorize facts  
 ✅ **Use RAG for knowledge, fine-tuning for style**
 
-❌ **Using too little data (10 examples)** — Overfits immediately  
+❌ **Using too little data (10 examples)**  -  Overfits immediately  
 ✅ **Collect 1000+ examples minimum**
 
-❌ **Fine-tuning base model** — Loses general knowledge  
+❌ **Fine-tuning base model**  -  Loses general knowledge  
 ✅ **Fine-tune instruction-tuned models (Claude, GPT-4o)**
 
-❌ **Ignoring validation set** — Can't tell if you're overfitting  
+❌ **Ignoring validation set**  -  Can't tell if you're overfitting  
 ✅ **Monitor validation loss during training**
 
-❌ **Not comparing to baseline** — Can't tell if it's better  
+❌ **Not comparing to baseline**  -  Can't tell if it's better  
 ✅ **Always A/B test fine-tuned vs original model**
 
 ---
@@ -500,18 +500,18 @@ How we tackled it:
 
 ## Key Takeaways
 
-1. **RAG > Fine-tuning for knowledge** — Simpler, cheaper, fresher
-2. **Fine-tune for style, not facts** — Model can't memorize
-3. **1000 examples >> 100 examples** — Quality and quantity both matter
-4. **Always baseline** — Compare to original model before deploying
-5. **Start simple** — Prompt engineering → RAG → fine-tuning (in that order)
-6. **Instruction fine-tuning ROI** — Clear if you have defined tasks and data
-7. **Preference fine-tuning is hard** — Needs human raters, expensive
-8. **Adapters for scale** — Multiple domains without model duplication
+1. **RAG > Fine-tuning for knowledge**  -  Simpler, cheaper, fresher
+2. **Fine-tune for style, not facts**  -  Model can't memorize
+3. **1000 examples >> 100 examples**  -  Quality and quantity both matter
+4. **Always baseline**  -  Compare to original model before deploying
+5. **Start simple**  -  Prompt engineering → RAG → fine-tuning (in that order)
+6. **Instruction fine-tuning ROI**  -  Clear if you have defined tasks and data
+7. **Preference fine-tuning is hard**  -  Needs human raters, expensive
+8. **Adapters for scale**  -  Multiple domains without model duplication
 
 ---
 
 See Also:
-- [How LLMs Work](/deep-dive/how-llms-work) — Understanding pre-training
-- [RAG Architecture](/deep-dive/rag-architecture) — Alternative to fine-tuning for knowledge
-- [Prompt Engineering](/deep-dive/prompt-engineering) — Often better than fine-tuning
+- [How LLMs Work](/deep-dive/how-llms-work)  -  Understanding pre-training
+- [RAG Architecture](/deep-dive/rag-architecture)  -  Alternative to fine-tuning for knowledge
+- [Prompt Engineering](/deep-dive/prompt-engineering)  -  Often better than fine-tuning

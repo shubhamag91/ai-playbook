@@ -1,6 +1,6 @@
 ---
 title: Model Specifications & Pricing (May 2026)
-description: Detailed specs for major AI models — context windows, pricing, capabilities and tradeoffs
+description: Detailed specs for major AI models  -  context windows, pricing, capabilities and tradeoffs
 sidebar:
   order: 4
 tags:
@@ -16,7 +16,7 @@ nextVerificationDue: 2026-06-09
 ---
 
 :::note
-Keep this table opinionated — it's **your** notes, not an exhaustive database. Update the "Best for" and "Notes" columns as you learn.
+Keep this table opinionated  -  it's **your** notes, not an exhaustive database. Update the "Best for" and "Notes" columns as you learn.
 :::
 
 ## Model Comparison
@@ -89,5 +89,5 @@ If the number surprises you: add caching, batch process, use cheaper model for r
 ---
 
 See also:
-- [Tools & Platforms Guide](/decide/tools/guide) — How to access models
-- [Benchmarks](/reference/benchmarks) — Performance on standard evaluations
+- [Tools & Platforms Guide](/decide/tools/guide)  -  How to access models
+- [Benchmarks](/reference/benchmarks)  -  Performance on standard evaluations

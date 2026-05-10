@@ -1,6 +1,6 @@
 ---
 title: AI Tools Landscape (2026)
-description: Curated map of AI tools by category — conversational, coding, automation, creative, and specialized tools.
+description: Curated map of AI tools by category  -  conversational, coding, automation, creative, and specialized tools.
 tags:
   - reference
   - cheatsheet

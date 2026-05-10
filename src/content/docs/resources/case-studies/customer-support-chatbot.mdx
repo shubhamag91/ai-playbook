@@ -44,7 +44,7 @@ System: "You are a helpful support agent. Answer customer questions."
 User: "I ordered 3 weeks ago and haven't received my package"
 Model: "I understand your frustration. Most packages arrive within 5-7 business days. 
         I'd recommend waiting a bit longer, or you could contact customer service..."
-Problem: Hallucinated—customer ordered 3 weeks ago, clearly overdue.
+Problem: Hallucinated - customer ordered 3 weeks ago, clearly overdue.
 ```
 
 **Why it failed:**
@@ -101,7 +101,7 @@ Connected to internal APIs:
 - Return status (if applicable, when expected back)
 - Support history (past tickets, resolution)
 
-This wasn't indexed as embeddings—retrieved directly via API calls with the customer's ID.
+This wasn't indexed as embeddings - retrieved directly via API calls with the customer's ID.
 
 **3. LLM with Tool Use**
 
@@ -144,7 +144,7 @@ How the key pieces work under the hood:
 
 ### Confidence Scoring
 
-Not just probability—actual heuristics:
+Not just probability - actual heuristics:
 
 ```python
 confidence = 0.0
@@ -230,7 +230,7 @@ The numbers after 8 weeks in production:
 
 | Metric | Before | After | Change |
 |--------|--------|-------|--------|
-| Tickets/day | 10,000 | 10,000 | — |
+| Tickets/day | 10,000 | 10,000 |  -  |
 | Bot deflection rate | 0% | 40% | +40% |
 | Tickets handled by humans | 10,000 | 6,000 | -40% |
 | Avg response time | 8 hours | 15 min (bot), 2 hours (human) | -95% |
@@ -335,6 +335,6 @@ Key takeaways from building and shipping this system:
 ---
 
 See Also:
-- [RAG Architecture](/deep-dive/rag-architecture) — How the knowledge base works
-- [Agents & Frameworks](/deep-dive/agents-frameworks) — Tool use pattern
-- [Prompt Engineering](/deep-dive/prompt-engineering) — Confidence-scoring prompts
+- [RAG Architecture](/deep-dive/rag-architecture)  -  How the knowledge base works
+- [Agents & Frameworks](/deep-dive/agents-frameworks)  -  Tool use pattern
+- [Prompt Engineering](/deep-dive/prompt-engineering)  -  Confidence-scoring prompts

@@ -9,14 +9,14 @@ export interface TrendItem {
 export const trendingTopics: TrendItem[] = [
   {
     title: 'Claude 4 Opus Released',
-    description: '400K context, agent mode by default, $8/$24 per 1M tokens — Anthropic\'s new flagship.',
+    description: '400K context, agent mode by default, $8/$24 per 1M tokens  -  Anthropic\'s new flagship.',
     link: '/research/whats-new#claude-4-opus-anthropic-may-2026',
     date: 'May 2026',
     category: 'Model Release',
   },
   {
     title: 'GPT-5.5 Instant',
-    description: 'OpenAI\'s fastest model yet — <1s responses, $0.05/$0.20 per 1M tokens, ideal for real-time apps.',
+    description: 'OpenAI\'s fastest model yet  -  <1s responses, $0.05/$0.20 per 1M tokens, ideal for real-time apps.',
     link: '/research/whats-new#gpt-55-openai-may-2026',
     date: 'May 2026',
     category: 'Model Release',
@@ -65,7 +65,7 @@ export const trendingTopics: TrendItem[] = [
   },
   {
     title: 'Gemini 2.5 Pro (Nvidia)',
-    description: 'Nvidia\'s answer to Groq — runs full models on their own hardware. 2000+ tok/s on Llama 3 70B.',
+    description: 'Nvidia\'s answer to Groq  -  runs full models on their own hardware. 2000+ tok/s on Llama 3 70B.',
     link: '/research/emerging-trends#inference',
     date: 'Mar 2026',
     category: 'Infrastructure',

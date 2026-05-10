@@ -1,6 +1,6 @@
 ---
 title: Quick Start (30 minutes)
-description: A 30-minute guided introduction to AI concepts, tools, and workflows — no technical background required.
+description: A 30-minute guided introduction to AI concepts, tools, and workflows  -  no technical background required.
 sidebar:
   order: 2
 tags:
@@ -15,13 +15,13 @@ Everything you need to know about AI and LLMs in 30 minutes. Pick a destination 
 
 ## What's An LLM?
 
-An **LLM (Large Language Model)** is software that predicts the next word by pattern matching. ChatGPT, Claude, Gemini — they all work this way. That's the whole concept.
+An **LLM (Large Language Model)** is software that predicts the next word by pattern matching. ChatGPT, Claude, Gemini  -  they all work this way. That's the whole concept.
 
 **Key facts:**
 - Trained on billions of text examples (books, web, code)
 - Better at predicting = smarter responses
 - Not magic. Not conscious. Just very advanced autocomplete
-- Can write, code, analyze, summarize, explain — anything involving language
+- Can write, code, analyze, summarize, explain  -  anything involving language
 
 **What they can't do:**
 - Access the internet (unless the app integrates it)
@@ -48,9 +48,9 @@ Structured checklists for AI roles. Covers models, tools, concepts, and real-wor
 How to integrate Claude/GPT into apps. APIs, pricing, best practices.
 
 ### **Need to make a decision right now?**
-- **[Which AI tool?](/decide/tools/guide/)** — Compare 50+ tools by use case
-- **[Which LLM model?](/decide/models/guide/)** — Interactive filter for reasoning, speed, cost
-- **[Glossary](/reference/glossary/)** — 60+ AI terms explained in 1 sentence each
+- **[Which AI tool?](/decide/tools/guide/)**  -  Compare 50+ tools by use case
+- **[Which LLM model?](/decide/models/guide/)**  -  Interactive filter for reasoning, speed, cost
+- **[Glossary](/reference/glossary/)**  -  60+ AI terms explained in 1 sentence each
 
 ---
 

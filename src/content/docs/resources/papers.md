@@ -11,7 +11,7 @@ lastUpdated: 2026-05-10
 nextVerificationDue: 2026-08-08
 ---
 
-Curated papers every AI practitioner should know — from foundations to frontier.
+Curated papers every AI practitioner should know  -  from foundations to frontier.
 
 ---
 
@@ -29,7 +29,7 @@ Curated papers every AI practitioner should know — from foundations to frontie
 
 ### GPT-3: Language Models are Few-Shot Learners (2020)
 **Authors:** Brown et al. (OpenAI)
-**Significance:** Demonstrated that scaling models to 175B parameters unlocks in-context learning — no fine-tuning needed for many tasks.
+**Significance:** Demonstrated that scaling models to 175B parameters unlocks in-context learning  -  no fine-tuning needed for many tasks.
 **Read:** [arXiv](https://arxiv.org/abs/2005.14165)
 
 ### Training Language Models to Follow Instructions (InstructGPT, 2022)
@@ -43,12 +43,12 @@ Curated papers every AI practitioner should know — from foundations to frontie
 
 ### Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks (2020)
 **Authors:** Lewis et al. (Facebook AI)
-**Significance:** Formalized the RAG pattern — augment LLMs with external knowledge retrieval. The foundation of most production LLM systems.
+**Significance:** Formalized the RAG pattern  -  augment LLMs with external knowledge retrieval. The foundation of most production LLM systems.
 **Read:** [arXiv](https://arxiv.org/abs/2005.11401)
 
 ### Lost in the Middle: How Language Models Use Long Contexts (2023)
 **Authors:** Liu et al. (Stanford)
-**Significance:** Showed that LLMs perform worst on information in the middle of long contexts — critical insight for RAG system design.
+**Significance:** Showed that LLMs perform worst on information in the middle of long contexts  -  critical insight for RAG system design.
 **Read:** [arXiv](https://arxiv.org/abs/2307.03172)
 
 ---
@@ -67,7 +67,7 @@ Curated papers every AI practitioner should know — from foundations to frontie
 
 ### ReAct: Synergizing Reasoning and Acting in Language Models (2022)
 **Authors:** Yao et al. (Princeton)
-**Significance:** Combined reasoning traces with action steps — the pattern behind modern agent frameworks.
+**Significance:** Combined reasoning traces with action steps  -  the pattern behind modern agent frameworks.
 **Read:** [arXiv](https://arxiv.org/abs/2210.03629)
 
 ---
@@ -107,7 +107,7 @@ Curated papers every AI practitioner should know — from foundations to frontie
 
 ## Where to Find More
 
-- **[Papers with Code](https://paperswithcode.com)** — Papers + benchmarks + code
-- **[arXiv](https://arxiv.org/list/cs.CL/recent)** — Recent NLP papers
-- **[Hugging Face Papers](https://huggingface.co/papers)** — Curated daily
-- **[Semantic Scholar](https://www.semanticscholar.org)** — Search + citation graph
+- **[Papers with Code](https://paperswithcode.com)**  -  Papers + benchmarks + code
+- **[arXiv](https://arxiv.org/list/cs.CL/recent)**  -  Recent NLP papers
+- **[Hugging Face Papers](https://huggingface.co/papers)**  -  Curated daily
+- **[Semantic Scholar](https://www.semanticscholar.org)**  -  Search + citation graph

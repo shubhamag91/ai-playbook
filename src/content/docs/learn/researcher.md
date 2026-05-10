@@ -1,6 +1,6 @@
 ---
 title: Researcher Learning Path
-description: Stay current with AI research, trends, and new model releases — a structured path for researchers and enthusiasts.
+description: Stay current with AI research, trends, and new model releases  -  a structured path for researchers and enthusiasts.
 sidebar:
   order: 4
 tags:
@@ -96,7 +96,7 @@ Once a month, look at what actually matters:
 
 ### Source 1: Hugging Face Papers
 
-Visit [huggingface.co/papers](https://huggingface.co/papers) — automatically categorizes all ML papers.
+Visit [huggingface.co/papers](https://huggingface.co/papers)  -  automatically categorizes all ML papers.
 
 **Filter by:** Computer Vision, NLP, or whatever interests you  
 **Read:** The top 5 papers by upvotes
@@ -106,10 +106,10 @@ Visit [huggingface.co/papers](https://huggingface.co/papers) — automatically c
 ### Source 2: arXiv Announcements
 
 Subscribe to [arXiv](https://arxiv.org/) in your interest areas:
-- cs.AI — General AI
-- cs.CL — Language models
-- cs.LG — Machine learning
-- cs.CV — Vision
+- cs.AI  -  General AI
+- cs.CL  -  Language models
+- cs.LG  -  Machine learning
+- cs.CV  -  Vision
 
 **Set:** Monthly email digest  
 **Time:** 5 minutes to review titles
@@ -117,11 +117,11 @@ Subscribe to [arXiv](https://arxiv.org/) in your interest areas:
 ### Source 3: Model Releases
 
 Check these monthly:
-- [OpenAI](https://openai.com/news) — GPT releases, product updates
-- [Anthropic](https://www.anthropic.com/) — Claude updates
-- [Meta](https://ai.meta.com/) — Llama releases
-- [Google](https://ai.google/news/) — Gemini, etc.
-- [Hugging Face](https://huggingface.co/models) — New open-source models
+- [OpenAI](https://openai.com/news)  -  GPT releases, product updates
+- [Anthropic](https://www.anthropic.com/)  -  Claude updates
+- [Meta](https://ai.meta.com/)  -  Llama releases
+- [Google](https://ai.google/news/)  -  Gemini, etc.
+- [Hugging Face](https://huggingface.co/models)  -  New open-source models
 
 **Time:** 10 minutes
 
@@ -161,20 +161,20 @@ Pick one important topic per quarter and go deep:
 
 ## Leveraging AI Researchers (Weekly, 30 min)
 
-Don't just read *about* research — follow the researchers.
+Don't just read *about* research  -  follow the researchers.
 
 ### Researchers to Follow on X/Twitter
 
 **LLM Focused:**
-- [@ylecun](https://x.com/ylecun) — Yann LeCun (Meta); contrarian takes
-- [@lilianweng](https://x.com/lilianweng) — Lilian Weng (OpenAI); technical depth
-- [@darioamodei](https://x.com/darioamodei) — Dario Amodei (Anthropic); vision posts
-- [@emollick](https://x.com/emollick) — Ethan Mollick (Wharton); practitioner perspective
+- [@ylecun](https://x.com/ylecun)  -  Yann LeCun (Meta); contrarian takes
+- [@lilianweng](https://x.com/lilianweng)  -  Lilian Weng (OpenAI); technical depth
+- [@darioamodei](https://x.com/darioamodei)  -  Dario Amodei (Anthropic); vision posts
+- [@emollick](https://x.com/emollick)  -  Ethan Mollick (Wharton); practitioner perspective
 
 **Practitioners & Builders:**
-- [@karpathy](https://x.com/karpathy) — Andrej Karpathy; education + demos
-- [@simonw](https://x.com/simonw) — Simon Willison; daily AI experiments
-- [@swyx](https://x.com/swyx) — Shawn Wang; engineering perspective
+- [@karpathy](https://x.com/karpathy)  -  Andrej Karpathy; education + demos
+- [@simonw](https://x.com/simonw)  -  Simon Willison; daily AI experiments
+- [@swyx](https://x.com/swyx)  -  Shawn Wang; engineering perspective
 
 **Action:** Follow 3-5. Use X Lists to create a dedicated AI feed.
 
@@ -182,11 +182,11 @@ Don't just read *about* research — follow the researchers.
 
 **Monthly (1-2 hours):**
 
-1. **[Lex Fridman Podcast](https://lexfridman.com/podcast/)** — Long interviews with researchers
+1. **[Lex Fridman Podcast](https://lexfridman.com/podcast/)**  -  Long interviews with researchers
    - Listen to: Interviews on topics you care about (~3 hours)
    - When: Background while doing other work
 
-2. **[The Cognitive Revolution](https://cognitiverevolution.ai/)** — Real-world AI applications
+2. **[The Cognitive Revolution](https://cognitiverevolution.ai/)**  -  Real-world AI applications
    - Listen to: Bi-weekly episodes (~1 hour)
    - When: Commute or workout
 
@@ -209,9 +209,9 @@ If you're getting 70%+ of predictions right, you understand the field well.
 
 ### Reddit
 
-- [r/MachineLearning](https://reddit.com/r/MachineLearning) — Researchers
-- [r/LocalLLM](https://reddit.com/r/LocalLLM) — Running LLMs locally
-- [r/OpenAI](https://reddit.com/r/OpenAI) — GPT news
+- [r/MachineLearning](https://reddit.com/r/MachineLearning)  -  Researchers
+- [r/LocalLLM](https://reddit.com/r/LocalLLM)  -  Running LLMs locally
+- [r/OpenAI](https://reddit.com/r/OpenAI)  -  GPT news
 
 ### Discord/Slack
 
@@ -250,29 +250,29 @@ You don't have 5-6 hours? Do this minimum:
 ## Tips for Staying Focused
 
 1. **Use RSS feeds** to aggregate your sources (Feedly, Inoreader, NewsBlur)
-2. **Create a reading schedule** — Tuesday is paper day, Friday is newsletter day
-3. **Share what you learn** — Explaining it to others deepens understanding
-4. **Build on what you read** — Make a small project based on a paper you read
-5. **Unfollow noise** — Don't follow 100 people. Follow 5 really good ones.
+2. **Create a reading schedule**  -  Tuesday is paper day, Friday is newsletter day
+3. **Share what you learn**  -  Explaining it to others deepens understanding
+4. **Build on what you read**  -  Make a small project based on a paper you read
+5. **Unfollow noise**  -  Don't follow 100 people. Follow 5 really good ones.
 
 ---
 
 ## Resources Hub
 
 ### Websites to Check Monthly
-- [Hugging Face Papers](https://huggingface.co/papers) — Latest papers
-- [Papers With Code](https://paperswithcode.com/) — Papers + implementations
-- [arXiv](https://arxiv.org/) — Raw research (noisy, but comprehensive)
+- [Hugging Face Papers](https://huggingface.co/papers)  -  Latest papers
+- [Papers With Code](https://paperswithcode.com/)  -  Papers + implementations
+- [arXiv](https://arxiv.org/)  -  Raw research (noisy, but comprehensive)
 
 ### For Specific Topics
-- [What's New](/research/whats-new) — Timeline of AI developments
-- [Model Releases](/research/model-releases) — New models explained
-- [Emerging Trends](/research/emerging-trends) — Quarterly trend analysis
+- [What's New](/research/whats-new)  -  Timeline of AI developments
+- [Model Releases](/research/model-releases)  -  New models explained
+- [Emerging Trends](/research/emerging-trends)  -  Quarterly trend analysis
 
 ### For Deep Learning
-- [Fast.ai](https://fast.ai/) — Free courses (the best)
-- [Neuralnet.ninja](https://neuralnet.ninja/) — Interactive explanations
-- [3Blue1Brown YouTube](https://youtube.com/@3blue1brown) — Visualizations
+- [Fast.ai](https://fast.ai/)  -  Free courses (the best)
+- [Neuralnet.ninja](https://neuralnet.ninja/)  -  Interactive explanations
+- [3Blue1Brown YouTube](https://youtube.com/@3blue1brown)  -  Visualizations
 
 ---
 
@@ -280,8 +280,8 @@ You don't have 5-6 hours? Do this minimum:
 
 The AI field moves fast, but you don't need to know everything. You need to:
 
-1. **Understand the fundamentals** (transformers, attention, etc.) — these don't change
-2. **Track major releases** (new GPT, new Claude, etc.) — these affect what's possible
-3. **Know where to look** when something new appears — you can dig deep when it matters
+1. **Understand the fundamentals** (transformers, attention, etc.)  -  these don't change
+2. **Track major releases** (new GPT, new Claude, etc.)  -  these affect what's possible
+3. **Know where to look** when something new appears  -  you can dig deep when it matters
 
 Use this path to build that foundation, then stay informed with the daily/weekly rhythm. You'll be in the top 10% of informed people without spending excessive time.

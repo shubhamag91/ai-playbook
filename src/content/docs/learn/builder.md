@@ -17,7 +17,7 @@ A practical 1-week path for developers building AI applications. We assume you c
 
 ---
 
-## Week 1: Day 1-2 — Choose Your Stack
+## Week 1: Day 1-2  -  Choose Your Stack
 
 ### Step 1: Pick Your API (30 min)
 
@@ -105,7 +105,7 @@ This works. You've now built an AI assistant.
 
 ---
 
-## Week 1: Day 3 — Build Multi-Turn Conversations
+## Week 1: Day 3  -  Build Multi-Turn Conversations
 
 Single messages are limited. Real apps need context. Build a chatbot that remembers previous messages.
 
@@ -143,7 +143,7 @@ This is why long conversations get expensive. Solution: context windows or summa
 
 ---
 
-## Week 1: Day 4 — Add Retrieval (RAG Basics)
+## Week 1: Day 4  -  Add Retrieval (RAG Basics)
 
 Now you need your model to know about *your* data. Add a vector database.
 
@@ -206,7 +206,7 @@ response = client.messages.create(
 
 ---
 
-## Week 1: Day 5-6 — Add Structured Output
+## Week 1: Day 5-6  -  Add Structured Output
 
 Your app needs to extract data, not just chat. Make the model return JSON.
 
@@ -261,7 +261,7 @@ class Person(BaseModel):
 
 ---
 
-## Week 1: Day 7 — Production Patterns
+## Week 1: Day 7  -  Production Patterns
 
 Now you have a working app. Make it production-ready.
 
@@ -348,13 +348,13 @@ results = await asyncio.gather(*[ask_question(q) for q in questions])
 ## Going Deeper
 
 **If you want more advanced patterns:**
-- [RAG Architecture](/deep-dive/rag-architecture) — Vector databases, chunking strategies
-- [Agents & Frameworks](/deep-dive/agents-frameworks) — CrewAI, LangChain, autonomous agents
-- [Prompt Engineering](/deep-dive/prompt-engineering) — Optimization techniques
+- [RAG Architecture](/deep-dive/rag-architecture)  -  Vector databases, chunking strategies
+- [Agents & Frameworks](/deep-dive/agents-frameworks)  -  CrewAI, LangChain, autonomous agents
+- [Prompt Engineering](/deep-dive/prompt-engineering)  -  Optimization techniques
 
 **Tools for your app:**
-- [Tools & Platforms Guide](/decide/tools/guide) — Vector DBs, frameworks, monitoring
-- [Model Specs](/reference/model-specs) — Which model for your use case
+- [Tools & Platforms Guide](/decide/tools/guide)  -  Vector DBs, frameworks, monitoring
+- [Model Specs](/reference/model-specs)  -  Which model for your use case
 
 **Next steps:**
 1. Build a small prototype (RAG chatbot on your docs)

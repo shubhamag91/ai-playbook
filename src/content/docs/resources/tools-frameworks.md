@@ -1,6 +1,6 @@
 ---
 title: Tools & Frameworks Reference
-description: Comprehensive reference of AI development tools — frameworks, SDKs, deployment platforms, monitoring, and infrastructure.
+description: Comprehensive reference of AI development tools  -  frameworks, SDKs, deployment platforms, monitoring, and infrastructure.
 sidebar:
   order: 5
 tags:
@@ -12,7 +12,7 @@ lastUpdated: 2026-05-10
 nextVerificationDue: 2026-08-08
 ---
 
-AI development tools organized by category — from app frameworks to production infrastructure.
+AI development tools organized by category  -  from app frameworks to production infrastructure.
 
 If you're new to this: think of building an AI app like building a house. Frameworks are your toolkit. SDKs talk to the model provider. Inference servers run the model yourself. Vector databases store your data's "memory." Monitoring tells you if it's working. Deployment platforms host it all.
 
@@ -20,7 +20,7 @@ If you're new to this: think of building an AI app like building a house. Framew
 
 ## LLM Frameworks
 
-**What this is:** Libraries that give you pre-built pieces for connecting your app to an LLM — like a starter kit for AI features. Instead of writing code to call an API from scratch, you use a framework that handles prompts, conversation history, and tool integration for you.
+**What this is:** Libraries that give you pre-built pieces for connecting your app to an LLM  -  like a starter kit for AI features. Instead of writing code to call an API from scratch, you use a framework that handles prompts, conversation history, and tool integration for you.
 
 **When you'd use it:** You're building a chatbot, a RAG system, or any app that talks to an LLM. Start here.
 
@@ -48,7 +48,7 @@ Building multi-agent systems?              → LangGraph
 
 **What this is:** The official "phone line" to a model provider (Anthropic, OpenAI, Google). An SDK is a small library that handles authentication, request formatting, and error handling so you can focus on your app logic.
 
-**When you'd use it:** You're building something and know which provider you want. Skip the framework if your use case is simple — just use the SDK directly.
+**When you'd use it:** You're building something and know which provider you want. Skip the framework if your use case is simple  -  just use the SDK directly.
 
 | Provider | SDK | Key Features |
 |---|---|---|
@@ -81,9 +81,9 @@ Building multi-agent systems?              → LangGraph
 
 ## Vector Databases
 
-**What this is:** A special database that stores "embeddings" — mathematical representations of text meaning. When you search, it finds things by meaning rather than exact keywords. This is how RAG (Retrieval-Augmented Generation) works: you store your documents as vectors, then retrieve relevant ones when a user asks a question.
+**What this is:** A special database that stores "embeddings"  -  mathematical representations of text meaning. When you search, it finds things by meaning rather than exact keywords. This is how RAG (Retrieval-Augmented Generation) works: you store your documents as vectors, then retrieve relevant ones when a user asks a question.
 
-**When you'd use it:** You're building RAG — an app that answers questions based on your own documents (knowledge base, support docs, research papers).
+**When you'd use it:** You're building RAG  -  an app that answers questions based on your own documents (knowledge base, support docs, research papers).
 
 | Database | Deployment | Key Feature |
 |---|---|---|

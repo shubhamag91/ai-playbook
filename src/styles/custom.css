@@ -6,7 +6,7 @@
   --sl-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 }
 
-/* Accent color — pick anything you like */
+/* Accent color  -  pick anything you like */
 :root {
   --sl-color-accent-low: #1a2d4d;
   --sl-color-accent: #3b82f6;
@@ -48,7 +48,7 @@ h2 + h3::before {
   border-radius: 1px;
 }
 
-/* Mobile optimization — ensure proper touch targets and spacing */
+/* Mobile optimization  -  ensure proper touch targets and spacing */
 @media (max-width: 768px) {
   /* Ensure all interactive elements have minimum 44px touch target */
   button,

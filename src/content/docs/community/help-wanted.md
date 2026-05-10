@@ -1,6 +1,6 @@
 ---
 title: Help Wanted
-description: Well-scoped tasks for first-time contributors — pick one and start contributing.
+description: Well-scoped tasks for first-time contributors  -  pick one and start contributing.
 sidebar:
   order: 4
 tags:
@@ -41,7 +41,7 @@ Add a new term to the glossary. Pick a term not already covered, write a clear e
 ## Technical Tasks
 
 ### Fix a CSS Bug
-Check for layout issues — dark/light mode inconsistencies, mobile breakpoints, or alignment problems.
+Check for layout issues  -  dark/light mode inconsistencies, mobile breakpoints, or alignment problems.
 
 **Files:** `src/components/*.css`  
 **Time:** ~15 minutes  

@@ -1,6 +1,6 @@
 ---
 title: Evaluation & Testing for LLMs
-description: How to evaluate LLM outputs — qualitative metrics, benchmark selection, A/B testing, guardrails, and LLM-as-judge patterns.
+description: How to evaluate LLM outputs  -  qualitative metrics, benchmark selection, A/B testing, guardrails, and LLM-as-judge patterns.
 sidebar:
   order: 7
 tags:
@@ -20,7 +20,7 @@ import Breadcrumb from '../../../components/Breadcrumb.astro';
 
 <Breadcrumb />
 
-How to know if your LLM application is actually working — from individual prompt tests to production monitoring.
+How to know if your LLM application is actually working  -  from individual prompt tests to production monitoring.
 
 ---
 
@@ -146,8 +146,8 @@ Compare two versions of a prompt, model, or system configuration.
 
 1. **Split traffic** 50/50 between control (A) and variant (B)
 2. **Collect both** quantitative (latency, cost) and qualitative (eval scores) metrics
-3. **Statistical significance** — run until you have 100+ samples per variant
-4. **Decision** — switch if B is clearly better; keep A if uncertain
+3. **Statistical significance**  -  run until you have 100+ samples per variant
+4. **Decision**  -  switch if B is clearly better; keep A if uncertain
 
 ### Sample Size Calculator
 
@@ -179,7 +179,7 @@ Use existing benchmarks when choosing between models, and custom evals for your 
 | **Bamboogle** | Multi-step reasoning | Agentic workflows |
 | **HellaSwag** | Commonsense reasoning | Chatbots, everyday tasks |
 
-**Custom benchmarks** — Create a dataset of 50-100 real user queries with gold-standard responses. Run all eval variants against this dataset. This is more valuable than any public benchmark.
+**Custom benchmarks**  -  Create a dataset of 50-100 real user queries with gold-standard responses. Run all eval variants against this dataset. This is more valuable than any public benchmark.
 
 ---
 
@@ -258,7 +258,7 @@ User Query → LLM → Output → Guardrails → User
 ## Quick Start: Minimal Eval Suite
 
 ```python
-# A minimal evaluation setup — adapt for your use case
+# A minimal evaluation setup  -  adapt for your use case
 evals = [
     {"query": "What is RAG?", "checks": ["retrieval", "augmented", "generation"]},
     {"query": "Explain transformers", "checks": ["attention", "encoder", "decoder"]},
@@ -278,6 +278,6 @@ def run_evals(model, evals):
 
 ## See Also
 
-- [Benchmarks](/reference/benchmarks) — Public benchmark comparisons
-- [Training & Fine-tuning](/deep-dive/training-finetuning) — When evals show you need a better model
-- [Prompt Engineering](/deep-dive/prompt-engineering) — Iterate prompts before building evals
+- [Benchmarks](/reference/benchmarks)  -  Public benchmark comparisons
+- [Training & Fine-tuning](/deep-dive/training-finetuning)  -  When evals show you need a better model
+- [Prompt Engineering](/deep-dive/prompt-engineering)  -  Iterate prompts before building evals

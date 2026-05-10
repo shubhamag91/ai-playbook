@@ -13,7 +13,7 @@ nextVerificationDue: 2027-05-08
 
 1. Every page is a Markdown (`.md`) or MDX (`.mdx`) file under `src/content/docs/`.
 2. Folders become sidebar sections automatically.
-3. Push to `main` — your host (Cloudflare Pages / Vercel / Netlify) rebuilds and deploys.
+3. Push to `main`  -  your host (Cloudflare Pages / Vercel / Netlify) rebuilds and deploys.
 
 ## Folder layout
 
@@ -52,17 +52,17 @@ src/content/docs/
 ## What's in this playbook (May 2026)
 
 **Core Pages**
-- **Tools** — Landscape of conversational AI (Claude, ChatGPT, Gemini, DeepSeek, Perplexity), coding assistants, automation, and creative tools.
-- **Workflows** — Common AI workflows (research, coding, content creation) plus industry-specific patterns (healthcare, finance, legal, autonomous vehicles).
-- **Agents** — Agentic AI systems, multi-agent coordination, tool use, and current implementations (Cursor, Claude Code, Windsurf, AutoGen, CrewAI).
-- **Open Source** — Running open-weight models locally (Llama, DeepSeek, Mistral, Qwen) and self-hosted options.
+- **Tools**  -  Landscape of conversational AI (Claude, ChatGPT, Gemini, DeepSeek, Perplexity), coding assistants, automation, and creative tools.
+- **Workflows**  -  Common AI workflows (research, coding, content creation) plus industry-specific patterns (healthcare, finance, legal, autonomous vehicles).
+- **Agents**  -  Agentic AI systems, multi-agent coordination, tool use, and current implementations (Cursor, Claude Code, Windsurf, AutoGen, CrewAI).
+- **Open Source**  -  Running open-weight models locally (Llama, DeepSeek, Mistral, Qwen) and self-hosted options.
 
 **Reference Pages**
-- **Glossary** — 60+ AI terms organized by complexity level, plus May 2026 model comparisons.
-- **History** — Timeline from 1950s through May 2026, covering the rise of agentic AI and frontier models.
-- **Confusions** — 30+ myths debunked (agents won't replace you, context windows matter differently, cost is collapsing).
-- **Follow** — Researchers, practitioners, industry leaders, and newsletters to stay current.
-- **Principles** — 7 guiding rules for using AI responsibly, plus detailed AI safety & ethics for the agentic era.
+- **Glossary**  -  60+ AI terms organized by complexity level, plus May 2026 model comparisons.
+- **History**  -  Timeline from 1950s through May 2026, covering the rise of agentic AI and frontier models.
+- **Confusions**  -  30+ myths debunked (agents won't replace you, context windows matter differently, cost is collapsing).
+- **Follow**  -  Researchers, practitioners, industry leaders, and newsletters to stay current.
+- **Principles**  -  7 guiding rules for using AI responsibly, plus detailed AI safety & ethics for the agentic era.
 
 **Interview Prep Cheatsheets (11 total)**
 - LLM fundamentals, product management, system design, banking/fintech, behavioral interviews
@@ -126,10 +126,10 @@ grep "lastUpdated:" src/content/docs/glossary.mdx
 ```
 
 Key dates to watch:
-- **Model releases** — Claude 4.7 (400K context), GPT-5.5 Instant, Gemini 3.1 Pro (1M context), o3 (reasoning), DeepSeek R1, Grok 3
-- **Agentic AI tools** — Cursor (78% SWE-bench), Windsurf (75%), Claude Code, CrewAI, AutoGen
-- **Reasoning models & test-time compute** — o3, DeepSeek R1, and implications for costs/latency
-- **Real-time AI** — Video analysis, live translation, streaming inference
+- **Model releases**  -  Claude 4.7 (400K context), GPT-5.5 Instant, Gemini 3.1 Pro (1M context), o3 (reasoning), DeepSeek R1, Grok 3
+- **Agentic AI tools**  -  Cursor (78% SWE-bench), Windsurf (75%), Claude Code, CrewAI, AutoGen
+- **Reasoning models & test-time compute**  -  o3, DeepSeek R1, and implications for costs/latency
+- **Real-time AI**  -  Video analysis, live translation, streaming inference
 
 ## Tagging & organizing
 
@@ -138,4 +138,4 @@ Starlight gives you nav + full-text search out of the box. If you want Obsidian-
 - **[Astro Starlight Sidebar Topics](https://starlight-sidebar-topics.netlify.app/)** for nested topic groups
 - **[Quartz](https://quartz.jzhao.xyz/)** if you decide you want the full "digital garden" feel
 
-Start simple — you can always migrate content later because it's all just Markdown.
+Start simple  -  you can always migrate content later because it's all just Markdown.

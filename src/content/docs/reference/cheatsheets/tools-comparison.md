@@ -1,6 +1,6 @@
 ---
 title: Tools Comparison (1 page)
-description: Which AI tool to use for what — chat, coding, content creation, APIs
+description: Which AI tool to use for what  -  chat, coding, content creation, APIs
 sidebar:
   order: 5
 tags:
@@ -81,16 +81,16 @@ nextVerificationDue: 2026-06-08
 ## Speed vs Quality vs Price Tradeoffs
 
 ### 🚀 Fastest
-**GPT-5.5 Instant** — Replies in <1s, great for real-time apps. Good quality for the speed.
+**GPT-5.5 Instant**  -  Replies in <1s, great for real-time apps. Good quality for the speed.
 
 ### 🏆 Best Quality
-**Claude Opus 4.7** — Longest context, most thoughtful. Slower, more expensive.
+**Claude Opus 4.7**  -  Longest context, most thoughtful. Slower, more expensive.
 
 ### 💰 Cheapest
-**DeepSeek V4** — 10–50x less than others. Quality is surprisingly good for reasoning.
+**DeepSeek V4**  -  10–50x less than others. Quality is surprisingly good for reasoning.
 
 ### 🎯 Best Balance
-**Claude Sonnet 4.6** or **GPT-5.5** — Fast, smart, reasonable cost. Pick based on your use case.
+**Claude Sonnet 4.6** or **GPT-5.5**  -  Fast, smart, reasonable cost. Pick based on your use case.
 
 ---
 

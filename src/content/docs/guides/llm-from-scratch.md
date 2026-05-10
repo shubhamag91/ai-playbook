@@ -1,5 +1,5 @@
 ---
-title: Build an LLM from Scratch — Book Summary
+title: Build an LLM from Scratch  -  Book Summary
 description: Notes and summary from "Build a Large Language Model (From Scratch)" by Sebastian Raschka.
 tags:
   - guide
@@ -8,9 +8,9 @@ lastUpdated: 2026-05-08
 nextVerificationDue: 2027-05-08
 ---
 
-This guide summarizes key concepts from Sebastian Raschka's book "Build a Large Language Model (From Scratch)" — a practical, code-first journey through building a GPT-like LLM from the ground up.
+This guide summarizes key concepts from Sebastian Raschka's book "Build a Large Language Model (From Scratch)"  -  a practical, code-first journey through building a GPT-like LLM from the ground up.
 
-> **Philosophy**: "I don't understand anything I can't build." — Richard Feynman
+> **Philosophy**: "I don't understand anything I can't build."  -  Richard Feynman
 
 ## Chapter 1: Understanding Large Language Models
 
@@ -122,7 +122,7 @@ for i in range(len(text) - window_size):
 
 ### The Problem with RNNs
 
-RNNs process sequentially — slow and struggle with long-range dependencies (vanishing gradients).
+RNNs process sequentially  -  slow and struggle with long-range dependencies (vanishing gradients).
 
 ### Self-Attention
 
@@ -206,7 +206,7 @@ def gelu(x):
     return 0.5 * x * (1 + torch.tanh(np.sqrt(2/np.pi) * (x + 0.044715 * x**3)))
 ```
 
-Used in GPT, BERT — better than ReLU for language tasks.
+Used in GPT, BERT  -  better than ReLU for language tasks.
 
 ### Generating Text
 
@@ -344,7 +344,7 @@ formatted_text = f"[INST] {instruction} [/INST] {response}"
 
 ### DPO (Direct Preference Optimization)
 
-Simpler than RLHF — directly optimize against preference data:
+Simpler than RLHF  -  directly optimize against preference data:
 
 ```python
 # DPO loss (simplified)

@@ -19,8 +19,8 @@ Complete tracking of all pages, their tier assignments, and verification schedul
 
 | Tier | Cadence | Pages | How to Review |
 |---|---|---|---|
-| **T1 — Monthly** | Every 30 days | Pricing, tools, comparisons | Check official pricing pages, verify model names |
-| **T2 — Quarterly** | Every 90 days | Deep dives, learn paths, resources | Spot-check accuracy, update lastUpdated |
-| **T3 — Annual** | Every 365 days | Glossary, history, diagrams | Verify no major shifts, update lastUpdated |
+| **T1  -  Monthly** | Every 30 days | Pricing, tools, comparisons | Check official pricing pages, verify model names |
+| **T2  -  Quarterly** | Every 90 days | Deep dives, learn paths, resources | Spot-check accuracy, update lastUpdated |
+| **T3  -  Annual** | Every 365 days | Glossary, history, diagrams | Verify no major shifts, update lastUpdated |
 
 The [stale-content workflow](/.github/workflows/stale-content.yml) automatically checks `nextVerificationDue` dates every Monday and creates an issue if any page is overdue.
