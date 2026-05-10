@@ -45,7 +45,7 @@ export default defineConfig({
   integrations: [
     starlight({
       components: {
-        Content: './src/components/ContentOverride.astro',
+        Footer: './src/components/FooterOverride.astro',
       },
       title: 'AI Playbook',
       description: 'A living playbook of AI & LLM knowledge — notes, cheatsheets, diagrams, and decks.',
