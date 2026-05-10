@@ -175,6 +175,7 @@ export default defineConfig({
           label: 'Decide',
           items: [
             { label: 'Tools Guide', slug: 'decide/tools/guide' },
+            { label: 'Decision Tree', slug: 'decide/tools/decision-tree' },
             { label: 'Tool Comparison', slug: 'decide/tools/comparison' },
             { label: 'Models Guide', slug: 'decide/models/guide' },
             { label: 'Frameworks Guide', slug: 'decide/frameworks/guide' },
