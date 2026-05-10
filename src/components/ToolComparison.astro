@@ -8,31 +8,44 @@ const toolsByCategory = {
     { name: 'Gemini', cost: '$20/mo', costSort: 20, speed: 'Fast', speedSort: 1, bestFor: 'Research, massive documents' },
     { name: 'Perplexity', cost: '$20/mo', costSort: 20, speed: 'Fast', speedSort: 1, bestFor: 'Real-time web search, citations' },
     { name: 'DeepSeek', cost: 'Free/$10/mo', costSort: 5, speed: 'Fast', speedSort: 1, bestFor: 'Cost-conscious, reasoning' },
-    { name: 'NotebookLM', cost: 'Free', costSort: 0, speed: 'Medium', speedSort: 2, bestFor: 'PDF analysis, document synthesis' },
+    { name: 'NotebookLM', cost: 'Free', costSort: 0, speed: 'Medium', speedSort: 2, bestFor: 'Document analysis, audio summaries' },
     { name: 'Kimi', cost: 'Free/$10/mo', costSort: 5, speed: 'Medium', speedSort: 2, bestFor: 'Long context, web search' },
-    { name: 'Ollama', cost: 'Free', costSort: 0, speed: 'Varies', speedSort: 2, bestFor: 'Private, self-hosted' }
+    { name: 'Microsoft Copilot', cost: 'Free/$20/mo', costSort: 15, speed: 'Fast', speedSort: 1, bestFor: 'Office integration, Edge' },
+    { name: 'Ollama', cost: 'Free', costSort: 0, speed: 'Varies', speedSort: 2, bestFor: 'Private, self-hosted' },
   ],
   coding: [
     { name: 'Cursor', cost: '$20-40/mo', costSort: 30, speed: 'Medium', speedSort: 2, bestFor: 'Large codebases, multi-file refactors' },
     { name: 'Claude Code', cost: 'Pay-per-use', costSort: 10, speed: 'Medium', speedSort: 2, bestFor: 'Terminal, automation, CLI workflows' },
     { name: 'GitHub Copilot', cost: 'Free/$10-20/mo', costSort: 10, speed: 'Fast', speedSort: 1, bestFor: 'Widest IDE support' },
     { name: 'Windsurf', cost: '$15-30/mo', costSort: 22, speed: 'Fast', speedSort: 1, bestFor: 'Agentic workflows' },
-    { name: 'JetBrains AI', cost: 'Free/$10-15/mo', costSort: 10, speed: 'Medium', speedSort: 2, bestFor: 'JetBrains IDEs' }
+    { name: 'JetBrains AI', cost: 'Free/$10-15/mo', costSort: 10, speed: 'Medium', speedSort: 2, bestFor: 'JetBrains IDEs' },
+    { name: 'Aider', cost: 'Free + API costs', costSort: 5, speed: 'Medium', speedSort: 2, bestFor: 'Git-native, reliable commits' },
+    { name: 'Lovable', cost: 'Freemium', costSort: 15, speed: 'Fast', speedSort: 1, bestFor: 'Full-stack apps from description' },
+    { name: 'Vercel v0', cost: 'Freemium', costSort: 10, speed: 'Fast', speedSort: 1, bestFor: 'React UI components from text' },
+    { name: 'Replit', cost: 'Freemium', costSort: 15, speed: 'Medium', speedSort: 2, bestFor: 'Browser IDE + instant deploy' },
   ],
   content: [
     { name: 'Midjourney', cost: '$10-120/mo', costSort: 50, speed: 'Medium', speedSort: 2, bestFor: 'Photorealistic images, illustrations' },
+    { name: 'DALL-E 3', cost: 'In ChatGPT Plus', costSort: 20, speed: 'Fast', speedSort: 1, bestFor: 'Quick iterations, integrated' },
+    { name: 'Flux', cost: 'Free or $0.05-0.10/image', costSort: 5, speed: 'Slow', speedSort: 3, bestFor: 'Open-source, local or API' },
     { name: 'Runway', cost: '$12-76/mo', costSort: 40, speed: 'Medium', speedSort: 2, bestFor: 'Video generation, post-production' },
+    { name: 'Sora', cost: 'In ChatGPT Pro', costSort: 25, speed: 'Slow', speedSort: 3, bestFor: 'High-quality video' },
     { name: 'Suno', cost: 'Free/$8-32/mo', costSort: 15, speed: 'Medium', speedSort: 2, bestFor: 'Original music, background scores' },
-    { name: 'NotebookLM', cost: 'Free', costSort: 0, speed: 'Fast', speedSort: 1, bestFor: 'Document summarization' },
-    { name: 'ElevenLabs', cost: 'Free/$11-99/mo', costSort: 30, speed: 'Medium', speedSort: 2, bestFor: 'Voice synthesis, narration' }
+    { name: 'ElevenLabs', cost: 'Free/$11-99/mo', costSort: 30, speed: 'Medium', speedSort: 2, bestFor: 'Voice synthesis, narration' },
+    { name: 'Descript', cost: 'Freemium', costSort: 20, speed: 'Medium', speedSort: 2, bestFor: 'AI audio/video editing' },
+    { name: 'Whisper', cost: 'Free (open-source)', costSort: 0, speed: 'Medium', speedSort: 2, bestFor: 'Speech-to-text, 99 languages' },
   ],
   apis: [
     { name: 'Anthropic API', cost: 'Pay-per-token', costSort: 10, speed: 'Medium', speedSort: 2, bestFor: 'Building with Claude' },
-    { name: 'OpenAI API', cost: 'Pay-per-token', costSort: 10, speed: 'Medium', speedSort: 2, bestFor: 'Building with GPT' },
+    { name: 'OpenAI API', cost: 'Pay-per-token', costSort: 10, speed: 'Fast', speedSort: 1, bestFor: 'Building with GPT' },
     { name: 'Google Vertex AI', cost: 'Pay-per-token', costSort: 10, speed: 'Medium', speedSort: 2, bestFor: 'Building with Gemini' },
+    { name: 'DeepSeek API', cost: '$0.14-2.19/1M tok', costSort: 2, speed: 'Fast', speedSort: 1, bestFor: 'Cost-efficient, open models' },
+    { name: 'Together AI', cost: 'Pay-per-token', costSort: 8, speed: 'Fast', speedSort: 1, bestFor: '100+ open models' },
+    { name: 'Replicate', cost: 'Pay-per-second', costSort: 8, speed: 'Medium', speedSort: 2, bestFor: 'Run open models serverless' },
+    { name: 'OpenRouter', cost: 'Pay-per-token', costSort: 8, speed: 'Medium', speedSort: 2, bestFor: 'Single API, 100+ models' },
     { name: 'LangChain', cost: 'Open-source', costSort: 0, speed: 'Varies', speedSort: 2, bestFor: 'LLM app framework' },
-    { name: 'CrewAI', cost: 'Open-source', costSort: 0, speed: 'Varies', speedSort: 2, bestFor: 'Multi-agent orchestration' }
-  ]
+    { name: 'CrewAI', cost: 'Open-source', costSort: 0, speed: 'Varies', speedSort: 2, bestFor: 'Multi-agent orchestration' },
+  ],
 };
 ---
 
