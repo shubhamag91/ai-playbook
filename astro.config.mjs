@@ -176,6 +176,7 @@ export default defineConfig({
             { label: 'Beginner Path', slug: 'learn/beginner' },
             { label: 'Builder Path', slug: 'learn/builder' },
             { label: 'Researcher Path', slug: 'learn/researcher' },
+            { label: 'Workflows', slug: 'workflows' },
             { label: 'Interview Prep', slug: 'learn/interview-prep' },
           ],
         },
@@ -191,6 +192,7 @@ export default defineConfig({
               ],
             },
             { label: 'Tool Comparison', slug: 'decide/tools/comparison' },
+            { label: 'AI Tools Navigator', slug: 'tools' },
             { label: 'Models Guide', slug: 'decide/models/guide' },
             { label: 'Frameworks Guide', slug: 'decide/frameworks/guide' },
             { label: 'Cost Calculator', slug: 'decide/cost-calculator' },
@@ -201,6 +203,7 @@ export default defineConfig({
           items: [
             { label: 'Glossary', slug: 'reference/glossary' },
             { label: 'Cheatsheets', autogenerate: { directory: 'reference/cheatsheets' } },
+            { label: 'Who to Follow', slug: 'follow' },
             { label: 'Confusions', slug: 'reference/confusions' },
             { label: 'Principles', slug: 'reference/principles' },
             { label: 'Benchmarks', slug: 'reference/benchmarks' },

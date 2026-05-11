@@ -20,10 +20,11 @@ nextVerificationDue: 2027-05-08
 ```text
 src/content/docs/
 ├── index.md                      # Landing page (Welcome)
-├── tools.md                      # Conversational AI, coding, automation tools (May 2026)
+├── tools/index.md               # AI Tools Navigator (May 2026)
 ├── workflows.md                  # AI workflows by industry & use case
-├── agents.md                     # Agents & agentic AI systems (Cursor, Claude Code, etc.)
-├── open-source.md               # Open-weight models (Llama, DeepSeek, Mistral)
+├── follow.mdx                    # Who to Follow
+├── deep-dive/
+│   └── agents-frameworks.mdx     # Agents & agentic AI systems
 ├── glossary.mdx                 # 60+ AI terms (Beginner → Advanced)
 ├── history.mdx                  # Timeline: 1950s → May 2026 (Agentic AI era)
 ├── confusions.mdx               # 30+ misconceptions debunked
@@ -54,8 +55,8 @@ src/content/docs/
 **Core Pages**
 - **Tools**  -  Landscape of conversational AI (Claude, ChatGPT, Gemini, DeepSeek, Perplexity), coding assistants, automation, and creative tools.
 - **Workflows**  -  Common AI workflows (research, coding, content creation) plus industry-specific patterns (healthcare, finance, legal, autonomous vehicles).
-- **Agents**  -  Agentic AI systems, multi-agent coordination, tool use, and current implementations (Cursor, Claude Code, Windsurf, AutoGen, CrewAI).
-- **Open Source**  -  Running open-weight models locally (Llama, DeepSeek, Mistral, Qwen) and self-hosted options.
+- **Agents**  -  Agentic AI systems, multi-agent coordination, tool use, and current implementations (Cursor, Claude Code, Windsurf, AutoGen, CrewAI). See [Agents & Frameworks deep dive](/deep-dive/agents-frameworks/).
+- **Open Source**  -  Running open-weight models locally (Llama, DeepSeek, Mistral, Qwen, Muse Spark). See [Open-Source Models guide](/research/models/guide/).
 
 **Reference Pages**
 - **Glossary**  -  60+ AI terms organized by complexity level, plus May 2026 model comparisons.
