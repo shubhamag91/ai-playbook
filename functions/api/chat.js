@@ -130,9 +130,9 @@ export async function onRequest({ request, env }) {
 
     // --- Call Llama 3.3 70B ---
     if (finalContext) {
-      messages.unshift({ role: 'system', content: 'You are a knowledgeable AI assistant. Answer naturally and conversationally. Use the provided information to answer, supplemented by your own knowledge. Never mention "reference material", "context", "sources", "search results", or "according to". When listing multiple items, use bullet points (- item). When providing steps, use numbered lists (1. step). Use **bold** for key terms. Use `code` for technical terms. For important takeaways or key points, prefix with > to highlight them. Be concise (2-3 paragraphs or a short list).' });
-
-      messages.push({ role: 'user', content: `Here is accurate data about current AI models. Use ONLY this data to answer the question:\n\n${finalContext}\n\nQuestion: ${question}` });
+      const sysContent = `You are a knowledgeable AI assistant with access to accurate reference data about AI models. Answer naturally and conversationally using this reference data, not your training knowledge. Reference data:\n\n${finalContext}\n\nWhen listing multiple items, use bullet points (- item). When providing steps, use numbered lists (1. step). Use **bold** for key terms. Use \`code\` for technical terms. For important takeaways or key points, prefix with > to highlight them. Be concise (2-3 paragraphs or a short list). Never mention "reference data" or "context".`;
+      messages.unshift({ role: 'system', content: sysContent });
+      messages.push({ role: 'user', content: question });
     } else {
       messages.unshift({ role: 'system', content: 'Answer questions naturally and conversationally. When listing multiple items, use bullet points (- item). When providing steps, use numbered lists (1. step). Use **bold** for key terms. Use `code` for technical terms. For important takeaways or key points, prefix with > to highlight them. Be concise (2-3 paragraphs or a short list).' });
       messages.push({ role: 'user', content: question });
