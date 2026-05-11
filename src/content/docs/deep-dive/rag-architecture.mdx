@@ -1,18 +1,20 @@
 ---
 title: "RAG Architecture: Complete Guide"
-description: Retrieval-Augmented Generation  -  building knowledge systems that teach LLMs your data
+description: Retrieval-Augmented Generation  -  building knowledge systems that teach LLMs your data, including retrieval technology deep dive
 sidebar:
-  order: 2
+  order: 4
 tags:
   - deep-dive
   - rag
   - architecture
+  - retrieval
+  - embeddings
 glossaryLinks:
   - rag
   - embedding
   - token
   - hallucination
-lastUpdated: 2026-05-10
+lastUpdated: 2026-05-11
 nextVerificationDue: 2026-08-08
 ---
 
@@ -207,13 +209,14 @@ final = rerank_with_llm(combined, query, top_k=5)
 
 ## Vector Databases Compared
 
-| DB | Best For | Cost | Complexity |
-|---|----------|------|------------|
-| Chroma | Prototyping, local | Free | Easiest |
-| Pinecone | Production, managed | $0.04/1K vectors | Medium |
-| Weaviate | Self-hosted, scale | Free or paid | Medium |
-| Qdrant | High performance | Free or cloud | Medium |
-| pgvector | SQL integration | Database cost | Hard |
+| DB | Best For | Index Type | Scalability | Cost | Complexity |
+|---|---|---|---|---|---|
+| Chroma | Prototyping, local | Brute force (HNSW optional) | Single node | Free | Easiest |
+| Pinecone | Production, managed | HNSW | Auto-scaling | $0.04/1K vectors | Medium |
+| Weaviate | Self-hosted, scale | HNSW + custom | Multi-node | Free or paid | Medium |
+| Qdrant | High performance, filtering | HNSW + payload index | Multi-node, sharding | Free or cloud | Medium |
+| pgvector | SQL integration | IVFFlat, HNSW | Postgres scale | DB cost | Hard |
+| Milvus | Billion-scale | IVF, HNSW, DiskANN | Distributed | Free or cloud | Hardest |
 
 ---
 
@@ -272,6 +275,207 @@ Generate Final Answer with All Context
 **Pros:** Handles multi-step reasoning  
 **Cons:** Multiple LLM calls, expensive  
 **Use:** Complex research, troubleshooting
+
+---
+
+## Retrieval Technology Deep Dive
+
+The retrieval layer is the most important determinant of RAG quality. A bad retriever means the LLM gets bad context. This section covers everything that happens between "user asks a question" and "chunks go into the prompt."
+
+### Embedding Models
+
+Embedding models convert text to vectors. Not all embedding models are equal — the choice dramatically affects retrieval quality.
+
+**How embedding models work:**
+1. Text is tokenized (same as LLMs)
+2. Passed through a transformer encoder (no decoder — just the encoder part)
+3. The final hidden state is pooled into a single vector
+4. That vector represents the semantic meaning of the input
+
+**Comparison of major embedding models (May 2026):**
+
+| Model | Dimensions | Max Tokens | Best For | Cost |
+|---|---|---|---|---|
+| text-embedding-3-small | 512-1536 | 8K | General purpose, cheap | $0.02/1K tokens |
+| text-embedding-3-large | 256-3072 | 8K | High accuracy | $0.13/1K tokens |
+| Cohere Embed v4 | 1024-4096 | 512 | Multilingual, classification | $0.10/1K tokens |
+| BGE-M3 (BAAI) | 1024 | 8K | Multilingual, open-source | Free (self-host) |
+| E5-Mistral (Microsoft) | 4096 | 8K | High accuracy, open-source | Free (self-host) |
+| Jina Embeddings v3 | 1024 | 8K | Task-specific routing | Free (self-host) |
+
+**Key considerations:**
+- **Dimensionality:** Higher = more information per vector, but slower search. 768-1536 is the sweet spot for most use cases.
+- **Max tokens:** Embedding models have token limits too. Longer documents must be chunked first.
+- **Open vs API:** Open-source models (BGE, E5, Jina) can be self-hosted for privacy and zero API costs. API models (OpenAI, Cohere) are simpler but cost money at scale.
+- **Multilingual:** If your data has multiple languages, use a multilingual embedding model (Cohere, BGE-M3).
+
+**Rule of thumb:** Start with `text-embedding-3-small` (cheap, good quality). Switch to E5-Mistral or BGE-M3 if you need better accuracy at higher scale.
+
+### Dense vs Sparse vs Hybrid Retrieval
+
+**Dense retrieval** (vector search):
+
+Embed both query and documents into dense vectors. Search by cosine similarity or dot product.
+
+```
+Query: "return policy" → [0.3, -0.1, 0.8, ...]  (dense vector)
+Document: "we accept returns within 30 days" → [0.35, -0.05, 0.75, ...]  (dense vector)
+Similarity: 0.92 (very similar) ✅
+```
+
+**Pros:** Understands semantics ("how to get a refund" finds return policy)
+**Cons:** Keyword-specific queries fail ("policy document 4042" needs exact match)
+
+**Sparse retrieval** (BM25 / keyword search):
+
+Traditional TF-IDF style. Each term gets a weight based on frequency.
+
+```
+Query: "return policy"
+  "return" → weight 0.45
+  "policy" → weight 0.55
+Document: "we accept returns within 30 days"
+  "returns" → weight 0.3, "within" → weight 0.1, "30" → weight 0.15, "days" → weight 0.1
+Score: 0.27 (decent — matches on "return/returns")
+```
+
+**Pros:** Excellent for exact terms, IDs, proper nouns
+**Cons:** No semantic understanding — "how to get my money back" won't match "return policy"
+
+**Hybrid retrieval:**
+
+Combine both scores and merge results. The standard technique is **Reciprocal Rank Fusion (RRF)**:
+
+```python
+def reciprocal_rank_fusion(dense_results, sparse_results, k=60):
+    scores = {}
+    for rank, doc in enumerate(dense_results + sparse_results):
+        doc_id = doc.id
+        if doc_id not in scores:
+            scores[doc_id] = 0
+        scores[doc_id] += 1 / (rank + k)
+    return sorted(scores.items(), key=lambda x: x[1], reverse=True)
+```
+
+**RRF formula:** `score = sum(1 / (rank + k))` for each document across both rankings. `k=60` is the standard smoothing constant.
+
+**Hybrid is almost always better** than either alone. Expect 10-20% improvement in retrieval recall.
+
+### Reranking
+
+After initial retrieval (top 10-100), a **reranker** re-evaluates candidates with a more expensive but more accurate model.
+
+**Why rerank?**
+- Vector DB search is fast but imperfect
+- A reranker can take into account more nuanced signals
+- Reranking is applied to a small set (top N), so it adds minimal latency
+
+**Cross-encoder reranking:**
+
+The reranker takes a (query, document) pair and outputs a relevance score:
+
+```
+Input: ("What is the return policy?", "we accept returns within 30 days...")
+  ↓
+Cross-encoder transformer (BERT-style, processes both together)
+  ↓
+Score: 0.95 (highly relevant)
+```
+
+Cross-encoders are too slow to run on the full corpus (they process each pair fully) but fast enough for 10-100 candidates.
+
+**Reranker comparison:**
+
+| Model | Speed (docs/sec) | Quality | Cost |
+|---|---|---|---|
+| Cohere Rerank v3 | ~100 | Excellent | $1/1K docs |
+| BGE-Reranker-v2 | ~50 | Very good | Free (self-host) |
+| Cross-encoder/ms-marco | ~200 | Good | Free (self-host) |
+| LLM-as-judge | ~5 | Best | $0.01/query |
+
+**When to use which:**
+- **Start without reranking** — vector search alone is often sufficient for simple Q&A
+- **Add cross-encoder reranking** when you need higher accuracy (production systems)
+- **Add LLM reranking** only for the hardest cases (multi-document, multi-hop)
+
+### Late Interaction Models (ColBERT)
+
+ColBERT introduces a middle ground between dense retrieval and cross-encoder reranking. It uses **late interaction** — query and document are encoded separately, then compared token-by-token.
+
+```
+Query: "return policy" → [q1, q2]  (query token vectors)
+Document: "we accept returns within..." → [d1, d2, d3, ..., dn]  (doc token vectors)
+
+Match: For each query token q_i, find max similarity with any document token d_j
+       q1("return") matches d3("returns") → 0.9
+       q2("policy") matches d1("we") → 0.3  (no match)
+Score: average of max similarities = (0.9 + 0.3) / 2 = 0.6
+```
+
+**Pros:**
+- More accurate than standard dense retrieval (token-level matching)
+- Can be pre-computed (document embeddings are static)
+- Efficient at query time (only compare query tokens to pre-computed doc embeddings)
+
+**Cons:**
+- More storage (store per-token embeddings, not a single vector)
+- Slower than standard dense retrieval (more comparisons)
+- Fewer deployment options (main implementation is ColBERTv2)
+
+**Best for:** High-accuracy retrieval where standard vector search isn't enough but full cross-encoder reranking is too expensive.
+
+### Advanced Retrieval Patterns
+
+**Query rewriting:** Transform the user's raw query into a better search query before retrieval.
+
+```
+User question: "How do I cancel?"
+↕ (LLM rewrites)
+Search query: "cancellation policy subscription termination refund"
+```
+
+**Multi-vector retrieval:** Generate multiple queries for a single user question.
+
+```
+User question: "Compare our products"
+↕ (LLM generates variations)
+Queries:
+1. "product A features pricing"
+2. "product B features pricing"
+3. "A vs B comparison"
+```
+
+Each query is searched independently. Results are merged and deduplicated.
+
+**HyDE (Hypothetical Document Embeddings):**
+
+Generate a hypothetical answer first, then use that to search:
+
+```
+User question: "What's the return policy for electronics?"
+  ↓
+LLM generates hypothetical answer: "Electronics can be returned within 30 days if unopened..."
+  ↓
+Embed the hypothetical answer (not the question)
+  ↓
+Search with this embedding (more likely to match relevant documents)
+```
+
+HyDE works because the hypothetical answer is semantically closer to the actual relevant documents than the original question.
+
+**Step-back prompting for retrieval:**
+
+Retrieve at a higher level of abstraction first, then narrow down.
+
+```
+User question: "Can I return a laptop after 2 weeks?"
+  ↓ Step back
+Concept question: "Electronics return policy"
+  ↓ Retrieve
+Retrieved: "Electronics: 30-day return window, must include all accessories"
+  ↓ Narrow
+Specific answer: "Yes, a laptop can be returned within 2 weeks."
+```
 
 ---
 
