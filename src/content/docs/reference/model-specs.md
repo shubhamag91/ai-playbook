@@ -73,32 +73,13 @@ Keep this table opinionated  -  it's **your** notes, not an exhaustive database.
     └─ no  → Claude Sonnet 4.6 (default)
 ```
 
-## Cost Scenarios (Real Use Cases)
+---
 
-**Scenario 1: Customer support chatbot (100 requests/day, 500 input tokens avg, 200 output tokens avg)**
-- Claude Sonnet: ~$15/month
-- GPT-5.5 Instant: ~$4/month
-- DeepSeek V4 Flash: ~$2/month ✅ Best value
+## Cost Analysis
 
-**Scenario 2: RAG + research (10 requests/day, 8000 input tokens avg, 1000 output)**
-- Gemini 3.1 Pro: ~$16/month (handles 1M context)
-- Claude Sonnet: ~$120/month
-- DeepSeek V4: ~$35/month
+For monthly cost estimates, see the [Models Decision Guide](/decide/models/guide/) (cost scenarios) and [Economics of AI](/reference/economics-of-ai/) (TCO analysis, build-vs-buy).
 
-**Scenario 3: Reasoning + code generation (50 requests/day, 2000 input, 1500 output)**
-- Claude Opus 4.7: ~$675/month
-- Claude Sonnet: ~$225/month ✅ Best balance
-- DeepSeek V4: ~$53/month (if quality sufficient)
-
-## Cost Formula
-
-```
-daily_requests × avg_input_tokens × (input_price / 1M)
-+ daily_requests × avg_output_tokens × (output_price / 1M)
-= monthly_cost × 30
-```
-
-If the number surprises you: add caching, batch process, use cheaper model for routing, or add RAG to reduce context.
+> **Prices as of May 2026.** API pricing changes frequently. Check individual provider pages for current rates.
 
 ---
 

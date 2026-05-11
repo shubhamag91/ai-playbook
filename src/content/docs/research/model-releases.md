@@ -11,7 +11,7 @@ lastUpdated: 2026-05-11
 nextVerificationDue: 2026-08-06
 ---
 
-A chronological view of significant model releases, updates, and announcements through May 2026.
+A chronological view of significant model releases, updates, and announcements through May 2026. For full details on the latest releases, see [What's New](/research/whats-new/).
 
 ---
 
@@ -108,58 +108,18 @@ A chronological view of significant model releases, updates, and announcements t
 
 ## May 2026 (Current)
 
-### Claude Opus 4.7 (Thinking) (May 1)
-- **400K context**, thinking mode
-- **Top-ranked on Design Arena** at 1350 Elo
-- **Cost:** $15/$75 per 1M tokens
-- Status: Available via Anthropic API
+See [What's New](/research/whats-new/) for full details on all May 2026 releases.
 
-### GPT-5.5 Release (May 5)
-- Multimodal reasoning, fast streaming
-- **1000 tokens/sec** streaming
-- **Cost:** $2/$8 per 1M tokens
-- **Instant variant** at $0.05/$0.15 per 1M for routing
-- Status: Available on API + ChatGPT
-
-### Gemini 3.1 Pro (May 8)
-- **1M context window**
-- Deep Research mode
-- Integrated with Workspace
-- **Cost:** $2/$12 per 1M tokens
-- **Gemini 3 Mini:** $1/$6, faster variant
-
-### Kimi K2.6 (May 10)
-- Moonshot AI's flagship — 256K context
-- **100-agent swarm** for complex orchestration
-- **Top-5 on Design Arena** at 1343 Elo
-- Status: Chat, API, open-weight
-
-### GLM 5 Series (May 12)
-- **GLM 5.1** — Zhipu's flagship, 1341 Elo on Design Arena
-- **GLM 5 Turbo** — fast inference variant at 1336 Elo
-- **GLM 4.7** — mid-cycle update bridging GLM 4 and GLM 5
-- Strong multilingual, enterprise-focused
-
-### Grok 3 Pro (xAI) (May 14)
-- Premium tier of Grok 3
-- **Real-time X/Twitter data** access
-- **1315 Elo on Design Arena**
-- **Cost:** $3/$15 per 1M tokens
-
-### Llama 4 Scout (May 16)
-- MoE variant with **10M context window** (109B params)
-- Designed for extreme long-context tasks
-- MIT license, self-hosted
-
-### MiniMax M2.7 (May 18)
-- Independent Chinese AI lab
-- Strong coding, long-context, and design performance at 1310 Elo
-- **Cost:** ~$0.30/$1.00 per 1M tokens
-
-### MiMo M2.7 (Xiaomi) (May 20)
-- Xiaomi's first major AI model release
-- Multimodal (text + vision), competitive pricing at ~$0.25/$0.80
-- Focus on Xiaomi device ecosystem integration
+- **Claude Opus 4.7 (Thinking)** — 400K context, #1 on Design Arena. [Details](/research/whats-new/#claude-opus-47-thinking-anthropic-may-2026)
+- **GPT-5.5** — Multimodal reasoning, 1000 tok/s. Instant variant at $0.05/$0.15. [Details](/research/whats-new/#gpt-55-openai-may-2026)
+- **Gemini 3.1 Pro** — 1M context, Deep Research mode. Gemini 3 Mini also released. [Details](/research/whats-new/#gemini-31-pro-google-may-2026)
+- **Kimi K2.6** — 256K context, 100-agent swarm, Top-5 on Design Arena. [Details](/research/whats-new/#kimi-k26-moonshot-ai-may-2026)
+- **GLM 5 Series** — GLM 5.1, 5 Turbo, and GLM 5 from Zhipu AI. [Details](/research/whats-new/#glm-5-series-zhipu-ai-may-2026)
+- **Grok 3 Pro** — Real-time X/Twitter data, 1315 Elo on Design Arena. [Details](/research/whats-new/#grok-3-pro-xai-may-2026)
+- **DeepSeek V4 Flash & V4 Pro** — Ultra-cheap frontier API + premium variant. [Details](/research/whats-new/#deepseek-v4-flash-and-v4-pro-deepseek-april-may-2026)
+- **MiniMax M2.7** — Strong coding and design at ~$0.30/$1.00. [Details](/research/whats-new/#minimax-m27-minimax-may-2026)
+- **Llama 4 Scout** — MoE with 10M context window, 109B params. [Details](/research/whats-new/#llama-4-scout-meta-may-2026)
+- **MiMo M2.7** — Xiaomi's first major AI model. [Details](/research/whats-new/#mimo-m27-xiaomi-may-2026)
 
 ---
 
@@ -178,38 +138,6 @@ A chronological view of significant model releases, updates, and announcements t
 
 ---
 
-## Trend: Cost Collapse & Proliferation
-
-**What happened in early 2026:**
-- DeepSeek V4 Flash at $0.14/$0.28 drove API pricing down 50-70%
-- Open-source models (Llama 4, DeepSeek, Muse Spark) caught up to proprietary
-- Chinese AI ecosystem emerged as major force: Kimi, GLM, Qwen, MiniMax, Xiaomi
-- Design Arena became the standard for creative/design capability benchmarking
-
-**Impact:** More choice, lower prices, less vendor lock-in than ever.
-
----
-
-## Model Comparison (May 2026)
-
-| Model | Context | Cost (Input/Output per 1M) | Best For |
-|---|---|---|---|
-| Claude Opus 4.7 (Thinking) | 400K | $15/$75 | Complex reasoning, design |
-| Claude Sonnet 4.6 | 200K | $3/$15 | Default daily driver |
-| GPT-5.5 | 128K | $2/$8 | General tasks, all-around |
-| GPT-5.5 Instant | 128K | $0.05/$0.15 | Ultra-cheap routing |
-| o3 | 128K | $10-$60 out | Deep reasoning |
-| Gemini 3.1 Pro | 1M | $2/$12 | Long-context research |
-| DeepSeek V4 | 128K | $0.55/$2.19 | Cost-conscious production |
-| DeepSeek V4 Flash | 128K | $0.14/$0.28 | Cheapest API option |
-| Kimi K2.6 | 256K | ~$0.55/$2.19 | Agent swarm, long context |
-| Grok 3 Pro | 128K | $3/$15 | Real-time data, X/Twitter |
-| Qwen 3.6 | 128K | ~$0.40/$1.50 | Multilingual, vision |
-| GLM 5.1 | 128K | ~$0.50/$2.00 | Enterprise multilingual |
-| Llama 4 Scout | 10M | Free (self-host) | Extreme long-context |
-
----
-
 ## For Builders
 
 **Pick a model based on:**
@@ -217,4 +145,4 @@ A chronological view of significant model releases, updates, and announcements t
 2. **Your constraints** (speed? cost? privacy?)
 3. **Your fallback** (have a 2nd choice if primary is down)
 
-**2026 advantage:** Redundancy is cheap. Use multiple models. If one fails or gets slow, swap to another.
+**2026 advantage:** Redundancy is cheap. Use multiple models. If one fails or gets slow, swap to another. For model comparison, see [Model Specs & Pricing](/reference/model-specs/). For cost analysis, see [Economics of AI](/reference/economics-of-ai/).

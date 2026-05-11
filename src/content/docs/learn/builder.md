@@ -155,41 +155,7 @@ Now you need your model to know about *your* data. Add a vector database.
 3. Add those snippets to the prompt as context
 4. Send to LLM
 
-**Simplest RAG Setup (using Chroma, free):**
-
-```python
-from chromadb import Client
-from chromadb.utils import embedding_functions
-
-# Create a vector store
-client = Client()
-collection = client.get_or_create_collection(name="documents")
-
-# Add your documents
-docs = [
-    "The Earth orbits the Sun every 365.25 days.",
-    "Mars has two small moons named Phobos and Deimos."
-]
-collection.add(
-    documents=docs,
-    ids=["1", "2"]
-)
-
-# User query
-query = "How many moons does Mars have?"
-results = collection.query(query_texts=[query], n_results=1)
-context = results['documents'][0][0]
-
-# Send to LLM
-response = client.messages.create(
-    model="claude-3-5-sonnet-20241022",
-    max_tokens=1024,
-    messages=[{
-        "role": "user",
-        "content": f"Context: {context}\n\nQuestion: {query}"
-    }]
-)
-```
+**Simplest RAG Setup:** For a complete working implementation (chunking, embedding, retrieval, reranking), see the [RAG System Template](/resources/templates/rag-system/). It covers the same pattern with production-ready code.
 
 **What's happening:**
 1. Your documents get converted to embeddings (numerical representations)

@@ -480,24 +480,17 @@ As of May 2026, the industry is split:
 
 ## Part 11: Fine-tuning
 
-After training, you can fine-tune on your data:
+After training, you can adapt a model to your domain:
 
-**How:**
-1. Start with trained model
-2. Train on your data (thousands to millions of examples)
-3. Update parameters slightly (only 0.1-1% change)
+**How:** Start with a trained model, train on your data (thousands of examples), update 0.1-1% of parameters.
 
-**Cost:** 10-100x cheaper than pre-training
+**Cost:** 10-100x cheaper than pre-training.
 
-**Use cases:**
-- Teach model your style (write like your brand)
-- Teach model specific task (classify documents)
-- Reduce hallucinations (ground in facts)
+**When to use:** Model outputs wrong style/tone, needs domain expertise.
 
-**When NOT to fine-tune:**
-- You need your data private (fine-tune locally)
-- You have under 100 examples (use RAG instead)
-- You need custom reasoning (use agents instead)
+**When not to:** You have under 100 examples (use RAG instead), you need simple reasoning (use prompting).
+
+For a complete guide, see [Training & Fine-tuning](/deep-dive/training-finetuning/).
 
 ---
 

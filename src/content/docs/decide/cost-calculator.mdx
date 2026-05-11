@@ -50,30 +50,7 @@ Monthly cost = Daily cost × 30
 
 ## Cost Optimization Tips
 
-### 1. Use Cheaper Models When Possible
-- Haiku for simple tasks (5x cheaper than Sonnet)
-- DeepSeek for massive volume (100x cheaper)
-- Only use Opus when Sonnet fails
-
-### 2. Reduce Input Tokens
-- Summarize before sending to API
-- Use fewer examples in prompts
-- Cache repeated context
-
-### 3. Use Caching
-- First request: 100% cost
-- Subsequent requests: 10% cost
-- Saves 90% on repeated analysis
-
-### 4. Batch Process
-- Instead of 100 individual requests: 1 batch of 100
-- Can save significantly depending on API
-
-### 5. Route Based on Complexity
-- Use Haiku to decide if task needs Sonnet
-- ~80% of requests → Haiku
-- ~20% of requests → Sonnet
-- Result: 60-70% cost reduction
+For detailed cost optimization strategies, see [Economics of AI](/reference/economics-of-ai/). Key techniques include model routing, prompt caching, semantic caching, and batch processing.
 
 ---
 
