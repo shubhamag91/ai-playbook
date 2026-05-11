@@ -34,32 +34,58 @@ export async function onRequest({ request, env }) {
     const index = await indexRes.json();
     const query = question.toLowerCase();
 
-    const scored = index.map(entry => {
-      const title = entry.title.toLowerCase();
-      const desc = entry.description.toLowerCase();
-      const chunk = entry.chunk.toLowerCase();
-      const fullText = title + ' ' + desc + ' ' + chunk;
-      const stopWords = ['who','what','when','where','why','how','can','you','the','are','all','not','but','for','and','was','has','had','its','may','get','use','any','new','now','yet','way','see','two','set','let','say','few','old'];
-      const words = query.split(/\s+/).filter(w => w.length > 2 && !stopWords.includes(w));
-      if (words.length === 0) return { ...entry, score: 0 };
-      let score = 0;
-      for (const word of words) {
+    // Extract meaningful words from the question
+    const stopWords = ['who','what','when','where','why','how','can','you','the','are','all','not','but','for','and','was','has','had','its','may','get','use','any','new','now','yet','way','see','two','set','let','say','few','old','tell','about','like','just','more','also','very','each','much','some','such','than','that','this','with','from','your','which','will','would','could','should'];
+    const queryWords = query.split(/\s+/).filter(w => w.length > 2 && !stopWords.includes(w));
+    
+    if (queryWords.length === 0) {
+      var hasPlaybookContent = false;
+      var contextStr = '';
+    } else {
+      // TF-IDF scoring: compute document frequency for each query word
+      const docFreq = {};
+      for (const word of queryWords) {
         const safeWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        score += ((title.match(new RegExp(safeWord, 'gi')) || []).length) * 20;
-        score += ((desc.match(new RegExp(safeWord, 'gi')) || []).length) * 5;
-        score += ((chunk.match(new RegExp(safeWord, 'gi')) || []).length);
+        const regex = new RegExp(safeWord, 'gi');
+        docFreq[word] = index.filter(e => (e.title + ' ' + e.description + ' ' + e.chunk).toLowerCase().match(regex)).length;
       }
-      if (words.every(w => fullText.includes(w))) score += 15;
-      if (title.includes(query)) score += 30;
-      if (chunk.includes(query)) score += 10;
-      const mc = words.reduce((s, w) => s + ((chunk.match(new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi')) || []).length), 0);
-      score += (mc / Math.max(chunk.length, 1) * 100) * 5;
-      return { ...entry, score };
-    }).filter(e => e.score > 0).sort((a, b) => b.score - a.score).slice(0, 5);
 
-    // Only consider playbook content if it has a strong match (at least one query word in title)
-    const hasPlaybookContent = scored.length > 0 && scored[0].score >= 20;
-    const contextStr = hasPlaybookContent ? scored.map(c => c.chunk).join('\n\n') : '';
+      const totalDocs = index.length;
+      const scored = index.map(entry => {
+        const title = entry.title.toLowerCase();
+        const desc = entry.description.toLowerCase();
+        const chunk = entry.chunk.toLowerCase();
+        const fullText = title + ' ' + desc + ' ' + chunk;
+
+        let score = 0;
+        for (const word of queryWords) {
+          const safeWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const regex = new RegExp(safeWord, 'gi');
+
+          // IDF weight: rare words get higher weight
+          const df = docFreq[word] || 1;
+          const idf = Math.log(totalDocs / df) + 1;
+
+          // Count matches in each field
+          const titleMatches = (title.match(regex) || []).length;
+          const descMatches = (desc.match(regex) || []).length;
+          const chunkMatches = (chunk.match(regex) || []).length;
+
+          score += titleMatches * 20 * idf;
+          score += descMatches * 5 * idf;
+          score += chunkMatches * 1 * idf;
+        }
+
+        // Bonus for exact phrase match
+        if (title.includes(query)) score += 50;
+        if (chunk.includes(query)) score += 20;
+
+        return { ...entry, score };
+      }).filter(e => e.score > 0).sort((a, b) => b.score - a.score).slice(0, 5);
+
+      const hasPlaybookContent = scored.length > 0 && scored[0].score >= 15;
+      const contextStr = hasPlaybookContent ? scored.map(c => c.chunk).join('\n\n') : '';
+    }
 
     // --- Build messages ---
     const messages = [];
