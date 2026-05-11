@@ -101,9 +101,9 @@ export async function onRequest({ request, env }) {
       });
 
     } else {
-      // Tier 2 + 3: Use Groq Compound (built-in web search + model knowledge)
-      messages.push({ role: 'system', content: 'You are a helpful AI assistant. You have access to web search for current information. When asked about recent events, news, pricing, or specific current data, use web search to provide accurate answers.' });
-      const userMsg = `Question: ${question}`;
+      // Tier 2: Use Llama 3.3 70B (training knowledge - covers AI concepts up to mid-2024)
+      messages.push({ role: 'system', content: 'Answer questions naturally and conversationally. Be concise (2-3 paragraphs).' });
+      messages.push({ role: 'user', content: question });
 
       const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
@@ -112,7 +112,7 @@ export async function onRequest({ request, env }) {
           'Authorization': `Bearer ${groqKey}`,
         },
         body: JSON.stringify({
-          model: 'groq/compound-mini',
+          model: 'llama-3.3-70b-versatile',
           messages: messages,
           temperature: 0.3,
           max_tokens: 800,
@@ -120,32 +120,9 @@ export async function onRequest({ request, env }) {
       });
 
       if (!groqRes.ok) {
-        // Fallback: if compound fails, try Llama 3.3 directly
-        const fallbackRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${groqKey}`,
-          },
-          body: JSON.stringify({
-            model: 'llama-3.3-70b-versatile',
-            messages: [{ role: 'system', content: 'Answer questions naturally and conversationally. Be concise.' }, { role: 'user', content: question }],
-            temperature: 0.3,
-            max_tokens: 500,
-          }),
-        });
-
-        if (!fallbackRes.ok) {
-          const err = await fallbackRes.text();
-          return new Response(JSON.stringify({ error: `Groq API error: ${fallbackRes.status}` }), {
-            status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders },
-          });
-        }
-
-        const fallbackData = await fallbackRes.json();
-        const answerText = fallbackData?.choices?.[0]?.message?.content || '';
-        return new Response(JSON.stringify({ answer: answerText }), {
-          headers: { 'Content-Type': 'application/json', ...corsHeaders },
+        const err = await groqRes.text();
+        return new Response(JSON.stringify({ error: `Groq API error: ${groqRes.status}` }), {
+          status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders },
         });
       }
 
