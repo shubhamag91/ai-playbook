@@ -1,7 +1,7 @@
 (function() {
   function init() {
     // Key AI terms to highlight (A)
-    var keyTerms = ['Claude','GPT','Gemini','DeepSeek','RAG','LLM','Transformer','Fine-tuning','Fine tuning','Embedding','Token','Attention','Hallucination','Prompt','Temperature','Quantization','Ollama','vLLM','Llama','Mistral','Qwen','Phi','Haiku','Sonnet','Opus','MATH','MMLU','GPQA','HumanEval','SWE-bench','RLHF','LoRA','R1','V4'];
+    var keyTerms = ['Claude','GPT','Gemini','DeepSeek','RAG','LLM','Fine-tuning','Fine tuning','Embedding','Token','Hallucination','Quantization','Ollama','vLLM','Llama','Mistral','Qwen','Phi','Haiku','Sonnet','Opus','MATH','MMLU','GPQA','HumanEval','SWE-bench','RLHF','LoRA','R1','V4'];
 
     // Inject CSS
     var style = document.createElement('style');
