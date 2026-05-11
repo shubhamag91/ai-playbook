@@ -55,18 +55,72 @@ const files = walkDir(docsDir);
 // Index structured model data for better search
 const modelsPath = path.resolve(__dirname, '../src/data/models.ts');
 const modelsContent = fs.readFileSync(modelsPath, 'utf8');
-const modelRegex = /{ name: '([^']+)', company: '([^']+)', latest: ([^,]+), context: '([^']*)', pricing: '([^']*)', capabilities: '([^']+)'(?:, notes: '([^']*)')?/g;
+const modelRegex = /{ name: '([^']+)', company: '([^']+)', latest: ([^,]+), context: '([^']*)', pricing: '([^']*)', capabilities: '([^']+)'(?:, parameters: '([^']*)')?(?:, notes: '([^']*)')?/g;
 const modelEntries = [];
 let modelMatch;
 while ((modelMatch = modelRegex.exec(modelsContent)) !== null) {
-  const [, name, company, latest, context, pricing, capabilities, notes] = modelMatch;
-  modelEntries.push({ name, company, latest, context, pricing, capabilities, notes });
+  const [, name, company, latest, context, pricing, capabilities, parameters, notes] = modelMatch;
+  modelEntries.push({ name, company, latest, context, pricing, capabilities, parameters, notes });
   allChunks.push({
     slug: `models/${name.toLowerCase().replace(/\s+/g, '-')}`,
     title: name,
     description: `${company} - ${capabilities}`,
-    chunk: `${name} is ${company}'s ${latest === 'true' ? 'latest' : 'previous generation'} model. It supports ${capabilities}. Context window: ${context}. Pricing: ${pricing}. ${notes || ''}`,
+    chunk: `${name} is ${company}'s ${latest === 'true' ? 'latest' : 'previous generation'} model. It supports ${capabilities}. Context window: ${context}. Pricing: ${pricing}.${parameters ? ` Parameters: ${parameters}.` : ''} ${notes || ''}`,
   });
+}
+
+// Helper: context string → comparable number
+function contextToNum(ctx) {
+  if (!ctx || ctx === 'varies') return 0;
+  const num = parseFloat(ctx);
+  if (ctx.includes('M')) return num * 1000000;
+  if (ctx.includes('K')) return num * 1000;
+  return num;
+}
+
+// Helper: extract output price from pricing string (the larger/second number)
+function outputPrice(pricing) {
+  if (!pricing) return Infinity;
+  // Try explicit output notation: $X/$Y per 1M
+  let match = pricing.match(/\$?([\d.]+)\s*\/\s*\$?([\d.]+)\s*per\s*1M/);
+  if (match) return parseFloat(match[2]);
+  // Try ~$X/$Y per 1M
+  match = pricing.match(/~\$?([\d.]+)\s*\/\s*\$?([\d.]+)\s*per\s*1M/);
+  if (match) return parseFloat(match[2]);
+  return Infinity;
+}
+
+// Generate a "top N" comparison chunk
+function topN(entries, keyFn, label, formatFn, reverse = false) {
+  const filtered = entries.filter(e => keyFn(e) !== null && keyFn(e) !== Infinity && keyFn(e) !== 0 && !isNaN(keyFn(e)));
+  const sorted = [...filtered].sort((a, b) => reverse ? keyFn(a) - keyFn(b) : keyFn(b) - keyFn(a));
+  const top = sorted.slice(0, 5);
+  if (top.length === 0) return null;
+  return {
+    slug: `models/top-${label.toLowerCase().replace(/\s+/g, '-')}`,
+    title: `Top models by ${label}`,
+    description: `Models ranked by ${label}`,
+    chunk: `Top models by ${label}:\n` + top.map((m, i) =>
+      `${i + 1}. ${m.name} (${m.company}) — ${formatFn(m)}`
+    ).join('\n'),
+  };
+}
+
+// Add attribute-based comparison chunks
+const onlyLatest = modelEntries.filter(m => m.latest === 'true' || m.latest === true);
+
+const attrComparisons = [
+  topN(onlyLatest, m => contextToNum(m.context), 'context window',
+    m => `${m.context} tokens`),
+  topN(onlyLatest, m => outputPrice(m.pricing), 'output price (cheapest)',
+    m => `${m.pricing}`, true),
+  topN(onlyLatest.filter(m => m.parameters && m.parameters !== 'Unknown'),
+    m => parseFloat(m.parameters), 'parameter count',
+    m => `${m.parameters} parameters`),
+].filter(Boolean);
+
+for (const comp of attrComparisons) {
+  allChunks.push(comp);
 }
 
 // Add comparison chunks that group related models

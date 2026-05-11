@@ -5,6 +5,7 @@ export interface ModelEntry {
   context: string;
   pricing: string;
   capabilities: string;
+  parameters?: string;
   notes?: string;
 }
 
@@ -31,19 +32,19 @@ export const models: ModelEntry[] = [
   { name: 'Gemini 3 Mini', company: 'Google', latest: true, context: '128K', pricing: '$1/$6 per 1M', capabilities: 'reasoning, coding, vision, speed', notes: 'Smaller, faster Gemini variant.' },
 
   // DeepSeek
-  { name: 'DeepSeek V4', company: 'DeepSeek', latest: true, context: '128K', pricing: '$0.55/$2.19 per 1M', capabilities: 'reasoning, coding, general', notes: 'Surprisingly capable. MIT license.' },
-  { name: 'DeepSeek V4 Flash', company: 'DeepSeek', latest: true, context: '128K', pricing: '$0.14/$0.28 per 1M', capabilities: 'routing, classification, simple tasks', notes: 'Absurdly affordable. Good enough.' },
-  { name: 'DeepSeek V4 Pro', company: 'DeepSeek', latest: true, context: '128K', pricing: '$0.55/$2.19 per 1M', capabilities: 'reasoning, coding, design, general', notes: 'Premium DeepSeek variant. Strong on design benchmarks.' },
+  { name: 'DeepSeek V4', company: 'DeepSeek', latest: true, context: '128K', pricing: '$0.55/$2.19 per 1M', capabilities: 'reasoning, coding, general', parameters: '236B', notes: 'Surprisingly capable. MIT license.' },
+  { name: 'DeepSeek V4 Flash', company: 'DeepSeek', latest: true, context: '128K', pricing: '$0.14/$0.28 per 1M', capabilities: 'routing, classification, simple tasks', parameters: '~20B', notes: 'Absurdly affordable. Good enough.' },
+  { name: 'DeepSeek V4 Pro', company: 'DeepSeek', latest: true, context: '128K', pricing: '$0.55/$2.19 per 1M', capabilities: 'reasoning, coding, design, general', parameters: '236B', notes: 'Premium DeepSeek variant. Strong on design benchmarks.' },
   { name: 'DeepSeek VL', company: 'DeepSeek', latest: true, context: '128K', pricing: '~$0.55/$2.19 per 1M', capabilities: 'vision, image understanding', notes: 'DeepSeek\'s dedicated vision model.' },
-  { name: 'DeepSeek R1', company: 'DeepSeek', latest: true, context: '128K', pricing: '~$0.55/$2.19 per 1M', capabilities: 'reasoning, math, science', notes: 'Open-weight reasoning matching o1.' },
+  { name: 'DeepSeek R1', company: 'DeepSeek', latest: true, context: '128K', pricing: '~$0.55/$2.19 per 1M', capabilities: 'reasoning, math, science', parameters: '236B', notes: 'Open-weight reasoning matching o1.' },
 
   // Meta
-  { name: 'Llama 4', company: 'Meta', latest: true, context: 'varies', pricing: 'Free (self-host)', capabilities: 'general, coding, reasoning, vision', notes: 'Open weights. MIT license. Run locally.' },
-  { name: 'Llama 4 Scout', company: 'Meta', latest: true, context: '10M', pricing: 'Free (self-host)', capabilities: 'general, coding, long-context, vision', notes: 'MoE variant. 10M context window, 109B total params.' },
-  { name: 'Muse Spark', company: 'Meta', latest: true, context: 'varies', pricing: 'Free (self-host)', capabilities: 'reasoning, coding, design, multimodal', notes: 'Meta\'s latest open-weight model. Replaces Llama. Strong on design.' },
+  { name: 'Llama 4', company: 'Meta', latest: true, context: 'varies', pricing: 'Free (self-host)', capabilities: 'general, coding, reasoning, vision', parameters: '405B (MoE)', notes: 'Open weights. MIT license. Run locally.' },
+  { name: 'Llama 4 Scout', company: 'Meta', latest: true, context: '10M', pricing: 'Free (self-host)', capabilities: 'general, coding, long-context, vision', parameters: '109B (MoE)', notes: 'MoE variant. 10M context window, 109B total params.' },
+  { name: 'Muse Spark', company: 'Meta', latest: true, context: 'varies', pricing: 'Free (self-host)', capabilities: 'reasoning, coding, design, multimodal', parameters: '~70B', notes: 'Meta\'s latest open-weight model. Replaces Llama. Strong on design.' },
 
   // xAI
-  { name: 'Grok 3 Pro', company: 'xAI', latest: true, context: '128K', pricing: '$3/$15 per 1M', capabilities: 'reasoning, coding, real-time, vision', notes: 'Premium tier of Grok 3. Real-time X/Twitter data.' },
+  { name: 'Grok 3 Pro', company: 'xAI', latest: true, context: '128K', pricing: '$3/$15 per 1M', capabilities: 'reasoning, coding, real-time, vision', parameters: 'Unknown', notes: 'Premium tier of Grok 3. Real-time X/Twitter data.' },
 
   // Moonshot AI
   { name: 'Kimi K2.6', company: 'Moonshot AI', latest: true, context: '256K', pricing: '~$0.55/$2.19 per 1M', capabilities: 'reasoning, coding, long-context, vision, design', notes: 'Latest Kimi. Top-5 on Design Arena. Agent swarm capabilities.' },

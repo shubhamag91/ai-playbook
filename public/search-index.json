@@ -93,19 +93,19 @@
     "slug": "models/deepseek-v4",
     "title": "DeepSeek V4",
     "description": "DeepSeek - reasoning, coding, general",
-    "chunk": "DeepSeek V4 is DeepSeek's latest model. It supports reasoning, coding, general. Context window: 128K. Pricing: $0.55/$2.19 per 1M. Surprisingly capable. MIT license."
+    "chunk": "DeepSeek V4 is DeepSeek's latest model. It supports reasoning, coding, general. Context window: 128K. Pricing: $0.55/$2.19 per 1M. Parameters: 236B. Surprisingly capable. MIT license."
   },
   {
     "slug": "models/deepseek-v4-flash",
     "title": "DeepSeek V4 Flash",
     "description": "DeepSeek - routing, classification, simple tasks",
-    "chunk": "DeepSeek V4 Flash is DeepSeek's latest model. It supports routing, classification, simple tasks. Context window: 128K. Pricing: $0.14/$0.28 per 1M. Absurdly affordable. Good enough."
+    "chunk": "DeepSeek V4 Flash is DeepSeek's latest model. It supports routing, classification, simple tasks. Context window: 128K. Pricing: $0.14/$0.28 per 1M. Parameters: ~20B. Absurdly affordable. Good enough."
   },
   {
     "slug": "models/deepseek-v4-pro",
     "title": "DeepSeek V4 Pro",
     "description": "DeepSeek - reasoning, coding, design, general",
-    "chunk": "DeepSeek V4 Pro is DeepSeek's latest model. It supports reasoning, coding, design, general. Context window: 128K. Pricing: $0.55/$2.19 per 1M. Premium DeepSeek variant. Strong on design benchmarks."
+    "chunk": "DeepSeek V4 Pro is DeepSeek's latest model. It supports reasoning, coding, design, general. Context window: 128K. Pricing: $0.55/$2.19 per 1M. Parameters: 236B. Premium DeepSeek variant. Strong on design benchmarks."
   },
   {
     "slug": "models/deepseek-vl",
@@ -117,31 +117,31 @@
     "slug": "models/deepseek-r1",
     "title": "DeepSeek R1",
     "description": "DeepSeek - reasoning, math, science",
-    "chunk": "DeepSeek R1 is DeepSeek's latest model. It supports reasoning, math, science. Context window: 128K. Pricing: ~$0.55/$2.19 per 1M. Open-weight reasoning matching o1."
+    "chunk": "DeepSeek R1 is DeepSeek's latest model. It supports reasoning, math, science. Context window: 128K. Pricing: ~$0.55/$2.19 per 1M. Parameters: 236B. Open-weight reasoning matching o1."
   },
   {
     "slug": "models/llama-4",
     "title": "Llama 4",
     "description": "Meta - general, coding, reasoning, vision",
-    "chunk": "Llama 4 is Meta's latest model. It supports general, coding, reasoning, vision. Context window: varies. Pricing: Free (self-host). Open weights. MIT license. Run locally."
+    "chunk": "Llama 4 is Meta's latest model. It supports general, coding, reasoning, vision. Context window: varies. Pricing: Free (self-host). Parameters: 405B (MoE). Open weights. MIT license. Run locally."
   },
   {
     "slug": "models/llama-4-scout",
     "title": "Llama 4 Scout",
     "description": "Meta - general, coding, long-context, vision",
-    "chunk": "Llama 4 Scout is Meta's latest model. It supports general, coding, long-context, vision. Context window: 10M. Pricing: Free (self-host). MoE variant. 10M context window, 109B total params."
+    "chunk": "Llama 4 Scout is Meta's latest model. It supports general, coding, long-context, vision. Context window: 10M. Pricing: Free (self-host). Parameters: 109B (MoE). MoE variant. 10M context window, 109B total params."
   },
   {
     "slug": "models/muse-spark",
     "title": "Muse Spark",
     "description": "Meta - reasoning, coding, design, multimodal",
-    "chunk": "Muse Spark is Meta's latest model. It supports reasoning, coding, design, multimodal. Context window: varies. Pricing: Free (self-host). Meta\\"
+    "chunk": "Muse Spark is Meta's latest model. It supports reasoning, coding, design, multimodal. Context window: varies. Pricing: Free (self-host). Parameters: ~70B. Meta\\"
   },
   {
     "slug": "models/grok-3-pro",
     "title": "Grok 3 Pro",
     "description": "xAI - reasoning, coding, real-time, vision",
-    "chunk": "Grok 3 Pro is xAI's latest model. It supports reasoning, coding, real-time, vision. Context window: 128K. Pricing: $3/$15 per 1M. Premium tier of Grok 3. Real-time X/Twitter data."
+    "chunk": "Grok 3 Pro is xAI's latest model. It supports reasoning, coding, real-time, vision. Context window: 128K. Pricing: $3/$15 per 1M. Parameters: Unknown. Premium tier of Grok 3. Real-time X/Twitter data."
   },
   {
     "slug": "models/kimi-k2.6",
@@ -202,6 +202,24 @@
     "title": "MiMo M2.7",
     "description": "Xiaomi - reasoning, coding, vision",
     "chunk": "MiMo M2.7 is Xiaomi's latest model. It supports reasoning, coding, vision. Context window: 128K. Pricing: ~$0.25/$0.80 per 1M. Xiaomi\\"
+  },
+  {
+    "slug": "models/top-context-window",
+    "title": "Top models by context window",
+    "description": "Models ranked by context window",
+    "chunk": "Top models by context window:\n1. Llama 4 Scout (Meta) — 10M tokens\n2. Gemini 3.1 Pro (Google) — 1M tokens\n3. Gemini 3 Pro Preview (Google) — 1M tokens\n4. Claude 4 Opus (Anthropic) — 400K tokens\n5. Claude Opus 4.7 (Thinking) (Anthropic) — 400K tokens"
+  },
+  {
+    "slug": "models/top-output-price-(cheapest)",
+    "title": "Top models by output price (cheapest)",
+    "description": "Models ranked by output price (cheapest)",
+    "chunk": "Top models by output price (cheapest):\n1. GPT-5.5 Instant (OpenAI) — $0.05/$0.15 per 1M\n2. DeepSeek V4 Flash (DeepSeek) — $0.14/$0.28 per 1M\n3. MiMo M2.7 (Xiaomi) — ~$0.25/$0.80 per 1M\n4. GLM 5 Turbo (Zhipu AI) — ~$0.30/$1.00 per 1M\n5. MiniMax M2.7 (MiniMax) — ~$0.30/$1.00 per 1M"
+  },
+  {
+    "slug": "models/top-parameter-count",
+    "title": "Top models by parameter count",
+    "description": "Models ranked by parameter count",
+    "chunk": "Top models by parameter count:\n1. Llama 4 (Meta) — 405B (MoE) parameters\n2. DeepSeek V4 (DeepSeek) — 236B parameters\n3. DeepSeek V4 Pro (DeepSeek) — 236B parameters\n4. DeepSeek R1 (DeepSeek) — 236B parameters\n5. Llama 4 Scout (Meta) — 109B (MoE) parameters"
   },
   {
     "slug": "models/comparison-flagship",
