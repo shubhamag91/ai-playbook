@@ -62,7 +62,7 @@ export async function onRequest({ request, env }) {
         'Authorization': `Bearer ${groqKey}`,
       },
       body: JSON.stringify({
-        model: 'mixtral-8x7b-32768',
+        model: 'llama3-70b-8192',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userMsg },
