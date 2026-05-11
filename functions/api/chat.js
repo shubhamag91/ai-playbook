@@ -34,8 +34,8 @@ export async function onRequest({ request, env }) {
     const indexRes = await fetch(indexUrl);
     const index = await indexRes.json();
 
-    // Rewrite question into a better search query using Groq
-    let searchQuery = question.toLowerCase();
+    // Rewrite question into multiple search queries using Groq
+    let searchQueries = [question.toLowerCase()];
     try {
       const rewriteRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
@@ -43,74 +43,78 @@ export async function onRequest({ request, env }) {
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
           messages: [
-            { role: 'system', content: 'Extract key search terms from this question. Expand acronyms (RAG → Retrieval-Augmented Generation, SLM → Small Language Model, MoE → Mixture of Experts). Output ONLY 3-8 search terms separated by spaces, no punctuation, no explanation.' },
+            { role: 'system', content: 'Generate 3 different search queries for this question. Use different terminology or phrasing in each. Keep queries concise (3-8 words each). Separate queries with | character. Expand acronyms (RAG → Retrieval-Augmented Generation, SLM → Small Language Model, MoE → Mixture of Experts). Output ONLY the 3 queries separated by | .' },
             { role: 'user', content: question }
           ],
           temperature: 0.1,
-          max_tokens: 50,
+          max_tokens: 80,
         }),
       });
       if (rewriteRes.ok) {
         const rewriteData = await rewriteRes.json();
-        const rewritten = rewriteData?.choices?.[0]?.message?.content?.trim().toLowerCase();
-        if (rewritten && rewritten.length > 5) searchQuery = rewritten;
+        const raw = rewriteData?.choices?.[0]?.message?.content?.trim().toLowerCase() || '';
+        const parts = raw.split('|').map(s => s.trim()).filter(s => s.length > 3);
+        if (parts.length > 0) searchQueries = parts;
       }
     } catch (e) { /* fall back to original question */ }
 
-    const query = searchQuery;
+    // TF-IDF scoring helper: returns scored results for a single query
+    function scoreQuery(queryText, docs, totalDocs) {
+      const stopWords = ['who','what','when','where','why','how','can','you','the','are','all','not','but','for','and','was','has','had','its','may','get','use','any','new','now','yet','way','see','two','set','let','say','few','old','tell','about','like','just','more','also','very','each','much','some','such','than','that','this','with','from','your','which','will','would','could','should'];
+      const words = queryText.split(/\s+/).filter(w => w.length > 2 && !stopWords.includes(w));
+      if (words.length === 0) return [];
 
-    // Extract meaningful words from the question
-    const stopWords = ['who','what','when','where','why','how','can','you','the','are','all','not','but','for','and','was','has','had','its','may','get','use','any','new','now','yet','way','see','two','set','let','say','few','old','tell','about','like','just','more','also','very','each','much','some','such','than','that','this','with','from','your','which','will','would','could','should'];
-    const queryWords = query.split(/\s+/).filter(w => w.length > 2 && !stopWords.includes(w));
-    
-    if (queryWords.length === 0) {
-      var hasPlaybookContent = false;
-      var contextStr = '';
-    } else {
-      // TF-IDF scoring: compute document frequency for each query word
       const docFreq = {};
-      for (const word of queryWords) {
+      for (const word of words) {
         const safeWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         const regex = new RegExp(safeWord, 'gi');
-        docFreq[word] = index.filter(e => (e.title + ' ' + e.description + ' ' + e.chunk).toLowerCase().match(regex)).length;
+        docFreq[word] = docs.filter(e => (e.title + ' ' + e.description + ' ' + e.chunk).toLowerCase().match(regex)).length;
       }
 
-      const totalDocs = index.length;
-      const scored = index.map(entry => {
+      return docs.map(entry => {
         const title = entry.title.toLowerCase();
         const desc = entry.description.toLowerCase();
         const chunk = entry.chunk.toLowerCase();
-        const fullText = title + ' ' + desc + ' ' + chunk;
-
         let score = 0;
-        for (const word of queryWords) {
+        for (const word of words) {
           const safeWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
           const regex = new RegExp(safeWord, 'gi');
-
-          // IDF weight: rare words get higher weight
           const df = docFreq[word] || 1;
           const idf = Math.log(totalDocs / df) + 1;
-
-          // Count matches in each field
           const titleMatches = (title.match(regex) || []).length;
           const descMatches = (desc.match(regex) || []).length;
           const chunkMatches = (chunk.match(regex) || []).length;
-
           score += titleMatches * 20 * idf;
           score += descMatches * 5 * idf;
           score += chunkMatches * 1 * idf;
         }
-
-        // Bonus for exact phrase match
-        if (title.includes(query)) score += 50;
-        if (chunk.includes(query)) score += 20;
-
+        if (title.includes(queryText)) score += 50;
         return { ...entry, score };
-      }).filter(e => e.score > 0).sort((a, b) => b.score - a.score).slice(0, 3);
-
-      const hasPlaybookContent = scored.length > 0 && scored[0].score >= 35;
-      const contextStr = hasPlaybookContent ? scored.map(c => c.chunk).join('\n\n') : '';
+      }).filter(e => e.score > 0).sort((a, b) => b.score - a.score).slice(0, 5);
     }
+
+    // Score each query independently, then merge via RRF
+    const totalDocs = index.length;
+    const allResults = searchQueries.map(q => scoreQuery(q, index, totalDocs));
+    const rrfScores = {};
+    for (const results of allResults) {
+      results.forEach((entry, rank) => {
+        const key = entry.slug + '|' + entry.title;
+        rrfScores[key] = (rrfScores[key] || 0) + 1 / (rank + 60);
+      });
+    }
+
+    const mergedEntries = Object.entries(rrfScores)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([key]) => {
+        const slug = key.split('|')[0];
+        return index.find(e => e.slug === slug && (e.slug + '|' + e.title) === key);
+      })
+      .filter(Boolean);
+
+    const hasPlaybookContent = mergedEntries.length > 0 && rrfScores[mergedEntries[0].slug + '|' + mergedEntries[0].title] >= 0.03;
+    const contextStr = hasPlaybookContent ? mergedEntries.map(c => c.chunk).join('\n\n') : '';
 
     // --- Build messages ---
     const messages = [];
