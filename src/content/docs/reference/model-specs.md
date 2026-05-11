@@ -32,7 +32,11 @@ Keep this table opinionated  -  it's **your** notes, not an exhaustive database.
 | **Gemini 3.1 Pro** | 1M | $2/$12 per 1M | ✅ Images + Video | Long-context research, docs | Best context window. Excellent multimodal. |
 | **DeepSeek V4** | 128k | $0.55/$2.19 per 1M | ❌ Text only | Cost-conscious prod | Surprisingly capable. MIT license. |
 | **DeepSeek V4 Flash** | 128k | $0.14/$0.28 per 1M | ❌ Text only | Ultra-cheap routing | Absurdly affordable. Good enough. |
+| **DeepSeek V4 Pro** | 128k | $0.55/$2.19 per 1M | ❌ Text only | Premium DeepSeek | Stronger than V4. Top on Design Arena. |
 | **DeepSeek VL** | 128k | ~$0.55/$2.19 per 1M | ✅ Images | Vision tasks (DeepSeek ecosystem) | Separate vision model from DeepSeek API. |
+| **Kimi K2.6** | 256k | ~$0.55/$2.19 per 1M | ❌ Text only | Agent swarm, long context | 100-agent swarm. Top-5 on Design Arena. |
+| **GLM 5.1** | 128k | ~$0.50/$2.00 per 1M | ✅ Images | Multilingual, design | Zhipu's flagship. Strong on design benchmarks. |
+| **Muse Spark** | varies | Free (self-host) | ✅ Images | Open-weight design | Meta's latest. Replaces Llama. |
 | **Llama 4** | varies | Free (self-host) | ✅ Images | On-prem, privacy-critical | Open weights. MIT license. Run locally. |
 
 ## How to Choose (May 2026)

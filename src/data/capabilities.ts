@@ -30,6 +30,11 @@ export const models = [
   { id: 'deepseek-vl', label: 'DeepSeek VL', family: 'DeepSeek', short: 'DS VL' },
   { id: 'o3', label: 'o3', family: 'OpenAI', short: 'o3' },
   { id: 'llama-4', label: 'Llama 4 405B', family: 'Llama', short: 'Llama 4' },
+  { id: 'kimi-k26', label: 'Kimi K2.6', family: 'Moonshot', short: 'K2.6' },
+  { id: 'glm-51', label: 'GLM 5.1', family: 'Zhipu', short: 'GLM 5.1' },
+  { id: 'muse-spark', label: 'Muse Spark', family: 'Meta', short: 'Muse' },
+  { id: 'deepseek-v4-pro', label: 'DeepSeek V4 Pro', family: 'DeepSeek', short: 'DS Pro' },
+  { id: 'claude-opus-46', label: 'Claude Opus 4.6', family: 'Claude', short: 'Opus 4.6' },
 ];
 
 export const capabilityData: CapabilityScore[] = [
@@ -131,4 +136,59 @@ export const capabilityData: CapabilityScore[] = [
   { model: 'deepseek-v4', task: 'cost', score: 5, benchmarkRef: '$0.55/$2.19 per 1M', detail: '10-50x cheaper than peers' },
   { model: 'o3', task: 'cost', score: 1, benchmarkRef: '$10-60 per 1M output', detail: 'Most expensive reasoning' },
   { model: 'llama-4', task: 'cost', score: 5, benchmarkRef: 'Free (self-host)', detail: 'Open-source, no API costs' },
+
+  // Kimi K2.6
+  { model: 'kimi-k26', task: 'coding', score: 4, benchmarkRef: null, detail: 'Strong coder, agentic capabilities' },
+  { model: 'kimi-k26', task: 'math', score: 4, benchmarkRef: null, detail: 'Solid math reasoning' },
+  { model: 'kimi-k26', task: 'reasoning', score: 4, benchmarkRef: null, detail: 'Strong reasoning with thinking mode' },
+  { model: 'kimi-k26', task: 'writing', score: 4, benchmarkRef: null, detail: 'Good long-form writing' },
+  { model: 'kimi-k26', task: 'vision', score: 3, benchmarkRef: null, detail: 'Basic vision support' },
+  { model: 'kimi-k26', task: 'long-context', score: 5, benchmarkRef: '256K context', detail: 'Excellent long-context, agent swarm' },
+  { model: 'kimi-k26', task: 'agentic', score: 5, benchmarkRef: null, detail: 'Up to 100 specialized agents in swarm' },
+  { model: 'kimi-k26', task: 'speed', score: 3, benchmarkRef: null, detail: 'Moderate speed' },
+  { model: 'kimi-k26', task: 'cost', score: 4, benchmarkRef: null, detail: 'Competitive pricing' },
+
+  // GLM 5.1
+  { model: 'glm-51', task: 'coding', score: 4, benchmarkRef: null, detail: 'Strong multilingual coder' },
+  { model: 'glm-51', task: 'math', score: 4, benchmarkRef: null, detail: 'Good math reasoning' },
+  { model: 'glm-51', task: 'reasoning', score: 4, benchmarkRef: null, detail: 'Solid reasoning capabilities' },
+  { model: 'glm-51', task: 'writing', score: 4, benchmarkRef: null, detail: 'Strong multilingual writing' },
+  { model: 'glm-51', task: 'vision', score: 3, benchmarkRef: null, detail: 'Basic vision support' },
+  { model: 'glm-51', task: 'long-context', score: 3, benchmarkRef: '128K context', detail: 'Standard context window' },
+  { model: 'glm-51', task: 'agentic', score: 3, benchmarkRef: null, detail: 'Basic agentic capabilities' },
+  { model: 'glm-51', task: 'speed', score: 4, benchmarkRef: null, detail: 'Fast inference' },
+  { model: 'glm-51', task: 'cost', score: 4, benchmarkRef: null, detail: 'Competitive pricing' },
+
+  // Muse Spark (Meta)
+  { model: 'muse-spark', task: 'coding', score: 4, benchmarkRef: null, detail: 'Strong coder, Llama lineage' },
+  { model: 'muse-spark', task: 'math', score: 4, benchmarkRef: null, detail: 'Good math reasoning' },
+  { model: 'muse-spark', task: 'reasoning', score: 4, benchmarkRef: null, detail: 'Competitive reasoning' },
+  { model: 'muse-spark', task: 'writing', score: 3, benchmarkRef: null, detail: 'Adequate prose generation' },
+  { model: 'muse-spark', task: 'vision', score: 3, benchmarkRef: null, detail: 'Basic multimodal support' },
+  { model: 'muse-spark', task: 'long-context', score: 3, benchmarkRef: '128K context', detail: 'Standard for open-weight' },
+  { model: 'muse-spark', task: 'agentic', score: 4, benchmarkRef: null, detail: 'Good tool use' },
+  { model: 'muse-spark', task: 'speed', score: 4, benchmarkRef: null, detail: 'Fast inference' },
+  { model: 'muse-spark', task: 'cost', score: 5, benchmarkRef: 'Free (self-host)', detail: 'Open-weight, no API costs' },
+
+  // DeepSeek V4 Pro
+  { model: 'deepseek-v4-pro', task: 'coding', score: 4, benchmarkRef: null, detail: 'Strong coder, premium variant' },
+  { model: 'deepseek-v4-pro', task: 'math', score: 4, benchmarkRef: null, detail: 'Good math reasoning' },
+  { model: 'deepseek-v4-pro', task: 'reasoning', score: 4, benchmarkRef: null, detail: 'Solid reasoning capabilities' },
+  { model: 'deepseek-v4-pro', task: 'writing', score: 3, benchmarkRef: null, detail: 'Decent writing quality' },
+  { model: 'deepseek-v4-pro', task: 'vision', score: 0, benchmarkRef: null, detail: 'Text-only. Use DeepSeek VL for vision.' },
+  { model: 'deepseek-v4-pro', task: 'long-context', score: 3, benchmarkRef: '128K context', detail: 'Standard context window' },
+  { model: 'deepseek-v4-pro', task: 'agentic', score: 3, benchmarkRef: null, detail: 'Basic function calling' },
+  { model: 'deepseek-v4-pro', task: 'speed', score: 4, benchmarkRef: null, detail: 'Fast inference' },
+  { model: 'deepseek-v4-pro', task: 'cost', score: 4, benchmarkRef: null, detail: 'Good value for quality' },
+
+  // Claude Opus 4.6
+  { model: 'claude-opus-46', task: 'coding', score: 5, benchmarkRef: 'HumanEval ~95%', detail: 'Excellent coder, slightly behind 4.7' },
+  { model: 'claude-opus-46', task: 'math', score: 5, benchmarkRef: 'MATH ~95%', detail: 'Strong math capabilities' },
+  { model: 'claude-opus-46', task: 'reasoning', score: 5, benchmarkRef: null, detail: 'Deep reasoning, thinking mode available' },
+  { model: 'claude-opus-46', task: 'writing', score: 5, benchmarkRef: null, detail: 'Excellent prose quality' },
+  { model: 'claude-opus-46', task: 'vision', score: 4, benchmarkRef: null, detail: 'Good image understanding' },
+  { model: 'claude-opus-46', task: 'long-context', score: 4, benchmarkRef: '200K context', detail: 'Solid long-doc processing' },
+  { model: 'claude-opus-46', task: 'agentic', score: 5, benchmarkRef: null, detail: 'Excellent tool use' },
+  { model: 'claude-opus-46', task: 'speed', score: 2, benchmarkRef: null, detail: 'Slower, thoughtful responses' },
+  { model: 'claude-opus-46', task: 'cost', score: 2, benchmarkRef: '$15/$75 per 1M', detail: 'Expensive but capable' },
 ];

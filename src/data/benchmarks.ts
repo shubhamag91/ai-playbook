@@ -36,6 +36,23 @@ export const benchmarkData = [
   { model: 'DeepSeek V4', family: 'DeepSeek', category: 'reasoning', benchmark: 'GPQA', score: 76.4, date: '2026-05' },
   { model: 'o3', family: 'OpenAI', category: 'reasoning', benchmark: 'GPQA', score: 87.3, date: '2026-02' },
   { model: 'Llama 4 405B', family: 'Llama', category: 'reasoning', benchmark: 'GPQA', score: 73.1, date: '2026-03' },
+
+  // === Design Arena (Elo scores) ===
+  { model: 'Claude Opus 4.7 (Thinking)', family: 'Claude', category: 'design', benchmark: 'Design Arena', score: 1350, date: '2026-05' },
+  { model: 'Claude Opus 4.6', family: 'Claude', category: 'design', benchmark: 'Design Arena', score: 1346, date: '2026-05' },
+  { model: 'Claude Opus 4.6 (Thinking)', family: 'Claude', category: 'design', benchmark: 'Design Arena', score: 1344, date: '2026-05' },
+  { model: 'Kimi K2.6', family: 'Moonshot', category: 'design', benchmark: 'Design Arena', score: 1343, date: '2026-05' },
+  { model: 'GLM 5.1', family: 'Zhipu', category: 'design', benchmark: 'Design Arena', score: 1341, date: '2026-05' },
+  { model: 'Claude Opus 4.7', family: 'Claude', category: 'design', benchmark: 'Design Arena', score: 1338, date: '2026-05' },
+  { model: 'GLM 5 Turbo', family: 'Zhipu', category: 'design', benchmark: 'Design Arena', score: 1336, date: '2026-05' },
+  { model: 'Claude Sonnet 4.6', family: 'Claude', category: 'design', benchmark: 'Design Arena', score: 1331, date: '2026-05' },
+  { model: 'DeepSeek V4 Pro', family: 'DeepSeek', category: 'design', benchmark: 'Design Arena', score: 1313, date: '2026-05' },
+  { model: 'Muse Spark', family: 'Meta', category: 'design', benchmark: 'Design Arena', score: 1312, date: '2026-05' },
+  { model: 'GPT-5.5', family: 'GPT', category: 'design', benchmark: 'Design Arena', score: 1312, date: '2026-05' },
+  { model: 'GLM 5', family: 'Zhipu', category: 'design', benchmark: 'Design Arena', score: 1307, date: '2026-05' },
+  { model: 'Claude Opus 4.5', family: 'Claude', category: 'design', benchmark: 'Design Arena', score: 1301, date: '2026-05' },
+  { model: 'Kimi K2.5 (Thinking)', family: 'Moonshot', category: 'design', benchmark: 'Design Arena', score: 1301, date: '2026-05' },
+  { model: 'Gemini 3 Pro Preview', family: 'Gemini', category: 'design', benchmark: 'Design Arena', score: 1300, date: '2026-05' },
 ];
 
 export const benchmarkMeta = {
@@ -43,6 +60,7 @@ export const benchmarkMeta = {
   MATH: { label: 'MATH', category: 'math', description: 'Math problem solving (high school)' },
   MMLU: { label: 'MMLU', category: 'knowledge', description: 'Multitask language understanding' },
   GPQA: { label: 'GPQA', category: 'reasoning', description: 'Graduate-level QA' },
+  'Design Arena': { label: 'Design Arena', category: 'design', description: 'AI design quality (Elo)' },
 };
 
 export const categories = [
@@ -51,6 +69,7 @@ export const categories = [
   { id: 'math', label: 'Math' },
   { id: 'knowledge', label: 'Knowledge' },
   { id: 'reasoning', label: 'Reasoning' },
+  { id: 'design', label: 'Design' },
 ];
 
-export const families = ['All', 'Claude', 'GPT', 'Gemini', 'DeepSeek', 'Llama', 'Mistral', 'OpenAI'];
+export const families = ['All', 'Claude', 'GPT', 'Gemini', 'DeepSeek', 'Llama', 'Mistral', 'OpenAI', 'Moonshot', 'Zhipu', 'Meta'];

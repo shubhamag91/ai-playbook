@@ -71,10 +71,24 @@ export const trendingTopics: TrendItem[] = [
     category: 'Infrastructure',
   },
   {
-    title: 'Kimi K2 Thinking',
-    description: '1-trillion-parameter open-source reasoning model from Moonshot AI. 50.2% on Humanity\'s Last Exam.',
+    title: 'Kimi K2.6 Released',
+    description: 'Moonshot AI\'s latest flagship. 256K context, 100-agent swarm, top-5 on Design Arena.',
     link: '/decide/tools/guide#chinese-ai-ecosystem',
-    date: 'Apr 2026',
+    date: 'May 2026',
+    category: 'Model Release',
+  },
+  {
+    title: 'GLM 5 Series (Zhipu AI)',
+    description: 'Zhipu AI\'s GLM 5, 5.1, and 5 Turbo models rank among top design models on Design Arena.',
+    link: '/decide/tools/guide#chinese-ai-ecosystem',
+    date: 'May 2026',
+    category: 'Model Release',
+  },
+  {
+    title: 'Meta Muse Spark',
+    description: 'Meta\'s latest open-weight model replacing Llama. Strong design capabilities on Design Arena.',
+    link: '/research/models/guide',
+    date: 'May 2026',
     category: 'Open Source',
   },
 ];
