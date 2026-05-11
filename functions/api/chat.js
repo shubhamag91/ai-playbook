@@ -35,16 +35,23 @@ export async function onRequest({ request, env }) {
     const index = await indexRes.json();
 
     // Rewrite question into multiple search queries using Groq
+    // Include conversation context for follow-up questions
     let searchQueries = [question.toLowerCase()];
     try {
+      let contextStr = '';
+      if (history && Array.isArray(history)) {
+        const recent = history.slice(-4);
+        contextStr = recent.map(m => `${m.role}: ${m.content}`).join('\n') + '\n';
+      }
+
       const rewriteRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqKey}` },
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
           messages: [
-            { role: 'system', content: 'Generate 3 different search queries for this question. Use different terminology or phrasing in each. Keep queries concise (3-8 words each). Separate queries with | character. Expand acronyms (RAG → Retrieval-Augmented Generation, SLM → Small Language Model, MoE → Mixture of Experts). Output ONLY the 3 queries separated by | .' },
-            { role: 'user', content: question }
+            { role: 'system', content: 'Given the conversation history and the latest question, generate 3 search queries to find relevant documentation. Resolve pronouns (it, that, this, they) using context. Use different terminology in each query (3-8 words each). Expand acronyms. Separate queries with | character. Output ONLY the 3 queries separated by | .' },
+            { role: 'user', content: contextStr ? `Conversation:\n${contextStr}\nLatest question: ${question}` : question }
           ],
           temperature: 0.1,
           max_tokens: 80,
