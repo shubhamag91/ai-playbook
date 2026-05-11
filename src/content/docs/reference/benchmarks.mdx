@@ -35,11 +35,37 @@ Most leaderboards report scores as percentages (higher is better) or ranked posi
 
 For up-to-date leaderboard rankings, see:
 
-- **[HELM Leaderboard](https://crfm.stanford.edu/helm/latest/)**  -  Comprehensive multi-task evaluation
-- **[OpenCompass](https://opencompass.org.cn/)**  -  Chinese and multilingual benchmarks
-- **[AlpacaEval](https://tatsu-lab.github.io/alpaca_eval/)**  -  Chat model rankings by human preference
-- **[Hugging Face Open LLM Leaderboard](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)**  -  Open-source models
-- **[FinCanna Index](https://www.ishnsinstitute.org/fincanna/)**  -  Financial domain benchmarks
+### General & Knowledge
+
+| Benchmark | Focus | Organized By |
+|---|---|---|
+| **[HELM](https://crfm.stanford.edu/helm/latest/)** | Multi-task evaluation (reasoning, knowledge, accuracy) | Stanford CRFM |
+| **[OpenCompass](https://opencompass.org.cn/)** | Chinese + multilingual benchmarks | OpenCompass |
+| **[AlpacaEval](https://tatsu-lab.github.io/alpaca_eval/)** | Chat model rankings by human preference | Stanford |
+| **[Hugging Face Open LLM Leaderboard](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)** | Open-source model rankings | Hugging Face |
+| **[Chatbot Arena (LMSYS)](https://chat.lmsys.org/leaderboard)** | Human preference rankings via pairwise voting | UC Berkeley / LMSYS |
+
+### Design & Code Generation
+
+| Benchmark | Focus | Organized By |
+|---|---|---|
+| **[Design Arena](https://www.designarena.ai/leaderboard)** | AI design quality (websites, UI, game dev, 3D, data viz, image, video, audio) | Arcada Labs |
+| **[SWE-bench](https://www.swebench.com/)** | Real-world software engineering tasks (bug fixes, feature implementation) | Princeton |
+
+### Domain-Specific
+
+| Benchmark | Focus | Organized By |
+|---|---|---|
+| **[FinCanna Index](https://www.ishnsinstitute.org/fincanna/)** | Financial domain benchmarks | Ishns Institute |
+| **[HELM - Legal](https://crfm.stanford.edu/helm/legal/latest/)** | Legal reasoning and knowledge | Stanford CRFM |
+| **[HELM - Medical](https://crfm.stanford.edu/helm/med/latest/)** | Medical reasoning and knowledge | Stanford CRFM |
+
+### Key
+
+- **HELM** — Holistic Evaluation of Language Models. The most comprehensive multi-task benchmark.
+- **Design Arena** — 5M+ community votes across 30+ categories (code, UI, image, video, audio). Uses blind pairwise comparison with Bradley-Terry (Elo) ranking.
+- **Chatbot Arena** — Blind pairwise comparisons voted by users. Models ranked by Elo score.
+- **SWE-bench** — Tests models on real GitHub issues. The gold standard for coding capability.
 
 ---
 
