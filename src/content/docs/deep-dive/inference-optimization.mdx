@@ -1,18 +1,20 @@
 ---
-title: "Inference Optimization: Speed & Cost"
-description: Techniques to make LLM inference faster and cheaper  -  quantization, caching, batching, speculative decoding, and tooling.
+title: "Inference Optimization: Speed, Cost & Edge AI"
+description: Techniques to make LLM inference faster, cheaper, and deployable on edge  -  quantization, caching, batching, speculative decoding, SLMs, and on-device AI
 sidebar:
-  order: 6
+  order: 8
 tags:
   - deep-dive
   - inference
   - optimization
+  - edge-ai
+  - slm
 glossaryLinks:
   - inference
   - quantization
   - token
   - hallucination
-lastUpdated: 2026-05-10
+lastUpdated: 2026-05-11
 nextVerificationDue: 2026-08-08
 ---
 
@@ -179,6 +181,144 @@ What's your priority?
 
 ---
 
+## Small Language Models & Edge AI
+
+Not every task needs a 400B-parameter frontier model. Small Language Models (SLMs) are optimized for efficiency, running on consumer hardware, phones, and even browsers.
+
+### The SLM Landscape (May 2026)
+
+| Model | Parameters | Quality Relative To | Best For |
+|---|---|---|---|
+| **Phi-4 (Microsoft)** | 14B | GPT-3.5 class | Reasoning, code, general |
+| **Gemma 2/3 (Google)** | 2B-9B | Llama 3 8B class | Lightweight, multilingual |
+| **Llama 3.2 (Meta)** | 1B-11B | GPT-3.5 class | General, on-device |
+| **TinyLlama** | 1.1B | GPT-2 class | Ultra-lightweight, CPU only |
+| **Qwen 2.5 (Alibaba)** | 0.5B-72B | Frontier at 72B, efficient at smaller | Multilingual |
+| **Mistral 7B** | 7B | GPT-3.5 class | Fast, instruction-following |
+| **H2O-Danube** | 1.8B | GPT-2 class | Simpler tasks |
+
+**Key insight:** Phi-4 (14B) matches GPT-3.5 quality at 1/10th the size. The gap between small and large models is shrinking rapidly due to better training data and techniques.
+
+### When SLMs Are Enough
+
+| Task | SLM Works? | Frontier Model Better? |
+|---|---|---|
+| Classification, routing, intent detection | ✅ Yes | Marginally |
+| Simple Q&A, summarization | ✅ Yes | Slightly |
+| Code generation (common patterns) | ✅ Yes | For complex logic |
+| Creative writing, nuanced analysis | ⚠️ Sometimes | ✅ Significantly |
+| Multi-step reasoning | ❌ Rarely | ✅ Much better |
+| Multilingual, low-resource | ⚠️ Depends on training | ✅ Usually better |
+
+**Rule of thumb:** If a human could answer in 5 seconds, an SLM is probably sufficient. If it takes a human 30+ seconds of thinking, use a larger model.
+
+### On-Device AI
+
+The biggest trend in SLMs is **running them directly on phones, laptops, and IoT devices** — no internet connection required.
+
+**Apple Intelligence (Apple, 2024-2026):**
+- On-device models for summarization, rewriting, image editing
+- Uses a mix of on-device SLM (3B class) and cloud fallback to GPT/Claude
+- Privacy-focused: sensitive queries stay on-device
+- Available on iPhone 16+ and M-series Macs
+
+**Android AI (Google, 2025-2026):**
+- Gemini Nano: 1.8B model running on Pixel and Samsung devices
+- Features: smart reply, summarization, photo editing
+- Powered by Google Tensor chips with dedicated AI accelerators
+
+**Browser-based AI:**
+- **WebLLM / WebGPU:** Run SLMs directly in the browser using WebGPU API
+- **Transformers.js:** Run Hugging Face models in-browser
+- **Chrome built-in AI:** Gemini Nano available via `window.ai` API
+- Use cases: privacy-sensitive chatbots, local language translation, accessibility tools
+
+**Edge deployment formats:**
+
+| Format | Platform | Use Case |
+|---|---|---|
+| **GGUF** | llama.cpp, Ollama, LM Studio | CPU inference, personal computers |
+| **CoreML** | Apple devices (iOS, macOS) | On-device, Apple Silicon optimized |
+| **TFLite** | Android, embedded Linux | Mobile phones, Raspberry Pi |
+| **ExecuTorch** | Meta's edge runtime | Mobile, wearable, IoT |
+| **ONNX Runtime** | Cross-platform | Production edge servers |
+| **WebGPU** | Browser | Zero-install, in-browser AI |
+
+### The Hybrid Pattern: Routing
+
+The most efficient deployment uses SLMs and frontier models together, with a **router** that decides which model to use for each query.
+
+```
+User query
+  ↓
+Router (lightweight classifier)
+  ├─ Simple query → SLM (fast, cheap, on-device)
+  ├─ Complex query → Frontier model (powerful, slower, API)
+  └─ Sensitive data → SLM (privacy)
+```
+
+**Implementation with a router model:**
+
+```python
+def route_query(query: str) -> str:
+    """Route to the right model based on query complexity."""
+    # Simple heuristic: token length and keyword detection
+    if len(query) < 50 and not any(kw in query for kw in complex_keywords):
+        return "slm"  # Phi-4 or Gemma
+    elif "password" in query or "ssn" in query or "medical" in query:
+        return "slm"  # Privacy-sensitive, keep on-device
+    else:
+        return "frontier"  # Claude, GPT-5.5, or Gemini
+```
+
+**Alternatively, use a classifier model:**
+```python
+router_model = AutoModelForSequenceClassification.from_pretrained("routing-model")
+complexity = router_model.predict(query)  # 0-1 score
+
+if complexity < 0.3:
+    return phi4.generate(query)      # SLM
+elif complexity < 0.7:
+    return claude_sonnet.generate(query)  # Mid-tier
+else:
+    return claude_opus.generate(query)    # Frontier
+```
+
+**Results of a good routing strategy:**
+- 70-80% of queries go to the SLM (fast, cheap)
+- 15-25% go to mid-tier (balanced)
+- 5-10% go to frontier (expensive but necessary)
+- Overall cost reduction: 60-80%
+
+### Quantization for Edge
+
+Edge deployment depends heavily on quantization. A 7B model in FP16 needs 14GB of memory (impossible on a phone). In INT4, it needs only 3.5GB (feasible on recent phones).
+
+**Memory requirements by format:**
+
+| Model | FP16 | INT8 | INT4 | NF4 |
+|---|---|---|---|---|
+| Phi-4 (14B) | 28GB | 14GB | 7GB | 7GB |
+| Gemma 2 (9B) | 18GB | 9GB | 4.5GB | 4.5GB |
+| Llama 3.2 (8B) | 16GB | 8GB | 4GB | 4GB |
+| TinyLlama (1.1B) | 2.2GB | 1.1GB | 550MB | 550MB |
+
+**Apple Neural Engine:** Apple's ANE can run 7B-class models in INT4 at 30+ tokens/sec on iPhone 17 Pro. This makes real-time on-device chat viable.
+
+**Qualcomm AI Engine:** Android phones with Snapdragon 8 Elite can run 7B INT4 models at 20+ tokens/sec.
+
+### When to Use Each Approach
+
+| Scenario | Recommended Setup | Cost | Latency |
+|---|---|---|---|
+| Privacy-sensitive chat | On-device SLM (INT4) | $0 | 50-200ms |
+| High-volume API | Router → mostly SLM | $0.001/query | 100-500ms |
+| Mobile app | On-device SLM + cloud fallback | $0.001/query | 50ms on-device |
+| Browser extension | WebLLM + Transformers.js | $0 | 200-500ms |
+| IoT / embedded | TinyLlama (GGUF, INT4) | $0 | 500ms+ |
+
+---
+
 ## Production Tools
 
 | Tool | Best For | Key Feature |
@@ -195,10 +335,12 @@ What's your priority?
 
 | Scenario | Recommended Setup | Estimated Cost/Month |
 |---|---|---|
+| On-device AI (phone/browser) | Phi-4 INT4 + WebLLM / CoreML | $0 (on-device) |
 | Personal chatbot (`<1K` req/day) | Ollama + 7B INT4 model | $0 (local) |
 | Production API (10K req/day) | vLLM + 70B INT8 + prompt caching | $200-500 |
 | Batch processing (1M req/day) | TensorRT-LLM + FP8 + continuous batching | $1,000-3,000 |
 | Real-time voice (50ms SLA) | Lightweight model + KV cache + no batching | $500-2,000 |
+| Hybrid routing (100K req/day) | Router → 80% SLM / 20% frontier | $100-500 |
 
 ---
 
