@@ -1,0 +1,36 @@
+---
+import './DesignArenaLeaderboards.css';
+
+const arenas = [
+  { name: '3D Design', id: '3d' },
+  { name: 'Web App', id: 'web-app' },
+  { name: 'Image to Website', id: 'image-to-website' },
+  { name: 'Mobile', id: 'mobile' },
+  { name: 'Website', id: 'website' },
+  { name: 'UI Component', id: 'ui-component' },
+  { name: 'Game Dev', id: 'game-dev' },
+  { name: 'Data Visualization', id: 'data-visualization' },
+  { name: 'Android', id: 'android' },
+  { name: 'Full Stack', id: 'full-stack' },
+  { name: 'SVG', id: 'svg' },
+  { name: 'Code Categories', id: 'code' },
+];
+---
+
+<div class="design-arena-leaderboards">
+  <div class="design-arena-leaderboards__grid">
+    {arenas.map((arena) => (
+      <div class="design-arena-leaderboards__item">
+        <h3 class="design-arena-leaderboards__title">{arena.name}</h3>
+        <div class="design-arena-leaderboards__iframe-wrapper">
+          <iframe
+            src={`https://www.designarena.ai/leaderboard?arena=${arena.id}`}
+            title={`Design Arena - ${arena.name}`}
+            class="design-arena-leaderboards__iframe"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

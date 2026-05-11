@@ -1,0 +1,50 @@
+.design-arena-leaderboards {
+  margin: 2rem 0;
+}
+
+.design-arena-leaderboards__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 1200px) {
+  .design-arena-leaderboards__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.design-arena-leaderboards__item {
+  background: var(--sl-color-gray-6);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--sl-color-gray-5);
+}
+
+.design-arena-leaderboards__title {
+  padding: 1rem;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--sl-color-gray-5);
+  border-bottom: 1px solid var(--sl-color-gray-4);
+}
+
+.design-arena-leaderboards__iframe-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  height: 0;
+  overflow: hidden;
+}
+
+.design-arena-leaderboards__iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
