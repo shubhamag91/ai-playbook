@@ -1,6 +1,6 @@
 ---
-title: Tools Guide  -  Feature Matrix
-description: Compact table format for comparing AI tools
+title: Tools Guide  -  Feature Matrix & Decision Trees
+description: Compact table format and decision trees for comparing AI tools
 tags:
   - decide
   - tools
@@ -12,6 +12,19 @@ import Breadcrumb from '../../../../components/Breadcrumb.astro';
 <Breadcrumb />
 
 ## Conversational AI
+
+```
+What do you need?
+│
+├─ General chat, web search, creative writing  →  ChatGPT
+├─ Long-form writing, analysis, nuance  →  Claude
+├─ Very long documents, research  →  Gemini
+├─ Research with cited sources  →  Perplexity
+├─ Analyze your own documents/papers  →  NotebookLM
+├─ Multi-language research, agentic browsing  →  Kimi
+├─ Run models locally, fully private  →  Ollama
+└─ Windows/Office ecosystem  →  Microsoft Copilot
+```
 
 | Tool | Best For | Cost | Key Limitation |
 |---|---|---|---|
@@ -27,6 +40,22 @@ import Breadcrumb from '../../../../components/Breadcrumb.astro';
 ---
 
 ## Code & Build
+
+```
+What are you building?
+│
+├─ Daily coding in an IDE
+│   ├─ Large codebases, multi-file refactors → Cursor
+│   ├─ Terminal-first, automation, CI → Claude Code
+│   └─ Simple inline, team-friendly → GitHub Copilot
+│
+├─ Building apps without coding
+│   ├─ Full-stack app from description → Lovable
+│   └─ React components from description → Vercel v0
+│
+├─ Browser-based coding → Bolt.new or Replit
+└─ Agentic / multi-step workflows → Windsurf
+```
 
 | Tool | Best For | Cost | Key Limitation |
 |---|---|---|---|
@@ -44,6 +73,21 @@ import Breadcrumb from '../../../../components/Breadcrumb.astro';
 
 ## Automate & Orchestrate
 
+```
+What do you need to automate?
+│
+├─ Connect apps, no-code workflows
+│   ├─ Easy, visual, 5K+ apps → Zapier
+│   └─ More powerful, self-hostable → n8n
+│
+├─ Orchestrate AI agents
+│   ├─ Multi-agent Python framework → CrewAI
+│   ├─ General LLM app framework → LangChain
+│   └─ RAG / data framework → LlamaIndex
+│
+└─ AI-native workflow tool → OpenClaw
+```
+
 | Tool | Best For | Cost | Key Limitation |
 |---|---|---|---|
 | Zapier | No-code automation, 5K+ apps | Free/$20+/mo | Expensive at scale |
@@ -55,7 +99,37 @@ import Breadcrumb from '../../../../components/Breadcrumb.astro';
 
 ---
 
-## Create Content  -  Writing
+## Create Content
+
+```
+What content are you creating?
+│
+├─ Writing
+│   ├─ Grammar, tone, style → Grammarly
+│   ├─ Long-form copywriting → Jasper
+│   ├─ Rewriting, summarization → Wordtune
+│   └─ Translation → DeepL
+│
+├─ Images
+│   ├─ Photorealistic, artistic → Midjourney
+│   ├─ In-ChatGPT, quick iterations → DALL-E 3
+│   ├─ Open-source, run locally → Flux / Stable Diffusion
+│   └─ Adobe ecosystem → Adobe Firefly
+│
+├─ Video
+│   ├─ Full control, editing → Runway
+│   └─ Short-form, quick → Pika / Sora
+│
+├─ Music & Audio
+│   ├─ Original songs → Suno
+│   └─ Voice-overs, audiobooks → ElevenLabs
+│
+└─ Speech processing
+    ├─ Transcription → Whisper (open-source)
+    └─ Studio-quality editing → Descript
+```
+
+### Writing
 
 | Tool | Best For | Cost |
 |---|---|---|
@@ -66,7 +140,7 @@ import Breadcrumb from '../../../../components/Breadcrumb.astro';
 | Notion AI | Writing inside Notion docs | Freemium |
 | Microsoft Copilot | In Word, Excel, PowerPoint, Teams | Paid |
 
-## Create Content  -  Images
+### Images
 
 | Tool | Best For | Cost |
 |---|---|---|
@@ -78,7 +152,7 @@ import Breadcrumb from '../../../../components/Breadcrumb.astro';
 | Ideogram | Text-in-image generation | Freemium |
 | Imagen / ImageFX | Google ecosystem | Free |
 
-## Create Content  -  Video & Audio
+### Video & Audio
 
 | Tool | Best For | Cost |
 |---|---|---|
@@ -90,7 +164,7 @@ import Breadcrumb from '../../../../components/Breadcrumb.astro';
 | ElevenLabs | Voice cloning, voice-overs | Free/$11-99/mo |
 | HeyGen | AI avatar video from text | Freemium |
 
-## Create Content  -  Speech
+### Speech
 
 | Tool | Best For | Cost |
 |---|---|---|
@@ -102,6 +176,16 @@ import Breadcrumb from '../../../../components/Breadcrumb.astro';
 ---
 
 ## Research & Learning
+
+```
+What are you researching?
+│
+├─ Web research with citations → Perplexity
+├─ Document/paper analysis → NotebookLM
+├─ Academic paper search → Elicit
+├─ Long-form analysis → Claude
+└─ Multi-language research → Kimi
+```
 
 | Tool | Best For | Cost |
 |---|---|---|
@@ -116,6 +200,19 @@ import Breadcrumb from '../../../../components/Breadcrumb.astro';
 
 ## Work & Productivity
 
+```
+What do you need help with?
+│
+├─ Meeting notes
+│   ├─ Real-time transcription → Otter.ai
+│   ├─ Zoom/Teams recorder → Fathom
+│   └─ Searchable transcripts → Fireflies.ai
+│
+└─ Calendar optimization
+    ├─ AI scheduling → Clockwise / Reclaim
+    └─ Auto task prioritization → Motion
+```
+
 | Tool | Best For | Cost |
 |---|---|---|
 | Otter.ai | Real-time meeting transcription | Freemium |
@@ -128,6 +225,27 @@ import Breadcrumb from '../../../../components/Breadcrumb.astro';
 ---
 
 ## Infrastructure
+
+```
+What infrastructure do you need?
+│
+├─ GPU compute
+│   ├─ Default for training/inference → NVIDIA H100/B200
+│   ├─ NVIDIA alternative → AMD MI300X
+│   ├─ Custom ASIC for Google Cloud → Google TPU
+│   └─ Fastest LLM inference chip → Groq LPU
+│
+├─ Vector databases (for RAG)
+│   ├─ Managed, serverless → Pinecone
+│   ├─ Self-hosted, GraphQL → Weaviate
+│   ├─ Simple, local-first → Chroma
+│   ├─ Fast, Rust-native → Qdrant
+│   └─ Already on Postgres → pgvector
+│
+└─ Model APIs
+    ├─ Open models via API → Replicate / Together AI
+    └─ 100+ models, single API → OpenRouter
+```
 
 **GPUs:** NVIDIA H100/B200 (default), AMD MI300X (alternative), Google TPU (custom ASIC), Groq LPU (fastest inference), Apple M-series (local 7B-70B), Cerebras WSE (single-chip training)
 
@@ -151,10 +269,23 @@ import Breadcrumb from '../../../../components/Breadcrumb.astro';
 
 ---
 
-## Global AI Landscape
+## Global AI Landscape (Chinese Ecosystem)
+
+```
+Which Chinese AI tool?
+│
+├─ Best international accessibility → DeepSeek (chat/V4/R1)
+├─ Alibaba's multimodal model → Qwen / Tongyi
+├─ Long context + agent swarm → Kimi
+├─ Chinese market leader → ERNIE / Wenxin (Baidu)
+├─ TikTok parent's AI → Doubao (ByteDance)
+├─ Enterprise, open-source → ChatGLM / Zhipu AI
+├─ Video generation → Kling AI (Kuaishou)
+└─ Bilingual, open-weight → Yi (01.AI)
+```
 
 | Tool | Company | Best For | Access |
-|---|---|---|---|---|
+|---|---|---|---|
 | DeepSeek | High-Flyer | Cost leader, strong reasoning | Chat, API, Ollama, open-weight |
 | Qwen 3.6 / Tongyi | Alibaba | Multilingual flagship, code, vision | API, Hugging Face |
 | Kimi K2.6 | Moonshot AI | 256K context, 100-agent swarm, top-5 on Design Arena | Chat, API, open-weight |

@@ -187,8 +187,7 @@ export default defineConfig({
               label: 'Tools Guide',
               collapsed: false,
               items: [
-                { label: 'Feature Matrix', slug: 'decide/tools/guide' },
-                { label: 'Decision Tree', slug: 'decide/tools/decision-tree' },
+                { label: 'Feature Matrix & Decision Trees', slug: 'decide/tools/guide' },
               ],
             },
             { label: 'Tool Comparison', slug: 'decide/tools/comparison' },
@@ -207,8 +206,7 @@ export default defineConfig({
             { label: 'Confusions', slug: 'reference/confusions' },
             { label: 'Principles', slug: 'reference/principles' },
             { label: 'Benchmarks', slug: 'reference/benchmarks' },
-            { label: 'Model Specs', slug: 'reference/model-specs' },
-            { label: 'Model Capability Matrix', slug: 'reference/model-capability-matrix' },
+            { label: 'Model Specs & Capabilities', slug: 'reference/model-specs' },
             { label: 'Economics of AI', slug: 'reference/economics-of-ai' },
           ],
         },
@@ -216,7 +214,6 @@ export default defineConfig({
           label: 'Research',
           items: [
             { label: 'What\'s New', slug: 'research/whats-new' },
-            { label: 'Model Releases', slug: 'research/model-releases' },
             { label: 'Open-Source Models', slug: 'research/models/guide' },
             { label: 'Chinese AI Ecosystem', slug: 'research/china-ecosystem' },
             { label: 'Trends', slug: 'research/emerging-trends' },

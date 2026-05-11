@@ -266,7 +266,7 @@ You don't have 5-6 hours? Do this minimum:
 
 ### For Specific Topics
 - [What's New](/research/whats-new)  -  Timeline of AI developments
-- [Model Releases](/research/model-releases)  -  New models explained
+- [What's New](/research/whats-new)  -  New models and industry developments
 - [Emerging Trends](/research/emerging-trends)  -  Quarterly trend analysis
 
 ### For Deep Learning

@@ -73,7 +73,7 @@ Advanced patterns and best practices for better LLM outputs.
 ### Stay Updated
 - Bookmark [What's New](/research/whats-new) for monthly updates
 - Follow [Who to Follow](/follow) for newsletters and researchers
-- Check [Model Releases](/research/model-releases) for new tool announcements
+- Check [What's New](/research/whats-new) for new tool announcements
 
 ---
 
@@ -122,7 +122,7 @@ Advanced patterns and best practices for better LLM outputs.
 
 ### Recent Updates
 - [What's New](/research/whats-new)  -  May 2026 releases and trends
-- [Model Releases](/research/model-releases)  -  Timeline of new models
+- [What's New](/research/whats-new)  -  Latest developments and releases
 - [Emerging Trends](/research/emerging-trends)  -  15 key trends
 
 ---

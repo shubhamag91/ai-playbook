@@ -19,3 +19,8 @@
 # Legacy cheatsheet paths that moved to reference section
 /cheatsheets/ai-tools-landscape /reference/cheatsheets/ai-tools-landscape 301
 /cheatsheets/coding-assistants-agents /reference/cheatsheets/coding-assistants-agents 301
+
+# Page consolidations (May 2026)
+/research/model-releases /research/whats-new 301
+/reference/model-capability-matrix /reference/model-specs 301
+/decide/tools/decision-tree /decide/tools/guide 301
