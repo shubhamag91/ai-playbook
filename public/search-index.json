@@ -957,7 +957,7 @@
     "slug": "deep-dive/multimodal-ai",
     "title": "\"Multimodal AI\"",
     "description": "Deep dive on multimodal AI  -  architectures, computer vision, speech, and audio generation",
-    "chunk": "### Pattern 4: Voice Assistant\n```text\nUser: Speaks question\nPipeline: Whisper (ASR) → Claude Sonnet (think) → ElevenLabs (speak)\nOutput: Natural voice response in {\"<\"}1 second\n\n### Pattern 5: Music Creation\n```\nInput: \"A lo-fi hip hop track with piano, 90 BPM, chill vibe\"\nModel: Suno\nOutput: Full 3-minute track with melody, harmony, and rhythm\n```\n\n---\n\n## Key Takeaways"
+    "chunk": "### Pattern 4: Voice Assistant\n```text\nUser: Speaks question\nPipeline: Whisper (ASR) → Claude Sonnet (think) → ElevenLabs (speak)\nOutput: Natural voice response in {\"<\"}1 second\n```\n\n### Pattern 5: Music Creation\n```\nInput: \"A lo-fi hip hop track with piano, 90 BPM, chill vibe\"\nModel: Suno\nOutput: Full 3-minute track with melody, harmony, and rhythm\n```\n\n---\n\n## Key Takeaways"
   },
   {
     "slug": "deep-dive/multimodal-ai",
