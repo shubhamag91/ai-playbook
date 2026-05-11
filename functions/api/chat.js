@@ -76,23 +76,19 @@ export async function onRequest({ request, env }) {
     let finalContext = contextStr;
     let contextLabel = 'Reference material';
 
-    if (!hasPlaybookContent && env.TAVILY_API_KEY) {
-      // Tier 2: Search the web via Tavily
-      const tavilyRes = await fetch('https://api.tavily.com/search', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          api_key: env.TAVILY_API_KEY,
-          query: question,
-          search_depth: 'basic',
-          max_results: 5,
-        }),
+    if (!hasPlaybookContent && env.BRAVE_API_KEY) {
+      // Tier 2: Search the web via Brave Search
+      const braveRes = await fetch(`https://api.search.brave.com/res/v1/web/search?q=${encodeURIComponent(question)}&count=5`, {
+        headers: {
+          'X-Subscription-Token': env.BRAVE_API_KEY,
+          'Accept': 'application/json',
+        },
       });
 
-      if (tavilyRes.ok) {
-        const tavilyData = await tavilyRes.json();
-        if (tavilyData.results && tavilyData.results.length > 0) {
-          finalContext = tavilyData.results.map(r => r.content).join('\n\n');
+      if (braveRes.ok) {
+        const braveData = await braveRes.json();
+        if (braveData.web && braveData.web.results && braveData.web.results.length > 0) {
+          finalContext = braveData.web.results.map(r => r.description).filter(Boolean).join('\n\n');
           contextLabel = 'Web search results';
         }
       }
