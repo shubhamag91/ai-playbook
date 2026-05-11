@@ -233,6 +233,7 @@ export default defineConfig({
             { label: 'Training & Fine-tuning', slug: 'deep-dive/training-finetuning' },
             { label: 'Prompt Engineering', slug: 'deep-dive/prompt-engineering' },
             { label: 'Inference Optimization', slug: 'deep-dive/inference-optimization' },
+            { label: 'Production LLMOps', slug: 'deep-dive/production-llmops' },
             { label: 'Evaluation & Testing', slug: 'deep-dive/eval-and-testing' },
           ],
         },
