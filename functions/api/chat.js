@@ -55,10 +55,13 @@ Answer:`;
       prompt: prompt,
     });
 
-    // Return as JSON
+    // Extract text from response (handle different response formats)
+    const answerText = aiResponse?.response || aiResponse?.text || (typeof aiResponse === 'string' ? aiResponse : JSON.stringify(aiResponse));
+
     return new Response(JSON.stringify({
-      answer: aiResponse.response || aiResponse,
+      answer: answerText,
       sources: sourceLinks,
+      raw: typeof aiResponse === 'object' ? Object.keys(aiResponse) : typeof aiResponse,
     }), {
       headers: { 'Content-Type': 'application/json', ...corsHeaders },
     });

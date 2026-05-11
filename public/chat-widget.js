@@ -85,8 +85,12 @@
         removeTyping();
         if (data.error) {
           addMsg('Error: ' + data.error, false);
-        } else if (data.answer) {
+        } else if (data.answer && data.answer.trim()) {
           addMsg(data.answer, false, data.sources || []);
+        } else if (!data.answer && data.sources && data.sources.length > 0) {
+          addMsg('I found relevant pages but could not generate an answer. Try visiting one of the source links directly.', false, data.sources);
+        } else if (data.raw) {
+          addMsg('Response: ' + JSON.stringify(data.raw), false);
         } else {
           addMsg('No response received.', false);
         }
