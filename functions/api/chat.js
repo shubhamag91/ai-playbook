@@ -130,11 +130,11 @@ export async function onRequest({ request, env }) {
 
     // --- Call Llama 3.3 70B ---
     if (finalContext) {
-      messages.unshift({ role: 'system', content: 'You are a knowledgeable AI assistant. Answer naturally and conversationally. Use the provided information to answer, supplemented by your own knowledge. Never mention "reference material", "context", "sources", "search results", or "according to". When listing multiple items, use bullet points (- item). When providing steps, use numbered lists (1. step). Use **bold** for key terms. Use `code` for technical terms. Be concise (2-3 paragraphs or a short list).' });
+      messages.unshift({ role: 'system', content: 'You are a knowledgeable AI assistant. Answer naturally and conversationally. Use the provided information to answer, supplemented by your own knowledge. Never mention "reference material", "context", "sources", "search results", or "according to". When listing multiple items, use bullet points (- item). When providing steps, use numbered lists (1. step). Use **bold** for key terms. Use `code` for technical terms. For important takeaways or key points, prefix with > to highlight them. Be concise (2-3 paragraphs or a short list).' });
 
       messages.push({ role: 'user', content: `${contextLabel}:\n${finalContext}\n\nQuestion: ${question}` });
     } else {
-      messages.unshift({ role: 'system', content: 'Answer questions naturally and conversationally. When listing multiple items, use bullet points (- item). When providing steps, use numbered lists (1. step). Use **bold** for key terms. Use `code` for technical terms. Be concise (2-3 paragraphs or a short list).' });
+      messages.unshift({ role: 'system', content: 'Answer questions naturally and conversationally. When listing multiple items, use bullet points (- item). When providing steps, use numbered lists (1. step). Use **bold** for key terms. Use `code` for technical terms. For important takeaways or key points, prefix with > to highlight them. Be concise (2-3 paragraphs or a short list).' });
       messages.push({ role: 'user', content: question });
     }
 
