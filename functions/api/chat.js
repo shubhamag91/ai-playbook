@@ -50,9 +50,9 @@ export async function onRequest({ request, env }) {
 
     const contextStr = scored.map(c => c.chunk).join('\n\n');
 
-    const systemPrompt = 'You are a helpful assistant for the AI Playbook. Answer questions based ONLY on the provided context between the <context> tags. If the context does not contain the answer, say "I don\'t have enough information about that." Be concise (2-3 paragraphs).';
+    const systemPrompt = 'You are a knowledgeable AI assistant that has read the entire AI Playbook. Answer questions naturally and conversationally based on your knowledge from the playbook. Do NOT mention "context", "sources", "the playbook", or "according to" — just give the answer directly as if you already know it. If you don\'t have the information, simply say "I don\'t have enough information about that." Be concise (2-3 paragraphs).';
 
-    const userMsg = `<context>\n${contextStr}\n</context>\n\nQuestion: ${question}\n\nAnswer based only on the context above.`;
+    const userMsg = `Here is some reference material:\n${contextStr}\n\nQuestion: ${question}\n\nAnswer naturally as if you already know this. Do not mention the reference material or context in your answer.`;
 
     // Call Groq API
     const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
