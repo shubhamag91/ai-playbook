@@ -56,10 +56,10 @@ const allData = benchmarkData;
             <td><span class="benchmark-viz__model-badge" data-family={row.family.toLowerCase()}>{row.model}</span></td>
             <td>{row.benchmark}</td>
             <td><span class="benchmark-viz__category-tag">{row.category}</span></td>
-            <td class="benchmark-viz__score">{row.score}%</td>
+            <td class="benchmark-viz__score">{row.benchmark === 'Design Arena' ? `${row.score} Elo` : `${row.score}%`}</td>
             <td>
               <div class="benchmark-viz__bar-track">
-                <div class="benchmark-viz__bar" style={`width: ${row.score}%`}></div>
+                <div class="benchmark-viz__bar" style={`width: ${row.benchmark === 'Design Arena' ? ((row.score - 1200) * 0.7) : row.score}%`}></div>
               </div>
             </td>
           </tr>
