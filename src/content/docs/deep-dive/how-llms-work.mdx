@@ -1,18 +1,20 @@
 ---
 title: "How LLMs Work: Technical Deep Dive"
-description: Technical deep dive  -  transformers, attention, embeddings, and training
+description: Technical deep dive  -  transformers, attention, embeddings, scaling laws, and MoE
 sidebar:
   order: 1
 tags:
   - deep-dive
   - architecture
   - llm
+  - scaling
+  - moe
 glossaryLinks:
   - transformer
   - attention
   - token
   - embedding
-lastUpdated: 2026-05-10
+lastUpdated: 2026-05-11
 nextVerificationDue: 2026-08-08
 ---
 
@@ -286,28 +288,75 @@ Probabilities flatten → more random choices
 
 ## Part 8: Scaling Laws
 
-There's a predictable relationship between model size and performance:
+There's a predictable relationship between model size, data, compute, and performance. Understanding this is essential for making informed decisions about model selection and architecture.
+
+### The Core Finding (Kaplan et al., 2020)
+
+Scaling laws describe how model performance improves as you increase three resources:
 
 ```
-Performance ∝ (Model Size) ^ (-0.074)
+Performance improvement ≈ f(
+  Model parameters (size),
+  Training tokens (data),
+  Compute budget (FLOPs)
+)
 ```
 
-Or more simply:
-- 2x parameters → ~6% better performance
-- 10x parameters → ~20% better performance
-- 100x parameters → ~40% better performance
+**Empirical relationship (Kaplan):**
+- 2x parameters → ~6% better loss
+- 10x parameters → ~20% better loss
+- 100x parameters → ~40% better loss
 
-**Implications:**
-- Bigger models are always better (up to a point)
-- But cost scales faster than performance
-- GPT-4 is 100x larger than GPT-3 but not 100x better
+**Key insight:** Performance scales as a power-law with each resource. There are diminishing returns, but no "plateau" was observed at GPT-3 scale.
 
-**Compute Budget:**
-For fixed budget, the optimal ratio is:
-- Model size: 6B parameters
-- Training tokens: 6B × 20 = 120B tokens
+### The Three Axes
 
-(Chinchilla scaling, 2022)
+| Axis | What it costs | What it buys |
+|---|---|---|
+| **Parameters** | Memory (VRAM), inference latency | Model capacity, knowledge retention |
+| **Training tokens** | Data collection, compute for processing | Broad knowledge, language fluency |
+| **Compute budget** | GPU/TPU hours, dollars | Overall capability |
+
+The art of model design is deciding how to allocate your compute budget across parameters and data.
+
+### Chinchilla Optimal Compute (2022)
+
+DeepMind showed that most models were undertrained — they had too many parameters for the amount of data they were trained on.
+
+**Chinchilla's finding:**
+For a compute-optimal model, the ratio should be:
+- **20 tokens of training data per parameter**
+
+```
+Optimal model size = Compute budget / (6 × 20)
+Training tokens = 20 × parameters
+```
+
+**Example:** If you have 1e23 FLOPs of compute:
+- Optimal model size: ~6B parameters
+- Optimal training tokens: ~120B tokens
+
+**Why this matters:** Many models (including GPT-3) were significantly over-parameterized. You could get the same performance from a smaller model trained on more data, for less cost.
+
+### Current State (May 2026)
+
+Scaling has evolved significantly since the original papers:
+
+**What's changed:**
+- **Data quality > data quantity:** The best models now prioritize curated, high-quality data over raw scale. Chinchilla assumed all tokens are equal — they're not.
+- **MoE decouples capacity from compute:** Mixture of Experts models can have hundreds of billions of parameters but only use a fraction per token (see Part 11).
+- **Test-time compute is a new axis:** Models like o3 and DeepSeek R1 spend more compute at inference time (thinking) rather than just at training time.
+
+**The diminishing returns debate:**
+- Pro-scaling: Larger models continue to improve on hard benchmarks (GPQA, SWE-bench)
+- Anti-scaling: Marginal gains shrink; better data, architecture, and inference techniques offer higher ROI
+- Consensus: Scaling still works, but the frontier has moved from "scale blindly" to "scale intelligently" (better data, better architecture, better training methods)
+
+**Practical implications:**
+- Frontier models (Claude Opus, GPT-5.5) are in the 1T+ parameter range (with MoE)
+- Small models (Phi-4, Gemma) achieve GPT-3.5-class performance at 1/100th the size through better data and training
+- The cost of training frontier models has risen to $100M-$1B per run
+- Most teams should not train models — fine-tune existing ones instead
 
 ---
 
@@ -334,7 +383,102 @@ With 200K context, you can:
 
 ---
 
-## Part 10: Fine-tuning
+## Part 10: Mixture of Experts (MoE) Architecture
+
+Most frontier models no longer use a single dense neural network. Instead, they use a **Mixture of Experts (MoE)** architecture that decouples total parameter count from per-token compute cost.
+
+### The Problem MoE Solves
+
+A dense model uses all its parameters for every token. A 1T parameter dense model would be impossibly expensive to run. MoE solves this by activating only a subset of parameters per token.
+
+```
+Dense model (inefficient at scale):
+  Every token → All parameters → Output
+
+MoE model (efficient at scale):
+  Every token → Router → Top 2 of 16 experts → Output
+```
+
+### How MoE Works
+
+**1. Experts:** Feed-forward networks, each specialized in different types of processing. A model might have 16 to 256 experts.
+
+**2. Router (Gating Network):** A small neural network that decides which experts to use for each token. It outputs a probability distribution over experts.
+
+**3. Top-K Routing:** Only the top K experts (typically K=2) are activated per token. The others are skipped entirely.
+
+```
+Token: "bites"
+  ↓
+Router scores: Expert 7 (92%), Expert 12 (85%), Expert 3 (12%), ...
+  ↓
+Activate: Expert 7 + Expert 12 (weighted by router scores)
+  ↓
+Output: Combined expert output → next layer
+```
+
+**Why K=2?** Two experts provides enough specialization without the overhead of coordinating more. Some models use K=1 (cheapest) or K=4 (more capacity).
+
+### Expert Specialization
+
+Experts naturally specialize during training without explicit supervision:
+
+- Some experts learn grammar patterns
+- Some experts learn factual knowledge
+- Some experts learn coding syntax
+- Some experts learn multi-step reasoning
+
+This emerges from training — no one assigns roles to experts. The router learns to route tokens to the right experts based on the task.
+
+### Load Balancing
+
+A critical challenge: the router might route all tokens to the same few experts, leaving others unused. Solutions:
+
+**Load balancing loss:** A penalty term added during training that encourages the router to distribute tokens evenly across experts.
+
+**Expert capacity:** A hard limit on how many tokens each expert can process. Tokens routed to a full expert are passed through (not processed) or rerouted.
+
+### MoE vs Dense: Tradeoffs
+
+| Aspect | Dense | MoE |
+|---|---|---|
+| Total parameters | N | 4N to 10N (experts + shared) |
+| Active parameters per token | N | ~N/4 to N/2 (only K experts) |
+| Training cost | Baseline | 2-3x more (experts add gradient compute) |
+| Inference cost | Baseline | Similar to dense (same active params) |
+| Quality at same active params | Worse | Better (more total knowledge) |
+| Memory (VRAM) | N | 4N-10N (all experts must be loaded) |
+
+**Key insight:** MoE gives you the knowledge capacity of a much larger model at the inference cost of a smaller one. The tradeoff is higher memory (to store all experts) and higher training cost.
+
+### Real-World MoE Models (May 2026)
+
+| Model | Total Params | Active Params | Experts | Top-K |
+|---|---|---|---|---|
+| Llama 4 | 405B | ~90B | 16 | 2 |
+| Llama 4 Scout | 109B | ~26B | 16 | 2 |
+| Grok 2 | ~300B | ~60B | 8 | 2 |
+| Mixtral 8x7B | 47B | 13B | 8 | 2 |
+| DeepSeek V2/V3 | 236B | ~21B | Varies | Varies |
+| Gemini 3.1 Pro | Unknown | Unknown | Unknown | Unknown |
+
+### MoE Challenges
+
+1. **Memory bandwidth:** All experts must be loaded in memory even though only 2 are used per token. This is why MoE models need high-memory GPUs.
+2. **Expert collapse:** If load balancing fails, some experts become useless. The model wastes parameters.
+3. **Fine-tuning difficulty:** MoE models are harder to fine-tune because updates can destabilize the router.
+4. **Batch inference complexity:** Different tokens in a batch might route to different experts, making efficient batching harder.
+
+### The Future: Dense vs MoE
+
+As of May 2026, the industry is split:
+- **Anthropic** (Claude) uses dense architectures, arguing they produce more coherent outputs
+- **Google** (Gemini), **Meta** (Llama 4), and **DeepSeek** use MoE for cost-effective scaling
+- **OpenAI** (GPT-5.5) uses a hybrid approach — dense core with MoE-like routing for specialized tasks
+
+---
+
+## Part 11: Fine-tuning
 
 After training, you can fine-tune on your data:
 
@@ -381,9 +525,10 @@ After training, you can fine-tune on your data:
 4. **Transformers:** Blocks of attention + feedforward layers
 5. **Training:** Expensive (done once), learn parameters
 6. **Inference:** Cheap (done constantly), use parameters
-7. **Scaling:** Bigger → better, but with diminishing returns
+7. **Scaling Laws:** Performance scales with parameters, data, and compute — but with diminishing returns and intelligent tradeoffs
 8. **Context window:** Limits what the model can see
-9. **Fine-tuning:** Cheap adaptation to your data
+9. **MoE:** Enables much larger models by only activating a fraction of parameters per token
+10. **Fine-tuning:** Cheap adaptation to your data
 
 ---
 
