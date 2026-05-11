@@ -93,35 +93,20 @@
 .benchmark-viz__model-badge[data-family="mistral"] { background: #ff700033; color: #ff7000; }
 .benchmark-viz__model-badge[data-family="openai"] { background: #a3a3a333; color: #a3a3a3; }
 
-.benchmark-viz__category-tag {
-  display: inline-block;
-  padding: 0.15rem 0.45rem;
-  border-radius: 0.25rem;
-  font-size: 0.8rem;
-  background: var(--sl-color-gray-5);
-  color: var(--sl-color-gray-2);
-  text-transform: capitalize;
-}
-
 .benchmark-viz__score {
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
-.benchmark-viz__bar-track {
-  width: 120px;
-  height: 8px;
-  background: var(--sl-color-gray-5);
-  border-radius: 4px;
-  overflow: hidden;
+.benchmark-viz__score--elo {
+  color: var(--sl-color-accent);
+  font-size: 0.85rem;
 }
 
-.benchmark-viz__bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--sl-color-accent), var(--sl-color-accent-high));
-  border-radius: 4px;
-  transition: width 0.3s ease;
-  min-width: 2px;
+.benchmark-viz__company {
+  color: var(--sl-color-gray-2);
+  font-size: 0.85rem;
 }
 
 .benchmark-viz__count {
@@ -139,10 +124,6 @@
 
   .benchmark-viz__filter-group {
     min-width: 100%;
-  }
-
-  .benchmark-viz__bar-track {
-    width: 80px;
   }
 
   .benchmark-viz__table th,

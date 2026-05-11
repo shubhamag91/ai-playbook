@@ -1,34 +1,87 @@
 ---
 import './BenchmarkViz.css';
-import { benchmarkData, categories, families } from '../data/benchmarks';
+import { benchmarkData } from '../data/benchmarks';
 
-const allData = benchmarkData;
+const familyToCompany: Record<string, string> = {
+  'Claude': 'Anthropic', 'GPT': 'OpenAI', 'Gemini': 'Google',
+  'DeepSeek': 'DeepSeek', 'Llama': 'Meta', 'Mistral': 'Mistral',
+  'OpenAI': 'OpenAI', 'Moonshot': 'Moonshot AI', 'Zhipu': 'Zhipu AI',
+  'Meta': 'Meta', 'xAI': 'xAI', 'Alibaba': 'Alibaba', 'MiniMax': 'MiniMax', 'Xiaomi': 'Xiaomi',
+};
+
+const categoryKey: Record<string, string> = {
+  'coding': 'coding', 'math': 'math', 'knowledge': 'knowledge',
+  'reasoning': 'reasoning', 'design': 'design',
+};
+
+const categoryLabels: Record<string, string> = {
+  coding: 'Coding (HumanEval)', math: 'Math (MATH)', knowledge: 'Knowledge (MMLU)',
+  reasoning: 'Reasoning (GPQA)', design: 'Design (Design Arena)',
+};
+
+type ModelRow = {
+  model: string;
+  company: string;
+  family: string;
+  coding: number | null;
+  math: number | null;
+  knowledge: number | null;
+  reasoning: number | null;
+  design: number | null;
+};
+
+const modelMap = new Map<string, ModelRow>();
+
+for (const entry of benchmarkData) {
+  const key = `${entry.model}|${entry.family}`;
+  if (!modelMap.has(key)) {
+    modelMap.set(key, {
+      model: entry.model,
+      company: familyToCompany[entry.family] || entry.family,
+      family: entry.family,
+      coding: null,
+      math: null,
+      knowledge: null,
+      reasoning: null,
+      design: null,
+    });
+  }
+  const row = modelMap.get(key)!;
+  row[categoryKey[entry.category]] = entry.score;
+}
+
+const modelData = Array.from(modelMap.values());
+const allFamilies = Array.from(new Set(modelData.map(r => r.family))).sort();
+const familiesList = ['All', ...allFamilies];
+const categories = ['coding', 'math', 'knowledge', 'reasoning', 'design'];
+
+function formatScore(val: number | null, category: string): string {
+  if (val === null) return '\u2014';
+  return category === 'design' ? `${val} Elo` : `${val}%`;
+}
+
+function attrName(v: string): string { return v.toLowerCase().replace(/[^a-z0-9]/g, '-'); }
 ---
 
 <div class="benchmark-viz" id="benchmark-viz">
   <div class="benchmark-viz__controls">
     <div class="benchmark-viz__filter-group">
-      <label for="bm-category">Category</label>
-      <select id="bm-category" class="benchmark-viz__select">
-        {categories.map(cat => (
-          <option value={cat.id}>{cat.label}</option>
-        ))}
-      </select>
-    </div>
-    <div class="benchmark-viz__filter-group">
       <label for="bm-family">Family</label>
       <select id="bm-family" class="benchmark-viz__select">
-        {families.map(f => (
-          <option value={f.toLowerCase()}>{f}</option>
+        {familiesList.map(f => (
+          <option value={attrName(f)}>{f}</option>
         ))}
       </select>
     </div>
     <div class="benchmark-viz__filter-group">
       <label for="bm-sort">Sort By</label>
       <select id="bm-sort" class="benchmark-viz__select">
-        <option value="score-desc">Score (high to low)</option>
-        <option value="score-asc">Score (low to high)</option>
         <option value="model">Model name</option>
+        <option value="coding">Coding</option>
+        <option value="math">Math</option>
+        <option value="knowledge">Knowledge</option>
+        <option value="reasoning">Reasoning</option>
+        <option value="design">Design</option>
       </select>
     </div>
   </div>
@@ -37,68 +90,76 @@ const allData = benchmarkData;
     <table class="benchmark-viz__table">
       <thead>
         <tr>
-          <th>Model</th>
-          <th>Benchmark</th>
-          <th>Category</th>
-          <th>Score</th>
-          <th>Trend</th>
+          <th class="benchmark-viz__header sortable" data-sort="model">Model</th>
+          <th>Company</th>
+          {categories.map(cat => (
+            <th class="benchmark-viz__header sortable" data-sort={cat}>{categoryLabels[cat]}</th>
+          ))}
         </tr>
       </thead>
       <tbody id="bm-tbody">
-        {allData.map(row => (
+        {modelData.map(row => (
           <tr class="benchmark-viz__row"
-            data-model={row.model}
-            data-family={row.family.toLowerCase()}
-            data-category={row.category}
-            data-score={row.score}
+            data-model={attrName(row.model)}
+            data-family={attrName(row.family)}
             data-sort-model={row.model.toLowerCase()}
+            data-sort-coding={row.coding ?? -1}
+            data-sort-math={row.math ?? -1}
+            data-sort-knowledge={row.knowledge ?? -1}
+            data-sort-reasoning={row.reasoning ?? -1}
+            data-sort-design={row.design ?? -1}
           >
-            <td><span class="benchmark-viz__model-badge" data-family={row.family.toLowerCase()}>{row.model}</span></td>
-            <td>{row.benchmark}</td>
-            <td><span class="benchmark-viz__category-tag">{row.category}</span></td>
-            <td class="benchmark-viz__score">{row.benchmark === 'Design Arena' ? `${row.score} Elo` : `${row.score}%`}</td>
-            <td>
-              <div class="benchmark-viz__bar-track">
-                <div class="benchmark-viz__bar" style={`width: ${row.benchmark === 'Design Arena' ? ((row.score - 1200) * 0.7) : row.score}%`}></div>
-              </div>
-            </td>
+            <td><span class="benchmark-viz__model-badge" data-family={attrName(row.family)}>{row.model}</span></td>
+            <td class="benchmark-viz__company">{row.company}</td>
+            {categories.map(cat => (
+              <td class={`benchmark-viz__score${cat === 'design' ? ' benchmark-viz__score--elo' : ''}`}>
+                {formatScore(row[cat], cat)}
+              </td>
+            ))}
           </tr>
         ))}
       </tbody>
     </table>
   </div>
 
-  <p class="benchmark-viz__count" id="bm-count">Showing {allData.length} results</p>
+  <p class="benchmark-viz__count" id="bm-count">Showing {modelData.length} results</p>
 </div>
 
 <script is:inline>
 const viz = document.getElementById('benchmark-viz');
 if (viz) {
-  const categorySelect = document.getElementById('bm-category');
   const familySelect = document.getElementById('bm-family');
   const sortSelect = document.getElementById('bm-sort');
   const tbody = document.getElementById('bm-tbody');
   const countEl = document.getElementById('bm-count');
 
+  function getHeaders() {
+    return Array.from(document.querySelectorAll('.benchmark-viz__header.sortable'));
+  }
+
+  function getSortVal(row, sortKey) {
+    return parseFloat(row.getAttribute('data-sort-' + sortKey)) || row.getAttribute('data-sort-' + sortKey) || '';
+  }
+
   function filterAndSort() {
-    const cat = categorySelect.value;
     const fam = familySelect.value;
     const sort = sortSelect.value;
+    const asc = sort === 'model';
 
     const rows = Array.from(tbody.querySelectorAll('tr'));
     const visible = rows.filter(row => {
-      const matchesCat = cat === 'all' || row.getAttribute('data-category') === cat;
-      const matchesFam = fam === 'all' || row.getAttribute('data-family') === fam;
-      return matchesCat && matchesFam;
+      return fam === 'all' || row.getAttribute('data-family') === fam;
     });
 
     visible.sort((a, b) => {
-      if (sort === 'model') {
-        return a.getAttribute('data-sort-model').localeCompare(b.getAttribute('data-sort-model'));
+      const aVal = getSortVal(a, sort);
+      const bVal = getSortVal(b, sort);
+      if (typeof aVal === 'number' && typeof bVal === 'number') {
+        return asc ? aVal - bVal : bVal - aVal;
       }
-      const aScore = parseFloat(a.getAttribute('data-score'));
-      const bScore = parseFloat(b.getAttribute('data-score'));
-      return sort === 'score-desc' ? bScore - aScore : aScore - bScore;
+      return typeof aVal === 'string' && typeof bVal === 'string'
+        ? (asc ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal))
+        : 0;
     });
 
     rows.forEach(row => row.remove());
@@ -108,7 +169,6 @@ if (viz) {
     countEl.textContent = `Showing ${visible.length} of ${rows.length} results${hidden > 0 ? ` (${hidden} filtered)` : ''}`;
   }
 
-  categorySelect.addEventListener('change', filterAndSort);
   familySelect.addEventListener('change', filterAndSort);
   sortSelect.addEventListener('change', filterAndSort);
 }
