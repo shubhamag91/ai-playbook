@@ -1,18 +1,19 @@
 ---
 title: Evaluation & Testing for LLMs
-description: How to evaluate LLM outputs  -  qualitative metrics, benchmark selection, A/B testing, guardrails, and LLM-as-judge patterns.
+description: How to evaluate LLM outputs  -  benchmarks, qualitative metrics, A/B testing, guardrails, and LLM-as-judge patterns.
 sidebar:
-  order: 7
+  order: 10
 tags:
   - deep-dive
   - evaluation
   - testing
+  - benchmarks
 glossaryLinks:
   - hallucination
   - inference
   - llm
   - prompt
-lastUpdated: 2026-05-10
+lastUpdated: 2026-05-11
 nextVerificationDue: 2026-08-08
 ---
 
@@ -166,20 +167,144 @@ def min_sample_size(effect_size=0.1, alpha=0.05, power=0.8):
 
 ---
 
-## Benchmark Selection
+## Benchmark Methodology
 
-Use existing benchmarks when choosing between models, and custom evals for your specific use case.
+Understanding how benchmarks actually work is essential for interpreting model scores correctly.
 
-| Benchmark | What It Measures | Best For |
-|---|---|---|
-| **HumanEval** | Code generation | Coding assistants |
-| **MATH** | Mathematical reasoning | Math tutoring, analysis |
-| **MMLU** | Broad knowledge | General-purpose QA |
-| **GPQA** | Graduate-level reasoning | Research, complex analysis |
-| **Bamboogle** | Multi-step reasoning | Agentic workflows |
-| **HellaSwag** | Commonsense reasoning | Chatbots, everyday tasks |
+### How Major Benchmarks Work
 
-**Custom benchmarks**  -  Create a dataset of 50-100 real user queries with gold-standard responses. Run all eval variants against this dataset. This is more valuable than any public benchmark.
+**MMLU (Massive Multitask Language Understanding):**
+- 57 subjects from high-school to professional-level (math, law, medicine, physics...)
+- Format: Multiple choice (A/B/C/D), ~14,000 questions
+- Scoring: Simple accuracy — what % did the model get right?
+- Ceiling: Human experts score ~90%; top models now hit 92-93%
+- **Pitfall:** Many questions are answerable from memorized internet text, not genuine reasoning
+
+**HumanEval:**
+- 164 hand-written Python programming problems
+- Format: Function signature + docstring, model writes the body
+- Scoring: Functional correctness — does the code pass unit tests?
+- Ceiling: 100% is theoretically possible; top models hit 96-99%
+- **Pitfall:** Tests are simple (few edge cases), models may memorize common patterns
+
+**GPQA (Graduate-Level Google-Proof Q&A):**
+- 448 expert-written questions in biology, physics, chemistry
+- Format: Multiple choice, designed to be "Google-proof" (can't find answers by search)
+- Scoring: Accuracy
+- Ceiling: Domain experts score ~85%; top models hit 87% (o3)
+- **Why it matters:** Hardest benchmark — tests genuine understanding, not memorization
+
+**SWE-bench:**
+- 2,294 real GitHub issues from 12 popular Python repos
+- Format: Model gets issue description + codebase, must produce a patch
+- Scoring: Does the patch pass the repository's existing test suite?
+- **Why it matters:** Most realistic coding benchmark — tests real-world software engineering
+- **Current best:** Claude Sonnet 4.6 at ~49%, o3 at ~71%
+
+**GSM8K (Grade School Math 8K):**
+- 8,500 grade-school math word problems
+- Format: Natural language problem, model must output the numeric answer
+- Scoring: Exact match accuracy
+- **Saturation:** Many models now score 95%+; useful for regression testing but no longer differentiates
+
+**Design Arena:**
+- AI design quality benchmark with 5M+ community votes
+- Format: Blind pairwise comparison of model outputs (code, UI, images, video)
+- Scoring: Bradley-Terry Elo rating
+- **Why it matters:** Measures creative/aesthetic output, not just reasoning — an entirely different axis of capability
+
+### Benchmark Contamination
+
+The single biggest issue with benchmarks: **data leakage**.
+
+```
+Training data (internet, books, code) contains benchmark questions.
+Model memorizes answers during training.
+Benchmark score is inflated.
+Real-world performance is lower.
+```
+
+**How to detect contamination:**
+- **N-gram overlap:** If 10+ consecutive words from a benchmark question appear verbatim in training data, it's contaminated
+- **Perplexity analysis:** Models have unusually low perplexity on contaminated questions
+- **Time of release:** If a benchmark was released before the model's training cutoff, it may be in the training data
+
+**Real example:**
+- GPT-4 scored 86% on MMLU
+- GPT-4's training data included the internet up to September 2021
+- MMLU was released in 2020
+- Likely contamination: 10-20% of MMLU questions may have been seen during training
+- Adjusted true performance: perhaps 70-75%
+
+**How to mitigate:**
+- Use benchmarks released after your model's training cutoff
+- Test on held-out subsets (MMLU-Redux, HumanEval-X)
+- Use benchmarks designed to resist contamination (GPQA, which is "Google-proof")
+- Report contamination analysis alongside scores
+
+### Benchmark Saturation
+
+As models improve, benchmarks become less useful:
+
+| Benchmark | Year Released | Saturation | What It Tells You Now |
+|---|---|---|---|
+| MMLU | 2020 | Near-saturated | Whether a model is basic vs capable |
+| HumanEval | 2021 | Near-saturated | Coding fluency (not real-world skill) |
+| GSM8K | 2021 | Saturated | Basic arithmetic, small use |
+| GPQA | 2023 | Not saturated | Genuine reasoning capability |
+| SWE-bench | 2023 | Not saturated | Real-world coding ability |
+| Design Arena | 2025 | Not saturated | Creative/design capability |
+
+**Pattern:** Benchmarks lose discriminating power in 2-3 years. The community must keep creating harder benchmarks.
+
+### How to Interpret Scores
+
+```
+Benchmark score ≠ real-world capability
+```
+
+| Score Range | What It Actually Means |
+|---|---|
+| 90-100% | Model is good at this type of question |
+| 80-90% | Model is competent but makes mistakes |
+| 70-80% | Model has basic capability, needs improvement |
+| Below 70% | Model struggles with this domain |
+
+**But context matters:**
+- 95% on MMLU (saturated) ≠ 95% on GPQA (hard)
+- A coding model may score 95% on HumanEval but 30% on SWE-bench
+- A model strong in English may be weak in Chinese (even with same benchmark format)
+
+**Statistical significance:**
+- Small score differences ({"<"}2%) are often noise
+- Benchmark runs are non-deterministic (temperature, sampling variation)
+- Run each benchmark 3-5 times and report mean + variance
+
+### Beyond Benchmarks
+
+Benchmarks tell you how models compare in controlled conditions. For real-world decisions, add:
+
+**1. Human evaluation (gold standard):**
+- Have domain experts rate outputs blind (A vs B)
+- 50-100 samples per variant is enough for statistical significance
+- Cost: $500-5000 per evaluation round
+
+**2. LLM-as-judge evaluation:**
+- Use a strong model (Claude, GPT-5.5) to rate your application's outputs
+- Well-calibrated with human ratings (0.7-0.9 correlation)
+- Cost: $0.01-0.05 per evaluation
+
+**3. Task-specific evals:**
+- Create a dataset of 50-100 real user queries with gold-standard responses
+- Run your application's outputs through the same eval criteria
+- This is more valuable than any public benchmark
+
+**4. Production metrics:**
+- User satisfaction scores
+- Task completion rate
+- Time to resolution
+- Escalation rate (for support)
+- These are the only metrics that truly matter
 
 ---
 
