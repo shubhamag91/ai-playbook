@@ -209,6 +209,7 @@ export default defineConfig({
             { label: 'Benchmarks', slug: 'reference/benchmarks' },
             { label: 'Model Specs', slug: 'reference/model-specs' },
             { label: 'Model Capability Matrix', slug: 'reference/model-capability-matrix' },
+            { label: 'Economics of AI', slug: 'reference/economics-of-ai' },
           ],
         },
         {
@@ -217,6 +218,7 @@ export default defineConfig({
             { label: 'What\'s New', slug: 'research/whats-new' },
             { label: 'Model Releases', slug: 'research/model-releases' },
             { label: 'Open-Source Models', slug: 'research/models/guide' },
+            { label: 'Chinese AI Ecosystem', slug: 'research/china-ecosystem' },
             { label: 'Trends', slug: 'research/emerging-trends' },
             { label: 'History', slug: 'research/history' },
             { label: 'Vocabulary', slug: 'research/vocabulary' },

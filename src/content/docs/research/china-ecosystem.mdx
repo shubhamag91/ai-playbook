@@ -1,0 +1,254 @@
+---
+title: "Chinese AI Ecosystem Landscape"
+description: The growing Chinese AI ecosystem  -  Kimi, GLM, Qwen, MiniMax, MiMo, ERNIE, and how to access them
+sidebar:
+  order: 4
+tags:
+  - research
+  - china
+  - models
+  - ecosystem
+lastUpdated: 2026-05-11
+nextVerificationDue: 2026-08-08
+---
+
+Chinese AI labs now produce frontier-quality models competitive with US leaders. This page maps the ecosystem, compares players, and explains how to access them.
+
+---
+
+## Why It Matters
+
+In 2024, China was "catching up." In 2026, they're setting the pace in key areas:
+
+- **Cost leadership** — DeepSeek V4 Flash at $0.14/$0.28 forced global price cuts
+- **Design quality** — 4 of the top 10 Design Arena models are Chinese (Kimi K2.6, GLM 5.1, GLM 5 Turbo, Qwen 3.6)
+- **Agentic AI** — Kimi's 100-agent swarm is unique globally
+- **Multilingual** — Chinese models handle EN/CN equally well; many excel at other Asian languages
+
+---
+
+## The Players
+
+### Moonshot AI — Kimi
+
+**Flagship:** Kimi K2.6
+
+| Aspect | Detail |
+|---|---|
+| **Context** | 256K tokens |
+| **Design Arena** | 1343 Elo (Top 5) |
+| **Pricing** | ~$0.55/$2.19 per 1M |
+| **Unique feature** | 100-agent swarm — orchestrates up to 100 specialized agents for complex tasks |
+| **Access** | Chat (web/app), API, open-weight |
+
+**Best for:** Agentic workflows, long-context analysis, design tasks.
+
+**Kimi K2.5 (Thinking):** Previous generation with thinking mode. 1301 Elo on Design Arena.
+
+### Zhipu AI — GLM Series
+
+**Flagships:** GLM 5.1, GLM 5 Turbo, GLM 5
+
+| Model | Elo | Best For |
+|---|---|---|
+| GLM 5.1 | 1341 | Enterprise multilingual, design |
+| GLM 5 Turbo | 1336 | Speed, multilingual |
+| GLM 5 | 1307 | Base model, general purpose |
+| GLM 4.7 | 1298 | Mid-cycle update, bridging GLM 4 |
+
+**Unique strengths:**
+- Strongest multilingual performance of any Chinese AI lab
+- Enterprise focus — SOC2 compliance, dedicated support
+- GLM 5.1 is Zhipu's flagship at 1341 Elo on Design Arena
+- Older models (GLM 4, GLM 4.7) still maintained for compatibility
+
+**Access:** API, Hugging Face, enterprise sales
+
+**Best for:** Enterprise use, multilingual applications, design tasks.
+
+### Alibaba — Qwen / Tongyi
+
+**Flagship:** Qwen 3.6
+
+| Aspect | Detail |
+|---|---|
+| **Context** | 128K tokens |
+| **Design Arena** | 1310 Elo |
+| **Pricing** | ~$0.40/$1.50 per 1M |
+| **Sizes** | 0.5B to 72B parameters (open-weight versions available) |
+| **Access** | API (Alibaba Cloud), Hugging Face, self-host |
+
+**Unique strengths:**
+- Deep integration with Alibaba Cloud ecosystem (ECS, OSS, DataWorks)
+- Strong across all modalities (text, code, vision)
+- Open-weight versions (Qwen 2.5 series) are popular for self-hosting
+- Versions available from 0.5B (edge) to 72B (frontier)
+
+**Best for:** Multilingual, general-purpose, Alibaba Cloud users.
+
+### MiniMax
+
+**Flagship:** MiniMax M2.7
+
+| Aspect | Detail |
+|---|---|
+| **Context** | 128K tokens |
+| **Design Arena** | 1310 Elo |
+| **Pricing** | ~$0.30/$1.00 per 1M |
+| **Access** | Chat (app), API |
+
+**Unique strengths:**
+- Independent lab (not backed by a tech giant)
+- Strong coding and long-context performance
+- Competitive pricing — among the cheapest Chinese models
+- Growing user base in productivity and coding
+
+**Best for:** Coding, long-context tasks, cost-sensitive applications.
+
+### Xiaomi — MiMo
+
+**Flagship:** MiMo M2.7
+
+| Aspect | Detail |
+|---|---|
+| **Context** | 128K tokens |
+| **Design Arena** | 1280 Elo |
+| **Pricing** | ~$0.25/$0.80 per 1M |
+| **Access** | Xiaomi ecosystem, API |
+
+**Unique strengths:**
+- Xiaomi's first major AI model
+- Multimodal (text + vision)
+- Focused on Xiaomi device ecosystem integration
+- Most affordable of the Chinese AI models
+
+**Best for:** IoT integration, Xiaomi device users, budget-friendly multimodal.
+
+### Baidu — ERNIE / Wenxin
+
+**Flagship:** ERNIE 4.5
+
+| Aspect | Detail |
+|---|---|
+| **Context** | 128K tokens |
+| **Pricing** | ~$0.30/$1.00 per 1M |
+| **Access** | Baidu Cloud API, WeChat integration |
+
+**Unique strengths:**
+- Baidu's search and knowledge graph integration
+- Strong Chinese-language performance
+- Deep integration with Baidu ecosystem (search, maps, cloud)
+- Enterprise-focused with Chinese regulatory compliance
+
+**Best for:** Chinese market, enterprise, Baidu ecosystem users.
+
+### ByteDance — Doubao
+
+**Flagship:** Doubao
+
+| Aspect | Detail |
+|---|---|
+| **Context** | 128K tokens |
+| **Pricing** | ~$0.20/$0.60 per 1M |
+| **Access** | Doubao app, API |
+
+**Unique strengths:**
+- Backed by ByteDance (TikTok/Douyin)
+- Strong creative writing and entertainment
+- Consumer-focused (apps, social media)
+- Competitive pricing
+
+**Best for:** Creative writing, content generation, consumer apps.
+
+### 01.AI — Yi
+
+**Flagship:** Yi-Lightning
+
+| Aspect | Detail |
+|---|---|
+| **Context** | 128K tokens |
+| **Pricing** | Free tier + paid plans |
+| **Access** | API, Hugging Face (open-weight) |
+
+**Unique strengths:**
+- Founded by Kai-Fu Lee (former Google China, Microsoft Research)
+- Strong bilingual (EN/CN) performance
+- Open-weight versions available
+- Lean startup (small team, focused approach)
+
+**Best for:** Bilingual applications, open-source enthusiasts.
+
+---
+
+## Comparison: Chinese vs US Models (May 2026)
+
+| Category | Chinese Leaders | US Leaders | Who Wins |
+|---|---|---|---|
+| **Text reasoning** | Qwen 3.6, Kimi K2.6 | Claude Opus 4.7, o3 | US (slightly) |
+| **Coding** | Qwen 3.6, MiniMax M2.7 | Claude Sonnet 4.6, GPT-5.5 | US (slightly) |
+| **Design (Arena)** | Kimi K2.6, GLM 5.1 | Claude Opus 4.7, Claude 4.6 | Close — top 5 split |
+| **Cost** | DeepSeek V4 Flash ($0.14) | GPT-5.5 Instant ($0.05) | US (by a hair) |
+| **Context window** | 256K (Kimi) | 1M (Gemini) | US |
+| **Agentic** | Kimi 100-agent swarm | Claude agent mode | China (unique capability) |
+| **Multilingual** | Qwen, GLM | Claude, GPT | China (better EN/CN mix) |
+| **Open-weight** | Qwen, Yi, DeepSeek | Llama, Muse Spark | China (more options) |
+
+**Overall assessment:** Chinese models are 90-95% as capable as US leaders at 50-70% the cost. The gap is closing rapidly.
+
+---
+
+## How to Access Chinese Models
+
+### API Access
+
+| Provider | Setup | Documentation | Payment |
+|---|---|---|---|
+| DeepSeek | API key via DeepSeek console | English available | International cards |
+| Alibaba (Qwen) | Alibaba Cloud account | English available | International cards |
+| Zhipu (GLM) | API key via Zhipu console | Chinese + some English | Chinese payment methods |
+| Moonshot (Kimi) | API key via Kimi console | Chinese + English documentation | International cards |
+| MiniMax | API key via MiniMax console | Chinese + English | International cards |
+| Baidu (ERNIE) | Baidu Cloud account | Chinese only | Chinese payment methods |
+
+**The easiest way:** Use OpenRouter — it aggregates multiple Chinese models behind a single API with billing in USD.
+
+### Open-Weight Access
+
+| Model | Platform | License |
+|---|---|---|
+| Qwen 2.5 (0.5B-72B) | Hugging Face, Ollama | Custom (permissive) |
+| DeepSeek V4 | Hugging Face, Ollama | MIT |
+| DeepSeek R1 | Hugging Face, Ollama | MIT |
+| Yi-Lightning | Hugging Face | Custom |
+| GLM 5.1 | Hugging Face | Custom |
+
+**Recommended setup:** Ollama for local experimentation. Together AI or Replicate for API access to open-weight models.
+
+### Chat / Web Access
+
+| Service | URL | Language |
+|---|---|---|
+| Kimi Chat | kimi.moonshot.cn | Chinese (some English) |
+| Qwen Chat | tongyi.aliyun.com | Chinese + English |
+| DeepSeek Chat | chat.deepseek.com | Chinese + English |
+| GLM Chat | chatglm.cn | Chinese |
+| Doubao | doubao.com | Chinese |
+
+---
+
+## Key Takeaways
+
+1. **Chinese AI is no longer "catching up"** — they compete at the frontier in design, cost, and agentic AI
+2. **Kimi K2.6's 100-agent swarm** is a unique capability no US model offers
+3. **GLM 5.1 and Kimi K2.6** break the US monopoly on top-5 Design Arena rankings
+4. **Access is easier than ever** — OpenRouter, Hugging Face, and English docs for most models
+5. **Cost is the killer advantage** — Chinese models are consistently 30-50% cheaper than US equivalents
+6. **Ignore at your own risk** — a well-informed AI practitioner evaluates Chinese and US models side by side
+
+---
+
+See Also:
+- [Model Releases](/research/model-releases)  -  Chinese model release timeline
+- [What's New](/research/whats-new)  -  Latest announcements including Chinese AI
+- [Model Specs & Pricing](/reference/model-specs)  -  Detailed comparison table
+- [Tools Guide](/decide/tools/guide)  -  Accessing models through OpenRouter

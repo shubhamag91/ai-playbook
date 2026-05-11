@@ -1,0 +1,262 @@
+---
+title: "Economics of AI"
+description: Build-vs-buy analysis, TCO models, cost optimization strategies, and market dynamics for AI systems
+sidebar:
+  order: 8
+tags:
+  - reference
+  - economics
+  - cost
+lastUpdated: 2026-05-11
+nextVerificationDue: 2026-08-08
+---
+
+Making cost-effective decisions about AI  -  when to build vs buy, how to model total cost, and how the market is evolving.
+
+---
+
+## Build vs Buy: The Framework
+
+The first decision: use an API (buy) or self-host / fine-tune (build).
+
+| Factor | Buy (API) | Build (Self-host) |
+|---|---|---|
+| **Time to market** | Days | Weeks to months |
+| **Upfront cost** | $0 | $500-$500K (infra) |
+| **Per-query cost** | $0.001-$0.10 | $0.0001-$0.01 |
+| **Privacy** | Data leaves your infra | Data stays on-prem |
+| **Customization** | Prompting only | Full control |
+| **Maintenance** | Provider handles it | Your team handles it |
+| **Scaling** | Auto-scales | You manage capacity |
+| **Quality** | Frontier models | SLMs or fine-tuned |
+
+### Decision Tree
+
+```
+Is privacy the primary concern?
+├─ Yes → Self-host (build)
+└─ No → Continue
+
+Is usage volume > 10M tokens/month?
+├─ Yes → Build may be cheaper
+└─ No → API is almost certainly cheaper
+
+Do you need frontier-level quality?
+├─ Yes → Buy API (can't self-host frontier quality)
+└─ No → Build with SLM (Phi-4, Llama 4, Mistral)
+
+Do you need custom behavior (fine-tuned)?
+├─ Yes → Build with API fine-tuning or self-host
+└─ No → Buy with prompting
+```
+
+---
+
+## Total Cost of Ownership (TCO)
+
+### API-Based TCO
+
+```text
+Monthly API Cost = 
+  (input_tokens × input_price + output_tokens × output_price) / 1,000,000
+  × daily_requests × 30
+```
+
+**Example: 100K requests/day, 2000 input + 500 output tokens each**
+
+| Model | Input Price | Output Price | Monthly Cost |
+|---|---|---|---|
+| Claude Sonnet 4.6 | $3/M | $15/M | $40,500 |
+| GPT-5.5 | $2/M | $8/M | $24,000 |
+| Gemini 3.1 Pro | $2/M | $12/M | $30,000 |
+| DeepSeek V4 | $0.55/M | $2.19/M | $6,585 |
+| DeepSeek V4 Flash | $0.14/M | $0.28/M | $1,260 |
+| GPT-5.5 Instant | $0.05/M | $0.15/M | $525 |
+
+**Hidden API costs:**
+- Embedding generation (if using RAG): $0.02-0.13/1K tokens
+- Reranking: $1/1K docs (Cohere) or free (self-host)
+- Vector DB hosting: $0.04/1K vectors/month (Pinecone)
+- Monitoring: $0-500/month depending on tool
+
+### Self-Hosted TCO
+
+```text
+Monthly Self-Hosted Cost =
+  GPU rental + storage + bandwidth + engineering time + electricity
+```
+
+**GPU rental prices (May 2026):**
+
+| GPU | Memory | Cost/Hour | Best For |
+|---|---|---|---|
+| NVIDIA H100 | 80GB | $1.5-3.0 | Training, 70B+ inference |
+| NVIDIA B200 | 192GB | $3.0-5.0 | Training, MoE inference |
+| NVIDIA A100 | 80GB | $1.0-2.0 | Inference, fine-tuning |
+| AMD MI300X | 192GB | $1.0-2.0 | Inference (Linux only) |
+| Apple M4 Ultra | 256GB unified | Included (Mac) | Local 7B-70B, prototyping |
+
+**Example: Self-hosting Llama 4 70B**
+
+| Item | Monthly Cost |
+|---|---|
+| 2x H100 (runpod/lamda) | $2,160 (30 days × 24h × $3/h) |
+| Storage (500GB SSD) | $50 |
+| Bandwidth (10TB) | $100 |
+| Engineering time (20% FTE) | $2,000-5,000 |
+| **Total** | **$4,310-7,310** |
+
+### Breakeven Analysis
+
+At what volume does self-hosting become cheaper than API?
+
+| Model | API Cost/M Token | Self-host Break-even |
+|---|---|---|
+| Claude Sonnet 4.6 | $15/output | ~50M tokens/month |
+| GPT-5.5 | $8/output | ~100M tokens/month |
+| DeepSeek V4 Flash | $0.28/output | ~1B tokens/month |
+
+**Rule of thumb:** You need 50M+ output tokens per month before self-hosting makes financial sense for frontier-class models. For SLMs, the break-even is lower (10-20M tokens/month).
+
+---
+
+## Optimization Strategies
+
+### 1. Model Routing
+
+Route simple queries to cheap models, complex to expensive:
+
+| Query Type | Model | Cost/Query | % of Traffic |
+|---|---|---|---|
+| Simple Q&A, classification | GPT-5.5 Instant | $0.00005 | 60% |
+| Content generation, analysis | Claude Sonnet 4.6 | $0.003 | 30% |
+| Complex reasoning, coding | Claude Opus 4.7 | $0.015 | 10% |
+
+**Weighted average cost:** $0.00005 × 60% + $0.003 × 30% + $0.015 × 10% = **$0.0024/query**
+
+**Without routing (all Claude Opus):** $0.015/query — **6.25x more expensive**
+
+### 2. Prompt Caching
+
+If users share common system prompts or context:
+
+```text
+Without caching: 10K requests × 5K tokens × $3/M = $150/day
+With caching:    10K × (500 new + 4500 cached at 10% price)
+                = 10K × (500 × $3/M + 4500 × $0.30/M)
+                = $15 + $13.50 = $28.50/day
+Savings: 81%
+```
+
+### 3. Semantic Caching
+
+Cache similar queries to avoid re-computation:
+
+- **Exact match cache** — 5-15% hit rate, trivial to implement
+- **Semantic cache** — 20-40% hit rate, requires vector DB
+- **Combined** — 25-50% hit rate
+
+### 4. Output Length Optimization
+
+Shorter responses cost less:
+
+| Change | Cost Impact | Quality Impact |
+|---|---|---|
+| Reduce max_tokens from 2000 to 500 | 75% less output cost | Usually minimal |
+| Request structured output (JSON) | 30-50% less | More focused responses |
+| Use concise system prompt | 10-20% less | Often improves quality |
+
+### 5. Batch Processing
+
+For non-real-time workloads, batch processing reduces cost:
+
+```text
+Real-time: 10K requests at $0.003 = $30/day
+Batch:     10K requests at $0.001 = $10/day (with batching discounts)
+Savings: 67%
+```
+
+---
+
+## Market Dynamics (May 2026)
+
+### The Price Collapse
+
+AI inference costs have dropped dramatically in 2026:
+
+| Period | Cost of 1M Output Tokens (GPT-class) | Driver |
+|---|---|---|
+| Jan 2024 | $30-60 | GPT-4 pricing |
+| Jan 2025 | $10-20 | Competition from Claude, Gemini |
+| Jan 2026 | $2-8 | DeepSeek V3/V4 shock |
+| May 2026 | $0.05-$0.28 (Flash/Instant) | Price war, open-weight models |
+
+**Key driver:** DeepSeek V4 Flash at $0.14/$0.28 forced every provider to cut prices. The market is now in a race to the bottom on commodity inference.
+
+### Market Structure
+
+| Tier | Examples | Pricing | Market Share |
+|---|---|---|---|
+| **Premium** | Claude Opus, o3, Grok 3 Pro | $3-$60/M output | ~10% |
+| **Standard** | Claude Sonnet, GPT-5.5, Gemini 3.1 Pro | $2-$15/M output | ~40% |
+| **Budget** | GPT-5.5 Instant, DeepSeek V4 Flash, Gemini 3 Mini | $0.05-$0.28/M output | ~50% |
+
+### What This Means for Builders
+
+| Strategy | Implication |
+|---|---|
+| **Don't optimize prematurely** | Prices will likely halve again in 12 months. Over-optimizing for today's prices is wasted effort. |
+| **Redundancy is free** | With multiple providers at similar prices, always have a fallback. |
+| **Open-weight is viable** | Self-hosting Llama 4 Scout, DeepSeek V4, or Muse Spark is cheaper than API at scale. |
+| **Fine-tuning ROI has shrunk** | With prompt engineering + RAG + routing, fine-tuning rarely pays back its cost. |
+| **Edge AI economics shift** | On-device SLMs (Phi-4, Gemma) cost $0/query. For high-volume, privacy-sensitive apps, this is the cheapest option. |
+
+---
+
+## Cost Estimation Tool
+
+```python
+def estimate_monthly_cost(
+    daily_requests=1000,
+    input_tokens=2000,
+    output_tokens=500,
+    model="claude-sonnet"
+):
+    pricing = {
+        "claude-opus":      {"in": 15, "out": 75},
+        "claude-sonnet":    {"in": 3, "out": 15},
+        "claude-haiku":     {"in": 0.80, "out": 4},
+        "gpt-5.5":          {"in": 2, "out": 8},
+        "gpt-5.5-instant":  {"in": 0.05, "out": 0.15},
+        "gemini-3.1-pro":   {"in": 2, "out": 12},
+        "deepseek-v4":      {"in": 0.55, "out": 2.19},
+        "deepseek-v4-flash":{"in": 0.14, "out": 0.28},
+    }
+
+    p = pricing[model]
+    daily_cost = (
+        daily_requests * input_tokens * p["in"] +
+        daily_requests * output_tokens * p["out"]
+    ) / 1_000_000
+
+    return round(daily_cost * 30, 2)
+```
+
+---
+
+## Key Takeaways
+
+1. **API is almost always cheaper than self-hosting** at low-to-medium volume (
+2. **Routing is the highest-ROI optimization** — use cheap models for 80% of traffic, expensive for 20%
+3. **Prices are dropping 50%+ per year** — don't over-optimize for today's prices
+4. **Caching is underutilized** — prompt caching (81% savings) and semantic caching (40% hit rate) are the easiest wins
+5. **Self-hosting breaks even at 50M+ tokens/month** — viable for high-volume, not for small-scale
+6. **Edge AI costs $0/query** — for privacy-sensitive or high-volume apps, on-device SLMs are the ultimate cost play
+
+---
+
+See Also:
+- [Cost Calculator](/decide/cost-calculator)  -  Interactive cost comparison tool
+- [Model Specs & Pricing](/reference/model-specs)  -  Current pricing reference
+- [Inference Optimization](/deep-dive/inference-optimization)  -  Technical optimization techniques
+- [Production LLMOps](/deep-dive/production-llmops)  -  Cost tracking in production
