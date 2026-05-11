@@ -83,7 +83,7 @@ export async function onRequest({ request, env }) {
         return { ...entry, score };
       }).filter(e => e.score > 0).sort((a, b) => b.score - a.score).slice(0, 5);
 
-      const hasPlaybookContent = scored.length > 0 && scored[0].score >= 150;
+      const hasPlaybookContent = scored.length > 0 && scored[0].score >= 80;
       const contextStr = hasPlaybookContent ? scored.map(c => c.chunk).join('\n\n') : '';
     }
 

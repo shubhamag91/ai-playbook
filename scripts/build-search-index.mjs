@@ -52,6 +52,52 @@ function walkDir(dir) {
 const allChunks = [];
 const files = walkDir(docsDir);
 
+// Index structured model data for better search
+const modelsPath = path.resolve(__dirname, '../src/data/models.ts');
+const modelsContent = fs.readFileSync(modelsPath, 'utf8');
+const modelRegex = /{ name: '([^']+)', company: '([^']+)', latest: ([^,]+), context: '([^']*)', pricing: '([^']*)', capabilities: '([^']+)'(?:, notes: '([^']*)')?/g;
+const modelEntries = [];
+let modelMatch;
+while ((modelMatch = modelRegex.exec(modelsContent)) !== null) {
+  const [, name, company, latest, context, pricing, capabilities, notes] = modelMatch;
+  modelEntries.push({ name, company, latest, context, pricing, capabilities, notes });
+  allChunks.push({
+    slug: `models/${name.toLowerCase().replace(/\s+/g, '-')}`,
+    title: name,
+    description: `${company} - ${capabilities}`,
+    chunk: `${name} is ${company}'s ${latest === 'true' ? 'latest' : 'previous generation'} model. It supports ${capabilities}. Context window: ${context}. Pricing: ${pricing}. ${notes || ''}`,
+  });
+}
+
+// Add comparison chunks that group related models
+const comparisons = [
+  {
+    topic: 'Latest flagship models comparison',
+    models: modelEntries.filter(m => m.latest === 'true' && ['Anthropic', 'OpenAI', 'Google', 'Meta'].includes(m.company)),
+    slug: 'models/comparison-flagship',
+  },
+  {
+    topic: 'Budget and cost-efficient models comparison',
+    models: modelEntries.filter(m => ['DeepSeek', 'OpenAI'].includes(m.company) || m.name.includes('Haiku') || m.name.includes('Instant') || m.name.includes('Flash')),
+    slug: 'models/comparison-budget',
+  },
+  {
+    topic: 'Reasoning models comparison',
+    models: modelEntries.filter(m => m.name.includes('Opus') || m.name.includes('o3') || m.name.includes('R1')),
+    slug: 'models/comparison-reasoning',
+  },
+];
+
+for (const comp of comparisons) {
+  const chunk = comp.models.map(m => `${m.name} (${m.company}): ${m.capabilities}. Context: ${m.context}. Pricing: ${m.pricing}.`).join('\n');
+  allChunks.push({
+    slug: comp.slug,
+    title: comp.topic,
+    description: `Compare ${comp.models.map(m => m.name).join(', ')}`,
+    chunk: chunk,
+  });
+}
+
 for (const filepath of files) {
   const content = fs.readFileSync(filepath, 'utf8');
   const rel = path.relative(docsDir, filepath);
