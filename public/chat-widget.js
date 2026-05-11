@@ -145,8 +145,16 @@
 
       html = lines2.join('\n');
 
-      // Line breaks
-      html = html.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+      // Line breaks: only convert newlines that are NOT inside HTML tags
+      html = html.replace(/\n\n/g, '<br><br>');
+      html = html.replace(/\n/g, function() { return '<br>'; });
+      // Fix: remove <br> that ended up inside block-level tags
+      html = html.replace(/<(ul|ol|pre|blockquote)[^>]*>\s*<br>/g, '<$1>');
+      html = html.replace(/<br>\s*<\/(ul|ol|pre|blockquote)>/g, '</$1>');
+      html = html.replace(/(<\/li>)<br>/g, '$1');
+      html = html.replace(/<br>(<li>)/g, '$1');
+      html = html.replace(/(<\/blockquote>)<br>/g, '$1');
+      html = html.replace(/<br>(<blockquote>)/g, '$1');
 
       return html;
     }
