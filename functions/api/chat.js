@@ -41,27 +41,24 @@ export async function onRequest({ request, env }) {
     const contextStr = scored.map((c, i) => `[Source ${i+1}: ${c.title} (/${c.slug}/)]\n${c.chunk}`).join('\n\n');
     const sourceLinks = [...new Set(scored.map(c => ({ title: c.title, slug: c.slug })))];
 
-    const prompt = `You are a helpful assistant for the AI Playbook. Answer questions based ONLY on the provided context. If unsure, say so. Be concise.
+    const systemPrompt = 'You are a helpful assistant for the AI Playbook. Answer questions based ONLY on the provided context between the <context> tags. If the context does not contain the answer, say "I don\'t have enough information about that." Be concise (2-3 paragraphs). Include relevant source references.';
 
-Context:
-${contextStr}
+    const userMsg = `<context>\n${contextStr}\n</context>\n\nQuestion: ${question}\n\nAnswer based only on the context above. Include relevant source references.`;
 
-Question: ${question}
-
-Answer:`;
-
-    // Call Workers AI - non-streaming
+    // Call Workers AI with messages format
     const aiResponse = await env.AI.run('@cf/meta/llama-3.2-3b-instruct', {
-      prompt: prompt,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userMsg },
+      ],
     });
 
-    // Extract text from response (handle different response formats)
-    const answerText = aiResponse?.response || aiResponse?.text || (typeof aiResponse === 'string' ? aiResponse : JSON.stringify(aiResponse));
+    // Extract text from response
+    const answerText = aiResponse?.response || '';
 
     return new Response(JSON.stringify({
       answer: answerText,
       sources: sourceLinks,
-      raw: typeof aiResponse === 'object' ? Object.keys(aiResponse) : typeof aiResponse,
     }), {
       headers: { 'Content-Type': 'application/json', ...corsHeaders },
     });
