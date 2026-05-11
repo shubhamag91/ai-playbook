@@ -183,13 +183,7 @@ export default defineConfig({
         {
           label: 'Decide',
           items: [
-            {
-              label: 'Tools Guide',
-              collapsed: false,
-              items: [
-                { label: 'Feature Matrix & Decision Trees', slug: 'decide/tools/guide' },
-              ],
-            },
+            { label: 'Tools Guide', slug: 'decide/tools/guide' },
             { label: 'Tool Comparison', slug: 'decide/tools/comparison' },
             { label: 'AI Tools Navigator', slug: 'tools' },
             { label: 'Models Guide', slug: 'decide/models/guide' },
