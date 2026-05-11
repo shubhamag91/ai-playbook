@@ -1,5 +1,5 @@
 // Cloudflare Pages Function — Chat API
-// 3-tier: playbook knowledge → model knowledge → web search (Groq built-in)
+// 3-tier: playbook knowledge → Llama 3.3 70B → Groq Compound (with web search)
 // POST /api/chat
 // Body: { question: string, history: Array<{role: string, content: string}> }
 
@@ -60,14 +60,7 @@ export async function onRequest({ request, env }) {
     const contextStr = hasPlaybookContent ? scored.map(c => c.chunk).join('\n\n') : '';
 
     // --- Build messages ---
-    const systemPrompt = 'You are a knowledgeable AI assistant. Answer questions naturally and conversationally. You have two sources of knowledge:\n' +
-      '1. Reference material provided below (if any) — use this first, it is the most up-to-date\n' +
-      '2. Your own training knowledge — use this for general AI concepts\n\n' +
-      'Never mention "reference material", "context", "sources", or "according to" — just answer directly. Be concise (2-3 paragraphs).';
-
-    const messages = [
-      { role: 'system', content: systemPrompt },
-    ];
+    const messages = [];
 
     // Add conversation history
     if (history && Array.isArray(history)) {
@@ -79,45 +72,90 @@ export async function onRequest({ request, env }) {
       }
     }
 
-    // Add current question (with playbook context if available)
+    // --- Choose model based on whether playbook has relevant content ---
     if (hasPlaybookContent) {
-      messages.push({ role: 'user', content: `Reference material:\n${contextStr}\n\nQuestion: ${question}` });
+      // Tier 1: Use Llama 3.3 70B with playbook context + its training knowledge
+      const systemMsg = 'You are a knowledgeable AI assistant. Answer naturally and conversationally. You have reference material below — use it for the most up-to-date information, supplemented by your own knowledge. Never mention "reference material", "context", or "sources". Be concise (2-3 paragraphs).';
+      const userMsg = `Reference material:\n${contextStr}\n\nQuestion: ${question}`;
+      messages.unshift({ role: 'system', content: systemMsg });
+      messages.push({ role: 'user', content: userMsg });
+
+      const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${groqKey}`,
+        },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: messages,
+          temperature: 0.3,
+          max_tokens: 800,
+        }),
+      });
+
+      const groqData = await groqRes.json();
+      const answerText = groqData?.choices?.[0]?.message?.content || '';
+      return new Response(JSON.stringify({ answer: answerText }), {
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      });
+
     } else {
-      messages.push({ role: 'user', content: question });
-    }
+      // Tier 2 + 3: Use Groq Compound (built-in web search + model knowledge)
+      // Automatically searches the web when it needs current info
+      const userMsg = question;
+      messages.push({ role: 'user', content: userMsg });
 
-    // --- Call Groq API ---
-    const groqBody = {
-      model: 'llama-3.3-70b-versatile',
-      messages: messages,
-      temperature: 0.3,
-      max_tokens: 800,
-    };
+      const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${groqKey}`,
+        },
+        body: JSON.stringify({
+          model: 'groq/compound-mini',
+          messages: messages,
+          temperature: 0.3,
+          max_tokens: 800,
+        }),
+      });
 
-    const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${groqKey}`,
-      },
-      body: JSON.stringify(groqBody),
-    });
+      if (!groqRes.ok) {
+        // Fallback: if compound fails, try Llama 3.3 directly
+        const fallbackRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${groqKey}`,
+          },
+          body: JSON.stringify({
+            model: 'llama-3.3-70b-versatile',
+            messages: [{ role: 'system', content: 'Answer questions naturally and conversationally. Be concise.' }, { role: 'user', content: question }],
+            temperature: 0.3,
+            max_tokens: 500,
+          }),
+        });
 
-    if (!groqRes.ok) {
-      const err = await groqRes.text();
-      return new Response(JSON.stringify({ error: `Groq API error: ${groqRes.status}` }), {
-        status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders },
+        if (!fallbackRes.ok) {
+          const err = await fallbackRes.text();
+          return new Response(JSON.stringify({ error: `Groq API error: ${fallbackRes.status}` }), {
+            status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders },
+          });
+        }
+
+        const fallbackData = await fallbackRes.json();
+        const answerText = fallbackData?.choices?.[0]?.message?.content || '';
+        return new Response(JSON.stringify({ answer: answerText }), {
+          headers: { 'Content-Type': 'application/json', ...corsHeaders },
+        });
+      }
+
+      const groqData = await groqRes.json();
+      const answerText = groqData?.choices?.[0]?.message?.content || '';
+      return new Response(JSON.stringify({ answer: answerText }), {
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
       });
     }
-
-    const groqData = await groqRes.json();
-    const choice = groqData?.choices?.[0];
-
-    const answerText = choice?.message?.content || '';
-
-    return new Response(JSON.stringify({ answer: answerText }), {
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
-    });
 
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), {
