@@ -2,32 +2,41 @@
 import './DesignArenaLeaderboards.css';
 
 const arenas = [
-  { name: '3D Design', id: '3d' },
-  { name: 'Web App', id: 'web-app' },
-  { name: 'Image to Website', id: 'image-to-website' },
-  { name: 'Mobile', id: 'mobile' },
-  { name: 'Website', id: 'website' },
-  { name: 'UI Component', id: 'ui-component' },
-  { name: 'Game Dev', id: 'game-dev' },
-  { name: 'Data Visualization', id: 'data-visualization' },
-  { name: 'Android', id: 'android' },
-  { name: 'Full Stack', id: 'full-stack' },
-  { name: 'SVG', id: 'svg' },
-  { name: 'Code Categories', id: 'code' },
+  { name: '3D Design', slug: '3d-design', url: 'https://www.designarena.ai/leaderboard' },
+  { name: 'Web App', slug: 'web-app', url: 'https://www.designarena.ai/leaderboard' },
+  { name: 'Image to Website', slug: 'image-to-website', url: 'https://www.designarena.ai/leaderboard' },
+  { name: 'Mobile', slug: 'mobile', url: 'https://www.designarena.ai/leaderboard' },
+  { name: 'Website', slug: 'website', url: 'https://www.designarena.ai/leaderboard' },
+  { name: 'UI Component', slug: 'ui-component', url: 'https://www.designarena.ai/leaderboard' },
+  { name: 'Game Dev', slug: 'game-dev', url: 'https://www.designarena.ai/leaderboard' },
+  { name: 'Data Visualization', slug: 'data-visualization', url: 'https://www.designarena.ai/leaderboard' },
+  { name: 'Android', slug: 'android', url: 'https://www.designarena.ai/leaderboard' },
+  { name: 'Full Stack', slug: 'full-stack', url: 'https://www.designarena.ai/leaderboard' },
+  { name: 'SVG', slug: 'svg', url: 'https://www.designarena.ai/leaderboard' },
+  { name: 'Code Categories', slug: 'code', url: 'https://www.designarena.ai/leaderboard' },
 ];
 ---
 
 <div class="design-arena-leaderboards">
+  <p class="design-arena-leaderboards__note">
+    Interactive leaderboards below. Click "Expand" on each to see full rankings with detailed model comparisons.
+  </p>
   <div class="design-arena-leaderboards__grid">
     {arenas.map((arena) => (
       <div class="design-arena-leaderboards__item">
-        <h3 class="design-arena-leaderboards__title">{arena.name}</h3>
+        <div class="design-arena-leaderboards__header">
+          <h3 class="design-arena-leaderboards__title">{arena.name}</h3>
+          <a href={arena.url} target="_blank" rel="noopener noreferrer" class="design-arena-leaderboards__link">
+            View on Design Arena →
+          </a>
+        </div>
         <div class="design-arena-leaderboards__iframe-wrapper">
           <iframe
-            src={`https://www.designarena.ai/leaderboard?arena=${arena.id}`}
+            src={`${arena.url}?arena=${arena.slug}`}
             title={`Design Arena - ${arena.name}`}
             class="design-arena-leaderboards__iframe"
             loading="lazy"
+            sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
           />
         </div>
       </div>
