@@ -76,19 +76,16 @@ export async function onRequest({ request, env }) {
     let finalContext = contextStr;
     let contextLabel = 'Reference material';
 
-    if (!hasPlaybookContent && env.BRAVE_API_KEY) {
-      // Tier 2: Search the web via Brave Search
-      const braveRes = await fetch(`https://api.search.brave.com/res/v1/web/search?q=${encodeURIComponent(question)}&count=5`, {
-        headers: {
-          'X-Subscription-Token': env.BRAVE_API_KEY,
-          'Accept': 'application/json',
-        },
-      });
+    if (!hasPlaybookContent && env.GOOGLE_API_KEY && env.GOOGLE_CX) {
+      // Tier 2: Search the web via Google Custom Search (100 queries/day free)
+      const gcsRes = await fetch(
+        `https://www.googleapis.com/customsearch/v1?key=${env.GOOGLE_API_KEY}&cx=${env.GOOGLE_CX}&q=${encodeURIComponent(question)}&num=5`
+      );
 
-      if (braveRes.ok) {
-        const braveData = await braveRes.json();
-        if (braveData.web && braveData.web.results && braveData.web.results.length > 0) {
-          finalContext = braveData.web.results.map(r => r.description).filter(Boolean).join('\n\n');
+      if (gcsRes.ok) {
+        const gcsData = await gcsRes.json();
+        if (gcsData.items && gcsData.items.length > 0) {
+          finalContext = gcsData.items.map(r => r.snippet).filter(Boolean).join('\n\n');
           contextLabel = 'Web search results';
         }
       }
