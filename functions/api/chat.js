@@ -45,8 +45,8 @@ export async function onRequest({ request, env }) {
 
     const userMsg = `<context>\n${contextStr}\n</context>\n\nQuestion: ${question}\n\nAnswer based only on the context above.`;
 
-    // Call Workers AI with messages format
-    const aiResponse = await env.AI.run('@cf/meta/llama-3.2-3b-instruct', {
+    // Call Workers AI
+    const aiResponse = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userMsg },
