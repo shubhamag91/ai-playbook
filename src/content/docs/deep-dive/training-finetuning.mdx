@@ -1,17 +1,18 @@
 ---
 title: "Training & Fine-tuning: Adapting Models to Your Data"
-description: Pre-training, fine-tuning, and when to adapt models  -  building custom AI with your data
+description: Pre-training, fine-tuning, data engineering, and when to adapt models
 sidebar:
-  order: 5
+  order: 6
 tags:
   - deep-dive
   - training
+  - data-engineering
 glossaryLinks:
   - fine-tuning
   - quantization
   - rlhf
   - transformer
-lastUpdated: 2026-05-10
+lastUpdated: 2026-05-11
 nextVerificationDue: 2026-08-08
 ---
 
@@ -84,6 +85,211 @@ Trained Foundation Model
 - Timeline: 6+ months
 
 **Almost never** for most organizations.
+
+---
+
+## Data Engineering for AI
+
+Before any training or fine-tuning happens, you need data. The quality of your data determines the quality of your model more than any architectural choice.
+
+### Data Collection
+
+**Sources for training data:**
+
+| Source | Quality | Scale | Cost | Best For |
+|---|---|---|---|---|
+| Public web crawl (Common Crawl) | Low | Trillions of tokens | Free | Pre-training base |
+| Books / research papers | High | Billions | $0-5M | Deep knowledge |
+| Code repositories (GitHub) | Medium | Hundreds of billions | Free | Coding capability |
+| Social media / forums | Low-medium | Trillions | Free | Dialogue, Q&A |
+| Proprietary customer data | Very high | Millions-billions | N/A | Domain fine-tuning |
+| Synthetic data generation | Medium | Unlimited | API cost | Augmentation |
+
+**Key considerations:**
+- **Diversity matters more than volume.** A model trained on 1T diverse tokens outperforms one trained on 10T repetitive tokens.
+- **Permission is critical.** Scraping copyrighted content for training is legally contested. Use open datasets (Common Crawl, The Pile, Dolma) when possible.
+- **Domain balance.** Most web data is English, technical, Western. Deliberately include non-English, non-technical, and diverse cultural sources.
+
+### Data Filtering & Cleaning
+
+Raw data is messy. A standard pre-processing pipeline:
+
+```
+Raw text → Deduplication → Quality filter → PII removal → Toxicity filter → Clean text
+```
+
+**1. Deduplication:**
+
+Duplicate data wastes compute and can cause overfitting. Techniques:
+
+- **Exact deduplication:** Remove identical documents (hash-based, O(n))
+- **Near-deduplication (MinHash):** Remove documents that are 80%+ similar even if not identical
+- **Line-level dedup:** Remove repeated boilerplate (navigation bars, copyright notices, HTML artifacts)
+
+**Impact:** Removing duplicates can reduce dataset size by 10-30% with zero quality loss. This directly saves training compute.
+
+**2. Quality filtering:**
+
+Not all text is worth training on. Filter based on:
+
+| Signal | What it catches | Threshold |
+|---|---|---|
+| Perplexity (using a small LM) | Gibberish, low-quality text | Remove top 10% highest perplexity |
+| Number of punctuation errors | Machine-translated, OCR garbage | Remove if >5 errors/100 chars |
+| Adult content score | NSFW content | Remove >0.8 score |
+| Language ID | Non-target languages | Keep only desired languages |
+| Document length | Too short (no content) or too long (merged docs) | Keep 100-100K chars |
+
+**The "FineWeb" approach:** Recent research shows that simple heuristic filtering (perplexity + dedup) matches or exceeds the performance of complex learned filtering methods. Start simple.
+
+**3. PII (Personal Identifiable Information) removal:**
+
+Critical for privacy and compliance:
+
+```python
+import re
+
+def remove_pii(text):
+    text = re.sub(r'\b\d{3}-\d{2}-\d{4}\b', '[SSN]', text)  # SSN
+    text = re.sub(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', '[EMAIL]', text)
+    text = re.sub(r'\b\d{16}\b', '[CC_NUMBER]', text)  # Credit card
+    # ... more patterns
+    return text
+```
+
+**4. Toxicity and bias filtering:**
+
+Remove or downweight hate speech, graphic violence, and other harmful content. This is a policy decision — some models (uncensored) choose to keep it.
+
+### Data Curation
+
+After cleaning, you need to **curate** the data — decide what goes in and in what proportion.
+
+**Domain mixing:**
+
+The ratio of different data types matters enormously:
+
+```
+Typical pre-training mix:
+  50% Web text (Common Crawl, filtered)
+  20% Books and articles
+  15% Code
+  10% Academic papers
+   5% Other (social, forums, multilingual)
+```
+
+**Why mixing matters:**
+- Too much web text → model is fluent but shallow
+- Too much code → model is good at logic but bad at prose
+- Too much books → model is formal but can't handle casual dialogue
+
+**Data selection for fine-tuning:**
+
+For fine-tuning, quality beats quantity by a wide margin:
+
+```
+1000 high-quality instruction examples
+  > 10000 auto-generated examples
+  > 100000 web-scraped examples
+```
+
+**The curation process:**
+1. Collect 5x more data than you think you need
+2. Have domain experts review a sample (100-500 examples)
+3. Identify common quality issues (wrong format, hallucinations, ambiguity)
+4. Fix the issues in the collection process, not by hand-editing
+5. Iterate until expert review passes at 95%+ quality rate
+
+### Synthetic Data Generation
+
+When you don't have enough real data, you can generate synthetic data using a capable model (distillation).
+
+**When to use synthetic data:**
+- You have 50 real examples but need 1000
+- You need variations on existing data (rewordings, perspectives)
+- You need edge cases that don't exist in your real data
+- You want to teach the model to handle specific failure modes
+
+**The process:**
+```python
+# Generate 1000 synthetic instruction examples
+prompt = """
+You are a data generator. Create 10 diverse examples of 
+{customer_support_queries} in the format:
+{
+  "instruction": "customer question",
+  "response": "support answer"
+}
+
+Make sure examples cover:
+- Different products
+- Different issue types (billing, technical, account)
+- Different tones (frustrated, confused, happy)
+"""
+
+synthetic_data = llm.generate(prompt, n=100)  # Generate 100 batches
+```
+
+**Risks of synthetic data:**
+- **Model collapse:** If you train on synthetic data from the same model, the model's output quality degrades over generations. This is a well-documented phenomenon.
+- **Bias amplification:** The synthetic data inherits the generating model's biases, then the fine-tuned model amplifies them.
+- **Hallucination propagation:** If the generating model hallucinates, those hallucinations become training data.
+
+**Safe use of synthetic data:**
+- Use a stronger model to generate data for a weaker model (distillation, not self-training)
+- Always verify synthetic data (human spot-check, automated validation)
+- Mix synthetic with real data (never use 100% synthetic)
+- Limit to 20-30% of total training data
+
+### Data Contamination
+
+**The problem:** Your training data may contain test data from benchmarks (MMLU, HumanEval, etc.). If so, your model appears to perform better than it actually does.
+
+**Examples of contamination:**
+- A model is trained on the internet, which includes the full MMLU test set
+- The model "scores" 90% on MMLU, but it has seen the answers during training
+- Real performance might be 70-80% — 10-20 points inflated
+
+**How to detect contamination:**
+- **N-gram overlap:** Check if test set examples appear verbatim in training data
+- **Perplexity analysis:** Models have unusually low perplexity on contaminated test examples
+- **Membership inference:** Train a classifier to distinguish training vs non-training data
+
+**How to prevent it:**
+- Use benchmarks released after your training data cutoff date
+- Deduplicate training data against known benchmark sets
+- Report contamination analysis alongside benchmark scores
+- Test on "unseen" variants of benchmarks (MMLU-Redux, HumanEval-X)
+
+### Data Versioning
+
+Treat training data like code: version it, track changes, document decisions.
+
+**What to track:**
+- Data source (URL, dataset name, version)
+- Processing steps applied (filtering, dedup, cleaning)
+- Date collected
+- Selection criteria (what was included/excluded and why)
+- License and usage terms
+
+**Tools:**
+- **DVC (Data Version Control):** Git-like versioning for datasets
+- **Hugging Face Datasets:** Versioned dataset storage with provenance tracking
+- **LFS (Git Large File Storage):** For smaller datasets ({"<"}5GB)
+- **Custom manifest files:** JSON/YAML with hashes for each data version
+
+### Data Engineering Checklist
+
+- [ ] Identify data sources (public + proprietary)
+- [ ] Run deduplication (exact + near-dedup with MinHash)
+- [ ] Apply quality filters (perplexity, length, language)
+- [ ] Remove PII and sensitive information
+- [ ] Curate domain mix ratios
+- [ ] Verify sample quality (human review 100-500 examples)
+- [ ] Check for benchmark contamination
+- [ ] Version dataset (DVC or similar)
+- [ ] Document all processing decisions
+- [ ] Re-evaluate as new data becomes available
 
 ---
 
