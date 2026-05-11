@@ -21,6 +21,7 @@
 
     var isOpen = false;
     var isAsking = false;
+    var conversation = [];
 
     function toggle() {
       isOpen = !isOpen;
@@ -43,6 +44,10 @@
       div.appendChild(content);
       messages.appendChild(div);
       messages.scrollTop = messages.scrollHeight;
+
+      // Track conversation history (keep last 10 messages)
+      conversation.push({ role: isUser ? 'user' : 'assistant', content: text });
+      if (conversation.length > 10) conversation.splice(0, conversation.length - 10);
     }
 
     function showTyping() {
@@ -72,7 +77,7 @@
       fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: q }),
+        body: JSON.stringify({ question: q, history: conversation }),
       })
       .then(function(r) { return r.json(); })
       .then(function(data) {
