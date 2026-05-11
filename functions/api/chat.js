@@ -132,7 +132,7 @@ export async function onRequest({ request, env }) {
     if (finalContext) {
       messages.unshift({ role: 'system', content: 'You are a knowledgeable AI assistant. Answer naturally and conversationally. Use the provided information to answer, supplemented by your own knowledge. Never mention "reference material", "context", "sources", "search results", or "according to". When listing multiple items, use bullet points (- item). When providing steps, use numbered lists (1. step). Use **bold** for key terms. Use `code` for technical terms. For important takeaways or key points, prefix with > to highlight them. Be concise (2-3 paragraphs or a short list).' });
 
-      messages.push({ role: 'user', content: `${contextLabel}:\n${finalContext}\n\nQuestion: ${question}` });
+      messages.push({ role: 'user', content: `Here is accurate data about current AI models. Use ONLY this data to answer the question:\n\n${finalContext}\n\nQuestion: ${question}` });
     } else {
       messages.unshift({ role: 'system', content: 'Answer questions naturally and conversationally. When listing multiple items, use bullet points (- item). When providing steps, use numbered lists (1. step). Use **bold** for key terms. Use `code` for technical terms. For important takeaways or key points, prefix with > to highlight them. Be concise (2-3 paragraphs or a short list).' });
       messages.push({ role: 'user', content: question });

@@ -116,10 +116,13 @@ for (const filepath of files) {
   // Get body (content after frontmatter)
   const body = content.slice(fmMatch[0].length).trim();
 
-  // Skip very short pages
-  if (estimateTokens(body) < 20) continue;
+  // Strip MDX import statements and component usage
+  const cleanBody = body.replace(/^import .+ from .+$/gm, '').replace(/^<[A-Z]\w+.*\/>$/gm, '').trim();
 
-  const chunks = chunkText(body, title, slug, description);
+  // Skip very short pages
+  if (estimateTokens(cleanBody) < 20) continue;
+
+  const chunks = chunkText(cleanBody, title, slug, description);
   allChunks.push(...chunks);
 }
 
