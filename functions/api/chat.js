@@ -1,5 +1,6 @@
 // Cloudflare Pages Function — Chat API
-// 3-tier: playbook → Tavily web search → Llama 3.3 70B
+// 3-tier: playbook search → Serper.dev web search → Llama 3.3 70B
+// Changes: query rewriting via Groq, threshold 35
 // POST /api/chat
 // Body: { question: string, history: Array<{role: string, content: string}> }
 
@@ -32,7 +33,31 @@ export async function onRequest({ request, env }) {
     const indexUrl = new URL('/search-index.json', request.url).toString();
     const indexRes = await fetch(indexUrl);
     const index = await indexRes.json();
-    const query = question.toLowerCase();
+
+    // Rewrite question into a better search query using Groq
+    let searchQuery = question.toLowerCase();
+    try {
+      const rewriteRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqKey}` },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [
+            { role: 'system', content: 'Extract key search terms from this question. Expand acronyms (RAG → Retrieval-Augmented Generation, SLM → Small Language Model, MoE → Mixture of Experts). Output ONLY 3-8 search terms separated by spaces, no punctuation, no explanation.' },
+            { role: 'user', content: question }
+          ],
+          temperature: 0.1,
+          max_tokens: 50,
+        }),
+      });
+      if (rewriteRes.ok) {
+        const rewriteData = await rewriteRes.json();
+        const rewritten = rewriteData?.choices?.[0]?.message?.content?.trim().toLowerCase();
+        if (rewritten && rewritten.length > 5) searchQuery = rewritten;
+      }
+    } catch (e) { /* fall back to original question */ }
+
+    const query = searchQuery;
 
     // Extract meaningful words from the question
     const stopWords = ['who','what','when','where','why','how','can','you','the','are','all','not','but','for','and','was','has','had','its','may','get','use','any','new','now','yet','way','see','two','set','let','say','few','old','tell','about','like','just','more','also','very','each','much','some','such','than','that','this','with','from','your','which','will','would','could','should'];
@@ -83,7 +108,7 @@ export async function onRequest({ request, env }) {
         return { ...entry, score };
       }).filter(e => e.score > 0).sort((a, b) => b.score - a.score).slice(0, 3);
 
-      const hasPlaybookContent = scored.length > 0 && scored[0].score >= 80;
+      const hasPlaybookContent = scored.length > 0 && scored[0].score >= 35;
       const contextStr = hasPlaybookContent ? scored.map(c => c.chunk).join('\n\n') : '';
     }
 
