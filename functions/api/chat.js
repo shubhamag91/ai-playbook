@@ -102,9 +102,8 @@ export async function onRequest({ request, env }) {
 
     } else {
       // Tier 2 + 3: Use Groq Compound (built-in web search + model knowledge)
-      // Automatically searches the web when it needs current info
-      const userMsg = question;
-      messages.push({ role: 'user', content: userMsg });
+      messages.push({ role: 'system', content: 'You are a helpful AI assistant. You have access to web search for current information. When asked about recent events, news, pricing, or specific current data, use web search to provide accurate answers.' });
+      const userMsg = `Question: ${question}`;
 
       const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
