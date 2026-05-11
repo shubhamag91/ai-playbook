@@ -151,6 +151,12 @@
       // Line breaks: only convert newlines that are NOT inside HTML tags
       html = html.replace(/\n\n/g, '<br><br>');
       html = html.replace(/\n/g, function() { return '<br>'; });
+      // Remove <br> adjacent to block elements (lists, pre, blockquote)
+      html = html.replace(/<\/(ul|ol|pre|blockquote)>\s*<br>/g, '</$1>');
+      html = html.replace(/<br>\s*<\/(ul|ol|pre|blockquote)>/g, '</$1>');
+      html = html.replace(/<(ul|ol|pre|blockquote)>/g, '<$1>');
+      html = html.replace(/(<\/li>)<br>/g, '$1');
+      html = html.replace(/<br>(<li>)/g, '$1');
       // Fix: remove <br> that ended up inside block-level tags
       html = html.replace(/<(ul|ol|pre|blockquote)[^>]*>\s*<br>/g, '<$1>');
       html = html.replace(/<br>\s*<\/(ul|ol|pre|blockquote)>/g, '</$1>');
