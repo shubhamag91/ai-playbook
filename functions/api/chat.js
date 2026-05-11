@@ -39,7 +39,8 @@ export async function onRequest({ request, env }) {
       const desc = entry.description.toLowerCase();
       const chunk = entry.chunk.toLowerCase();
       const fullText = title + ' ' + desc + ' ' + chunk;
-      const words = query.split(/\s+/).filter(w => w.length > 2);
+      const stopWords = ['who','what','when','where','why','how','can','you','the','are','all','not','but','for','and','was','has','had','its','may','get','use','any','new','now','yet','way','see','two','set','let','say','few','old'];
+      const words = query.split(/\s+/).filter(w => w.length > 2 && !stopWords.includes(w));
       if (words.length === 0) return { ...entry, score: 0 };
       let score = 0;
       for (const word of words) {
