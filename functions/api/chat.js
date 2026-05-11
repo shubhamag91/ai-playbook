@@ -1,5 +1,5 @@
 // Cloudflare Pages Function — Chat API
-// 3-tier: playbook knowledge → Llama 3.3 70B → Groq Compound (with web search)
+// 3-tier: playbook → Tavily web search → Llama 3.3 70B
 // POST /api/chat
 // Body: { question: string, history: Array<{role: string, content: string}> }
 
@@ -72,66 +72,68 @@ export async function onRequest({ request, env }) {
       }
     }
 
-    // --- Choose model based on whether playbook has relevant content ---
-    if (hasPlaybookContent) {
-      // Tier 1: Use Llama 3.3 70B with playbook context + its training knowledge
-      const systemMsg = 'You are a knowledgeable AI assistant. Answer naturally and conversationally. You have reference material below — use it for the most up-to-date information, supplemented by your own knowledge. Never mention "reference material", "context", or "sources". Be concise (2-3 paragraphs).';
-      const userMsg = `Reference material:\n${contextStr}\n\nQuestion: ${question}`;
-      messages.unshift({ role: 'system', content: systemMsg });
-      messages.push({ role: 'user', content: userMsg });
+    // --- Determine context source ---
+    let finalContext = contextStr;
+    let contextLabel = 'Reference material';
 
-      const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    if (!hasPlaybookContent && env.TAVILY_API_KEY) {
+      // Tier 2: Search the web via Tavily
+      const tavilyRes = await fetch('https://api.tavily.com/search', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${groqKey}`,
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          messages: messages,
-          temperature: 0.3,
-          max_tokens: 800,
+          api_key: env.TAVILY_API_KEY,
+          query: question,
+          search_depth: 'basic',
+          max_results: 5,
         }),
       });
 
-      const groqData = await groqRes.json();
-      const answerText = groqData?.choices?.[0]?.message?.content || '';
-      return new Response(JSON.stringify({ answer: answerText }), {
-        headers: { 'Content-Type': 'application/json', ...corsHeaders },
-      });
-
-    } else {
-      // Tier 2: Use Llama 3.3 70B (training knowledge - covers AI concepts up to mid-2024)
-      messages.push({ role: 'system', content: 'Answer questions naturally and conversationally. Be concise (2-3 paragraphs).' });
-      messages.push({ role: 'user', content: question });
-
-      const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${groqKey}`,
-        },
-        body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          messages: messages,
-          temperature: 0.3,
-          max_tokens: 800,
-        }),
-      });
-
-      if (!groqRes.ok) {
-        const err = await groqRes.text();
-        return new Response(JSON.stringify({ error: `Groq API error: ${groqRes.status}` }), {
-          status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders },
-        });
+      if (tavilyRes.ok) {
+        const tavilyData = await tavilyRes.json();
+        if (tavilyData.results && tavilyData.results.length > 0) {
+          finalContext = tavilyData.results.map(r => r.content).join('\n\n');
+          contextLabel = 'Web search results';
+        }
       }
+    }
 
-      const groqData = await groqRes.json();
-      const answerText = groqData?.choices?.[0]?.message?.content || '';
-      return new Response(JSON.stringify({ answer: answerText }), {
-        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+    // --- Call Llama 3.3 70B ---
+    if (finalContext) {
+      messages.unshift({ role: 'system', content: 'You are a knowledgeable AI assistant. Answer naturally and conversationally. Use the provided information to answer, supplemented by your own knowledge. Never mention "reference material", "context", "sources", "search results", or "according to". Be concise (2-3 paragraphs).' });
+      messages.push({ role: 'user', content: `${contextLabel}:\n${finalContext}\n\nQuestion: ${question}` });
+    } else {
+      messages.unshift({ role: 'system', content: 'Answer questions naturally and conversationally. Be concise (2-3 paragraphs).' });
+      messages.push({ role: 'user', content: question });
+    }
+
+    const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${groqKey}`,
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: messages,
+        temperature: 0.3,
+        max_tokens: 800,
+      }),
+    });
+
+    if (!groqRes.ok) {
+      const err = await groqRes.text();
+      return new Response(JSON.stringify({ error: `Groq API error: ${groqRes.status}` }), {
+        status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders },
       });
     }
+
+    const groqData = await groqRes.json();
+    const answerText = groqData?.choices?.[0]?.message?.content || '';
+
+    return new Response(JSON.stringify({ answer: answerText }), {
+      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+    });
 
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), {
