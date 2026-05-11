@@ -1,0 +1,399 @@
+---
+title: "Multimodal AI"
+description: Deep dive on multimodal AI  -  architectures, computer vision, speech, and audio generation
+sidebar:
+  order: 3
+tags:
+  - deep-dive
+  - multimodal
+  - vision
+  - speech
+  - audio
+glossaryLinks:
+  - multimodal
+  - vision
+  - embedding
+  - inference
+lastUpdated: 2026-05-11
+nextVerificationDue: 2026-08-08
+---
+
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+
+<Breadcrumb />
+
+How models process text, images, video, and audio together — the architectures, the techniques, and the leading models.
+
+---
+
+## Part 1: Multimodal Architectures
+
+The fundamental challenge: text is discrete (tokens), images are continuous (pixels), and audio is temporal (waveforms). How do you process them in a single model?
+
+### The Core Problem
+
+Each modality has different structure:
+
+| Modality | Structure | Typical Encoding | Size per unit |
+|---|---|---|---|
+| Text | Discrete sequence | Tokens (integers) | ~4 chars/token |
+| Images | 2D grid of pixels | Patches (16x16 pixels) | 768-dim vector per patch |
+| Audio | 1D time series | Spectrogram frames | 80-dim mel bands per frame |
+| Video | 3D (frames + spatial) | Frame patches + temporal encoding | Massive (thousands of tokens) |
+
+**Key question:** How do you align these different representations into a shared space the model can reason over?
+
+### Early Fusion vs Late Fusion
+
+**Early fusion:** Combine modalities at the input level, then process everything through a shared transformer.
+
+```
+Image patches ─┐
+               ├──→ Shared transformer encoder → Multimodal output
+Text tokens ───┘
+```
+
+**Pros:** Modalities can cross-attend to each other throughout processing. Better for tasks requiring fine-grained alignment (e.g., "what is the dog in this image doing?").
+
+**Cons:** Computationally expensive. The transformer sees all modalities per token. If you add images, every text token also pays attention to every image patch (quadratic cost).
+
+**Used by:** Gemini, GPT-5.5 (vision mode), Claude (vision mode).
+
+**Late fusion:** Process each modality in separate encoders, then combine at the decision layer.
+
+```
+Image → Vision encoder → Image features
+                                    ├──→ Fusion layer → Output
+Text → Text encoder → Text features
+```
+
+**Pros:** Each encoder can be specialized and optimized. Cheaper — you don't pay attention cost across modalities at every layer.
+
+**Cons:** Cross-modal reasoning is limited to the fusion layer. Harder to capture fine-grained interactions ("the blue car" vs "the red car" in an image).
+
+**Used by:** CLIP, image generation models (Stable Diffusion uses text embeddings from a separate text encoder).
+
+**The hybrid approach (most modern models):**
+- Use separate encoders for initial modality-specific processing
+- Cross-attend at specific layers (not every layer) to balance cost and quality
+- Gemini uses this: separate vision/text encoders with cross-attention at key layers
+
+### Modality Alignment (How Models Learn to Connect Modalities)
+
+Models need to learn that "dog" (text) and a picture of a dog (image) represent the same concept. This is called **modality alignment**.
+
+**CLIP (Contrastive Language-Image Pre-training):**
+The most influential alignment technique. Train a text encoder and an image encoder to produce similar embeddings for matching pairs:
+
+```
+Batch of 32,768 image-text pairs:
+
+Image encoder → [v1, v2, v3, ..., v32,768]
+Text encoder  → [t1, t2, t3, ..., t32,768]
+
+Goal: v1 matches t1 (same pair), v2 matches t2, etc.
+Loss: Contrastive — push matching pairs together, non-matching apart
+```
+
+After CLIP training, the embedding space is aligned: "dog" text → similar embedding → picture of a dog. This aligned space is then used for:
+- Zero-shot classification ("is this a dog?")
+- Cross-modal retrieval ("find images of dogs")
+- As a building block for generative models
+
+**How frontier models use this:**
+- CLIP-style alignment is used during pre-training
+- Models see interleaved image-text data from the web
+- The model learns to predict text tokens conditioned on image patches (and vice versa)
+- This is called "multimodal pre-training" and is extremely compute-intensive
+
+### The Memory Wall
+
+Multimodal models face a fundamental scaling challenge:
+
+```
+Text-only: 128K tokens × 128K tokens = 16B attention operations
+
+Multimodal (1 image = 256 patches):
+  (128K text + 256 image)² ≈ 16.4B operations  (only marginally more)
+
+Multimodal (30 images = 7,680 patches):
+  (128K + 7,680)² ≈ 18.4B operations
+
+Multimodal (1 min video at 1fps = 1,800 frames = 460K patches):
+  (128K + 460K)² ≈ 346B operations  (21x more!)
+```
+
+**Video is 100-1000x more expensive than text.** This is why video understanding is still limited — even with 1M context, processing a 5-minute video is prohibitively expensive.
+
+Techniques to mitigate:
+- **Sparse attention:** Only attend to a subset of patches (e.g., keyframes only)
+- **Temporal pooling:** Average adjacent frames
+- **Q-Former:** Compress image regions into fewer tokens (used by BLIP-2, InstructBLIP)
+
+---
+
+## Part 2: Computer Vision & Generation
+
+How models understand and generate images and video.
+
+### Diffusion Models (Core Technique)
+
+Most modern image generation models use **diffusion**. The idea: learn to reverse a process that gradually adds noise to an image.
+
+**Training (forward process):**
+```
+Clean image → Add noise gradually → Pure noise
+              Step 1    Step 2    ...  Step 1000
+```
+
+**Generation (reverse process):**
+```
+Pure noise → Remove noise gradually → Clean image
+             Step 1000  Step 999 ...  Step 1
+```
+
+The model learns to predict the noise at each step. Starting from random noise, it iteratively removes noise until a clear image emerges.
+
+**Key components:**
+- **U-Net architecture:** Downsample → process → upsample, with skip connections
+- **Denoising U-Net:** Trained to predict the noise at each step
+- **Text conditioning:** Text embeddings (from CLIP or a dedicated text encoder) guide the denoising process
+
+**Prompt guidance:**
+```
+"a cat wearing a hat" → text encoder → text embedding
+                                         ↓
+Random noise → Denoising U-Net (guided by text embedding) → Image of cat in hat
+```
+
+The strength of guidance is controlled by **CFG (Classifier-Free Guidance)** scale:
+- CFG = 1: No guidance (ignores prompt, generates random images)
+- CFG = 7: Strong guidance (follows prompt closely, but may reduce diversity)
+- CFG = 3-5: Typical range (good balance of quality and diversity)
+
+### DiT (Diffusion Transformer)
+
+The newest architecture replaces U-Net with a transformer:
+
+```
+Noisy image patches + text tokens
+  ↓
+Transformer blocks (attention + feedforward)
+  ↓
+Denoised image patches
+```
+
+**Why DiT is better:**
+- Transformers scale better than U-Nets (more compute → better quality)
+- Native support for conditioning (text, class labels, other images)
+- Simpler architecture (fewer hand-crafted components)
+
+**Used by:** Flux, Sora, Stable Diffusion 3, DALL-E 3.
+
+### Image Generation Models (May 2026)
+
+| Model | Architecture | Quality | Speed | Cost |
+|---|---|---|---|---|
+| **Flux.1** | DiT (3.5B params) | Excellent | Medium | Open-source / API |
+| **DALL-E 3** | DiT (unknown) | Excellent | Fast | Via ChatGPT ($20/mo) |
+| **Midjourney v7** | DiT + proprietary | Excellent | Medium | $10-120/mo |
+| **Stable Diffusion 3.5** | DiT (8B params) | Very good | Medium | Open-source |
+| **Ideogram 3** | DiT (unknown) | Very good | Fast | Freemium |
+
+**Key differentiators:**
+- **Flux** excels at typography (text in images) and photorealism
+- **Midjourney** has the best aesthetic/artistic quality
+- **DALL-E 3** has strongest prompt adherence
+- **Stable Diffusion** is the most customizable (LoRAs, ControlNet, fine-tuning)
+
+### Video Generation
+
+Video adds the temporal dimension — the model must ensure consistency across frames.
+
+**Sora (OpenAI):**
+- DiT architecture operating on spacetime patches
+- Trained on massive video data (millions of hours)
+- Can generate 60-second photorealistic videos
+- Limited public access
+
+**Other video models:**
+- **Runway Gen-3/Gen-4:** Best for editing + generation, $12-76/mo
+- **Kling AI v2:** Chinese competitor, good quality, broader access
+- **Pika:** Short clips (3-5 seconds), accessible, freemium
+
+**The challenge of video:** Generating a 60-second 1080p video at 24fps requires generating 1,440 unique frames. Each frame is a full image. The compute cost is enormous. Most video models generate at lower resolutions (720p or below) and upscale.
+
+---
+
+## Part 3: Speech & Audio AI
+
+How models understand and generate speech, music, and sound.
+
+### Automatic Speech Recognition (ASR)
+
+**Whisper (OpenAI):**
+The dominant open-source ASR model. Architecture:
+
+```
+Audio → Spectrogram → Encoder (ViT-like) → Text decoder → Transcription
+```
+
+**Key features:**
+- Trained on 680K hours of multilingual data
+- Supports 99 languages
+- Robust to noise, accents, and background music
+- Outputs timestamps (word-level)
+
+**Architecture details:**
+- Audio is converted to a log-Mel spectrogram (80 mel bands)
+- The spectrogram is processed by a ViT-style encoder
+- A text decoder generates the transcript autoregressively (like an LLM)
+- Can also translate (X → English transcription)
+
+**Alternatives:**
+- **Wav2Vec 2.0 (Meta):** Self-supervised, good with limited labeled data
+- **Conformer (NVIDIA):** State-of-the-art for production ASR
+- **DeepSpeech (Mozilla):** Older but still used in some edge deployments
+
+### Text-to-Speech (TTS)
+
+Modern TTS uses neural codecs combined with language models:
+
+```
+Text → LLM → Audio codec tokens → Neural vocoder → Speech waveform
+```
+
+**ElevenLabs:** The current leader. Key innovations:
+- **Voice cloning:** Generate speech in any voice from a short sample (30 seconds)
+- **Emotion control:** Specify delivery (happy, sad, excited, calm)
+- **Speech-to-speech:** Convert audio to another voice/emotion in real-time
+- **Sound effects:** Generate sound effects from text descriptions
+
+**Architecture:**
+1. Text is encoded by a text encoder
+2. A duration predictor determines timing (how long each phoneme lasts)
+3. An acoustic model generates mel-spectrogram frames
+4. A vocoder (HiFi-GAN, WaveNet) converts to waveform
+
+**Open-source alternatives:**
+- **Coqui TTS:** Full-stack TTS, supports voice cloning
+- **Bark (Suno):** Can generate speech, music, and sound effects
+- **XTTS (Coqui):** Multilingual voice cloning
+- **Piper:** Fast, on-device TTS (runs on Raspberry Pi)
+
+### Music Generation
+
+Music is harder than speech because it requires long-range structure (verse → chorus → verse), harmony, rhythm, and multiple instruments.
+
+**Suno:** The current leader in music generation:
+- Generates full songs with vocals, lyrics, and instrumentation
+- Can generate from text descriptions or existing audio
+- Handles genre, mood, tempo, and instrument specification
+
+**Udio:** Competitor to Suno, slightly different architecture:
+- Focus on higher audio quality
+- Better at instrumental music
+- Less capable with vocals
+
+**Architecture:**
+Both use a **music language model** approach:
+1. Audio is compressed into discrete tokens using an audio codec (like EnCodec)
+2. A transformer is trained to predict these audio tokens autoregressively
+3. Conditioning is provided by text descriptions and/or reference audio
+
+### Real-Time Speech
+
+The biggest challenge in speech AI is **latency**. Human conversation expects {"<"}300ms response time.
+
+**Real-time speech pipeline:**
+```
+User speaks → ASR (Whisper) → LLM processes → TTS (ElevenLabs) → Audio output
+                ~200ms           ~200-500ms        ~150ms            Total: ~550-850ms
+```
+
+**Techniques to reduce latency:**
+- **Streaming ASR:** Transcribe as the user speaks, don't wait for them to finish
+- **Speculative TTS:** Start generating audio before the LLM has finished producing text
+- **Voice activity detection (VAD):** Detect when the user stops speaking to trigger response
+- **Chunked processing:** Process audio in overlapping chunks instead of waiting for full utterance
+
+---
+
+## Current Multimodal Models (May 2026)
+
+| Model | Text | Image Input | Image Output | Audio Input | Audio Output | Video |
+|---|---|---|---|---|---|---|
+| **Gemini 3.1 Pro** | ✅ | ✅ | ❌ | ✅ (speech) | ❌ | ✅ (up to 1hr) |
+| **GPT-5.5** | ✅ | ✅ | ❌ (DALL-E separate) | ✅ (speech) | ❌ | ✅ (short clips) |
+| **Claude Opus 4.7** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| **Kimi K2.6** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| **GLM 5.1** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| **DeepSeek VL** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+
+**Standalone vision/audio models:**
+- **Flux, Midjourney, DALL-E 3:** Image generation only
+- **Sora, Runway, Kling AI:** Video generation only
+- **Whisper:** Speech-to-text only
+- **ElevenLabs:** Text-to-speech only
+- **Suno, Udio:** Music generation only
+
+**The landscape is fragmented.** No single model does all modalities well. Gemini comes closest, but its image generation and music capabilities are separate services.
+
+---
+
+## Use Cases & Patterns
+
+### Pattern 1: Document Understanding
+```text
+Input: Scanned PDF (text + images + tables)
+Model: Gemini 3.1 Pro (1M context, multimodal)
+Output: Summary with extracted data from tables and images
+```
+
+### Pattern 2: Image Generation with Refinement
+```text
+Input: "A cat wearing a Victorian hat, photorealistic"
+Model: Flux → Generate → "Make the hat red" (text refinement) → Flux edit
+Output: Refined image
+```
+
+### Pattern 3: Video Analysis
+```text
+Input: 10-minute lecture video
+Model: Extract frames (1fps = 600 frames) → Gemini 3.1 Pro
+Output: Summary, key topics, questions, and timestamps
+```
+
+### Pattern 4: Voice Assistant
+```text
+User: Speaks question
+Pipeline: Whisper (ASR) → Claude Sonnet (think) → ElevenLabs (speak)
+Output: Natural voice response in {"<"}1 second
+
+### Pattern 5: Music Creation
+```
+Input: "A lo-fi hip hop track with piano, 90 BPM, chill vibe"
+Model: Suno
+Output: Full 3-minute track with melody, harmony, and rhythm
+```
+
+---
+
+## Key Takeaways
+
+1. **Multimodal models use early fusion (shared processing) or late fusion (separate encoders)** — most frontier models use a hybrid approach
+2. **Modality alignment (CLIP-style) is the key technique** that lets models connect text, images, and audio
+3. **Video is 100-1000x more expensive than text** — this is the main bottleneck for multimodal AI
+4. **Diffusion models power most image/video generation**, with DiT replacing U-Net as the dominant architecture
+5. **Speech AI is fragmented** — separate models for ASR (Whisper), TTS (ElevenLabs), and music (Suno) perform better than unified approaches
+6. **No model does all modalities well** — Gemini is the most unified, but standalone specialists outperform it in their domains
+7. **Real-time speech requires {"<"}300ms latency** — streaming ASR, speculative TTS, and voice detection are essential techniques
+
+---
+
+See Also:
+- [How LLMs Work](/deep-dive/how-llms-work)  -  Foundation: transformers, tokens, attention
+- [RAG Architecture](/deep-dive/rag-architecture)  -  Document understanding with multimodal search
+- [Inference Optimization](/deep-dive/inference-optimization)  -  Making multimodal models faster
+- [Agents & Frameworks](/deep-dive/agents-frameworks)  -  Building voice assistants with tools
+- [Model Specs & Pricing](/reference/model-specs)  -  Multimodal model comparison
