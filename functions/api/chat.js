@@ -76,6 +76,26 @@ export async function onRequest({ request, env }) {
     let finalContext = contextStr;
     let contextLabel = 'Reference material';
 
+    // Tier 2: Web search via Serper.dev (when no playbook content found)
+    if (!hasPlaybookContent && env.SERPER_API_KEY) {
+      const serperRes = await fetch('https://google.serper.dev/search', {
+        method: 'POST',
+        headers: {
+          'X-API-KEY': env.SERPER_API_KEY,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ q: question, num: 5 }),
+      });
+
+      if (serperRes.ok) {
+        const serperData = await serperRes.json();
+        if (serperData.organic && serperData.organic.length > 0) {
+          finalContext = serperData.organic.map(r => r.snippet).filter(Boolean).join('\n\n');
+          contextLabel = 'Web search results';
+        }
+      }
+    }
+
     // --- Call Llama 3.3 70B ---
     if (finalContext) {
       messages.unshift({ role: 'system', content: 'You are a knowledgeable AI assistant. Answer naturally and conversationally. Use the provided information to answer, supplemented by your own knowledge. Never mention "reference material", "context", "sources", "search results", or "according to". Be concise (2-3 paragraphs).' });
