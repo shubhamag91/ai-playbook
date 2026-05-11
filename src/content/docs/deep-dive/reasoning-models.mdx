@@ -1,0 +1,298 @@
+---
+title: "Reasoning Models & Test-Time Compute"
+description: Deep dive on reasoning models  -  test-time compute, chain-of-thought, tree-of-thoughts, o3, DeepSeek R1, and when to use them
+sidebar:
+  order: 2
+tags:
+  - deep-dive
+  - reasoning
+  - inference
+glossaryLinks:
+  - reasoning
+  - inference
+  - chain-of-thought
+lastUpdated: 2026-05-11
+nextVerificationDue: 2026-08-08
+---
+
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+
+<Breadcrumb />
+
+How reasoning models work, why they're different from standard LLMs, and when to use them.
+
+---
+
+## The Core Insight: Test-Time Compute
+
+Standard LLMs spend all their compute during **training**. At inference time, they generate tokens in a single forward pass per token — no backtracking, no revision.
+
+**Reasoning models** flip this: they spend significant compute at **inference time** to explore multiple reasoning paths, verify intermediate steps, and refine their answers before producing a final output.
+
+```
+Standard model:
+  Input → [one pass per token] → Output (fast, cheap, direct)
+
+Reasoning model:
+  Input → [explore paths → evaluate → refine → verify] → Output (slow, expensive, thorough)
+```
+
+This is called **test-time compute** — and it's the biggest architectural shift in LLMs since the transformer itself.
+
+### Why It Matters
+
+- **Standard models** answer quickly but make mistakes on complex problems
+- **Reasoning models** take longer but catch their own errors
+- **The gap widens** as problems get harder — on GPQA (graduate-level QA), o3 scores 87.3% vs GPT-5.5's 82.1%
+- **Cost/latency tradeoff:** 10-100x more expensive per token, but may solve problems no standard model can
+
+---
+
+## How Reasoning Models Work
+
+### Chain-of-Thought (CoT)
+
+The simplest form of reasoning: ask the model to think step-by-step.
+
+```
+Standard prompt:
+  Q: "A bat and a ball cost $1.10. The bat costs $1 more than the ball.
+      How much does the ball cost?"
+  A: $0.10 (wrong — intuitive but incorrect)
+
+CoT prompt:
+  Q: "A bat and a ball cost $1.10..."
+  A: "Let's think step by step.
+      If the ball costs x, the bat costs x + $1.
+      Total: x + (x + $1) = $1.10
+      2x + $1 = $1.10
+      2x = $0.10
+      x = $0.05
+      The ball costs $0.05."
+```
+
+CoT was discovered as an emergent ability in sufficiently large models (~100B+ params). Small models don't benefit from it consistently.
+
+**How it's used in reasoning models:**
+- The model generates internal "thinking" tokens before the answer
+- These tokens are not shown to the user
+- They may use special tokens like `[think]` and `[/think]` to mark the reasoning section
+- The model is trained to evaluate and revise its own reasoning mid-generation
+
+### Self-Consistency
+
+One CoT path can be wrong. **Self-consistency** runs multiple CoT paths and picks the most common answer:
+
+```
+Path 1: "Let's think step by step..." → Answer: $0.05
+Path 2: "Let me calculate carefully..." → Answer: $0.05
+Path 3: "The ball costs..." → Answer: $0.10
+Path 4: "If bat = ball + $1..." → Answer: $0.05
+
+Consensus: $0.05 (3 out of 4 paths agree)
+```
+
+**Cost:** 4-10x more expensive (N paths × standard cost)
+**Benefit:** 5-15% accuracy improvement on math/reasoning tasks
+
+### Tree-of-Thoughts (ToT)
+
+Instead of a single linear chain, ToT explores multiple reasoning branches:
+
+```
+Step 1: Consider 3 possible approaches
+  ├── Approach A (math) → Step 2A → Continue...
+  ├── Approach B (logic) → Step 2B → Continue...
+  └── Approach C (intuition) → Step 2C → Dead end (prune)
+
+Evaluate each branch at each step.
+Prune dead ends. Continue promising branches.
+Choose the best final path.
+```
+
+ToT allows the model to:
+- **Backtrack:** Abandon dead-end reasoning paths
+- **Branch:** Explore multiple hypotheses simultaneously
+- **Evaluate:** Score each branch's promise before committing
+
+**When ToT helps:**
+- Multi-step math proofs
+- Complex planning (vacation itineraries, code architectures)
+- Creative problem-solving (brainstorm + evaluate cycle)
+
+### Beam Search for Reasoning
+
+Beam search maintains K candidate paths at each step, expanding and pruning:
+
+```
+Step 1: Top 5 reasoning starts
+  ↓
+Step 2: Expand each → 25 candidates → keep top 5
+  ↓
+Step 3: Expand again → 25 candidates → keep top 5
+  ↓
+...
+  ↓
+Step N: Pick the best of the 5 final paths
+```
+
+Beam search is the most compute-efficient reasoning strategy because it maintains diversity (many paths) while controlling cost (fixed beam width).
+
+### Process Reward Models (PRM)
+
+Standard models are trained to produce the right **final answer**. Reasoning models can be trained to produce the right **process** — each step should be correct.
+
+A Process Reward Model evaluates each intermediate step:
+
+```
+Step 1: "Let x = cost of ball" → PRM score: 0.95 (good start)
+Step 2: "Bat costs x + 1" → PRM score: 0.90 (correct setup)
+Step 3: "Total = x + (x+1) = 1.10" → PRM score: 0.85 (correct equation)
+Step 4: "2x = 0.10" → PRM score: 0.92 (correct algebra)
+Step 5: "x = 0.05" → PRM score: 0.95 (correct)
+
+Final answer: $0.05 ← confident because all steps are good
+```
+
+PRMs enable:
+- **Early stopping:** If a step scores low, abort and restart
+- **Fine-grained feedback:** Know which step went wrong, not just "the answer was wrong"
+- **Search guidance:** Use PRM scores to guide beam search toward promising branches
+
+---
+
+## Current Reasoning Models (May 2026)
+
+### o3 (OpenAI)
+
+| Aspect | Detail |
+|---|---|
+| **Approach** | Internal CoT with self-consistency + PRM |
+| **Cost** | $10-$60 per 1M output tokens (10-30x GPT-5.5) |
+| **Latency** | 10-60 seconds for complex problems |
+| **Strengths** | Math (MATH 97.9%), reasoning (GPQA 87.3%) |
+| **Weaknesses** | Slow, expensive, overkill for simple tasks |
+
+**Best for:** Complex math, science, coding challenges, competitive programming.
+
+### DeepSeek R1 (DeepSeek)
+
+| Aspect | Detail |
+|---|---|
+| **Approach** | Open-weight, uses GRPO (group relative policy optimization) for RL-based reasoning training |
+| **Cost** | ~$0.55/$2.19 per 1M (same as V4) — 20-50x cheaper than o3 |
+| **Latency** | 5-30 seconds |
+| **Strengths** | Math, reasoning, open-weight (MIT license) |
+| **Weaknesses** | Slightly lower ceiling than o3 |
+
+**Best for:** Cost-sensitive reasoning needs, self-hosted deployments.
+
+### Claude Opus 4.7 (Thinking) (Anthropic)
+
+| Aspect | Detail |
+|---|---|
+| **Approach** | Thinking mode toggle — adds internal reasoning tokens with self-evaluation |
+| **Cost** | $15/$75 per 1M (same as non-thinking mode) — no premium pricing |
+| **Latency** | 2-10 seconds (faster than o3) |
+| **Strengths** | Balanced reasoning + coding + design (top-ranked on Design Arena) |
+| **Weaknesses** | Thinking mode requires explicit prompting to enable |
+
+**Best for:** Tasks that need reasoning *and* creative output — the only model that excels at both.
+
+### Gemini 3.1 Pro (Google)
+
+| Aspect | Detail |
+|---|---|
+| **Approach** | Native reasoning mode, 1M context |
+| **Cost** | $2/$12 per 1M — competitive with standard models |
+| **Latency** | 3-15 seconds |
+| **Strengths** | Long-context reasoning (full documents), multimodal reasoning |
+| **Weaknesses** | Less refined reasoning chain than o3 |
+
+**Best for:** Document-level reasoning, research analysis.
+
+---
+
+## When to Use Reasoning Models
+
+### Use a reasoning model when:
+
+- **The problem has a verifiably correct answer** (math, coding, logic)
+- **The cost of being wrong is high** (medical diagnosis, legal analysis, financial models)
+- **You need the model to show its work** (audit trails, compliance)
+- **Standard models consistently fail** (complex multi-step problems)
+
+### Use a standard model when:
+
+- **Speed matters** (real-time chat, customer support)
+- **The task is creative** (writing, brainstorming — there's no "right" answer)
+- **The task is simple** (classification, summarization, routing)
+- **Cost is a primary constraint** (high-volume production)
+
+### The Hybrid Pattern
+
+The most effective pattern uses both:
+
+```
+Step 1: Route to standard model for fast response
+Step 2: If confidence < threshold, fall back to reasoning model
+Step 3: Cache reasoning results for similar future queries
+```
+
+This gives you speed for 80% of queries and accuracy for the 20% that matter most.
+
+---
+
+## Cost/Latency Comparison
+
+Scenario: 1000 queries/day, 2000 input + 1000 output tokens each
+
+| Model | Monthly Cost | Avg. Latency | Best For |
+|---|---|---|---|
+| Claude Sonnet 4.6 | ~$225 | 1-2s | Default daily driver |
+| Claude Opus 4.7 (Thinking) | ~$675 | 3-8s | Hard problems + creative |
+| DeepSeek R1 | ~$105 | 5-15s | Budget reasoning |
+| o3 | ~$1,800 | 15-45s | Hardest problems |
+| Gemini 3.1 Pro | ~$180 | 2-10s | Long-context reasoning |
+
+**Rule of thumb:** If a reasoning model takes longer to answer than you'd take to think about the problem, it's probably not worth using for that task.
+
+---
+
+## The Future of Reasoning Models
+
+### Ongoing Research
+
+**Scaling test-time compute:** Like training scaling laws, there may be inference-time scaling laws. More reasoning tokens = better answers, up to a point.
+
+**Efficient reasoning:** Making reasoning models cheaper (distillation from o3 → smaller models, speculative decoding for CoT).
+
+**Tool-augmented reasoning:** Letting models use code interpreters, calculators, and search during their reasoning process rather than relying purely on internal computation.
+
+**Continual verification:** Models that verify each step against ground truth (database lookups, API calls, code execution) rather than just reasoning internally.
+
+### What to Expect (Late 2026)
+
+- **Reasoning becomes a toggle** on most models (like Claude Thinking already is)
+- **Cost drops dramatically** as techniques improve (distillation, speculative decoding)
+- **Hybrid models** that automatically decide when to think harder
+- **Domain-specific reasoning** (legal reasoning, medical reasoning) fine-tuned for particular fields
+
+---
+
+## Key Takeaways
+
+1. **Test-time compute** is the biggest shift since the transformer — models that "think longer" perform better
+2. **CoT, self-consistency, tree-of-thoughts, and beam search** are the core techniques
+3. **o3 and DeepSeek R1** lead on pure reasoning; Claude Thinking balances reasoning + creativity
+4. **Cost is 10-100x premium** vs standard models — use selectively
+5. **Hybrid patterns** (route easy → standard, hard → reasoning) give the best cost/quality balance
+6. **The field is moving fast** — reasoning toggles, cost drops, and domain-specific models are coming in late 2026
+
+---
+
+See Also:
+- [How LLMs Work](/deep-dive/how-llms-work)  -  Foundation: scaling laws, transformers, MoE
+- [Inference Optimization](/deep-dive/inference-optimization)  -  Making models faster and cheaper
+- [Evaluation & Testing](/deep-dive/eval-and-testing)  -  Benchmark methodology and reasoning evals
+- [Model Releases](/research/model-releases)  -  Reasoning model history (o3, R1, Claude Thinking)

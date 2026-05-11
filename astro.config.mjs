@@ -226,6 +226,7 @@ export default defineConfig({
           label: 'Deep Dives',
           items: [
             { label: 'How LLMs Work', slug: 'deep-dive/how-llms-work' },
+            { label: 'Reasoning Models', slug: 'deep-dive/reasoning-models' },
             { label: 'RAG Architecture', slug: 'deep-dive/rag-architecture' },
             { label: 'Agents & Frameworks', slug: 'deep-dive/agents-frameworks' },
             { label: 'Training & Fine-tuning', slug: 'deep-dive/training-finetuning' },
