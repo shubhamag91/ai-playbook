@@ -35,10 +35,41 @@ export async function onRequest({ request, env }) {
     const query = question.toLowerCase();
 
     const scored = index.map(entry => {
-      const text = (entry.title + ' ' + entry.description + ' ' + entry.chunk).toLowerCase();
+      const title = entry.title.toLowerCase();
+      const desc = entry.description.toLowerCase();
+      const chunk = entry.chunk.toLowerCase();
+      const fullText = title + ' ' + desc + ' ' + chunk;
       const words = query.split(/\s+/).filter(w => w.length > 2);
-      let score = words.reduce((s, w) => s + ((text.match(new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi')) || []).length), 0);
-      if (entry.title.toLowerCase().includes(query)) score += 10;
+
+      if (words.length === 0) return { ...entry, score: 0 };
+
+      let score = 0;
+
+      // Count keyword matches (weighted by field)
+      for (const word of words) {
+        const safeWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const titleMatches = (title.match(new RegExp(safeWord, 'gi')) || []).length;
+        const descMatches = (desc.match(new RegExp(safeWord, 'gi')) || []).length;
+        const chunkMatches = (chunk.match(new RegExp(safeWord, 'gi')) || []).length;
+        score += titleMatches * 20 + descMatches * 5 + chunkMatches;
+      }
+
+      // Bonus if all query words appear in the chunk
+      const allPresent = words.every(w => fullText.includes(w));
+      if (allPresent) score += 15;
+
+      // Bonus for exact phrase match in title
+      if (title.includes(query)) score += 30;
+
+      // Bonus for exact phrase match in content
+      if (chunk.includes(query)) score += 10;
+
+      // Density bonus: prefer chunks where matches are concentrated
+      const totalChars = chunk.length || 1;
+      const matchCount = words.reduce((s, w) => s + ((chunk.match(new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi')) || []).length), 0);
+      const density = matchCount / (totalChars / 100); // matches per 100 chars
+      score += density * 5;
+
       return { ...entry, score };
     }).filter(e => e.score > 0).sort((a, b) => b.score - a.score).slice(0, 5);
 
