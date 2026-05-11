@@ -92,6 +92,9 @@
     }
 
     function renderMarkdown(text) {
+      // Normalize multiple blank lines into one
+      text = text.replace(/\n{3,}/g, '\n\n');
+
       // Escape HTML special chars first, then apply markdown
       var html = text
         .replace(/&/g, '&amp;')
