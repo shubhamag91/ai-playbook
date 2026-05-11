@@ -54,6 +54,22 @@ How to integrate Claude/GPT into apps. APIs, pricing, best practices.
 
 ---
 
+## How to Navigate This Playbook
+
+Use this guide to find the right pages for your goal:
+
+| Goal | Start Here | Then Read |
+|---|---|---|
+| **Learn AI basics** | Beginner Path | Glossary, How LLMs Work |
+| **Build something** | Builder Path | Frameworks Guide, Templates |
+| **Choose a model** | Model Specs | Economics of AI, Cost Calculator |
+| **Stay current** | What's New | Who to Follow, Trends |
+| **Prepare for interviews** | Interview Prep | Cheatsheets |
+| **Go deep on a topic** | Deep Dives section | Pick by category |
+| **Get a quick answer** | Ask the Playbook (chat bubble) | Search |
+
+---
+
 ## Common Questions
 
 **How do I start using AI?**

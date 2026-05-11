@@ -202,7 +202,7 @@ export default defineConfig({
           label: 'Reference',
           items: [
             { label: 'Glossary', slug: 'reference/glossary' },
-            { label: 'Cheatsheets', autogenerate: { directory: 'reference/cheatsheets' } },
+            { label: 'Cheatsheets', collapsed: true, autogenerate: { directory: 'reference/cheatsheets' } },
             { label: 'Who to Follow', slug: 'follow' },
             { label: 'Confusions', slug: 'reference/confusions' },
             { label: 'Principles', slug: 'reference/principles' },
@@ -227,16 +227,34 @@ export default defineConfig({
         {
           label: 'Deep Dives',
           items: [
-            { label: 'How LLMs Work', slug: 'deep-dive/how-llms-work' },
-            { label: 'Reasoning Models', slug: 'deep-dive/reasoning-models' },
-            { label: 'Multimodal AI', slug: 'deep-dive/multimodal-ai' },
-            { label: 'RAG Architecture', slug: 'deep-dive/rag-architecture' },
-            { label: 'Agents & Frameworks', slug: 'deep-dive/agents-frameworks' },
-            { label: 'Training & Fine-tuning', slug: 'deep-dive/training-finetuning' },
-            { label: 'Prompt Engineering', slug: 'deep-dive/prompt-engineering' },
-            { label: 'Inference Optimization', slug: 'deep-dive/inference-optimization' },
-            { label: 'Production LLMOps', slug: 'deep-dive/production-llmops' },
-            { label: 'Evaluation & Testing', slug: 'deep-dive/eval-and-testing' },
+            {
+              label: 'Core Architecture',
+              collapsed: false,
+              items: [
+                { label: 'How LLMs Work', slug: 'deep-dive/how-llms-work' },
+                { label: 'Reasoning Models', slug: 'deep-dive/reasoning-models' },
+                { label: 'Multimodal AI', slug: 'deep-dive/multimodal-ai' },
+              ],
+            },
+            {
+              label: 'Techniques & Methods',
+              collapsed: false,
+              items: [
+                { label: 'RAG Architecture', slug: 'deep-dive/rag-architecture' },
+                { label: 'Agents & Frameworks', slug: 'deep-dive/agents-frameworks' },
+                { label: 'Training & Fine-tuning', slug: 'deep-dive/training-finetuning' },
+                { label: 'Prompt Engineering', slug: 'deep-dive/prompt-engineering' },
+              ],
+            },
+            {
+              label: 'Production & Operations',
+              collapsed: false,
+              items: [
+                { label: 'Inference Optimization', slug: 'deep-dive/inference-optimization' },
+                { label: 'Production LLMOps', slug: 'deep-dive/production-llmops' },
+                { label: 'Evaluation & Testing', slug: 'deep-dive/eval-and-testing' },
+              ],
+            },
           ],
         },
         {
