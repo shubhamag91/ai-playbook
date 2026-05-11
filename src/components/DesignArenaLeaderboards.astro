@@ -2,44 +2,43 @@
 import './DesignArenaLeaderboards.css';
 
 const arenas = [
-  { name: '3D Design', slug: '3d-design', url: 'https://www.designarena.ai/leaderboard' },
-  { name: 'Web App', slug: 'web-app', url: 'https://www.designarena.ai/leaderboard' },
-  { name: 'Image to Website', slug: 'image-to-website', url: 'https://www.designarena.ai/leaderboard' },
-  { name: 'Mobile', slug: 'mobile', url: 'https://www.designarena.ai/leaderboard' },
-  { name: 'Website', slug: 'website', url: 'https://www.designarena.ai/leaderboard' },
-  { name: 'UI Component', slug: 'ui-component', url: 'https://www.designarena.ai/leaderboard' },
-  { name: 'Game Dev', slug: 'game-dev', url: 'https://www.designarena.ai/leaderboard' },
-  { name: 'Data Visualization', slug: 'data-visualization', url: 'https://www.designarena.ai/leaderboard' },
-  { name: 'Android', slug: 'android', url: 'https://www.designarena.ai/leaderboard' },
-  { name: 'Full Stack', slug: 'full-stack', url: 'https://www.designarena.ai/leaderboard' },
-  { name: 'SVG', slug: 'svg', url: 'https://www.designarena.ai/leaderboard' },
-  { name: 'Code Categories', slug: 'code', url: 'https://www.designarena.ai/leaderboard' },
+  { name: '3D Design', description: 'Complex 3D design and modeling tasks', icon: '🎨', slug: '3d-design' },
+  { name: 'Web App', description: 'Full-stack web application development', icon: '🌐', slug: 'web-app' },
+  { name: 'Image to Website', description: 'Convert designs to functional websites', icon: '📸', slug: 'image-to-website' },
+  { name: 'Mobile', description: 'Mobile app and interface design', icon: '📱', slug: 'mobile' },
+  { name: 'Website', description: 'Website design and development', icon: '🖥️', slug: 'website' },
+  { name: 'UI Component', description: 'Reusable component creation', icon: '🧩', slug: 'ui-component' },
+  { name: 'Game Dev', description: 'Game development and mechanics', icon: '🎮', slug: 'game-dev' },
+  { name: 'Data Visualization', description: 'Charts, graphs, and visual data', icon: '📊', slug: 'data-visualization' },
+  { name: 'Android', description: 'Android app development', icon: '🤖', slug: 'android' },
+  { name: 'Full Stack', description: 'End-to-end development tasks', icon: '🔧', slug: 'full-stack' },
+  { name: 'SVG', description: 'Scalable vector graphics creation', icon: '✏️', slug: 'svg' },
+  { name: 'Code Categories', description: 'General code generation across domains', icon: '💻', slug: 'code' },
 ];
+
+const baseUrl = 'https://www.designarena.ai/leaderboard';
 ---
 
 <div class="design-arena-leaderboards">
   <p class="design-arena-leaderboards__note">
-    Interactive leaderboards below. Click "Expand" on each to see full rankings with detailed model comparisons.
+    View model performance rankings across different design and development categories. Rankings based on 5M+ community votes using Elo rating system.
   </p>
+
   <div class="design-arena-leaderboards__grid">
     {arenas.map((arena) => (
-      <div class="design-arena-leaderboards__item">
-        <div class="design-arena-leaderboards__header">
-          <h3 class="design-arena-leaderboards__title">{arena.name}</h3>
-          <a href={arena.url} target="_blank" rel="noopener noreferrer" class="design-arena-leaderboards__link">
-            View on Design Arena →
-          </a>
+      <a
+        href={`${baseUrl}?arena=${arena.slug}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="design-arena-leaderboards__card"
+      >
+        <div class="design-arena-leaderboards__icon">{arena.icon}</div>
+        <h3 class="design-arena-leaderboards__card-title">{arena.name}</h3>
+        <p class="design-arena-leaderboards__card-description">{arena.description}</p>
+        <div class="design-arena-leaderboards__card-footer">
+          View Rankings <span class="design-arena-leaderboards__arrow">→</span>
         </div>
-        <div class="design-arena-leaderboards__iframe-wrapper">
-          <iframe
-            src={`${arena.url}?arena=${arena.slug}`}
-            title={`Design Arena - ${arena.name}`}
-            class="design-arena-leaderboards__iframe"
-            loading="lazy"
-            sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
-          />
-        </div>
-      </div>
+      </a>
     ))}
   </div>
 </div>
