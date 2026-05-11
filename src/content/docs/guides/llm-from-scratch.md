@@ -4,6 +4,10 @@ description: Notes and summary from "Build a Large Language Model (From Scratch)
 tags:
   - guide
   - training
+glossaryLinks:
+  - training
+  - transformer
+  - fine-tuning
 lastUpdated: 2026-05-08
 nextVerificationDue: 2027-05-08
 ---
