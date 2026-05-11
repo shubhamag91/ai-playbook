@@ -56,8 +56,8 @@ export async function onRequest({ request, env }) {
       return { ...entry, score };
     }).filter(e => e.score > 0).sort((a, b) => b.score - a.score).slice(0, 5);
 
-    // Only consider playbook content if it has a meaningful match (score >= 10)
-    const hasPlaybookContent = scored.length > 0 && scored[0].score >= 10;
+    // Only consider playbook content if it has a strong match (at least one query word in title)
+    const hasPlaybookContent = scored.length > 0 && scored[0].score >= 20;
     const contextStr = hasPlaybookContent ? scored.map(c => c.chunk).join('\n\n') : '';
 
     // --- Build messages ---
