@@ -81,7 +81,7 @@ export async function onRequest({ request, env }) {
         if (chunk.includes(query)) score += 20;
 
         return { ...entry, score };
-      }).filter(e => e.score > 0).sort((a, b) => b.score - a.score).slice(0, 5);
+      }).filter(e => e.score > 0).sort((a, b) => b.score - a.score).slice(0, 3);
 
       const hasPlaybookContent = scored.length > 0 && scored[0].score >= 80;
       const contextStr = hasPlaybookContent ? scored.map(c => c.chunk).join('\n\n') : '';
@@ -102,7 +102,7 @@ export async function onRequest({ request, env }) {
 
     // --- Determine context source ---
     let finalContext = contextStr;
-    let contextLabel = 'Reference material';
+    let contextLabel = 'Information';
 
     // Tier 2: Web search via Serper.dev (when no playbook content found)
     if (!hasPlaybookContent && env.SERPER_API_KEY) {
