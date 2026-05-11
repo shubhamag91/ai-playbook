@@ -120,6 +120,55 @@ import './CostCalculator.css';
           <span class="cost-calculator__badge cheap">Cheapest</span>
         </div>
       </div>
+
+      <div class="cost-calculator__card deepseek-pro">
+        <span class="cost-calculator__family">DeepSeek</span>
+        <div class="cost-calculator__model">DeepSeek V4 Pro</div>
+        <div class="cost-calculator__price" id="costDeepSeekPro">$6.30</div>
+        <div class="cost-calculator__row">
+          <span class="cost-calculator__rate">$0.55/$2.19 per 1M</span>
+          <span class="cost-calculator__badge balanced">Premium</span>
+        </div>
+      </div>
+
+      <div class="cost-calculator__card grok">
+        <span class="cost-calculator__family">xAI</span>
+        <div class="cost-calculator__model">Grok 3 Pro</div>
+        <div class="cost-calculator__price" id="costGrok">$90</div>
+        <div class="cost-calculator__row">
+          <span class="cost-calculator__rate">$3/$15 per 1M</span>
+          <span class="cost-calculator__badge context">Real-time</span>
+        </div>
+      </div>
+
+      <div class="cost-calculator__card qwen">
+        <span class="cost-calculator__family">Alibaba</span>
+        <div class="cost-calculator__model">Qwen 3.6</div>
+        <div class="cost-calculator__price" id="costQwen">$6.30</div>
+        <div class="cost-calculator__row">
+          <span class="cost-calculator__rate">~$0.40/$1.50 per 1M</span>
+        </div>
+      </div>
+
+      <div class="cost-calculator__card gemini-mini">
+        <span class="cost-calculator__family">Google</span>
+        <div class="cost-calculator__model">Gemini 3 Mini</div>
+        <div class="cost-calculator__price" id="costGeminiMini">$30</div>
+        <div class="cost-calculator__row">
+          <span class="cost-calculator__rate">$1/$6 per 1M</span>
+          <span class="cost-calculator__badge fastest">Fast</span>
+        </div>
+      </div>
+
+      <div class="cost-calculator__card kimi">
+        <span class="cost-calculator__family">Moonshot AI</span>
+        <div class="cost-calculator__model">Kimi K2.6</div>
+        <div class="cost-calculator__price" id="costKimi">$6.30</div>
+        <div class="cost-calculator__row">
+          <span class="cost-calculator__rate">~$0.55/$2.19 per 1M</span>
+          <span class="cost-calculator__badge context">256K ctx</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -135,6 +184,11 @@ document.addEventListener('DOMContentLoaded', function() {
     gemini: { in: 2, out: 12 },
     deepseek: { in: 0.14, out: 0.28 },
     deepseekv4: { in: 0.55, out: 2.19 },
+    deepseekpro: { in: 0.55, out: 2.19 },
+    grok: { in: 3, out: 15 },
+    qwen: { in: 0.40, out: 1.50 },
+    geminimini: { in: 1, out: 6 },
+    kimi: { in: 0.55, out: 2.19 },
   };
 
   function getVal(id) {
@@ -159,6 +213,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('costGemini').textContent = '$' + calcCost(pricing.gemini.in, pricing.gemini.out);
     document.getElementById('costDeepSeek').textContent = '$' + calcCost(pricing.deepseek.in, pricing.deepseek.out);
     document.getElementById('costDeepSeekV4').textContent = '$' + calcCost(pricing.deepseekv4.in, pricing.deepseekv4.out);
+    document.getElementById('costDeepSeekPro').textContent = '$' + calcCost(pricing.deepseekpro.in, pricing.deepseekpro.out);
+    document.getElementById('costGrok').textContent = '$' + calcCost(pricing.grok.in, pricing.grok.out);
+    document.getElementById('costQwen').textContent = '$' + calcCost(pricing.qwen.in, pricing.qwen.out);
+    document.getElementById('costGeminiMini').textContent = '$' + calcCost(pricing.geminimini.in, pricing.geminimini.out);
+    document.getElementById('costKimi').textContent = '$' + calcCost(pricing.kimi.in, pricing.kimi.out);
   }
 
   function updateSlider(slider) {

@@ -53,6 +53,16 @@ export const benchmarkData = [
   { model: 'Claude Opus 4.5', family: 'Claude', category: 'design', benchmark: 'Design Arena', score: 1301, date: '2026-05' },
   { model: 'Kimi K2.5 (Thinking)', family: 'Moonshot', category: 'design', benchmark: 'Design Arena', score: 1301, date: '2026-05' },
   { model: 'Gemini 3 Pro Preview', family: 'Gemini', category: 'design', benchmark: 'Design Arena', score: 1300, date: '2026-05' },
+  { model: 'Gemini 3 Mini', family: 'Gemini', category: 'design', benchmark: 'Design Arena', score: 1295, date: '2026-05' },
+  { model: 'Grok 3 Pro', family: 'xAI', category: 'design', benchmark: 'Design Arena', score: 1315, date: '2026-05' },
+  { model: 'Qwen 3.6', family: 'Alibaba', category: 'design', benchmark: 'Design Arena', score: 1310, date: '2026-05' },
+  { model: 'Llama 4 Scout', family: 'Llama', category: 'design', benchmark: 'Design Arena', score: 1290, date: '2026-05' },
+  { model: 'GLM 4.7', family: 'Zhipu', category: 'design', benchmark: 'Design Arena', score: 1298, date: '2026-05' },
+  { model: 'GLM 4', family: 'Zhipu', category: 'design', benchmark: 'Design Arena', score: 1285, date: '2026-05' },
+  { model: 'MiniMax M2.7', family: 'MiniMax', category: 'design', benchmark: 'Design Arena', score: 1310, date: '2026-05' },
+  { model: 'MiMo M2.7', family: 'Xiaomi', category: 'design', benchmark: 'Design Arena', score: 1280, date: '2026-05' },
+  { model: 'GPT-5.4', family: 'GPT', category: 'design', benchmark: 'Design Arena', score: 1305, date: '2026-05' },
+  { model: 'GPT-4.1', family: 'GPT', category: 'design', benchmark: 'Design Arena', score: 1290, date: '2026-05' },
 ];
 
 export const benchmarkMeta = {
@@ -72,4 +82,4 @@ export const categories = [
   { id: 'design', label: 'Design' },
 ];
 
-export const families = ['All', 'Claude', 'GPT', 'Gemini', 'DeepSeek', 'Llama', 'Mistral', 'OpenAI', 'Moonshot', 'Zhipu', 'Meta'];
+export const families = ['All', 'Claude', 'GPT', 'Gemini', 'DeepSeek', 'Llama', 'Mistral', 'OpenAI', 'Moonshot', 'Zhipu', 'Meta', 'xAI', 'Alibaba', 'MiniMax', 'Xiaomi'];

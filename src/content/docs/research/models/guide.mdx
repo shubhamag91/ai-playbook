@@ -36,9 +36,10 @@ This page is for people who want to run models locally or on their own infrastru
 ### Tier 1: Frontier Quality
 
 | Model | License | Size | Capability | Where to run |
-|---|---|---|---|---|
+|---|---|---|---|---|---|
 | **Llama 4** | MIT | 70B | GPT-4-class reasoning | Ollama, local GPU |
-| **Qwen 3.5** | Custom | 72B | Strong reasoning, multilingual | Ollama, Hugging Face |
+| **Llama 4 Scout** | MIT | 109B | 10M context, MoE efficiency | Ollama, vLLM |
+| **Qwen 3.6** | Custom | 72B | Strong reasoning, multilingual, vision | Ollama, Hugging Face |
 | **Mistral Large** | Apache 2.0 | 123B | Instruction-following, fast | vLLM, SageMaker |
 | **DeepSeek V4** | MIT | 236B | Strong general-purpose | Local, Together AI |
 | **DeepSeek R1** | MIT | 236B | o1-competitive reasoning | Local, Together AI |
@@ -305,7 +306,7 @@ model = AutoModelForCausalLM.from_pretrained(model_id)
 - Llama 4 finally matches GPT-4 class quality
 - DeepSeek V4 proved open-weight can compete at frontier pricing
 - DeepSeek R1 matched o1 reasoning quality at a fraction of the cost
-- Qwen 3.5 surpassed many proprietary models
+- Qwen 3.6 surpassed many proprietary models
 - Phi 4 brought GPT-4 quality to 14B models
 
 **Cost improvements:**

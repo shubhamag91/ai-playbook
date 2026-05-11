@@ -1,12 +1,12 @@
 ---
 title: "What's New in AI (May 2026)"
-description: Latest developments and announcements in AI as of May 2026  -  model releases, pricing changes, and emerging trends.
+description: Latest developments and announcements in AI as of May 2026 — model releases, pricing changes, and emerging trends.
 sidebar:
   order: 1
 tags:
   - research
   - whats-new
-lastUpdated: 2026-05-08
+lastUpdated: 2026-05-11
 nextVerificationDue: 2026-08-06
 ---
 
@@ -20,53 +20,129 @@ The latest announcements, releases, and developments reshaping AI in May 2026.
 
 ## Major Model Releases
 
-### Claude 4 Opus (Anthropic, May 2026)
-Anthropic released Claude 4 Opus as a successor to Claude 3.5 Sonnet. Key improvements:
-- **400K token context** (up from 200K)
-- **Agent mode enabled by default**  -  agents work more reliably without prompt engineering
-- **99.2% accuracy on HumanEval**  -  approaching human-level code generation
-- **Cost: $8/$24 per 1M tokens** (cheaper than Sonnet, more capable)
+### Claude Opus 4.7 (Thinking) (Anthropic, May 2026)
+Anthropic's latest flagship with thinking mode enabled. Ranked #1 on Design Arena (1350 Elo):
 
-Status: Production-ready, widely available through API, Claude.ai, and enterprise
+- **400K token context**
+- **Thinking mode** for complex multi-step reasoning
+- **Top-ranked on Design Arena** — best-in-class for design and code generation
+- **Cost: $15/$75 per 1M tokens**
+
+Status: Production-ready, available through Anthropic API
 
 ---
 
 ### GPT-5.5 (OpenAI, May 2026)
 OpenAI's update to GPT-5 series:
-- **Multimodal reasoning**  -  can see video AND reason about it in real-time
-- **Streaming at 1000 tokens/sec**  -  2x faster than o1
-- **128K context** (less than Claude, but faster)
-- **Costs $0.10/$0.30**  -  aggressively priced to compete
 
-Status: Available on OpenAI API and ChatGPT Plus
+- **Multimodal reasoning** — can see images AND reason about them
+- **Streaming at 1000 tokens/sec**
+- **Cost: $2/$8 per 1M tokens** (GPT-5.5), $0.05/$0.15 (Instant variant for routing)
+- **128K context** (less than Claude, but faster)
+
+Status: Available on OpenAI API and ChatGPT
 
 ---
 
-### Gemini 3.0 (Google, May 2026)
-Google's flagship update:
-- **2M token context** (up from 1M)
-- **Native reasoning**  -  Gemini now has built-in reasoning mode (like o1)
-- **Integrated with Workspace**  -  direct Gmail, Docs, Sheets integration
-- **Free tier expanded**  -  150M tokens/day (vs 100M before)
+### Gemini 3.1 Pro (Google, May 2026)
+Google's latest flagship (supersedes Gemini 3.0):
+
+- **1M token context window**
+- **Deep Research mode** — automated multi-step web research
+- **Integrated with Workspace** — direct Gmail, Docs, Sheets integration
+- **Cost: $2/$12 per 1M tokens**
+- **Gemini 3 Mini** available at $1/$6 for speed-sensitive tasks
 
 Status: Live on Google AI Studio and Workspace
 
 ---
 
-## Infrastructure & Deployment
+### Kimi K2.6 (Moonshot AI, May 2026)
+Moonshot AI's flagship model with unique agentic capabilities:
 
-How we rolled it out:
+- **256K context window**
+- **100-agent swarm** — orchestrates up to 100 specialized agents
+- **Top-5 on Design Arena** at 1343 Elo
+- **Cost:** ~$0.55/$2.19 per 1M tokens
+
+Status: Available via chat, API, and open-weight
+
+---
+
+### GLM 5 Series (Zhipu AI, May 2026)
+Zhipu AI released three models in their GLM 5 family:
+
+- **GLM 5.1** — flagship, 1341 Elo on Design Arena, enterprise multilingual
+- **GLM 5 Turbo** — fast inference, 1336 Elo
+- **GLM 5** — base model at 1307 Elo
+- Strong multilingual performance (Chinese + English)
+
+Status: Available via API and Hugging Face
+
+---
+
+### Grok 3 Pro (xAI, May 2026)
+xAI's premium tier:
+
+- **Real-time X/Twitter data** access
+- **1315 Elo on Design Arena**
+- **Cost: $3/$15 per 1M tokens**
+- 128K context
+
+Status: Available via Grok/X Premium+
+
+---
+
+### DeepSeek V4 Flash & V4 Pro (DeepSeek, April-May 2026)
+DeepSeek expanded its lineup beyond V4:
+
+- **V4 Flash:** $0.14/$0.28 per 1M — cheapest frontier-quality API
+- **V4 Pro:** $0.55/$2.19 per 1M — premium variant, 1313 Elo on Design Arena
+- Both MIT-licensed open weights
+
+---
+
+### MiniMax M2.7 (MiniMax, May 2026)
+Independent Chinese AI lab's latest model:
+
+- Strong coding and long-context performance
+- **1310 Elo on Design Arena**
+- **Cost:** ~$0.30/$1.00 per 1M tokens
+
+---
+
+### Llama 4 Scout (Meta, May 2026)
+Meta's MoE variant with extreme long-context:
+
+- **10M context window** (109B total params)
+- MIT license, open weights
+- Designed for processing entire codebases or document collections
+
+---
+
+### MiMo M2.7 (Xiaomi, May 2026)
+Xiaomi's first major AI model:
+
+- Multimodal (text + vision)
+- **Cost:** ~$0.25/$0.80 per 1M tokens
+- Focused on Xiaomi device ecosystem
+
+---
+
+## Infrastructure & Deployment
 
 ### NVIDIA H300 Launch
 New accelerator focuses on inference instead of training:
+
 - **10x faster inference** for batch processing
-- **Energy efficient**  -  run smaller models with better performance/watt
+- **Energy efficient** — run smaller models with better performance/watt
 - Impact: More cost-effective deployment for high-volume services
 
 ### Groq LPU 5 Release
 Groq's Language Processing Unit generation 5:
+
 - **1000+ tokens/sec** for streaming (vs 700 on LPU 4)
-- **Lower cost**  -  inference now under $0.001 per 1M tokens for some models
+- **Lower cost** — inference now under $0.001 per 1M tokens for some models
 - Impact: Real-time applications become practical
 
 ---
@@ -75,7 +151,7 @@ Groq's Language Processing Unit generation 5:
 
 ### 1. Agentic AI Goes Mainstream
 Six months ago: Agents were experimental.
-Now: Every SaaS product has an "AI Agent" button. Customer support, sales prospecting, code generation  -  agents are default.
+Now: Every SaaS product has an "AI Agent" button. Customer support, sales prospecting, code generation — agents are default.
 
 **What changed:** Better frameworks (Langgraph), better model reliability, proof of ROI
 
@@ -84,28 +160,33 @@ Vector databases are now as standard as SQL databases. Every company building wi
 
 **New pattern:** Move beyond basic RAG (retrieve top-3 chunks) to advanced RAG (reranking, multi-hop, hybrid search)
 
-### 3. Fine-tuning Becomes Niche
+### 3. Fine-Tuning Becomes Niche
 Why fine-tune when prompting + RAG work? Fine-tuning declining in usage because context windows grew and models improved.
 
 **Still used for:** Style adaptation, cost optimization at massive scale (millions of requests/day)
 
 ### 4. Open-Weight Models Catching Up
-DeepSeek R1, Llama 3.3, Mistral Large compete with closed models on reasoning, coding.
+DeepSeek V4, Llama 4, Muse Spark, Qwen 3.6 compete with closed models on reasoning, coding, and design.
 
 **Impact:** Companies have real choices. Not forced into proprietary APIs anymore.
 
-### 5. Verification & Correctness Matters
-As agents and autonomous systems proliferate, emphasis shifted to verification. "How do we know this is right?"
+### 5. Chinese AI Ecosystem Emerges
+Kimi K2.6, GLM 5.1, Qwen 3.6, MiniMax M2.7, MiMo M2.7 — Chinese AI labs now produce frontier-quality models competitive with US leaders.
 
-**Tools emerging:** formal verification for AI outputs, structured validation (Pydantic), human-in-the-loop workflows
+**Impact:** Global competition drives prices down and innovation up.
+
+### 6. Design Arena Becomes Key Benchmark
+Design Arena (blind pairwise Elo ratings for design/code output quality) emerged as a critical differentiator. Top models now differentiate on creative output, not just reasoning.
+
+**Impact:** Model selection now depends on creative capability, not just benchmark scores.
 
 ---
 
 ## Market Shifts
 
 ### Price Wars Heating Up
-- Claude Opus: $8/$24 (was $15/$60)
-- GPT-4o: $5/$15 (was $10/$30)
+- DeepSeek V4 Flash: $0.14/$0.28 per 1M
+- GPT-5.5 Instant: $0.05/$0.15 per 1M
 - Open-source models: free on consumer hardware
 
 **Impact:** Margin pressure on AI providers. Consolidation likely. Price no longer a barrier to entry.
@@ -113,14 +194,14 @@ As agents and autonomous systems proliferate, emphasis shifted to verification. 
 ### Enterprise Lock-In Easing
 Three months ago: "Use our API or be incompatible"
 
-Now: OpenRouter, LM Studio, Ollama let you swap models. Prompt caching (Claude, OpenAI) let you cache context across providers.
+Now: OpenRouter, LM Studio, Ollama let you swap models. Prompt caching lets you cache context across providers.
 
 **Impact:** Less vendor lock-in. More competition. Better for users.
 
 ### Job Market Shifting
-- Demand ↑ for: Prompt engineers, AI product managers, RLHF raters, AI safety roles
-- Demand ↓ for: Data entry, basic coding, customer service tier-1
-- Demand → : Educators (teaching AI to existing workforce), security (prompt injection, model theft)
+- Demand up for: Prompt engineers, AI product managers, RLHF raters, AI safety roles
+- Demand down for: Data entry, basic coding, customer service tier-1
+- Demand shifting: Educators (teaching AI to existing workforce), security (prompt injection, model theft)
 
 ---
 
@@ -165,3 +246,4 @@ Production monitoring for LLM applications. Logging, evaluation, tracing. Became
 
 5. **Agents are infrastructure now.** If you're not using agents for automation, you're doing extra work manually.
 
+6. **Watch the Chinese AI ecosystem.** Kimi, GLM, Qwen, MiniMax, and Xiaomi are producing frontier-quality models at aggressive pricing. Don't ignore them.

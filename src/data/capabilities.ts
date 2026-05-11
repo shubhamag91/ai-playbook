@@ -35,6 +35,11 @@ export const models = [
   { id: 'muse-spark', label: 'Muse Spark', family: 'Meta', short: 'Muse' },
   { id: 'deepseek-v4-pro', label: 'DeepSeek V4 Pro', family: 'DeepSeek', short: 'DS Pro' },
   { id: 'claude-opus-46', label: 'Claude Opus 4.6', family: 'Claude', short: 'Opus 4.6' },
+  { id: 'grok-3-pro', label: 'Grok 3 Pro', family: 'xAI', short: 'Grok 3' },
+  { id: 'qwen-36', label: 'Qwen 3.6', family: 'Alibaba', short: 'Qwen 3.6' },
+  { id: 'llama-4-scout', label: 'Llama 4 Scout', family: 'Llama', short: 'Scout' },
+  { id: 'gemini-3-mini', label: 'Gemini 3 Mini', family: 'Gemini', short: 'G 3 Mini' },
+  { id: 'minimax-m27', label: 'MiniMax M2.7', family: 'MiniMax', short: 'M2.7' },
 ];
 
 export const capabilityData: CapabilityScore[] = [
@@ -191,4 +196,59 @@ export const capabilityData: CapabilityScore[] = [
   { model: 'claude-opus-46', task: 'agentic', score: 5, benchmarkRef: null, detail: 'Excellent tool use' },
   { model: 'claude-opus-46', task: 'speed', score: 2, benchmarkRef: null, detail: 'Slower, thoughtful responses' },
   { model: 'claude-opus-46', task: 'cost', score: 2, benchmarkRef: '$15/$75 per 1M', detail: 'Expensive but capable' },
+
+  // Grok 3 Pro
+  { model: 'grok-3-pro', task: 'coding', score: 4, benchmarkRef: null, detail: 'Strong coder, real-time data access' },
+  { model: 'grok-3-pro', task: 'math', score: 4, benchmarkRef: null, detail: 'Good math reasoning' },
+  { model: 'grok-3-pro', task: 'reasoning', score: 4, benchmarkRef: null, detail: 'Solid multi-step reasoning' },
+  { model: 'grok-3-pro', task: 'writing', score: 3, benchmarkRef: null, detail: 'Adequate, not writing-optimized' },
+  { model: 'grok-3-pro', task: 'vision', score: 3, benchmarkRef: null, detail: 'Basic vision support' },
+  { model: 'grok-3-pro', task: 'long-context', score: 3, benchmarkRef: '128K context', detail: 'Standard context window' },
+  { model: 'grok-3-pro', task: 'agentic', score: 3, benchmarkRef: null, detail: 'Basic function calling' },
+  { model: 'grok-3-pro', task: 'speed', score: 4, benchmarkRef: null, detail: 'Fast inference' },
+  { model: 'grok-3-pro', task: 'cost', score: 2, benchmarkRef: '$3/$15 per 1M', detail: 'Premium pricing' },
+
+  // Qwen 3.6
+  { model: 'qwen-36', task: 'coding', score: 4, benchmarkRef: null, detail: 'Strong multilingual coder' },
+  { model: 'qwen-36', task: 'math', score: 4, benchmarkRef: null, detail: 'Good math reasoning' },
+  { model: 'qwen-36', task: 'reasoning', score: 4, benchmarkRef: null, detail: 'Solid reasoning' },
+  { model: 'qwen-36', task: 'writing', score: 4, benchmarkRef: null, detail: 'Strong multilingual writing' },
+  { model: 'qwen-36', task: 'vision', score: 3, benchmarkRef: null, detail: 'Basic vision support' },
+  { model: 'qwen-36', task: 'long-context', score: 3, benchmarkRef: '128K context', detail: 'Standard context window' },
+  { model: 'qwen-36', task: 'agentic', score: 3, benchmarkRef: null, detail: 'Basic agentic capabilities' },
+  { model: 'qwen-36', task: 'speed', score: 4, benchmarkRef: null, detail: 'Fast inference' },
+  { model: 'qwen-36', task: 'cost', score: 4, benchmarkRef: null, detail: 'Competitive pricing' },
+
+  // Llama 4 Scout
+  { model: 'llama-4-scout', task: 'coding', score: 3, benchmarkRef: null, detail: 'Decent coder, MoE efficiency' },
+  { model: 'llama-4-scout', task: 'math', score: 3, benchmarkRef: null, detail: 'Adequate math reasoning' },
+  { model: 'llama-4-scout', task: 'reasoning', score: 3, benchmarkRef: null, detail: 'Competitive reasoning for size' },
+  { model: 'llama-4-scout', task: 'writing', score: 3, benchmarkRef: null, detail: 'Solid for open-source' },
+  { model: 'llama-4-scout', task: 'vision', score: 3, benchmarkRef: null, detail: 'Basic multimodal support' },
+  { model: 'llama-4-scout', task: 'long-context', score: 5, benchmarkRef: '10M context', detail: 'Massive context window, best in class' },
+  { model: 'llama-4-scout', task: 'agentic', score: 3, benchmarkRef: null, detail: 'Basic tool use' },
+  { model: 'llama-4-scout', task: 'speed', score: 3, benchmarkRef: null, detail: 'MoE, moderate speed' },
+  { model: 'llama-4-scout', task: 'cost', score: 5, benchmarkRef: 'Free (self-host)', detail: 'Open-weight, no API costs' },
+
+  // Gemini 3 Mini
+  { model: 'gemini-3-mini', task: 'coding', score: 4, benchmarkRef: null, detail: 'Good coder for its size' },
+  { model: 'gemini-3-mini', task: 'math', score: 4, benchmarkRef: null, detail: 'Solid math reasoning' },
+  { model: 'gemini-3-mini', task: 'reasoning', score: 3, benchmarkRef: null, detail: 'Adequate reasoning' },
+  { model: 'gemini-3-mini', task: 'writing', score: 3, benchmarkRef: null, detail: 'Decent, speed-optimized' },
+  { model: 'gemini-3-mini', task: 'vision', score: 4, benchmarkRef: null, detail: 'Good vision for speed-optimized' },
+  { model: 'gemini-3-mini', task: 'long-context', score: 3, benchmarkRef: '128K context', detail: 'Standard context window' },
+  { model: 'gemini-3-mini', task: 'agentic', score: 3, benchmarkRef: null, detail: 'Basic agentic capabilities' },
+  { model: 'gemini-3-mini', task: 'speed', score: 5, benchmarkRef: null, detail: 'Fastest Gemini variant' },
+  { model: 'gemini-3-mini', task: 'cost', score: 4, benchmarkRef: '$1/$6 per 1M', detail: 'Affordable for quality' },
+
+  // MiniMax M2.7
+  { model: 'minimax-m27', task: 'coding', score: 4, benchmarkRef: null, detail: 'Strong coder' },
+  { model: 'minimax-m27', task: 'math', score: 4, benchmarkRef: null, detail: 'Good math reasoning' },
+  { model: 'minimax-m27', task: 'reasoning', score: 4, benchmarkRef: null, detail: 'Solid reasoning' },
+  { model: 'minimax-m27', task: 'writing', score: 3, benchmarkRef: null, detail: 'Adequate writing quality' },
+  { model: 'minimax-m27', task: 'vision', score: 3, benchmarkRef: null, detail: 'Basic vision support' },
+  { model: 'minimax-m27', task: 'long-context', score: 4, benchmarkRef: '128K context', detail: 'Strong long-context performance' },
+  { model: 'minimax-m27', task: 'agentic', score: 3, benchmarkRef: null, detail: 'Basic agentic capabilities' },
+  { model: 'minimax-m27', task: 'speed', score: 4, benchmarkRef: null, detail: 'Fast inference' },
+  { model: 'minimax-m27', task: 'cost', score: 4, benchmarkRef: null, detail: 'Competitive pricing' },
 ];

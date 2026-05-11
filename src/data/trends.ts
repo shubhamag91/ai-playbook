@@ -91,4 +91,18 @@ export const trendingTopics: TrendItem[] = [
     date: 'May 2026',
     category: 'Open Source',
   },
+  {
+    title: 'Grok 3 Pro (xAI)',
+    description: 'Premium Grok tier. Real-time X/Twitter data access. Strong on Design Arena at 1315 Elo.',
+    link: '/decide/tools/guide#global-ai-landscape',
+    date: 'May 2026',
+    category: 'Model Release',
+  },
+  {
+    title: 'MiniMax M2.7',
+    description: 'Independent Chinese AI lab. Strong coding, long-context, and design capabilities.',
+    link: '/decide/tools/guide#global-ai-landscape',
+    date: 'May 2026',
+    category: 'Model Release',
+  },
 ];
