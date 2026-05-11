@@ -77,21 +77,32 @@ No strict read order. Recommended path: Scaling Laws -> MoE -> Reasoning Models 
 
 ### Issue Reference
 
-| Issue | Title | Type | Est. Lines |
+| Issue | Title | Type | Est. Lines | Status |
+|---|---|---|---|---|
+| MOS-297 | Quick fixes: sidebar, broken refs, slide placeholder | Fix | — | Done |
+| MOS-298 | Deep Dive: Scaling Laws + MoE (expand How LLMs Work) | Expansion | +250 | Done |
+| MOS-299 | Deep Dive: Reasoning Models & Test-Time Compute | New | +350 | Done |
+| MOS-300 | Deep Dive: Multimodal AI (architectures + CV + speech + audio) | New | +500 | Done |
+| MOS-301 | Deep Dive: Retrieval Technology (expand RAG Architecture) | Expansion | +300 | Done |
+| MOS-302 | Deep Dive: Agent Security (expand Agents & Frameworks) | Expansion | +150 | Done |
+| MOS-303 | Deep Dive: Data Engineering (expand Training & Fine-tuning) | Expansion | +250 | Done |
+| MOS-304 | Deep Dive: SLMs & Edge AI (expand Inference Optimization) | Expansion | +200 | Done |
+| MOS-305 | Deep Dive: Production LLMOps | New | +400 | Done |
+| MOS-306 | Deep Dive: Benchmark Methodology (expand Evaluation & Testing) | Expansion | +200 | Done |
+| MOS-307 | Reference: Economics of AI | New | +250 | Done |
+| MOS-308 | Research: Chinese AI Ecosystem Landscape | New | +300 | Done |
+| MOS-309 | Docs: content-roadmap.md | Docs | — | Done |
+
+## Summary of Completed Work
+
+| Metric | Before | After | Change |
 |---|---|---|---|
-| MOS-297 | Quick fixes: sidebar, broken refs, slide placeholder | Fix | — |
-| MOS-298 | Deep Dive: Scaling Laws + MoE (expand How LLMs Work) | Expansion | +250 |
-| MOS-299 | Deep Dive: Reasoning Models & Test-Time Compute | New | +350 |
-| MOS-300 | Deep Dive: Multimodal AI (architectures + CV + speech + audio) | New | +500 |
-| MOS-301 | Deep Dive: Retrieval Technology (expand RAG Architecture) | Expansion | +300 |
-| MOS-302 | Deep Dive: Agent Security (expand Agents & Frameworks) | Expansion | +150 |
-| MOS-303 | Deep Dive: Data Engineering (expand Training & Fine-tuning) | Expansion | +250 |
-| MOS-304 | Deep Dive: SLMs & Edge AI (expand Inference Optimization) | Expansion | +200 |
-| MOS-305 | Deep Dive: Production LLMOps | New | +400 |
-| MOS-306 | Deep Dive: Benchmark Methodology (expand Evaluation & Testing) | Expansion | +200 |
-| MOS-307 | Reference: Economics of AI | New | +250 |
-| MOS-308 | Research: Chinese AI Ecosystem Landscape | New | +300 |
-| MOS-309 | Docs: content-roadmap.md | Docs | — |
+| Total pages | 65 | 70 | +5 |
+| Search index chunks | 446 | 570 | +124 |
+| Deep dives | 7 | 10 | +3 new, +5 expanded |
+| Reference pages | 7 | 8 | +1 |
+| Research pages | 6 | 7 | +1 |
+| Linear issues closed | 0 | 13 | All done |
 
 ---
 
