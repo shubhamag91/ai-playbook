@@ -60,11 +60,10 @@ export async function onRequest({ request, env }) {
     const contextStr = hasPlaybookContent ? scored.map(c => c.chunk).join('\n\n') : '';
 
     // --- Build messages ---
-    const systemPrompt = 'You are a knowledgeable AI assistant. Answer questions naturally and conversationally. You have three tiers of knowledge:\n' +
+    const systemPrompt = 'You are a knowledgeable AI assistant. Answer questions naturally and conversationally. You have two sources of knowledge:\n' +
       '1. Reference material provided below (if any) — use this first, it is the most up-to-date\n' +
-      '2. Your own training knowledge — use this for general AI concepts\n' +
-      '3. Web search — use the web_search tool when you need current information (pricing, recent model releases, news)\n\n' +
-      'Never mention "context", "sources", "reference material", or "according to" — just answer directly. Be concise (2-3 paragraphs). If you use web search, mention the source naturally (e.g. "as of" or "currently").';
+      '2. Your own training knowledge — use this for general AI concepts\n\n' +
+      'Never mention "reference material", "context", "sources", or "according to" — just answer directly. Be concise (2-3 paragraphs).';
 
     const messages = [
       { role: 'system', content: systemPrompt },
@@ -87,29 +86,12 @@ export async function onRequest({ request, env }) {
       messages.push({ role: 'user', content: question });
     }
 
-    // --- Call Groq API with web search tool ---
+    // --- Call Groq API ---
     const groqBody = {
       model: 'llama-3.3-70b-versatile',
       messages: messages,
       temperature: 0.3,
       max_tokens: 800,
-      tools: [
-        {
-          type: 'function',
-          function: {
-            name: 'web_search',
-            description: 'Search the web for current information. Use when you need up-to-date data about pricing, model releases, news, or anything that may have changed recently.',
-            parameters: {
-              type: 'object',
-              properties: {
-                query: { type: 'string', description: 'The search query' },
-              },
-              required: ['query'],
-            },
-          },
-        },
-      ],
-      tool_choice: 'auto',
     };
 
     const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -130,14 +112,6 @@ export async function onRequest({ request, env }) {
 
     const groqData = await groqRes.json();
     const choice = groqData?.choices?.[0];
-
-    // If the model called web_search, Groq handles it internally on their newer models
-    // For models that don't execute tools internally, we handle the result:
-    if (choice?.finish_reason === 'tool_calls' && choice?.message?.tool_calls) {
-      // Model wants to search. For models that execute tools internally,
-      // Groq should handle this. If not, we'd need another round trip.
-      // Fall through to use whatever response Groq returned.
-    }
 
     const answerText = choice?.message?.content || '';
 
