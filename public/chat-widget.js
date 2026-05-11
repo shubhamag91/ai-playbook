@@ -1,7 +1,7 @@
 (function() {
   function init() {
     // Key AI terms to highlight (A)
-    var keyTerms = ['Claude','Sonnet','Haiku','Opus','GPT','Gemini','DeepSeek','Ollama','vLLM','Llama','Mistral','Qwen','Phi','MATH','MMLU','GPQA','HumanEval','SWE-bench','RLHF','LoRA'];
+    var keyTerms = ['MMLU','HumanEval','SWE-bench','RLHF','LoRA'];
 
     // Inject CSS
     var style = document.createElement('style');
