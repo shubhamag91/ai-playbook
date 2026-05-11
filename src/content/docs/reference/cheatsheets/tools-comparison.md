@@ -8,6 +8,9 @@ tags:
   - cheatsheet
   - tools
   - comparison
+glossaryLinks:
+  - api
+  - inference
 lastUpdated: 2026-05-09
 nextVerificationDue: 2026-06-08
 ---

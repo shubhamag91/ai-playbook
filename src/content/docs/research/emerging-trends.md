@@ -6,6 +6,11 @@ sidebar:
 tags:
   - research
   - trends
+glossaryLinks:
+  - agent
+  - rag
+  - fine-tuning
+  - inference
 lastUpdated: 2026-05-08
 nextVerificationDue: 2026-08-06
 ---

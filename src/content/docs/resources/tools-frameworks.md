@@ -8,6 +8,12 @@ tags:
   - tools
   - frameworks
   - reference
+glossaryLinks:
+  - llm
+  - api
+  - vector database
+  - inference
+  - rag
 lastUpdated: 2026-05-10
 nextVerificationDue: 2026-08-08
 ---

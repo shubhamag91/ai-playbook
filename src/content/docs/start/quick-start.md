@@ -5,6 +5,11 @@ sidebar:
   order: 2
 tags:
   - getting-started
+glossaryLinks:
+  - llm
+  - token
+  - prompt
+  - inference
 lastUpdated: 2026-05-09
 nextVerificationDue: 2026-08-07
 ---

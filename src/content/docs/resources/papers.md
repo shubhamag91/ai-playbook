@@ -7,6 +7,11 @@ tags:
   - resources
   - papers
   - research
+glossaryLinks:
+  - transformer
+  - attention
+  - rlhf
+  - scaling laws
 lastUpdated: 2026-05-10
 nextVerificationDue: 2026-08-08
 ---

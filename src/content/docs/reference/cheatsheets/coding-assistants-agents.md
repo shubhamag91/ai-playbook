@@ -5,6 +5,10 @@ tags:
   - reference
   - cheatsheet
   - coding
+glossaryLinks:
+  - agent
+  - tool use
+  - llm
 lastUpdated: 2026-05-08
 nextVerificationDue: 2026-06-07
 sidebar:

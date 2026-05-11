@@ -6,6 +6,11 @@ sidebar:
 tags:
   - research
   - glossary
+glossaryLinks:
+  - llm
+  - token
+  - transformer
+  - inference
 lastUpdated: 2026-05-08
 nextVerificationDue: 2027-05-08
 ---

@@ -21,6 +21,14 @@ if (links.length > 0) {
     const currentEntry = allDocs.find(entry => entry.slug === path);
     const allLinks: Array<{ label: string; href: string; description?: string }> = [];
 
+    // Check for explicit seeAlso frontmatter links (supports section anchors)
+    const entryData = currentEntry?.data as Record<string, unknown> | undefined;
+    const seeAlsoLinks = entryData?.seeAlso as Array<{ label: string; href: string; description?: string }> | undefined;
+    if (seeAlsoLinks && seeAlsoLinks.length > 0) {
+      allLinks.push(...seeAlsoLinks);
+    }
+
+    // Tag-based auto-detection (page-level links)
     if (currentEntry?.data.tags && currentEntry.data.tags.length > 0) {
       const currentTags: string[] = currentEntry.data.tags;
       const scored: Array<{ entry: typeof allDocs[0]; score: number }> = [];
@@ -45,7 +53,6 @@ if (links.length > 0) {
     }
 
     // Add glossary link if page has glossaryLinks frontmatter
-    const entryData = currentEntry?.data as Record<string, unknown> | undefined;
     const glossaryTermSlugs: string[] = (entryData?.glossaryLinks as string[]) || [];
     if (glossaryTermSlugs.length > 0 && !allLinks.some(l => l.href.includes('/reference/glossary'))) {
       allLinks.push({

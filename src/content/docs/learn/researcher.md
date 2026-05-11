@@ -6,6 +6,11 @@ sidebar:
 tags:
   - learning
   - researcher
+glossaryLinks:
+  - llm
+  - inference
+  - benchmark
+  - token
 lastUpdated: 2026-05-08
 nextVerificationDue: 2026-08-06
 ---

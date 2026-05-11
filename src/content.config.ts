@@ -10,6 +10,11 @@ export const collections = {
       extend: z.object({
         tags: z.array(z.string()).optional().default([]),
         glossaryLinks: z.array(z.string()).optional().default([]),
+        seeAlso: z.array(z.object({
+          label: z.string(),
+          href: z.string(),
+          description: z.string().optional(),
+        })).optional().default([]),
       }),
     }),
   }),

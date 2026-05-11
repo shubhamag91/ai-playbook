@@ -6,6 +6,13 @@ sidebar:
 tags:
   - learning
   - builder
+glossaryLinks:
+  - api
+  - rag
+  - agent
+  - token
+  - embedding
+  - vector database
 lastUpdated: 2026-05-08
 nextVerificationDue: 2026-08-06
 ---
