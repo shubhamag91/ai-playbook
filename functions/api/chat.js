@@ -74,7 +74,7 @@ export async function onRequest({ request, env }) {
 
     if (!groqRes.ok) {
       const err = await groqRes.text();
-      return new Response(JSON.stringify({ error: `Groq API error: ${groqRes.status}` }), {
+      return new Response(JSON.stringify({ error: `Groq API error (${groqRes.status}): ${err}` }), {
         status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders },
       });
     }
