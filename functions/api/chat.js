@@ -48,7 +48,7 @@ export async function onRequest({ request, env, waitUntil }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqKey}` },
         body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
+          model: 'llama-3.1-8b-instant',
           messages: [
             { role: 'system', content: 'Given the conversation history and the latest question, generate 3 search queries to find relevant documentation. Resolve pronouns (it, that, this, they) using context. Use different terminology in each query (3-8 words each). Expand acronyms. Separate queries with | character. Output ONLY the 3 queries separated by | .' },
             { role: 'user', content: contextStr ? `Conversation:\n${contextStr}\nLatest question: ${question}` : question }
@@ -56,6 +56,7 @@ export async function onRequest({ request, env, waitUntil }) {
           temperature: 0.1,
           max_tokens: 80,
         }),
+        signal: AbortSignal.timeout(5000),
       });
       if (rewriteRes.ok) {
         const rewriteData = await rewriteRes.json();
@@ -191,6 +192,7 @@ export async function onRequest({ request, env, waitUntil }) {
         temperature: 0.3,
         max_tokens: 800,
       }),
+      signal: AbortSignal.timeout(12000),
     });
 
     if (!groqRes.ok) {

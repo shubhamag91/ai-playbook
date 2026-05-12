@@ -12,6 +12,11 @@ glossaryLinks:
   - fine-tuning
   - rag
   - prompt injection
+tldr:
+  - LLMs don't understand — they pattern-match based on training data
+  - Fine-tuning isn't for knowledge, use RAG instead
+  - Bigger is better but with diminishing returns — smarter data beats bigger models
+  - Context windows are not memory — each conversation starts fresh
 lastUpdated: 2026-05-08
 nextVerificationDue: 2027-05-08
 ---
@@ -22,6 +27,10 @@ import Breadcrumb from '../../../components/Breadcrumb.astro';
 <Breadcrumb />
 
 Myths, misconceptions, and confusions about AI. Clearing these up helps you build better mental models.
+
+:::important[The Core Confusion]
+An LLM does not understand, think, or reason in the human sense. It generates text that looks like it understands because it has seen similar patterns in training data. This is the single most important thing to understand about AI.
+:::
 
 ---
 

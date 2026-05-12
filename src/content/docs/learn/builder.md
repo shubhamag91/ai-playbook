@@ -13,6 +13,10 @@ glossaryLinks:
   - token
   - embedding
   - vector database
+tldr:
+  - "Learn to integrate Claude, GPT, and Gemini via their APIs"
+  - "Build RAG systems and agentic workflows from scratch"
+  - "Covers best practices for production deployment"
 lastUpdated: 2026-05-08
 nextVerificationDue: 2026-08-06
 ---

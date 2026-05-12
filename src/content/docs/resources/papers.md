@@ -12,6 +12,10 @@ glossaryLinks:
   - attention
   - rlhf
   - scaling laws
+tldr:
+  - "Curated list of foundational papers: Attention Is All You Need, GPT-3, InstructGPT"
+  - "Covers RAG, chain-of-thought, and scaling laws papers"
+  - "Each entry includes significance summary and arXiv link"
 lastUpdated: 2026-05-10
 nextVerificationDue: 2026-08-08
 ---

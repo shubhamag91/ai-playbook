@@ -11,6 +11,10 @@ glossaryLinks:
   - token
   - transformer
   - inference
+tldr:
+  - "Distinguishes between commonly confused terms: AI vs AGI, LLM vs foundation model"
+  - "Explains fine-tuning vs RAG vs prompt engineering tradeoffs"
+  - "Covers open-source vs open-weight vs open-access licensing"
 lastUpdated: 2026-05-08
 nextVerificationDue: 2027-05-08
 ---

@@ -11,6 +11,10 @@ glossaryLinks:
   - rag
   - fine-tuning
   - inference
+tldr:
+  - "Agentic AI, RAG commoditization, and open-weight models are the top trends"
+  - "Reasoning models with test-time compute are a major architectural shift"
+  - "Cost compression makes AI accessible to smaller teams"
 lastUpdated: 2026-05-08
 nextVerificationDue: 2026-08-06
 ---

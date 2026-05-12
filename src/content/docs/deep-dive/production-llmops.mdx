@@ -12,6 +12,11 @@ glossaryLinks:
   - inference
   - prompt
   - hallucination
+tldr:
+  - "Always deploy multi-model fallback — primary, secondary, and emergency models prevent outages"
+  - "Monitor quality and safety metrics alongside latency and errors — models degrade silently"
+  - "Cache aggressively: exact match (Redis) for FAQ, semantic cache (vector DB) for conversational patterns"
+  - "Use canary deployments for prompt changes — roll back within minutes if metrics degrade"
 lastUpdated: 2026-05-11
 nextVerificationDue: 2026-08-08
 ---

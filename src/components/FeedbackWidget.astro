@@ -1,0 +1,46 @@
+---
+import './FeedbackWidget.css';
+---
+
+<div class="feedback-widget" id="feedback-widget">
+  <div class="feedback-widget__inner">
+    <span class="feedback-widget__label">Was this page helpful?</span>
+    <div class="feedback-widget__actions">
+      <button class="feedback-widget__btn feedback-widget__btn--yes" data-feedback="yes" aria-label="Yes, helpful">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+        Yes
+      </button>
+      <button class="feedback-widget__btn feedback-widget__btn--no" data-feedback="no" aria-label="No, not helpful">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>
+        No
+      </button>
+    </div>
+    <span class="feedback-widget__thanks" id="feedback-thanks">Thanks for your feedback!</span>
+  </div>
+</div>
+
+<script is:inline>
+(function() {
+  var widget = document.getElementById('feedback-widget');
+  var thanks = document.getElementById('feedback-thanks');
+  if (!widget) return;
+
+  var feedbackGiven = localStorage.getItem('feedback-' + window.location.pathname);
+
+  // If feedback was already given for this page, show thanks
+  if (feedbackGiven) {
+    widget.querySelector('.feedback-widget__actions').style.display = 'none';
+    thanks.style.display = 'inline';
+    return;
+  }
+
+  widget.querySelectorAll('.feedback-widget__btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var val = this.getAttribute('data-feedback');
+      localStorage.setItem('feedback-' + window.location.pathname, val);
+      widget.querySelector('.feedback-widget__actions').style.display = 'none';
+      thanks.style.display = 'inline';
+    });
+  });
+})();
+</script>

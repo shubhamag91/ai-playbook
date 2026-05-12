@@ -14,6 +14,11 @@ glossaryLinks:
   - embedding
   - token
   - hallucination
+tldr:
+  - "RAG has 3 stages: indexing (chunk, embed, store), retrieval (find relevant chunks), generation (LLM answers with context)"
+  - "Hybrid search (dense + sparse/BM25) gives 10-20% better retrieval recall than either alone"
+  - "Embedding model choice dramatically affects quality — E5-Mistral and BGE-M3 are the best open options"
+  - "Cross-encoder reranking of top-10 candidates is the highest-ROI retrieval improvement"
 lastUpdated: 2026-05-11
 nextVerificationDue: 2026-08-08
 ---
@@ -24,6 +29,10 @@ import Breadcrumb from '../../../components/Breadcrumb.astro';
 <Breadcrumb />
 
 Retrieval-Augmented Generation (RAG) is how you make LLMs answer questions about your data. This guide covers everything from basic concepts to production patterns.
+
+:::important[Key Principle]
+RAG quality is determined by retrieval quality. No amount of prompt engineering can fix bad retrieval. Invest in your embedding model, chunking strategy, and reranking before optimizing prompts.
+:::
 
 ---
 

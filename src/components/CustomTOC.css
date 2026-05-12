@@ -1,0 +1,251 @@
+.custom-toc {
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.custom-toc__tabs {
+  display: flex;
+  gap: 1px;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--sl-color-gray-5);
+}
+
+.custom-toc__tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.4rem;
+  border: none;
+  background: none;
+  color: var(--sl-color-gray-3);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.custom-toc__tab svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.custom-toc__tab:hover {
+  color: var(--sl-color-white);
+}
+
+.custom-toc__tab.active {
+  color: var(--sl-color-accent);
+  border-bottom-color: var(--sl-color-accent);
+}
+
+.custom-toc__panel {
+  display: none;
+}
+
+.custom-toc__panel.active {
+  display: block;
+}
+
+.custom-toc__desc {
+  color: var(--sl-color-gray-2);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  margin-bottom: 0.75rem;
+}
+
+.custom-toc__label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--sl-color-gray-3);
+  margin-bottom: 0.4rem;
+}
+
+.custom-toc__tldr {
+  margin-bottom: 0.75rem;
+}
+
+.custom-toc__tldr ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.custom-toc__tldr li {
+  position: relative;
+  padding-left: 0.9rem;
+  margin-bottom: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--sl-color-gray-2);
+  line-height: 1.5;
+}
+
+.custom-toc__tldr li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--sl-color-accent);
+}
+
+.custom-toc__related {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.custom-toc__link {
+  display: flex;
+  flex-direction: column;
+  padding: 0.35rem 0.55rem;
+  border-radius: 6px;
+  background: var(--sl-color-gray-6);
+  border: 1px solid var(--sl-color-gray-5);
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.custom-toc__link:hover {
+  border-color: var(--sl-color-accent);
+  background: var(--sl-color-gray-5);
+}
+
+.custom-toc__link {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--sl-color-accent);
+}
+
+.custom-toc__link-desc {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--sl-color-gray-3);
+  margin-top: 0.1rem;
+}
+
+/* TOC panel */
+.custom-toc__nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-toc__heading {
+  display: block;
+  padding: 0.3rem 0.5rem;
+  margin-bottom: 0.15rem;
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--sl-color-gray-2);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  transition: color 0.15s, background 0.15s;
+  border-left: 2px solid transparent;
+}
+
+.custom-toc__heading:hover {
+  color: var(--sl-color-white);
+  background: var(--sl-color-gray-5);
+}
+
+.custom-toc__heading.active {
+  color: var(--sl-color-accent);
+  border-left-color: var(--sl-color-accent);
+  background: var(--sl-color-gray-6);
+}
+
+.custom-toc__heading.depth-3 {
+  padding-left: 1.2rem;
+  font-size: 0.76rem;
+  color: var(--sl-color-gray-3);
+}
+
+.custom-toc__empty-message {
+  font-size: 0.78rem;
+  color: var(--sl-color-gray-4);
+  padding: 0.5rem 0;
+  text-align: center;
+}
+
+/* Light mode */
+:root[data-theme='light'] .custom-toc__link {
+  background: var(--sl-color-gray-2);
+  border-color: var(--sl-color-gray-3);
+}
+
+:root[data-theme='light'] .custom-toc__link:hover {
+  background: var(--sl-color-gray-3);
+}
+
+:root[data-theme='light'] .custom-toc__heading:hover {
+  background: var(--sl-color-gray-3);
+}
+
+:root[data-theme='light'] .custom-toc__heading.active {
+  background: var(--sl-color-gray-2);
+}
+
+/* ─── Collapse button in tabs bar ──────────────────────── */
+.custom-toc__collapse {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--sl-color-gray-4);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+
+.custom-toc__collapse:hover {
+  color: var(--sl-color-gray-1);
+}
+
+/* ─── Floating restore button ──────────────────────────── */
+.toc-restore-btn {
+  display: none;
+  position: fixed;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--sl-color-gray-5);
+  background: var(--sl-color-gray-6);
+  color: var(--sl-color-gray-3);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.toc-restore-btn:hover {
+  color: var(--sl-color-accent);
+  border-color: var(--sl-color-accent);
+  background: var(--sl-color-gray-5);
+}
+
+.toc-restore-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Show restore button when TOC is collapsed */
+html[data-toc-collapsed] .toc-restore-btn {
+  display: flex;
+}

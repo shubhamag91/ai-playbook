@@ -14,6 +14,11 @@ glossaryLinks:
   - attention
   - token
   - embedding
+tldr:
+  - "Tokens become embeddings, attention identifies relevance, and transformer blocks build understanding"
+  - "Training costs over $100M for frontier models while inference costs $0.001 per 1K tokens"
+  - "MoE activates only a fraction of parameters per token, enabling much larger models at similar cost"
+  - "Scaling laws predict diminishing returns with 10x parameters giving roughly 20% better performance"
 lastUpdated: 2026-05-11
 nextVerificationDue: 2026-08-08
 ---
@@ -24,6 +29,10 @@ import Breadcrumb from '../../../components/Breadcrumb.astro';
 <Breadcrumb />
 
 Understanding the mechanics of Large Language Models  -  from tokens to transformers to training.
+
+:::important[Foundation Concept]
+LLMs do not understand language — they predict the next token based on patterns in training data. Every capability they have emerges from this simple mechanism.
+:::
 
 ---
 

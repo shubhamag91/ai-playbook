@@ -12,6 +12,11 @@ glossaryLinks:
   - quantization
   - rlhf
   - transformer
+tldr:
+  - Use RAG for knowledge, fine-tuning for style — never fine-tune just to teach facts
+  - 1000 high-quality examples outperform 10000 auto-generated ones
+  - Data quality determines model quality more than architecture choices
+  - Synthetic data helps but never use 100% synthetic — limit to 20-30% of training data
 lastUpdated: 2026-05-11
 nextVerificationDue: 2026-08-08
 ---
@@ -21,6 +26,10 @@ import Breadcrumb from '../../../components/Breadcrumb.astro';
 <Breadcrumb />
 
 When and how to customize large language models for your specific needs  -  from fine-tuning to training from scratch.
+
+:::important[When to Fine-Tune]
+Do NOT fine-tune to teach facts — use RAG for that. Fine-tune for style, tone, and behavior. If you have fewer than 1000 examples, start with prompt engineering instead.
+:::
 
 ---
 

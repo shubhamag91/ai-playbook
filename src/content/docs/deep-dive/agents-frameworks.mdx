@@ -12,6 +12,11 @@ glossaryLinks:
   - llm
   - inference
   - prompting
+tldr:
+  - Agents observe, decide, act, and repeat — the core loop powers all agentic AI
+  - Prompt injection is the most critical security threat — separate system instructions from user content
+  - Least privilege for tools and human approval for destructive actions are essential safety measures
+  - Sandbox code execution (Docker for production, restricted Python for simple cases)
 lastUpdated: 2026-05-11
 nextVerificationDue: 2026-08-08
 ---
@@ -22,6 +27,10 @@ import Breadcrumb from '../../../components/Breadcrumb.astro';
 <Breadcrumb />
 
 How to build AI systems that can make decisions, use tools, and work autonomously.
+
+:::important[Security First]
+Agents have access to tools that can take real-world actions. Prompt injection, data exfiltration, and privilege escalation are critical threats — design security in from the start, not as an afterthought.
+:::
 
 ---
 

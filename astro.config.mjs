@@ -3,6 +3,35 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import { visit } from 'unist-util-visit';
+
+// Remark plugin to add an "important" callout variant
+function remarkImportant() {
+  return function (tree) {
+    visit(tree, 'containerDirective', (node) => {
+      if (node.name !== 'important') return;
+      const label = node.attributes?.label || 'Important';
+      node.data = node.data || {};
+      node.data.hName = 'aside';
+      node.data.hProperties = {
+        class: 'starlight-aside starlight-aside--important',
+        'aria-label': label,
+      };
+      node.children = [
+        {
+          type: 'paragraph',
+          data: { hName: 'p', hProperties: { class: 'starlight-aside__title', 'aria-hidden': 'true' } },
+          children: [{ type: 'text', value: '💡 ' + label }],
+        },
+        {
+          type: 'containerDirective',
+          data: { hName: 'div', hProperties: { class: 'starlight-aside__content' } },
+          children: node.children,
+        },
+      ];
+    });
+  };
+}
 
 // https://astro.build/config
 export default defineConfig({
@@ -38,7 +67,7 @@ export default defineConfig({
   },
 
   markdown: {
-    remarkPlugins: [remarkMath],
+    remarkPlugins: [remarkMath, remarkImportant],
     rehypePlugins: [rehypeKatex],
   },
 
@@ -46,6 +75,7 @@ export default defineConfig({
     starlight({
       components: {
         Footer: './src/components/FooterOverride.astro',
+        TableOfContents: './src/components/CustomTOC.astro',
       },
       title: 'AI Playbook',
       description: 'A living playbook of AI & LLM knowledge — notes, cheatsheets, diagrams, and decks.',
@@ -83,6 +113,28 @@ export default defineConfig({
           attrs: {
             rel: 'preconnect',
             href: 'https://cdn.jsdelivr.net',
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'preconnect',
+            href: 'https://fonts.googleapis.com',
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'preconnect',
+            href: 'https://fonts.gstatic.com',
+            crossorigin: true,
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'stylesheet',
+            href: 'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap',
           },
         },
         {

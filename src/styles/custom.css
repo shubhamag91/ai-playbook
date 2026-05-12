@@ -1,39 +1,250 @@
-/* Tweak the Starlight theme for a warmer, more "playbook" feel.
-   Uncomment / edit as you like. */
+/* Tweak the Starlight theme for a warmer, more "playbook" feel. */
 
+/* ─── Typography ──────────────────────────────────────── */
 :root {
-  --sl-font: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --sl-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --sl-font: var(--font-body);
+  --sl-font-mono: var(--font-mono);
+
+  /* Match Paperclip's subtle sizing */
+  --sl-text-h1: 1.75rem; /* 28px */
+  --sl-text-h2: 1.5rem;  /* 24px */
+  --sl-text-h3: 1rem;    /* 16px (same as body) */
+  --sl-text-h4: 0.875rem;/* 14px */
+  --sl-text-body: 0.965rem; /* ~15.5px */
+  --sl-text-base: 0.965rem;
 }
 
-/* Accent color  -  pick anything you like */
+/* Larger screens — Starlight bumps headings by default, scale back */
+@media (min-width: 50rem) {
+  :root {
+    --sl-text-h1: 2rem;
+    --sl-text-h2: 1.625rem;
+    --sl-text-h3: 1rem;
+    --sl-text-h4: 0.875rem;
+  }
+}
+
+/* Reduce sidebar link sizes */
+.sidebar-content a {
+  font-size: 0.8rem;
+}
+
+/* ─── Spacing & layout ────────────────────────────────── */
+:root {
+  --sl-content-width: 46rem;
+  --content-gutter: 2rem;
+}
+
+/* ─── Right sidebar width ─────────────────────────────── */
+@media (min-width: 50rem) {
+  .right-sidebar-container {
+    min-width: 12rem;
+  }
+}
+
+/* ─── Accent color ────────────────────────────────────── */
 :root {
   --sl-color-accent-low: #1a2d4d;
   --sl-color-accent: #3b82f6;
   --sl-color-accent-high: #bfdbfe;
 }
 
-/* Make mermaid diagrams center nicely */
+/* ─── Headings in serif ───────────────────────────────── */
+h1, h2, h3,
+.site-title,
+.sidebar-content a,
+[class*="heading"] {
+  font-family: var(--font-body);
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.01em;
+}
+
+.content :where(h1) {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+
+.content :where(h2) {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+/* ─── Header glassmorphism ────────────────────────────── */
+header {
+  background: rgba(26, 26, 46, 0.85) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+:root[data-theme='light'] header {
+  background: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* ─── Mermaid diagrams ────────────────────────────────── */
 .mermaid, svg[aria-roledescription] {
   display: block;
   margin: 1.5rem auto;
   max-width: 100%;
 }
 
-/* Make card-style pages a touch softer */
-.card {
-  border-radius: 12px;
+/* ─── Table styling ────────────────────────────────────── */
+.content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
 }
 
-/* Improve content width on wide screens */
-@media (min-width: 1440px) {
-  main {
-    max-width: 1300px;
+.content th {
+  background: var(--sl-color-gray-6);
+  border-bottom: 2px solid var(--sl-color-gray-5);
+  padding: 0.35rem 0.65rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--sl-color-gray-2);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.content td {
+  padding: 0.35rem 0.65rem;
+  border-bottom: 1px solid var(--sl-color-gray-6);
+  color: var(--sl-color-gray-2);
+  vertical-align: top;
+}
+
+.content tbody tr:hover td {
+  background: var(--sl-color-gray-6);
+}
+
+/* ─── Card styling ────────────────────────────────────── */
+.card {
+  border-radius: 16px;
+  padding: 1.25rem;
+  border: 1px solid var(--sl-color-gray-5);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--sl-color-accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  border-color: var(--sl-color-gray-4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.card:hover::after {
+  transform: scaleY(1);
+}
+
+/* ─── Callout / aside styling ─────────────────────────────── */
+.starlight-aside {
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  border: 1px solid;
+}
+
+.starlight-aside--note {
+  background: var(--sl-color-gray-6);
+  border-color: var(--sl-color-gray-5);
+}
+
+.starlight-aside--tip {
+  background: rgba(34, 197, 94, 0.08);
+  border-color: rgba(34, 197, 94, 0.25);
+}
+
+.starlight-aside--caution {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.starlight-aside--danger {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.28);
+}
+
+/* Important callout — blue info box */
+.starlight-aside--important {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.28);
+  border-left: 3px solid #3b82f6;
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+}
+
+.starlight-aside--important .starlight-aside__icon {
+  color: #3b82f6;
+}
+
+.starlight-aside--important .starlight-aside__title {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+/* ─── Code block copy button ───────────────────────────────── */
+.expressive-code .copy {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.expressive-code:hover .copy {
+  opacity: 1;
+}
+
+.expressive-code .copy.is-copied {
+  opacity: 1;
+  color: var(--sl-color-accent);
+}
+
+/* ─── Layout max-width for ultrawide screens ───────────────── */
+@media (min-width: 1600px) {
+  .main-frame {
+    max-width: 1400px;
     margin: 0 auto;
   }
 }
 
-/* Visual separation between adjacent headings */
+/* ─── Collapsible right sidebar ───────────────────────── */
+/* Hide the right sidebar container when collapsed */
+html[data-toc-collapsed] .right-sidebar-container {
+  display: none;
+}
+
+/* Expand main content width when sidebar is collapsed */
+html[data-toc-collapsed][data-has-sidebar][data-has-toc] .main-pane {
+  width: 100%;
+  --sl-content-margin-inline: auto;
+}
+
+html[data-toc-collapsed] {
+  --sl-content-width: 65rem;
+}
+
+/* ─── Visual separation between adjacent headings ──────── */
 h2 + h3 {
   margin-top: 0.25rem;
 }
@@ -48,121 +259,43 @@ h2 + h3::before {
   border-radius: 1px;
 }
 
-/* Mobile optimization  -  ensure proper touch targets and spacing */
-@media (max-width: 768px) {
-  /* Ensure all interactive elements have minimum 44px touch target */
-  button,
-  a,
-  input[type='checkbox'],
-  input[type='radio'] {
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  /* Improve line height for readability on mobile */
-  p, li, dd {
-    line-height: 1.6;
-  }
-
-  /* Better spacing in lists */
-  ul, ol {
-    margin-bottom: 1.25rem;
-  }
-
-  li {
-    margin-bottom: 0.5rem;
-  }
-
-  /* Improve heading spacing */
-  h1, h2, h3, h4 {
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-  }
-
-  h1 {
-    margin-top: 0;
-    font-size: 1.75rem;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-  }
-
-  h3 {
-    font-size: 1.25rem;
-  }
-
-  /* Code block scrolling */
-  pre {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Table scrolling */
-  table {
-    overflow-x: auto;
-    display: block;
-    margin: 1rem 0;
-  }
-}
-
-/* Small mobile optimization */
-@media (max-width: 480px) {
-  /* Tighter spacing on very small screens */
-  body {
-    font-size: 0.95rem;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-    margin-bottom: 0.625rem;
-  }
-
-  h2 {
-    font-size: 1.25rem;
-    margin-bottom: 0.625rem;
-  }
-
-  h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  p {
-    margin-bottom: 0.75rem;
-  }
-
-  li {
-    margin-bottom: 0.375rem;
-  }
-
-  /* Ensure sidebar is usable on mobile */
-  nav {
-    font-size: 0.9rem;
-  }
-
-  /* Better spacing in content */
-  article {
-    padding: 0 0.5rem;
-  }
-}
-
-/* Ensure images scale properly on mobile */
+/* ─── Images ──────────────────────────────────────────────── */
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
-/* Improve mobile form usability */
+/* ─── Mobile optimizations ──────────────────────────────── */
 @media (max-width: 768px) {
-  input[type='text'],
-  input[type='email'],
-  input[type='search'],
-  textarea,
-  select {
-    font-size: 16px; /* Prevents zoom on iOS */
+  button, a, input[type='checkbox'], input[type='radio'] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  p, li, dd { line-height: 1.6; }
+  ul, ol { margin-bottom: 1.25rem; }
+  li { margin-bottom: 0.5rem; }
+  h1, h2, h3, h4 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
+  h1 { margin-top: 0; font-size: 1.75rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+  pre { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { overflow-x: auto; display: block; margin: 1rem 0; }
+  input[type='text'], input[type='email'], input[type='search'],
+  textarea, select {
+    font-size: 16px;
     padding: 0.75rem;
     min-height: 44px;
   }
+}
+
+@media (max-width: 480px) {
+  body { font-size: 0.95rem; }
+  h1 { font-size: 1.5rem; margin-bottom: 0.625rem; }
+  h2 { font-size: 1.25rem; margin-bottom: 0.625rem; }
+  h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.75rem; }
+  li { margin-bottom: 0.375rem; }
+  nav { font-size: 0.9rem; }
+  article { padding: 0 0.5rem; }
 }

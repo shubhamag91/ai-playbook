@@ -11,6 +11,11 @@ glossaryLinks:
   - inference
   - api
   - token
+tldr:
+  - API is cheaper than self-hosting below 50M tokens per month
+  - Model routing (simple queries to cheap models, complex to expensive) is the highest-ROI optimization
+  - Prompt caching saves up to 81% on repeated context prefixes
+  - AI inference prices dropped 90%+ from 2024 to 2026 — don't over-optimize for today's prices
 lastUpdated: 2026-05-11
 nextVerificationDue: 2026-08-08
 ---
@@ -20,6 +25,10 @@ import Breadcrumb from '../../../components/Breadcrumb.astro';
 <Breadcrumb />
 
 Making cost-effective decisions about AI  -  when to build vs buy, how to model total cost, and how the market is evolving.
+
+:::important[Don't Over-Optimize]
+AI prices drop 50%+ per year. What seems expensive today will be cheap in 6 months. Build for value now, not for hypothetical future scale. Premature optimization of AI costs is a common and expensive mistake.
+:::
 
 ---
 

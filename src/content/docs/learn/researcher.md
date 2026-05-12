@@ -11,6 +11,10 @@ glossaryLinks:
   - inference
   - benchmark
   - token
+tldr:
+  - "Stay current with daily and weekly reading habits"
+  - "Track papers using ArXiv, Twitter, and newsletter workflows"
+  - "Focus on reasoning models, agentic AI, and multimodal trends"
 lastUpdated: 2026-05-08
 nextVerificationDue: 2026-08-06
 ---

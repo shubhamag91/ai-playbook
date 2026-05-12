@@ -14,6 +14,10 @@ glossaryLinks:
   - vector database
   - inference
   - rag
+tldr:
+  - "Developer reference covering LLM frameworks, SDKs, inference servers, and vector databases"
+  - "Each section explains what the tool category is and when you would use it"
+  - "Includes deployment platforms for hosting AI applications"
 lastUpdated: 2026-05-10
 nextVerificationDue: 2026-08-08
 ---
