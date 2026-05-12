@@ -4,7 +4,7 @@
 // POST /api/chat
 // Body: { question: string, history: Array<{role: string, content: string}> }
 
-export async function onRequest({ request, env, ctx }) {
+export async function onRequest({ request, env, waitUntil }) {
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -203,7 +203,7 @@ export async function onRequest({ request, env, ctx }) {
     const groqData = await groqRes.json();
     const answerText = groqData?.choices?.[0]?.message?.content || '';
 
-    // Log to KV for analysis (fire-and-forget via ctx.waitUntil)
+    // Log to KV for analysis (fire-and-forget via waitUntil)
     if (env.CHAT_LOGS) {
       const topScore = mergedEntries.length > 0 ? rrfScores[mergedEntries[0].slug + '|' + mergedEntries[0].title] : 0;
       const logPayload = JSON.stringify({
@@ -215,7 +215,7 @@ export async function onRequest({ request, env, ctx }) {
         a: (answerText || '').substring(0, 300),
         t: new Date().toISOString(),
       });
-      ctx.waitUntil(env.CHAT_LOGS.put('log:' + Date.now(), logPayload).catch(e => console.error('KV log failed:', e)));
+      waitUntil(env.CHAT_LOGS.put('log:' + Date.now(), logPayload).catch(e => console.error('KV log failed:', e)));
     }
 
     return new Response(JSON.stringify({ answer: answerText, source: source }), {
