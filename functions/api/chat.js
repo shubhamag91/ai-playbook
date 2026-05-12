@@ -122,7 +122,8 @@ export async function onRequest({ request, env, waitUntil }) {
       .filter(Boolean);
 
     const hasPlaybookContent = mergedEntries.length > 0 && rrfScores[mergedEntries[0].slug + '|' + mergedEntries[0].title] >= 0.05;
-    const contextStr = hasPlaybookContent ? mergedEntries.map(c => `From [${c.title}](/${c.slug}/):\n${c.chunk}`).join('\n\n---\n\n') : '';
+    const siteOrigin = new URL(request.url).origin;
+    const contextStr = hasPlaybookContent ? mergedEntries.map(c => `From [${c.title}](${siteOrigin}/${c.slug}/):\n${c.chunk}`).join('\n\n---\n\n') : '';
 
     // Track where the answer came from
     let source = 'model';
@@ -172,7 +173,7 @@ export async function onRequest({ request, env, waitUntil }) {
 
     // --- Call Llama 3.3 70B ---
     if (finalContext) {
-      const sysContent = `You are a knowledgeable AI assistant with access to accurate reference data about AI models. Answer naturally and conversationally using this reference data, not your training knowledge. Reference data:\n\n${finalContext}\n\nWhen listing multiple items, use bullet points (- item). When providing steps, use numbered lists (1. step). Use **bold** for key terms. Use \`code\` for technical terms. For important takeaways or key points, prefix with > to highlight them. Be concise (2-3 paragraphs or a short list). Never mention "reference data" or "context". Your reference data includes page titles with links — if the user asks to go to a page or see specific information, use the provided links like [Page Title](/slug/).`;
+      const sysContent = `You are a knowledgeable AI assistant with access to accurate reference data about AI models. Answer naturally and conversationally using this reference data, not your training knowledge. Reference data:\n\n${finalContext}\n\nWhen listing multiple items, use bullet points (- item). When providing steps, use numbered lists (1. step). Use **bold** for key terms. Use \`code\` for technical terms. For important takeaways or key points, prefix with > to highlight them. Be concise (2-3 paragraphs or a short list). Never mention "reference data" or "context". Your reference data has links to pages like [Page Title](https://example.com/path/). When the user asks to visit a page or see information from a specific section, direct them with the provided link. If you don't find a relevant link, still try to help with what you know — but be honest about limitations.`;
       messages.unshift({ role: 'system', content: sysContent });
       messages.push({ role: 'user', content: question });
     } else {
