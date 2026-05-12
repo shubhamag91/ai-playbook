@@ -76,6 +76,7 @@ export default defineConfig({
       components: {
         Footer: './src/components/FooterOverride.astro',
         TableOfContents: './src/components/CustomTOC.astro',
+        MarkdownContent: './src/components/ContentOverride.astro',
       },
       title: 'AI Playbook',
       description: 'A living playbook of AI & LLM knowledge — notes, cheatsheets, diagrams, and decks.',

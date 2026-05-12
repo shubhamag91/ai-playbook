@@ -1,0 +1,35 @@
+---
+import './ContentOverride.css';
+
+const starlightRoute = Astro.locals.starlightRoute;
+const entry = starlightRoute?.entry;
+const entryData = (entry?.data as Record<string, unknown>) || {};
+const tags: string[] = (entryData.tags as string[]) || [];
+const lastUpdatedRaw: unknown = entryData.lastUpdated;
+let lastUpdatedStr = '';
+if (lastUpdatedRaw instanceof Date) {
+  lastUpdatedStr = lastUpdatedRaw.toISOString().split('T')[0];
+} else if (typeof lastUpdatedRaw === 'string') {
+  lastUpdatedStr = lastUpdatedRaw;
+}
+---
+
+<div class="sl-markdown-content">
+  {(lastUpdatedStr || tags.length > 0) && (
+    <div class="page-meta">
+      {lastUpdatedStr && (
+        <div class="page-meta__row">
+          <span class="page-meta__date">Updated {lastUpdatedStr}</span>
+        </div>
+      )}
+      {tags.length > 0 && (
+        <div class="page-meta__tags">
+          {tags.map(tag => (
+            <span class="page-meta__tag">{tag}</span>
+          ))}
+        </div>
+      )}
+    </div>
+  )}
+  <slot />
+</div>

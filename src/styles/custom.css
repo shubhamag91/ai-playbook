@@ -244,6 +244,46 @@ html[data-toc-collapsed] {
   --sl-content-width: 65rem;
 }
 
+/* ─── Prev/Next pagination styling ──────────────────────── */
+.pagination-links a[rel="prev"],
+.pagination-links a[rel="next"] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--sl-color-gray-5);
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
+  box-shadow: none;
+}
+
+.pagination-links a[rel="prev"]:hover,
+.pagination-links a[rel="next"]:hover {
+  border-color: var(--sl-color-gray-4);
+  background: var(--sl-color-gray-6);
+}
+
+.pagination-links a[rel="prev"] .link-title,
+.pagination-links a[rel="next"] .link-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--sl-color-white);
+  line-height: 1.4;
+}
+
+.pagination-links a[rel="prev"] svg,
+.pagination-links a[rel="next"] svg {
+  color: var(--sl-color-gray-3);
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+:root[data-theme='light'] .pagination-links a[rel="prev"] .link-title,
+:root[data-theme='light'] .pagination-links a[rel="next"] .link-title {
+  color: var(--sl-color-black);
+}
+
 /* ─── Visual separation between adjacent headings ──────── */
 h2 + h3 {
   margin-top: 0.25rem;
