@@ -125,10 +125,6 @@ export async function onRequest({ request, env, waitUntil }) {
     const siteOrigin = new URL(request.url).origin;
     const contextStr = hasPlaybookContent ? mergedEntries.map(c => `From [${c.title}](${siteOrigin}/${c.slug}/):\n${c.chunk}`).join('\n\n---\n\n') : '';
 
-    // Track where the answer came from
-    let source = 'model';
-    if (hasPlaybookContent) source = 'playbook';
-
     // --- Build messages ---
     const messages = [];
 
@@ -144,10 +140,11 @@ export async function onRequest({ request, env, waitUntil }) {
 
     // --- Determine context source ---
     let finalContext = contextStr;
-    let contextLabel = 'Information';
+    let source = 'model';
 
-    // Tier 2: Web search via Serper.dev (when no playbook content found)
-    if (!hasPlaybookContent && env.SERPER_API_KEY) {
+    // Tier 2: Web search via Serper.dev (always run, combine with playbook context)
+    let webContext = '';
+    if (env.SERPER_API_KEY) {
       try {
         const serperRes = await fetch('https://google.serper.dev/search', {
           method: 'POST',
@@ -156,24 +153,35 @@ export async function onRequest({ request, env, waitUntil }) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ q: question, num: 5 }),
+          signal: AbortSignal.timeout(5000),
         });
 
         if (serperRes.ok) {
           const serperData = await serperRes.json();
           if (serperData.organic && serperData.organic.length > 0) {
-            finalContext = serperData.organic.map(r => r.snippet).filter(Boolean).join('\n\n');
-            contextLabel = 'Web search results';
-            source = 'web';
+            webContext = serperData.organic.map(r => r.snippet).filter(Boolean).join('\n\n');
           }
         }
       } catch (e) {
-        // Search failed, fall through to model knowledge
+        // Web search failed, use playbook content or fall through
       }
+    }
+
+    // Combine both contexts
+    if (contextStr && webContext) {
+      finalContext = `Playbook content:\n${contextStr}\n\nWeb search results:\n${webContext}`;
+      source = 'playbook';
+    } else if (webContext) {
+      finalContext = webContext;
+      source = 'web';
+    } else if (contextStr) {
+      finalContext = contextStr;
+      source = 'playbook';
     }
 
     // --- Call Llama 3.3 70B ---
     if (finalContext) {
-      const sysContent = `You are a knowledgeable AI assistant with access to accurate reference data about AI models. Answer naturally and conversationally using this reference data, not your training knowledge. Reference data:\n\n${finalContext}\n\nWhen listing multiple items, use bullet points (- item). When providing steps, use numbered lists (1. step). Use **bold** for key terms. Use \`code\` for technical terms. For important takeaways or key points, prefix with > to highlight them. Be concise (2-3 paragraphs or a short list). Never mention "reference data" or "context". Your reference data has links to pages like [Page Title](https://example.com/path/). When the user asks to visit a page or see information from a specific section, direct them with the provided link. If you don't find a relevant link, still try to help with what you know — but be honest about limitations.`;
+      const sysContent = `You are a knowledgeable AI assistant with access to accurate reference data about AI models. Answer naturally and conversationally using this reference data, not your training knowledge. Reference data:\n\n${finalContext}\n\nWhen listing multiple items, use bullet points (- item). When providing steps, use numbered lists (1. step). Use **bold** for key terms. Use \`code\` for technical terms. For important takeaways or key points, prefix with > to highlight them. Be concise (2-3 paragraphs or a short list). Never mention "reference data" or "context". Pages are linked like [Title](https://...). When the user asks to visit a page, direct them with the link. If information comes from web search, you can reference the sources naturally.`;
       messages.unshift({ role: 'system', content: sysContent });
       messages.push({ role: 'user', content: question });
     } else {
