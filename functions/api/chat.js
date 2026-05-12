@@ -123,6 +123,10 @@ export async function onRequest({ request, env }) {
     const hasPlaybookContent = mergedEntries.length > 0 && rrfScores[mergedEntries[0].slug + '|' + mergedEntries[0].title] >= 0.03;
     const contextStr = hasPlaybookContent ? mergedEntries.map(c => c.chunk).join('\n\n') : '';
 
+    // Track where the answer came from
+    let source = 'model';
+    if (hasPlaybookContent) source = 'playbook';
+
     // --- Build messages ---
     const messages = [];
 
@@ -157,6 +161,7 @@ export async function onRequest({ request, env }) {
           if (serperData.organic && serperData.organic.length > 0) {
             finalContext = serperData.organic.map(r => r.snippet).filter(Boolean).join('\n\n');
             contextLabel = 'Web search results';
+            source = 'web';
           }
         }
       } catch (e) {
@@ -198,7 +203,7 @@ export async function onRequest({ request, env }) {
     const groqData = await groqRes.json();
     const answerText = groqData?.choices?.[0]?.message?.content || '';
 
-    return new Response(JSON.stringify({ answer: answerText }), {
+    return new Response(JSON.stringify({ answer: answerText, source: source }), {
       headers: { 'Content-Type': 'application/json', ...corsHeaders },
     });
 
