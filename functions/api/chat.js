@@ -121,7 +121,7 @@ export async function onRequest({ request, env, waitUntil }) {
       })
       .filter(Boolean);
 
-    const hasPlaybookContent = mergedEntries.length > 0 && rrfScores[mergedEntries[0].slug + '|' + mergedEntries[0].title] >= 0.03;
+    const hasPlaybookContent = mergedEntries.length > 0 && rrfScores[mergedEntries[0].slug + '|' + mergedEntries[0].title] >= 0.05;
     const contextStr = hasPlaybookContent ? mergedEntries.map(c => `From [${c.title}](/${c.slug}/):\n${c.chunk}`).join('\n\n---\n\n') : '';
 
     // Track where the answer came from
