@@ -121,7 +121,7 @@ export async function onRequest({ request, env, waitUntil }) {
       })
       .filter(Boolean);
 
-    const hasPlaybookContent = mergedEntries.length > 0 && rrfScores[mergedEntries[0].slug + '|' + mergedEntries[0].title] >= 0.05;
+    const hasPlaybookContent = mergedEntries.length > 0 && rrfScores[mergedEntries[0].slug + '|' + mergedEntries[0].title] >= 0.08;
     const siteOrigin = new URL(request.url).origin;
     const contextStr = hasPlaybookContent ? mergedEntries.map(c => `From [${c.title}](${siteOrigin}/${c.slug}/):\n${c.chunk}`).join('\n\n---\n\n') : '';
 
