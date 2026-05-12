@@ -1,4 +1,4 @@
-export async function onRequest({ request, env }) {
+export async function onRequest({ request, env, ctx }) {
   const adminSecret = env.ADMIN_SECRET;
   const url = new URL(request.url);
   const token = url.searchParams.get('token');
@@ -19,6 +19,19 @@ export async function onRequest({ request, env }) {
   }
 
   try {
+    // Verify the binding works by writing and reading a test key
+    let bindingOk = false;
+    let bindingError = '';
+    try {
+      const testKey = 'test:' + Date.now();
+      await env.CHAT_LOGS.put(testKey, 'ok');
+      const testVal = await env.CHAT_LOGS.get(testKey);
+      bindingOk = testVal === 'ok';
+      await env.CHAT_LOGS.delete(testKey);
+    } catch (e) {
+      bindingError = e.message || String(e);
+    }
+
     // List all log keys
     const keyList = await env.CHAT_LOGS.list({ prefix: 'log:' });
     const keys = keyList.keys.sort((a, b) => b.name.localeCompare(a.name)).slice(0, 200);
@@ -32,6 +45,7 @@ export async function onRequest({ request, env }) {
     }
 
     const sourceColors = { playbook: '#22c55e', web: '#3b82f6', model: '#f59e0b' };
+  const bindingStatus = bindingOk ? '<span style="color:#22c55e">Connected</span>' : '<span style="color:#f59e0b">Error: ' + bindingError + '</span>';
 
     const html = `<!DOCTYPE html>
 <html lang="en">
@@ -63,7 +77,7 @@ export async function onRequest({ request, env }) {
 </style></head>
 <body>
 <h1>Chatbot Response Logs</h1>
-<p style="color:#8b949e;font-size:.85rem;margin-bottom:1.5rem">Last ${entries.length} responses. Source: <span class="badge" style="background:rgba(34,197,94,0.15);color:#22c55e">Playbook</span> <span class="badge" style="background:rgba(59,130,246,0.15);color:#3b82f6">Web</span> <span class="badge" style="background:rgba(245,158,11,0.15);color:#f59e0b">Knowledge</span></p>
+<p style="color:#8b949e;font-size:.85rem;margin-bottom:1.5rem">KV: ${bindingStatus} | Last ${entries.length} responses. Source: <span class="badge" style="background:rgba(34,197,94,0.15);color:#22c55e">Playbook</span> <span class="badge" style="background:rgba(59,130,246,0.15);color:#3b82f6">Web</span> <span class="badge" style="background:rgba(245,158,11,0.15);color:#f59e0b">Knowledge</span></p>
 
 <div class="stats">
   <div class="stat"><div class="stat-label">Total</div><div class="stat-value">${entries.length}</div></div>
