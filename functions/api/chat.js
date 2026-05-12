@@ -203,6 +203,21 @@ export async function onRequest({ request, env }) {
     const groqData = await groqRes.json();
     const answerText = groqData?.choices?.[0]?.message?.content || '';
 
+    // Log to KV for analysis (fire-and-forget)
+    if (env.CHAT_LOGS) {
+      const topScore = mergedEntries.length > 0 ? rrfScores[mergedEntries[0].slug + '|' + mergedEntries[0].title] : 0;
+      const logPayload = JSON.stringify({
+        q: question,
+        source: source,
+        queries: searchQueries,
+        score: topScore,
+        threshold: 0.03,
+        a: (answerText || '').substring(0, 300),
+        t: new Date().toISOString(),
+      });
+      env.CHAT_LOGS.put('log:' + Date.now(), logPayload, { expirationTtl: 2592000 }).catch(() => {});
+    }
+
     return new Response(JSON.stringify({ answer: answerText, source: source }), {
       headers: { 'Content-Type': 'application/json', ...corsHeaders },
     });
