@@ -16,9 +16,9 @@ Well-scoped tasks suitable for first-time contributors. Check the [`help wanted`
 ## Content Tasks
 
 ### Verify a Pricing Table
-Pick one provider (Anthropic, OpenAI, Google, DeepSeek). Check their official pricing page against the data in `/reference/model-specs.md`. Submit a PR if anything changed.
+Pick one provider (Anthropic, OpenAI, Google, DeepSeek). Check their official pricing page against the data in `/decide/models/guide`. Submit a PR if anything changed.
 
-**Files:** `src/content/docs/reference/model-specs.md`  
+**Files:** `src/content/docs/decide/models/guide.mdx`  
 **Time:** ~15 minutes  
 **Skill:** Web research, Markdown
 

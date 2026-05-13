@@ -252,7 +252,6 @@ export default defineConfig({
             { label: 'Confusions', slug: 'reference/confusions' },
             { label: 'Principles', slug: 'reference/principles' },
             { label: 'Benchmarks', slug: 'reference/benchmarks' },
-            { label: 'Model Specs & Capabilities', slug: 'reference/model-specs' },
             { label: 'Economics of AI', slug: 'reference/economics-of-ai' },
           ],
         },

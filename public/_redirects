@@ -22,5 +22,6 @@
 
 # Page consolidations (May 2026)
 /research/model-releases /research/whats-new 301
-/reference/model-capability-matrix /reference/model-specs 301
+/reference/model-capability-matrix /decide/models/guide 301
 /decide/tools/decision-tree /decide/tools/guide 301
+/reference/model-specs /decide/models/guide 301

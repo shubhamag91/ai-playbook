@@ -24,8 +24,8 @@ jobs:
           STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://openai.com/api/pricing/ 2>/dev/null || echo "failed")
           echo "openai=$STATUS" >> $GITHUB_OUTPUT
 
-          # Compare with stored prices in model-specs.md
-          echo "model_specs_hash=$(md5sum src/content/docs/reference/model-specs.md | cut -d' ' -f1)" >> $GITHUB_OUTPUT
+          # Compare with stored prices in models guide
+          echo "model_specs_hash=$(md5sum src/content/docs/decide/models/guide.mdx | cut -d' ' -f1)" >> $GITHUB_OUTPUT
 
       - uses: actions/github-script@v7
         with:
@@ -41,7 +41,7 @@ jobs:
 
             body += `### 🔍 Content Review\n`;
             body += `- [ ] Check [What's New](/research/whats-new) — any major releases this week?\n`;
-            body += `- [ ] Review [Model Releases](/research/model-releases) for new entries\n`;
+            body += `- [ ] Review [What's New](/research/whats-new) for new entries\n`;
             body += `- [ ] Scan [Emerging Trends](/research/emerging-trends) for shifts\n`;
             body += `- [ ] Verify Claude pricing on [docs.anthropic.com](https://docs.anthropic.com/en/docs/about-claude/pricing)\n`;
             body += `- [ ] Verify OpenAI pricing on [openai.com/api/pricing](https://openai.com/api/pricing/)\n`;

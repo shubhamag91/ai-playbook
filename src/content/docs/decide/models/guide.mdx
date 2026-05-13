@@ -25,6 +25,8 @@ nextVerificationDue: 2026-06-07
 import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
 import Breadcrumb from '../../../../components/Breadcrumb.astro';
 import ModelSelector from '../../../../components/ModelSelector.astro';
+import ModelCompare from '../../../../components/ModelCompare.astro';
+import ModelMatrix from '../../../../components/ModelMatrix.astro';
 
 <Breadcrumb />
 
@@ -359,6 +361,32 @@ Not all models can process images. Here's which ones can and what they support:
 
 ---
 
+## Model Specifications & Capabilities
+
+All current models with pricing, context windows, and vision support. Source of truth: `src/data/models.ts`.
+
+<ModelCompare />
+
+---
+
+## Model Capability Matrix
+
+How models perform across key tasks, rated on a 1-5 scale based on benchmark scores and real-world performance.
+
+<ModelMatrix />
+
+| Score | Meaning |
+|---|---|
+| 5 (dark green) | Best in class. Top performer for this task. |
+| 4 (light green) | Strong. Excellent for most use cases. |
+| 3 (yellow) | Good. Capable but not top-tier. |
+| 2 (orange) | Fair. Works for simple cases. |
+| 1 (red) | Limited. Not recommended for this task. |
+
+> Scores combine public benchmarks and real-world usage as of May 2026. "Speed" measures output latency, not throughput. For detailed benchmark numbers, see the [Benchmarks page](/reference/benchmarks).
+
+---
+
 ## Where to Start
 
 1. **Pick a default:** Claude Sonnet (recommended) or GPT-4o
@@ -370,6 +398,6 @@ Not all models can process images. Here's which ones can and what they support:
 ---
 
 See Also:
-- [Model Specs & Pricing](/reference/model-specs)  -  Detailed pricing table
+- [Economics of AI](/reference/economics-of-ai)  -  Cost analysis and optimization
 - [Tools Guide](/decide/tools/guide)  -  Where to access models
 - [Builder Path](/learn/builder)  -  How to build with APIs

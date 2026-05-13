@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 const allDocs = await getCollection('docs');
 
 function getTier(slug: string): string {
-  const t1 = ['decide/', 'tools/', 'reference/model-specs', 'reference/benchmarks',
+  const t1 = ['decide/', 'tools/', 'reference/benchmarks',
     'reference/cheatsheets/tools-comparison', 'reference/cheatsheets/llm-primer',
     'reference/cheatsheets/ai-tools-landscape', 'reference/cheatsheets/coding'];
   const t3 = ['reference/glossary', 'reference/principles', 'reference/confusions',

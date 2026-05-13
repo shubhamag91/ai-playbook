@@ -38,14 +38,14 @@ export const trendingTopics: TrendItem[] = [
   {
     title: 'Gemma 3 Released',
     description: 'Google\'s open-weight model available in 2B, 9B, and 27B sizes. MIT license.',
-    link: '/research/model-releases#gemma-3-google-april-2026',
+    link: '/research/whats-new',
     date: 'Apr 2026',
     category: 'Open Source',
   },
   {
     title: 'Mistral Large 3',
     description: 'French AI lab\'s largest open-weight model yet. Bilingual (EN/FR), Mixtral MoE architecture.',
-    link: '/research/model-releases#mistral-large-3',
+    link: '/research/whats-new',
     date: 'Apr 2026',
     category: 'Open Source',
   },
@@ -59,7 +59,7 @@ export const trendingTopics: TrendItem[] = [
   {
     title: 'Llama 4 405B Released',
     description: 'Meta\'s largest open model. MoE architecture, 405B total parameters, 16 experts.',
-    link: '/research/model-releases#llama-4-meta-feb-2026',
+    link: '/research/whats-new',
     date: 'Feb 2026',
     category: 'Open Source',
   },

@@ -47,7 +47,7 @@ These pages show a "Glossary" link in their See Also section:
 - `/learn/beginner` — LLM, token, transformer, prompt
 - `/learn/interview-prep` — LLM, transformer, fine-tuning, RAG
 - `/tools/index` — LLM, inference, prompt
-- `/reference/model-specs` — token, context window, inference
+- `/decide/models/guide` — token, context window, inference
 
 ---
 

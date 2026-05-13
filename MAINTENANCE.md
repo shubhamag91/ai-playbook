@@ -92,14 +92,14 @@ Claude 3.5 Sonnet scores 93.7% on HumanEval
 
 Run this for Tier 1 pages at the start of each month (or when the weekly checklist [MOS-252] flags a change).
 
-1. **Pricing pages** (`/reference/model-specs`, `/decide/cost-calculator`, `/decide/tools/guide`):
+1. **Pricing pages** (`/decide/models/guide`, `/decide/cost-calculator`, `/decide/tools/guide`):
    - [ ] Check Anthropic pricing page — any changes?
    - [ ] Check OpenAI pricing page — any changes?
    - [ ] Check DeepSeek pricing page — any changes?
-   - [ ] Verify all prices in model-specs.md match official sources
+   - [ ] Verify all prices in models/guide.mdx match official sources
    - [ ] Update cost-calculator.mdx if rates changed
 
-2. **Model pages** (`/decide/models/guide`, `/research/model-releases`):
+2. **Model pages** (`/decide/models/guide`, `/research/whats-new`):
    - [ ] Any new model releases this month?
    - [ ] Any deprecated or renamed models?
    - [ ] Context windows still accurate?

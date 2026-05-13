@@ -22,7 +22,7 @@ Thanks for helping keep this knowledge base accurate and useful! 🙌
 Looking for a place to start? These are well-scoped tasks suitable for first-time contributors:
 
 ### Verification & Updates
-- **Verify a pricing table** — Pick one model provider, check their official pricing page against `/reference/model-specs.md`, submit a PR if anything changed. [Example change](https://github.com/shubhamag91/ai-playbook/commits/main)
+- **Verify a pricing table** — Pick one model provider, check their official pricing page against `/decide/models/guide`, submit a PR if anything changed. [Example change](https://github.com/shubhamag91/ai-playbook/commits/main)
 - **Check external links** — Pick a page, click every external link, report or fix broken ones
 - **Update a cheatsheet** — Add a new Q&A pair to one of the interview cheatsheets under `/reference/cheatsheets/`
 

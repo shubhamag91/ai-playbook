@@ -331,7 +331,7 @@ results = await asyncio.gather(*[ask_question(q) for q in questions])
 
 **Tools for your app:**
 - [Tools & Platforms Guide](/decide/tools/guide)  -  Vector DBs, frameworks, monitoring
-- [Model Specs](/reference/model-specs)  -  Which model for your use case
+- [Models Guide](/decide/models/guide)  -  Which model for your use case
 
 **Next steps:**
 1. Build a small prototype (RAG chatbot on your docs)

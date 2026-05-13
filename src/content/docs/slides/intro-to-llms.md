@@ -121,5 +121,5 @@ At May 2026 prices:
 
 - [Beginner Path](/learn/beginner/) — 4-hour intro
 - [Glossary](/reference/glossary/) — 60+ AI terms explained
-- [Model Specs & Pricing](/reference/model-specs/) — Current models compared
+- [Models Guide](/decide/models/guide) — Current models compared
 - [Quick Start](/start/quick-start/) — First experiment in 30 minutes
