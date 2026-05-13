@@ -20,6 +20,8 @@ This page answers: "I want to [task]. What should I use?"
 
 ## By Workflow
 
+For a comprehensive feature matrix with costs, limitations, and decision trees, see the [Tools Guide](/decide/tools/guide/).
+
 ### I want to write something
 
 **Best tools, ranked:**
@@ -187,38 +189,15 @@ This page answers: "I want to [task]. What should I use?"
 
 ---
 
-## Decision Tree: When to Choose What
+## Quick Reference: Tool Costs
 
-```text
-What's your goal?
-│
-├─ Write/Analysis → Claude.ai (best) or ChatGPT (faster)
-├─ Code → Cursor (IDE) or Claude Code (complex)
-├─ Research → Gemini (long) or Perplexity (sources)
-├─ Create (images) → Midjourney (quality) or DALL-E (integrated)
-├─ Create (video) → Runway or Sora
-├─ Automate → Zapier (easy) or n8n (flexible)
-├─ Music → Suno
-├─ Voice → ElevenLabs
-├─ Build web app → Lovable (fast) or Cursor (custom)
-└─ Privacy critical → Open-source (Ollama + Llama 4)
-```
+For a complete feature matrix with costs, limitations, and decision trees, see the [Tools Guide](/decide/tools/guide/). For interactive cost estimation, use the [Cost Calculator](/decide/cost-calculator/).
 
 ---
 
 ## May 2026 Updates
 
-**New this year:**
-- Claude 4.7 (400K context, best reasoning)
-- GPT-5.5 (faster, cheaper instant variant)
-- Gemini 3.1 Pro (1M context for documents)
-- DeepSeek V4 (crazy cheap, surprisingly capable)
-- Grok 3 (real-time X/Twitter data)
-
-**Pricing improvements:**
-- Instant models now viable (GPT-5.5 Instant $0.05 input)
-- DeepSeek V4 Flash at $0.14/1M input (cost leader)
-- Most Pro plans still $20/mo (no price increases)
+For the latest model releases and pricing changes, see [What's New](/research/whats-new/).
 
 ---
 

@@ -1,6 +1,6 @@
 ---
-title: Quick Start (30 minutes)
-description: A 30-minute guided introduction to AI concepts, tools, and workflows  -  no technical background required.
+title: Quick Start (5 minutes)
+description: Find the right starting point for your AI journey  -  pick your goal and go.
 sidebar:
   order: 2
 tags:
@@ -18,21 +18,11 @@ Everything you need to know about AI and LLMs in 30 minutes. Pick a destination 
 
 ---
 
-## What's An LLM?
+## Quick Orientation
 
-An **LLM (Large Language Model)** is software that predicts the next word by pattern matching. ChatGPT, Claude, Gemini  -  they all work this way. That's the whole concept.
+For a complete introduction to LLMs — what they are, how they work, and what they can do — start with the [Beginner Learning Path](/learn/beginner/).
 
-**Key facts:**
-- Trained on billions of text examples (books, web, code)
-- Better at predicting = smarter responses
-- Not magic. Not conscious. Just very advanced autocomplete
-- Can write, code, analyze, summarize, explain  -  anything involving language
-
-**What they can't do:**
-- Access the internet (unless the app integrates it)
-- Do reliable math
-- Know anything after their training date
-- Guarantee true information
+Jump straight to your destination below.
 
 ---
 
