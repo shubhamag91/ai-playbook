@@ -170,7 +170,7 @@ export async function onRequest({ request, env, waitUntil }) {
     // Combine both contexts
     if (contextStr && webContext) {
       finalContext = `Playbook content:\n${contextStr}\n\nWeb search results:\n${webContext}`;
-      source = 'web';
+      source = 'playbook';
     } else if (webContext) {
       finalContext = webContext;
       source = 'web';
