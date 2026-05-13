@@ -23,11 +23,16 @@
   margin-right: 0.35rem;
 }
 
-.page-meta__tags {
-  display: flex;
+.page-meta__tags-inline {
+  display: inline-flex;
   flex-wrap: wrap;
   gap: 0.35rem;
-  margin-top: 0.4rem;
+  margin-right: 0.35rem;
+}
+
+.page-meta__spacer {
+  flex: 1;
+  min-width: 1rem;
 }
 
 .page-meta__tag {

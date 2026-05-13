@@ -30,6 +30,16 @@ const hasTOC = headings.length > 0;
       <div class="page-meta__row">
         {readTime > 0 && <span class="page-meta__reading">📖 {readTime} min read</span>}
 
+        {tags.length > 0 && (
+          <span class="page-meta__tags-inline">
+            {tags.map(tag => (
+              <span class="page-meta__tag">{tag}</span>
+            ))}
+          </span>
+        )}
+
+        <span class="page-meta__spacer"></span>
+
         {hasInfo && (
           <span class="page-meta__info-wrap">
             <button class="page-meta__pill" data-toggle="info" aria-expanded="false">
@@ -81,13 +91,6 @@ const hasTOC = headings.length > 0;
           </span>
         )}
       </div>
-      {tags.length > 0 && (
-        <div class="page-meta__tags">
-          {tags.map(tag => (
-            <span class="page-meta__tag">{tag}</span>
-          ))}
-        </div>
-      )}
     </div>
   )}
   <slot />
