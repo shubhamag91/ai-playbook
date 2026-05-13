@@ -99,7 +99,10 @@ export async function onRequest({ request, env, waitUntil }) {
       ? merged.map(([key]) => {
           const s = key.split('|')[0];
           const e = index.find(x => x.slug === s && (x.slug + '|' + x.title) === key);
-          return e ? `${rrfScores[key].toFixed(3)} [${e.title}](${siteOrigin}/${e.slug}): ${e.chunk}` : null;
+          if (!e) return null;
+          const isTable = e.chunk.includes('|---') || (e.chunk.split('|').length > 5);
+          const prefix = isTable ? '[TABLE — extract specific data points] ' : '';
+          return `${rrfScores[key].toFixed(3)} ${prefix}[${e.title}](${siteOrigin}/${e.slug}): ${e.chunk}`;
         }).filter(Boolean).join('\n\n')
       : '';
 
@@ -140,11 +143,11 @@ export async function onRequest({ request, env, waitUntil }) {
 ${finalContext}
 
 INSTRUCTIONS:
-1. Use the most relevant sources to answer the question.
-2. When citing playbook content, include the links as [Page Title](URL).
-3. When citing web results, mention the information naturally.
-4. If neither source has the answer, use your training knowledge but be honest about limitations.
-5. Format: use bullet points for lists, numbered lists for steps, **bold** for key terms, > for important takeaways.
+1. Use the most relevant sources to answer the question. Be SPECIFIC — state numbers, prices, names.
+2. For comparison questions: extract exact pricing, context windows, benchmark scores, and capabilities from the data. Never say "various models" or "different capabilities" — give the actual values.
+3. When a [TABLE] is in the context, read the table cells and extract actual data points, not general descriptions.
+4. Cite playbook content with links as [Page Title](URL). When citing web results, mention them naturally.
+5. Format: use bullet points for lists, numbered lists for steps, **bold** for key terms.
 6. Be concise — aim for 2-3 paragraphs or a short list.
 7. Never say "playbook", "reference data", or "context" — just answer naturally.` });
     } else {

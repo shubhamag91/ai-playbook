@@ -107,6 +107,9 @@
       // Inline code (`code`)
       html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
 
+      // Links [text](url)
+      html = html.replace(/\[([^\]]+)\]\((\/[^)]+|https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+
       // Bold (**text**)
       html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
