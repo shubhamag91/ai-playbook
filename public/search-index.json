@@ -2175,7 +2175,7 @@
     "slug": "reference/cheatsheets/tools-comparison",
     "title": "Tools Comparison (1 page)",
     "description": "Which AI tool to use for what  -  chat, coding, content creation, APIs",
-    "chunk": "### Per 1 Million Input Tokens\n- Claude Opus: $15\n- Claude Sonnet: $3\n- GPT-5.5: $2\n- Gemini Pro: $2\n- DeepSeek: $0.14 (10–50x cheaper)\n\n### Per 1 Million Output Tokens\n- Claude Opus: $75\n- Claude Sonnet: $15\n- GPT-5.5: $8\n- Gemini Pro: $12\n- DeepSeek: $0.28\n\n**Example:** 100K input + 20K output with Claude Sonnet = $0.33. With DeepSeek V4 = $0.014.\n\n---\n\n## Next Steps\n\n1. **Start free:** Try [Claude](https://claude.ai), [ChatGPT](https://chatgpt.com), [Gemini](https://gemini.google.com)\n2. **Pick a tool:** Based on your use case above\n3. **Learn prompting:** [Prompt Engineering](/reference/cheatsheets/prompt-engineering/)\n4. **Build an app:** [Builder Path](/learn/builder) or API docs (Anthropic, OpenAI, Google)"
+    "chunk": "### Per 1 Million Input Tokens\n- Claude Opus: $15\n- Claude Sonnet: $3\n- GPT-5.5: $2\n- Gemini Pro: $2\n- DeepSeek: $0.14 (10–50x cheaper)\n\n### Per 1 Million Output Tokens\n- Claude Opus: $75\n- Claude Sonnet: $15\n- GPT-5.5: $8\n- Gemini Pro: $12\n- DeepSeek: $0.28\n\n**Example:** 100K input + 20K output with Claude Sonnet = $0.33. With DeepSeek V4 = $0.014.\n\n---\n\n## Next Steps\n\n1. **Start free:** Try [Claude](https://claude.ai), [ChatGPT](https://chatgpt.com), [Gemini](https://gemini.google.com)\n2. **Pick a tool:** Based on your use case above\n3. **Learn prompting:** [Prompt Engineering](/deep-dive/prompt-engineering)\n4. **Build an app:** [Builder Path](/learn/builder) or API docs (Anthropic, OpenAI, Google)"
   },
   {
     "slug": "reference/confusions",

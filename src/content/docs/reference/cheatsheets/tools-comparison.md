@@ -121,5 +121,5 @@ nextVerificationDue: 2026-06-08
 
 1. **Start free:** Try [Claude](https://claude.ai), [ChatGPT](https://chatgpt.com), [Gemini](https://gemini.google.com)
 2. **Pick a tool:** Based on your use case above
-3. **Learn prompting:** [Prompt Engineering](/reference/cheatsheets/prompt-engineering/)
+3. **Learn prompting:** [Prompt Engineering](/deep-dive/prompt-engineering)
 4. **Build an app:** [Builder Path](/learn/builder) or API docs (Anthropic, OpenAI, Google)
