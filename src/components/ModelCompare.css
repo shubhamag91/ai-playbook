@@ -1,0 +1,53 @@
+.model-compare {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 10px;
+  margin: 1rem 0;
+}
+
+.model-compare th {
+  background: var(--sl-color-gray-6);
+  border-bottom: 2px solid var(--sl-color-gray-5);
+  border-right: 1px solid var(--sl-color-gray-5);
+  padding: 0.35rem 0.65rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--sl-color-gray-2);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.model-compare td {
+  padding: 0.35rem 0.65rem;
+  border-bottom: 1px solid var(--sl-color-gray-5);
+  border-right: 1px solid var(--sl-color-gray-5);
+  color: var(--sl-color-gray-2);
+  vertical-align: top;
+}
+
+.model-compare th:last-child,
+.model-compare td:last-child {
+  border-right: none;
+}
+
+.model-compare tr:last-child td {
+  border-bottom: none;
+}
+
+.model-compare tbody tr:nth-child(even) td {
+  background: var(--sl-color-gray-6);
+}
+
+.model-compare tbody tr:hover td {
+  background: var(--sl-color-gray-5);
+}
+
+.model-compare__notes {
+  font-size: 0.78rem;
+  color: var(--sl-color-gray-3);
+  max-width: 220px;
+}
