@@ -75,7 +75,6 @@ export default defineConfig({
     starlight({
       components: {
         Footer: './src/components/FooterOverride.astro',
-        TableOfContents: './src/components/CustomTOC.astro',
         MarkdownContent: './src/components/ContentOverride.astro',
       },
       title: 'AI Playbook',

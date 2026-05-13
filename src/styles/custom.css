@@ -34,15 +34,8 @@
 
 /* ─── Spacing & layout ────────────────────────────────── */
 :root {
-  --sl-content-width: 46rem;
+  --sl-content-width: 65rem;
   --content-gutter: 2rem;
-}
-
-/* ─── Right sidebar width ─────────────────────────────── */
-@media (min-width: 50rem) {
-  .right-sidebar-container {
-    min-width: 12rem;
-  }
 }
 
 /* ─── Accent color ────────────────────────────────────── */
@@ -228,20 +221,20 @@ header {
   }
 }
 
-/* ─── Collapsible right sidebar ───────────────────────── */
-/* Hide the right sidebar container when collapsed */
-html[data-toc-collapsed] .right-sidebar-container {
-  display: none;
-}
+/* ─── Right sidebar — permanently hidden, replaced by Info/Pages dropdown ── */
+@media (min-width: 72rem) {
+  .right-sidebar-container {
+    display: none;
+  }
 
-/* Expand main content width when sidebar is collapsed */
-html[data-toc-collapsed][data-has-sidebar][data-has-toc] .main-pane {
-  width: 100%;
-  --sl-content-margin-inline: auto;
-}
+  [data-has-sidebar][data-has-toc] .main-pane {
+    width: 100%;
+    --sl-content-margin-inline: auto;
+  }
 
-html[data-toc-collapsed] {
-  --sl-content-width: 65rem;
+  :root {
+    --sl-content-width: 65rem;
+  }
 }
 
 /* ─── Prev/Next pagination styling ──────────────────────── */

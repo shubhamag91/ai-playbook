@@ -6,20 +6,81 @@ const starlightRoute = Astro.locals.starlightRoute;
 const entry = starlightRoute?.entry;
 const entryData = (entry?.data as Record<string, unknown>) || {};
 const tags: string[] = (entryData.tags as string[]) || [];
+const tldr: string[] = (entryData.tldr as string[]) || [];
+const seeAlso: Array<{ label: string; href: string; description?: string }> = (entryData.seeAlso as Array<{ label: string; href: string; description?: string }>) || [];
+const description: string = (entryData.description as string) || '';
 const body: string = (entry?.body as string) || '';
+const tocItems = starlightRoute?.toc?.items || [];
 
 const words = body ? body.split(/\s+/).filter(Boolean).length : 0;
 const readTime = Math.max(1, Math.ceil(words / 200));
+
+// Flatten TOC items
+function flatten(items: any[], depth: number = 2): { slug: string; text: string; depth: number }[] {
+  return items.flatMap(i => [{ slug: i.slug, text: i.text, depth }, ...flatten(i.children || [], depth + 1)]);
+}
+const headings = flatten(tocItems);
+const hasInfo = tldr.length > 0 || description.length > 0 || seeAlso.length > 0;
+const hasTOC = headings.length > 0;
 ---
 
 <div class="sl-markdown-content">
-  {(tags.length > 0 || readTime > 0) && (
+  {(tags.length > 0 || readTime > 0 || hasInfo || hasTOC) && (
     <div class="page-meta">
-      {readTime > 0 && (
-        <div class="page-meta__row">
-          <span class="page-meta__reading">📖 {readTime} min read</span>
-        </div>
-      )}
+      <div class="page-meta__row">
+        {readTime > 0 && <span class="page-meta__reading">📖 {readTime} min read</span>}
+
+        {hasInfo && (
+          <span class="page-meta__info-wrap">
+            <button class="page-meta__pill" data-toggle="info" aria-expanded="false">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Key Info
+              <svg class="chev" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="page-meta__dropdown" data-panel="info">
+              {description && <div class="page-meta__dd-desc">{description}</div>}
+              {tldr.length > 0 && (
+                <div class="page-meta__dd-tldr">
+                  <div class="page-meta__dd-label">Key Takeaways</div>
+                  <ul>{tldr.map(p => <li>{p}</li>)}</ul>
+                </div>
+              )}
+              {seeAlso.length > 0 && (
+                <div class="page-meta__dd-related">
+                  <div class="page-meta__dd-label">Related</div>
+                  {seeAlso.map(l => (
+                    <a href={l.href} class="page-meta__dd-link">
+                      {l.label}
+                      {l.description && <span class="page-meta__dd-link-sub">{l.description}</span>}
+                    </a>
+                  ))}
+                </div>
+              )}
+              {!description && !tldr.length && !seeAlso.length && (
+                <div class="page-meta__dd-empty">No overview available</div>
+              )}
+            </div>
+          </span>
+        )}
+
+        {hasTOC && (
+          <span class="page-meta__toc-wrap">
+            <button class="page-meta__pill" data-toggle="toc" aria-expanded="false">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              On this page
+              <span class="page-meta__pill-count">{headings.length}</span>
+              <svg class="chev" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="page-meta__dropdown" data-panel="toc">
+              <nav class="page-meta__toc-nav">
+                {headings.map(h => (
+                  <a href={`#${h.slug}`} class={`page-meta__toc-item depth-${h.depth}`} data-depth={h.depth}>{h.text}</a>
+                ))}
+              </nav>
+            </div>
+          </span>
+        )}
+      </div>
       {tags.length > 0 && (
         <div class="page-meta__tags">
           {tags.map(tag => (
@@ -31,3 +92,64 @@ const readTime = Math.max(1, Math.ceil(words / 200));
   )}
   <slot />
 </div>
+
+<script is:inline>
+(function() {
+  var openPanel = null;
+
+  document.querySelectorAll('.page-meta__pill').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var target = this.getAttribute('data-toggle');
+      var panel = this.parentElement.querySelector('.page-meta__dropdown');
+
+      if (panel === openPanel) {
+        // Close it
+        panel.classList.remove('is-open');
+        this.setAttribute('aria-expanded', 'false');
+        openPanel = null;
+      } else {
+        // Close any existing open panel
+        if (openPanel) {
+          openPanel.classList.remove('is-open');
+          openPanel.previousElementSibling?.setAttribute('aria-expanded', 'false');
+        }
+        // Open this one
+        panel.classList.add('is-open');
+        this.setAttribute('aria-expanded', 'true');
+        openPanel = panel;
+      }
+    });
+  });
+
+  // Close on outside click
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.page-meta__info-wrap') && !e.target.closest('.page-meta__toc-wrap')) {
+      if (openPanel) {
+        openPanel.classList.remove('is-open');
+        openPanel.previousElementSibling?.setAttribute('aria-expanded', 'false');
+        openPanel = null;
+      }
+    }
+  });
+
+  // Highlight active TOC item while scrolling
+  var tocLinks = document.querySelectorAll('.page-meta__toc-item');
+  if (tocLinks.length > 0) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          tocLinks.forEach(function(link) {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { rootMargin: '-80px 0px -80% 0px' });
+
+    document.querySelectorAll('h2, h3').forEach(function(h) {
+      if (h.id) observer.observe(h);
+    });
+  }
+})();
+</script>
