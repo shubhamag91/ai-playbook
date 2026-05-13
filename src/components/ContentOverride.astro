@@ -14,6 +14,8 @@ const tocItems = starlightRoute?.toc?.items || [];
 
 const words = body ? body.split(/\s+/).filter(Boolean).length : 0;
 const readTime = Math.max(1, Math.ceil(words / 200));
+const readTimeLabel = words < 100 ? 'Quick read' : `${readTime} min read`;
+const isHome = (starlightRoute?.entry?.slug === '' || starlightRoute?.entry?.slug === 'index' || starlightRoute?.entry?.id === 'index');
 
 // Flatten TOC items
 function flatten(items: any[], depth: number = 2): { slug: string; text: string; depth: number }[] {
@@ -24,11 +26,11 @@ const hasInfo = tldr.length > 0 || description.length > 0 || seeAlso.length > 0;
 const hasTOC = headings.length > 0;
 ---
 
-<div class="sl-markdown-content">
-  {(tags.length > 0 || readTime > 0 || hasInfo || hasTOC) && (
+<div class="sl-markdown-content content">
+  {!isHome && (tags.length > 0 || readTime > 0 || hasInfo || hasTOC) && (
     <div class="page-meta">
       <div class="page-meta__row">
-        {readTime > 0 && <span class="page-meta__reading">📖 {readTime} min read</span>}
+        {readTime > 0 && <span class="page-meta__reading">📖 {readTimeLabel}</span>}
 
         {tags.length > 0 && (
           <span class="page-meta__tags-inline">
@@ -153,6 +155,23 @@ const hasTOC = headings.length > 0;
     document.querySelectorAll('h2, h3').forEach(function(h) {
       if (h.id) observer.observe(h);
     });
+  }
+
+  // Sticky shadow on page-meta when scrolled
+  var meta = document.querySelector('.page-meta');
+  if (meta) {
+    var sentinel = document.createElement('div');
+    sentinel.style.position = 'absolute';
+    sentinel.style.top = '0';
+    sentinel.style.height = '1px';
+    sentinel.style.width = '1px';
+    sentinel.style.pointerEvents = 'none';
+    meta.parentElement.insertBefore(sentinel, meta);
+    
+    var shadowObserver = new IntersectionObserver(function(entries) {
+      meta.classList.toggle('is-stuck', !entries[0].isIntersecting);
+    }, { threshold: 1 });
+    shadowObserver.observe(sentinel);
   }
 })();
 </script>

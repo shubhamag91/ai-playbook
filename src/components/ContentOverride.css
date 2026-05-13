@@ -7,6 +7,11 @@
   top: var(--sl-nav-height);
   background: var(--sl-color-bg);
   z-index: 10;
+  transition: box-shadow 0.2s ease;
+}
+
+.page-meta.is-stuck {
+  box-shadow: 0 1px 8px rgba(0,0,0,0.08);
 }
 
 .page-meta__row {
@@ -277,4 +282,21 @@
 
 :root[data-theme='light'] .page-meta__dd-link {
   background: var(--sl-color-gray-1);
+}
+
+/* ─── Mobile: compact pills, hide labels ────────────── */
+@media (max-width: 640px) {
+  .page-meta__pill span:not(.page-meta__pill-count) {
+    display: none;
+  }
+  .page-meta__pill {
+    padding: 0.3rem 0.5rem;
+  }
+  .page-meta__pill .chev {
+    display: none;
+  }
+  .page-meta__pill svg {
+    width: 15px;
+    height: 15px;
+  }
 }
