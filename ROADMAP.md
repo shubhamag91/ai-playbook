@@ -1,6 +1,6 @@
 # AI Playbook Roadmap 2026
 
-**Last Updated:** May 8, 2026  
+**Last Updated:** May 14, 2026  
 **Maintained by:** Shubham (@shubhamag91)  
 **Status:** Active Development
 
@@ -21,22 +21,22 @@ Transform AI Playbook from a **documentation site** into a **knowledge product**
 ### Q2 2026 (May - June) — FOUNDATION & CREDIBILITY
 **Goal:** Fix accuracy issues, prevent content decay, complete missing sections
 
-#### Immediate Fixes (Week 1-2)
-- [ ] Accuracy corrections (Claude Code, v0, Gemini, Cursor, Lovable, Flux)
-- [ ] Restore /open-source page with May 2026 models
-- [ ] Set up automated monitoring (GitHub Actions)
-- [ ] Create content audit checklist
+#### Immediate Fixes (Week 1-2) ✅
+- [x] Accuracy corrections (Claude Code, v0, Gemini, Cursor, Lovable, Flux)
+- [x] Restore /open-source page with May 2026 models
+- [x] Set up automated monitoring (GitHub Actions)
+- [x] Create content audit checklist
 
 **Lead Metrics:**
 - 0 factual errors in /tools section
 - All pricing verified in past 7 days
 - Automated monitoring running
 
-#### Content Completion (Week 3-4)
-- [ ] Add homepage "Choose Your Path" selector
-- [ ] Create /updates changelog page
-- [ ] Add /benchmarks page (initial version)
-- [ ] Create decision frameworks (/tools, /models)
+#### Content Completion (Week 3-4) ✅
+- [x] Add homepage "Choose Your Path" selector
+- [x] Create /updates changelog page
+- [x] Add /benchmarks page (initial version)
+- [x] Create decision frameworks (/tools, /models)
 
 **Lead Metrics:**
 - Beginner funnel completion rate

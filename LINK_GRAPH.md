@@ -48,6 +48,11 @@ These pages show a "Glossary" link in their See Also section:
 - `/learn/interview-prep` — LLM, transformer, fine-tuning, RAG
 - `/tools/index` — LLM, inference, prompt
 - `/decide/models/guide` — token, context window, inference
+- `/tools/index` — LLM, inference, prompt
+- `/deep-dive/multimodal-ai` — multimodal, vision, token
+- `/deep-dive/reasoning-models` — reasoning, chain-of-thought
+- `/deep-dive/production-llmops` — LLMOps, deployment, monitoring
+- `/deep-dive/eval-and-testing` — evaluation, benchmark, hallucination
 
 ---
 
@@ -55,8 +60,8 @@ These pages show a "Glossary" link in their See Also section:
 
 | Metric | Count |
 |---|---|
-| Total pages | 60 |
-| Pages with manual cross-links | 14 |
-| Pages with glossary links | 11 |
-| Pages with tags (auto SeeAlso) | 56 |
+| Total pages | 66 |
+| Pages with manual cross-links | 18 |
+| Pages with glossary links | 15 |
+| Pages with tags (auto SeeAlso) | 62 |
 | Pages with section fallback | 4 (home, 404, glossary, resources) |
