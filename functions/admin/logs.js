@@ -3,9 +3,15 @@ export async function onRequest({ request, env, ctx }) {
   const url = new URL(request.url);
   const token = url.searchParams.get('token');
 
-  // Simple protection: require ?token=<ADMIN_SECRET> or skip if ADMIN_SECRET not set
-  if (adminSecret && token !== adminSecret) {
-    return new Response('Unauthorized. Set ADMIN_SECRET env var and pass ?token=...', {
+  // Fail-closed: deny if ADMIN_SECRET is not configured, or if the token doesn't match.
+  if (!adminSecret) {
+    return new Response('Admin endpoint disabled. ADMIN_SECRET env var is not set.', {
+      status: 503,
+      headers: { 'Content-Type': 'text/plain' },
+    });
+  }
+  if (token !== adminSecret) {
+    return new Response('Unauthorized.', {
       status: 401,
       headers: { 'Content-Type': 'text/plain' },
     });
