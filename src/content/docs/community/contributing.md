@@ -19,7 +19,7 @@ The AI Playbook is community-driven. Contributions are welcome  -  whether corre
 
 Found something outdated or wrong? Report it:
 
-- **On any page:** Click "Report Outdated" button (coming soon)
+- **On any page:** Use the [Report Outdated](/community/report) form
 - **On GitHub:** [Open an issue](https://github.com/shubhamag91/ai-playbook/issues)
 - **Via email:** [shubhamag91@gmail.com](mailto:shubhamag91@gmail.com)
 
@@ -270,7 +270,7 @@ Before submitting:
 
 Contributors get:
 - Name + link in commit message
-- Listed in `CONTRIBUTORS.md` (coming soon)
+- Listed on the [Contributors page](/community/contributors)
 - Credit in social announcements (if significant contribution)
 
 ---

@@ -10,6 +10,19 @@ All interactive components follow these patterns:
 - **Companion CSS files** for component styling
 - **`is:inline` directive** on script tags to prevent Astro preprocessing issues
 
+### Auto-Injected Components (No Import Needed)
+
+These components are injected on **every page** via Starlight's component override system in [astro.config.mjs](astro.config.mjs). You will not find `import` statements for them in MDX files — they render automatically:
+
+| Component | Where | Injected by |
+|---|---|---|
+| `ContentOverride` | Wraps all page content (metadata row, TOC dropdown) | Starlight `MarkdownContent` override |
+| `FooterOverride` | Bottom of every page | Starlight `Footer` override |
+| `SeeAlso` | Bottom of every page (related-content links) | Inside `FooterOverride` |
+| `FeedbackWidget` | Bottom of every page (thumbs up/down) | Inside `FooterOverride` |
+
+If `grep` reports these as "unused," that's a false positive — they're wired through the Starlight integration config, not imported by content files.
+
 ---
 
 ## Component List
