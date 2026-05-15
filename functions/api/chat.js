@@ -75,6 +75,9 @@ export async function onRequest({ request, env, waitUntil }) {
           s += (d.match(rg) || []).length * 5 * idf;
           s += (c.match(rg) || []).length * 1 * idf;
         }
+        // Term-match density bonus: reward chunks covering more query terms
+        const matchedTerms = words.filter(w => (t + ' ' + d + ' ' + c).includes(w)).length;
+        s *= 1 + (matchedTerms / words.length);
         if (t.includes(queryText)) s += 50;
         return { ...entry, score: s };
       }).filter(e => e.score > 0).sort((a, b) => b.score - a.score).slice(0, 5);
@@ -148,8 +151,9 @@ INSTRUCTIONS:
 3. When a [TABLE] is in the context, read the table cells and extract actual data points, not general descriptions.
 4. Cite playbook content with links as [Page Title](URL). When citing web results, mention them naturally.
 5. Format: use bullet points for lists, numbered lists for steps, **bold** for key terms.
-6. Be concise — aim for 2-3 paragraphs or a short list.
-7. Never say "playbook", "reference data", or "context" — just answer naturally.` });
+6. When the user asks WHERE a term is mentioned or to be "taken to" a page, list specific page titles with URLs. Point them to the right section.
+7. Be concise — aim for 2-3 paragraphs or a short list.
+8. Never say "playbook", "reference data", or "context" — just answer naturally.` });
     } else {
       messages.unshift({ role: 'system', content: 'Answer naturally and conversationally. Use bullet points for lists, numbered lists for steps, **bold** for key terms. Be concise.' });
     }

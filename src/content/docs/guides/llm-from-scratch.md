@@ -8,6 +8,7 @@ glossaryLinks:
   - training
   - transformer
   - fine-tuning
+  - temperature
 lastUpdated: 2026-05-08
 nextVerificationDue: 2027-05-08
 ---

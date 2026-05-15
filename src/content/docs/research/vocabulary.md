@@ -11,6 +11,7 @@ glossaryLinks:
   - token
   - transformer
   - inference
+  - temperature
 tldr:
   - "Distinguishes between commonly confused terms: AI vs AGI, LLM vs foundation model"
   - "Explains fine-tuning vs RAG vs prompt engineering tradeoffs"
