@@ -144,7 +144,7 @@ Pick one important topic per quarter and go deep:
 
 **Path:**
 1. Read: [o1 technical report](https://openai.com/o1) (1 hour)
-2. Watch: [Video explanation by AI Explained](https://youtube.com/@AIExplained) (15 min)
+2. Watch: [Reasoning Models & DeepSeek R1 from scratch — Yannic Kilcher](https://www.youtube.com/watch?v=9knUUdoiVMQ) (45 min)
 3. Experiment: Try o1 on a hard problem yourself (30 min)
 4. Deep read: Related papers on chain-of-thought (2 hours)
 
