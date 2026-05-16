@@ -83,4 +83,4 @@ Check [Meetup.com](https://meetup.com) and [Luma](https://lu.ma) for AI events n
 
 ## Twitter / X Accounts to Follow
 
-See the [Who to Follow](/follow) page for a curated list of researchers, practitioners, and organizations.
+See the [Who to Follow](/reference/follow) page for a curated list of researchers, practitioners, and organizations.

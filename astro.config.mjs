@@ -228,7 +228,7 @@ export default defineConfig({
             { label: 'Beginner Path', slug: 'learn/beginner' },
             { label: 'Builder Path', slug: 'learn/builder' },
             { label: 'Researcher Path', slug: 'learn/researcher' },
-            { label: 'Workflows', slug: 'workflows' },
+            { label: 'Workflows', slug: 'learn/workflows' },
             { label: 'Interview Prep', slug: 'learn/interview-prep' },
           ],
         },
@@ -248,7 +248,7 @@ export default defineConfig({
           items: [
             { label: 'Glossary', slug: 'reference/glossary' },
             { label: 'Cheatsheets', collapsed: true, autogenerate: { directory: 'reference/cheatsheets' } },
-            { label: 'Who to Follow', slug: 'follow' },
+            { label: 'Who to Follow', slug: 'reference/follow' },
             { label: 'Confusions', slug: 'reference/confusions' },
             { label: 'Principles', slug: 'reference/principles' },
             { label: 'Benchmarks', slug: 'reference/benchmarks' },
@@ -304,6 +304,7 @@ export default defineConfig({
           items: [
             { label: 'Overview & Downloads', slug: 'resources' },
             { label: 'Papers', slug: 'resources/papers' },
+            { label: 'Build an LLM from Scratch', slug: 'resources/llm-from-scratch' },
             { label: 'Communities', slug: 'resources/communities' },
             { label: 'Tools & Frameworks', slug: 'resources/tools-frameworks' },
             { label: 'Case Studies', autogenerate: { directory: 'resources/case-studies' } },

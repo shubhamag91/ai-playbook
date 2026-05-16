@@ -56,12 +56,6 @@ What's your goal?
 
 ---
 
-## Quick Reference: Tool Costs
-
-For a complete feature matrix with costs, limitations, and decision trees, see the [Tools Guide](/decide/tools/guide/). For interactive cost estimation, use the [Cost Calculator](/decide/cost-calculator/).
-
----
-
 ## May 2026 Updates
 
 For the latest model releases and pricing changes, see [What's New](/research/whats-new/).

@@ -75,7 +75,7 @@ Advanced patterns and best practices for better LLM outputs.
 
 ### Stay Updated
 - Bookmark [What's New](/research/whats-new) for monthly updates
-- Follow [Who to Follow](/follow) for newsletters and researchers
+- Follow [Who to Follow](/reference/follow) for newsletters and researchers
 - Check [What's New](/research/whats-new) for new tool announcements
 
 ---
@@ -121,7 +121,7 @@ Advanced patterns and best practices for better LLM outputs.
 ### Community
 - [Contributing](/community/contributing)  -  How to contribute
 - [Report Outdated](/community/report)  -  Report inaccurate content
-- [Who to Follow](/follow)  -  Researchers, practitioners, newsletters
+- [Who to Follow](/reference/follow)  -  Researchers, practitioners, newsletters
 
 ### Recent Updates
 - [What's New](/research/whats-new)  -  May 2026 releases and trends

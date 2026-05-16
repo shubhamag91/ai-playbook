@@ -2,7 +2,7 @@
 title: Build an LLM from Scratch  -  Book Summary
 description: Notes and summary from "Build a Large Language Model (From Scratch)" by Sebastian Raschka.
 tags:
-  - guide
+  - resources
   - training
 glossaryLinks:
   - training
@@ -394,10 +394,11 @@ Benefits:
 
 ## See Also
 
-- [LLM Interview Prep](/cheatsheets/llm-interview/)
-- [ML Fundamentals Interview Prep](/cheatsheets/ml-fundamentals-interview/)
-- [Prompt Engineering Cheatsheet](/cheatsheets/prompt-engineering/)
-- [Transformer Architecture Diagram](/diagrams/rag-architecture/)
+- [LLM Primer Cheatsheet](/reference/cheatsheets/llm-primer)
+- [Coding Assistants & Agents Cheatsheet](/reference/cheatsheets/coding-assistants-agents)
+- [Prompt Engineering Deep Dive](/deep-dive/prompt-engineering)
+- [RAG Architecture Deep Dive](/deep-dive/rag-architecture)
+- [Training & Fine-tuning Deep Dive](/deep-dive/training-finetuning)
 
 ---
 
