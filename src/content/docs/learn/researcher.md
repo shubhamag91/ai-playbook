@@ -280,7 +280,7 @@ You don't have 5-6 hours? Do this minimum:
 
 ### For Deep Learning
 - [Fast.ai](https://fast.ai/)  -  Free courses (the best)
-- [Neuralnet.ninja](https://neuralnet.ninja/)  -  Interactive explanations
+- [Distill.pub](https://distill.pub/)  -  Interactive visual explanations of ML concepts (Google Brain researchers)
 - [3Blue1Brown YouTube](https://youtube.com/@3blue1brown)  -  Visualizations
 
 ---
