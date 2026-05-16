@@ -1,5 +1,20 @@
 ---
 import './CostCalculator.css';
+import { models } from '../data/models';
+
+const calcModels = models
+  .filter(m => m.showInCalculator)
+  .sort((a, b) => (a.calcOrder ?? 99) - (b.calcOrder ?? 99));
+
+const defaultRequests = 100;
+const defaultInTokens = 1000;
+const defaultOutTokens = 500;
+
+const calcInitialCost = (inPrice: number | undefined, outPrice: number | undefined): string => {
+  if (inPrice === undefined || outPrice === undefined) return '–';
+  const daily = (defaultRequests * defaultInTokens * inPrice + defaultRequests * defaultOutTokens * outPrice) / 1_000_000;
+  return '$' + (daily * 30).toFixed(2);
+};
 ---
 
 <div class="cost-calculator">
@@ -7,8 +22,8 @@ import './CostCalculator.css';
     <h3>Usage Scenario</h3>
 
     <div class="cost-calculator__input-group">
-      <label class="cost-calculator__label">Daily Requests</label>
-      <input type="range" min="1" max="5000" value="100" class="cost-calculator__slider" data-field="requests" />
+      <label class="cost-calculator__label" for="slider-requests">Daily Requests</label>
+      <input type="range" min="1" max="5000" value="100" class="cost-calculator__slider" data-field="requests" id="slider-requests" aria-label="Daily Requests" />
       <div class="cost-calculator__range-labels">
         <span id="reqCount" class="cost-calculator__value">100</span>
         <span class="cost-calculator__range-end">5,000/day</span>
@@ -16,8 +31,8 @@ import './CostCalculator.css';
     </div>
 
     <div class="cost-calculator__input-group">
-      <label class="cost-calculator__label">Avg Input Tokens per Request</label>
-      <input type="range" min="100" max="50000" value="1000" class="cost-calculator__slider" data-field="inTokens" />
+      <label class="cost-calculator__label" for="slider-in-tokens">Avg Input Tokens per Request</label>
+      <input type="range" min="100" max="50000" value="1000" class="cost-calculator__slider" data-field="inTokens" id="slider-in-tokens" aria-label="Avg Input Tokens per Request" />
       <div class="cost-calculator__range-labels">
         <span id="inTokens" class="cost-calculator__value">1,000</span>
         <span class="cost-calculator__range-end">50,000</span>
@@ -25,8 +40,8 @@ import './CostCalculator.css';
     </div>
 
     <div class="cost-calculator__input-group">
-      <label class="cost-calculator__label">Avg Output Tokens per Request</label>
-      <input type="range" min="50" max="10000" value="500" class="cost-calculator__slider" data-field="outTokens" />
+      <label class="cost-calculator__label" for="slider-out-tokens">Avg Output Tokens per Request</label>
+      <input type="range" min="50" max="10000" value="500" class="cost-calculator__slider" data-field="outTokens" id="slider-out-tokens" aria-label="Avg Output Tokens per Request" />
       <div class="cost-calculator__range-labels">
         <span id="outTokens" class="cost-calculator__value">500</span>
         <span class="cost-calculator__range-end">10,000</span>
@@ -44,153 +59,25 @@ import './CostCalculator.css';
   <div class="cost-calculator__results">
     <h3>Monthly Cost</h3>
     <div class="cost-calculator__grid">
-      <div class="cost-calculator__card sonnet">
-        <span class="cost-calculator__family">Anthropic</span>
-        <div class="cost-calculator__model">Claude Sonnet</div>
-        <div class="cost-calculator__price" id="costSonnet">$90</div>
-        <div class="cost-calculator__row">
-          <span class="cost-calculator__rate">$3/$15 per 1M</span>
-          <span class="cost-calculator__badge default">Default</span>
+      {calcModels.map((model) => (
+        <div class={`cost-calculator__card ${model.calcClass}`} data-in={model.inputPrice} data-out={model.outputPrice}>
+          <span class="cost-calculator__family">{model.calcFamily}</span>
+          <div class="cost-calculator__model">{model.calcDisplayName}</div>
+          <div class="cost-calculator__price">{calcInitialCost(model.inputPrice, model.outputPrice)}</div>
+          <div class="cost-calculator__row">
+            <span class="cost-calculator__rate">{model.calcRate}</span>
+            {model.calcBadge && (
+              <span class={`cost-calculator__badge ${model.calcBadgeClass}`}>{model.calcBadge}</span>
+            )}
+          </div>
         </div>
-      </div>
-
-      <div class="cost-calculator__card haiku">
-        <span class="cost-calculator__family">Anthropic</span>
-        <div class="cost-calculator__model">Claude Haiku</div>
-        <div class="cost-calculator__price" id="costHaiku">$13.50</div>
-        <div class="cost-calculator__row">
-          <span class="cost-calculator__rate">$0.80/$4 per 1M</span>
-        </div>
-      </div>
-
-      <div class="cost-calculator__card opus">
-        <span class="cost-calculator__family">Anthropic</span>
-        <div class="cost-calculator__model">Claude Opus</div>
-        <div class="cost-calculator__price" id="costOpus">$675</div>
-        <div class="cost-calculator__row">
-          <span class="cost-calculator__rate">$15/$75 per 1M</span>
-        </div>
-      </div>
-
-      <div class="cost-calculator__card gpt5">
-        <span class="cost-calculator__family">OpenAI</span>
-        <div class="cost-calculator__model">GPT-5.5 Instant</div>
-        <div class="cost-calculator__price" id="costGPTInstant">$90</div>
-        <div class="cost-calculator__row">
-          <span class="cost-calculator__rate">$0.05/$0.15 per 1M</span>
-          <span class="cost-calculator__badge fastest">Fastest</span>
-        </div>
-      </div>
-
-      <div class="cost-calculator__card gpt">
-        <span class="cost-calculator__family">OpenAI</span>
-        <div class="cost-calculator__model">GPT-5.5</div>
-        <div class="cost-calculator__price" id="costGPT">$60</div>
-        <div class="cost-calculator__row">
-          <span class="cost-calculator__rate">$2/$8 per 1M</span>
-          <span class="cost-calculator__badge balanced">Balanced</span>
-        </div>
-      </div>
-
-      <div class="cost-calculator__card gemini">
-        <span class="cost-calculator__family">Google</span>
-        <div class="cost-calculator__model">Gemini 3.1</div>
-        <div class="cost-calculator__price" id="costGemini">$60</div>
-        <div class="cost-calculator__row">
-          <span class="cost-calculator__rate">$2/$12 per 1M</span>
-          <span class="cost-calculator__badge context">1M ctx</span>
-        </div>
-      </div>
-
-      <div class="cost-calculator__card deepseek-v4">
-        <span class="cost-calculator__family">DeepSeek</span>
-        <div class="cost-calculator__model">DeepSeek V4</div>
-        <div class="cost-calculator__price" id="costDeepSeekV4">$6.30</div>
-        <div class="cost-calculator__row">
-          <span class="cost-calculator__rate">$0.55/$2.19 per 1M</span>
-        </div>
-      </div>
-
-      <div class="cost-calculator__card deepseek">
-        <span class="cost-calculator__family">DeepSeek</span>
-        <div class="cost-calculator__model">DeepSeek Flash</div>
-        <div class="cost-calculator__price" id="costDeepSeek">$6.30</div>
-        <div class="cost-calculator__row">
-          <span class="cost-calculator__rate">$0.14/$0.28 per 1M</span>
-          <span class="cost-calculator__badge cheap">Cheapest</span>
-        </div>
-      </div>
-
-      <div class="cost-calculator__card deepseek-pro">
-        <span class="cost-calculator__family">DeepSeek</span>
-        <div class="cost-calculator__model">DeepSeek V4 Pro</div>
-        <div class="cost-calculator__price" id="costDeepSeekPro">$6.30</div>
-        <div class="cost-calculator__row">
-          <span class="cost-calculator__rate">$0.55/$2.19 per 1M</span>
-          <span class="cost-calculator__badge balanced">Premium</span>
-        </div>
-      </div>
-
-      <div class="cost-calculator__card grok">
-        <span class="cost-calculator__family">xAI</span>
-        <div class="cost-calculator__model">Grok 3 Pro</div>
-        <div class="cost-calculator__price" id="costGrok">$90</div>
-        <div class="cost-calculator__row">
-          <span class="cost-calculator__rate">$3/$15 per 1M</span>
-          <span class="cost-calculator__badge context">Real-time</span>
-        </div>
-      </div>
-
-      <div class="cost-calculator__card qwen">
-        <span class="cost-calculator__family">Alibaba</span>
-        <div class="cost-calculator__model">Qwen 3.6</div>
-        <div class="cost-calculator__price" id="costQwen">$6.30</div>
-        <div class="cost-calculator__row">
-          <span class="cost-calculator__rate">~$0.40/$1.50 per 1M</span>
-        </div>
-      </div>
-
-      <div class="cost-calculator__card gemini-mini">
-        <span class="cost-calculator__family">Google</span>
-        <div class="cost-calculator__model">Gemini 3 Mini</div>
-        <div class="cost-calculator__price" id="costGeminiMini">$30</div>
-        <div class="cost-calculator__row">
-          <span class="cost-calculator__rate">$1/$6 per 1M</span>
-          <span class="cost-calculator__badge fastest">Fast</span>
-        </div>
-      </div>
-
-      <div class="cost-calculator__card kimi">
-        <span class="cost-calculator__family">Moonshot AI</span>
-        <div class="cost-calculator__model">Kimi K2.6</div>
-        <div class="cost-calculator__price" id="costKimi">$6.30</div>
-        <div class="cost-calculator__row">
-          <span class="cost-calculator__rate">~$0.55/$2.19 per 1M</span>
-          <span class="cost-calculator__badge context">256K ctx</span>
-        </div>
-      </div>
+      ))}
     </div>
   </div>
 </div>
 
 <script is:inline>
 document.addEventListener('DOMContentLoaded', function() {
-  const pricing = {
-    sonnet: { in: 3, out: 15 },
-    haiku: { in: 0.80, out: 4 },
-    opus: { in: 15, out: 75 },
-    gpt: { in: 2, out: 8 },
-    gptinstant: { in: 0.05, out: 0.15 },
-    gemini: { in: 2, out: 12 },
-    deepseek: { in: 0.14, out: 0.28 },
-    deepseekv4: { in: 0.55, out: 2.19 },
-    deepseekpro: { in: 0.55, out: 2.19 },
-    grok: { in: 3, out: 15 },
-    qwen: { in: 0.40, out: 1.50 },
-    geminimini: { in: 1, out: 6 },
-    kimi: { in: 0.55, out: 2.19 },
-  };
-
   function getVal(id) {
     return parseInt(document.getElementById(id).textContent.replace(/,/g, '')) || 0;
   }
@@ -205,19 +92,12 @@ document.addEventListener('DOMContentLoaded', function() {
       return (daily * 30).toFixed(2);
     };
 
-    document.getElementById('costSonnet').textContent = '$' + calcCost(pricing.sonnet.in, pricing.sonnet.out);
-    document.getElementById('costHaiku').textContent = '$' + calcCost(pricing.haiku.in, pricing.haiku.out);
-    document.getElementById('costOpus').textContent = '$' + calcCost(pricing.opus.in, pricing.opus.out);
-    document.getElementById('costGPT').textContent = '$' + calcCost(pricing.gpt.in, pricing.gpt.out);
-    document.getElementById('costGPTInstant').textContent = '$' + calcCost(pricing.gptinstant.in, pricing.gptinstant.out);
-    document.getElementById('costGemini').textContent = '$' + calcCost(pricing.gemini.in, pricing.gemini.out);
-    document.getElementById('costDeepSeek').textContent = '$' + calcCost(pricing.deepseek.in, pricing.deepseek.out);
-    document.getElementById('costDeepSeekV4').textContent = '$' + calcCost(pricing.deepseekv4.in, pricing.deepseekv4.out);
-    document.getElementById('costDeepSeekPro').textContent = '$' + calcCost(pricing.deepseekpro.in, pricing.deepseekpro.out);
-    document.getElementById('costGrok').textContent = '$' + calcCost(pricing.grok.in, pricing.grok.out);
-    document.getElementById('costQwen').textContent = '$' + calcCost(pricing.qwen.in, pricing.qwen.out);
-    document.getElementById('costGeminiMini').textContent = '$' + calcCost(pricing.geminimini.in, pricing.geminimini.out);
-    document.getElementById('costKimi').textContent = '$' + calcCost(pricing.kimi.in, pricing.kimi.out);
+    document.querySelectorAll('.cost-calculator__card[data-in]').forEach(function(card) {
+      const inPrice = parseFloat(card.getAttribute('data-in'));
+      const outPrice = parseFloat(card.getAttribute('data-out'));
+      const priceEl = card.querySelector('.cost-calculator__price');
+      if (priceEl) priceEl.textContent = '$' + calcCost(inPrice, outPrice);
+    });
   }
 
   function updateSlider(slider) {
@@ -228,16 +108,16 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCosts();
   }
 
-  document.querySelectorAll('.cost-calculator__slider').forEach(slider => {
+  document.querySelectorAll('.cost-calculator__slider').forEach(function(slider) {
     slider.addEventListener('input', function() { updateSlider(this); });
   });
 
-  document.querySelectorAll('.cost-calculator__preset').forEach(btn => {
+  document.querySelectorAll('.cost-calculator__preset').forEach(function(btn) {
     btn.addEventListener('click', function() {
       document.querySelector('input[data-field="requests"]').value = this.getAttribute('data-req');
       document.querySelector('input[data-field="inTokens"]').value = this.getAttribute('data-in');
       document.querySelector('input[data-field="outTokens"]').value = this.getAttribute('data-out');
-      document.querySelectorAll('.cost-calculator__slider').forEach(s => updateSlider(s));
+      document.querySelectorAll('.cost-calculator__slider').forEach(function(s) { updateSlider(s); });
     });
   });
 

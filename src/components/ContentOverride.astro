@@ -44,12 +44,12 @@ const hasTOC = headings.length > 0;
 
         {hasInfo && (
           <span class="page-meta__info-wrap">
-            <button class="page-meta__pill" data-toggle="info" aria-expanded="false">
+            <button class="page-meta__pill" data-toggle="info" aria-expanded="false" aria-controls="panel-info">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
               Key Info
               <svg class="chev" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="page-meta__dropdown" data-panel="info">
+            <div class="page-meta__dropdown" data-panel="info" id="panel-info">
               {description && <div class="page-meta__dd-desc">{description}</div>}
               {tldr.length > 0 && (
                 <div class="page-meta__dd-tldr">
@@ -77,13 +77,13 @@ const hasTOC = headings.length > 0;
 
         {hasTOC && (
           <span class="page-meta__toc-wrap">
-            <button class="page-meta__pill" data-toggle="toc" aria-expanded="false">
+            <button class="page-meta__pill" data-toggle="toc" aria-expanded="false" aria-controls="panel-toc">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
               On this page
               <span class="page-meta__pill-count">{headings.length}</span>
               <svg class="chev" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="page-meta__dropdown" data-panel="toc">
+            <div class="page-meta__dropdown" data-panel="toc" id="panel-toc">
               <nav class="page-meta__toc-nav">
                 {headings.map(h => (
                   <a href={`#${h.slug}`} class={`page-meta__toc-item depth-${h.depth}`} data-depth={h.depth}>{h.text}</a>
