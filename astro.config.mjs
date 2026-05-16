@@ -229,7 +229,16 @@ export default defineConfig({
             { label: 'Builder Path', slug: 'learn/builder' },
             { label: 'Researcher Path', slug: 'learn/researcher' },
             { label: 'Workflows', slug: 'learn/workflows' },
-            { label: 'Interview Prep', slug: 'learn/interview-prep' },
+            {
+              label: 'Interview Prep',
+              collapsed: false,
+              items: [
+                { label: 'Overview & 2-Week Plan', slug: 'learn/interview-prep' },
+                { label: 'LLM Engineering', slug: 'learn/interview-prep-llm' },
+                { label: 'Quantitative Analytics', slug: 'learn/interview-prep-quant-banking' },
+                { label: 'Machine Learning', slug: 'learn/interview-prep-ml' },
+              ],
+            },
           ],
         },
         {
