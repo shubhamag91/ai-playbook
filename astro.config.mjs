@@ -233,6 +233,7 @@ export default defineConfig({
       sidebar: [
         {
           label: 'Start Here',
+          collapsed: true,
           items: [
             { label: 'Welcome', slug: 'index' },
             { label: 'Quick Start', slug: 'start/quick-start' },
@@ -240,6 +241,7 @@ export default defineConfig({
         },
         {
           label: 'Learn',
+          collapsed: true,
           items: [
             { label: 'Beginner Path', slug: 'learn/beginner' },
             { label: 'Builder Path', slug: 'learn/builder' },
@@ -247,7 +249,7 @@ export default defineConfig({
             { label: 'Workflows', slug: 'learn/workflows' },
             {
               label: 'Interview Prep',
-              collapsed: false,
+              collapsed: true,
               items: [
                 { label: 'Overview & 2-Week Plan', slug: 'learn/interview-prep' },
                 { label: 'LLM Engineering', slug: 'learn/interview-prep-llm' },
@@ -259,6 +261,7 @@ export default defineConfig({
         },
         {
           label: 'Decide',
+          collapsed: true,
           items: [
             { label: 'Tools Guide', slug: 'decide/tools/guide' },
             { label: 'Tool Comparison', slug: 'decide/tools/comparison' },
@@ -270,6 +273,7 @@ export default defineConfig({
         },
         {
           label: 'Reference',
+          collapsed: true,
           items: [
             { label: 'Glossary', slug: 'reference/glossary' },
             { label: 'Cheatsheets', collapsed: true, autogenerate: { directory: 'reference/cheatsheets' } },
@@ -282,6 +286,7 @@ export default defineConfig({
         },
         {
           label: 'Research',
+          collapsed: true,
           items: [
             { label: 'What\'s New', slug: 'research/whats-new' },
             { label: 'Open-Source Models', slug: 'research/models/guide' },
@@ -293,10 +298,11 @@ export default defineConfig({
         },
         {
           label: 'Deep Dives',
+          collapsed: true,
           items: [
             {
               label: 'Core Architecture',
-              collapsed: false,
+              collapsed: true,
               items: [
                 { label: 'How LLMs Work', slug: 'deep-dive/how-llms-work' },
                 { label: 'Reasoning Models', slug: 'deep-dive/reasoning-models' },
@@ -305,7 +311,7 @@ export default defineConfig({
             },
             {
               label: 'Techniques & Methods',
-              collapsed: false,
+              collapsed: true,
               items: [
                 { label: 'RAG Architecture', slug: 'deep-dive/rag-architecture' },
                 { label: 'Agents & Frameworks', slug: 'deep-dive/agents-frameworks' },
@@ -315,7 +321,7 @@ export default defineConfig({
             },
             {
               label: 'Production & Operations',
-              collapsed: false,
+              collapsed: true,
               items: [
                 { label: 'Inference Optimization', slug: 'deep-dive/inference-optimization' },
                 { label: 'Production LLMOps', slug: 'deep-dive/production-llmops' },
@@ -326,6 +332,7 @@ export default defineConfig({
         },
         {
           label: 'Resources',
+          collapsed: true,
           items: [
             { label: 'Overview & Downloads', slug: 'resources' },
             { label: 'Papers', slug: 'resources/papers' },
@@ -338,6 +345,7 @@ export default defineConfig({
         },
         {
           label: 'Community',
+          collapsed: true,
           items: [
             { label: 'Contributing', slug: 'community/contributing' },
             { label: 'Report Outdated', slug: 'community/report' },
