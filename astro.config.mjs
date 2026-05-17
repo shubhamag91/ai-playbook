@@ -257,6 +257,7 @@ export default defineConfig({
                 { label: 'Machine Learning', slug: 'learn/interview-prep-ml' },
               ],
             },
+            { label: 'Knowledge Quiz', slug: 'learn/quiz', badge: { text: 'New', variant: 'tip' } },
           ],
         },
         {

@@ -9,7 +9,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate-quiz": "node scripts/generate-quiz-bank.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "4.2.0",
