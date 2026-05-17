@@ -160,6 +160,8 @@ async function generateQuestions(topic, difficulty) {
 
 async function main() {
   const topicArg = process.argv[2];
+  const diffArg  = process.argv[3]; // optional: "easy" or "hard"
+
   const topicsToRun = topicArg
     ? TOPICS.filter(t => t.id === topicArg)
     : TOPICS;
@@ -169,6 +171,10 @@ async function main() {
     console.error(`    Available: ${TOPICS.map(t => t.id).join(', ')}`);
     process.exit(1);
   }
+
+  const diffsToRun = diffArg
+    ? [diffArg]
+    : ['easy', 'hard'];
 
   // Load existing bank so untouched topics are preserved
   const bankPath = join(ROOT, 'public/quiz-bank.json');
@@ -185,16 +191,20 @@ async function main() {
   };
 
   for (const topic of topicsToRun) {
-    for (const difficulty of ['easy', 'hard']) {
+    for (const difficulty of diffsToRun) {
       const key = `${topic.id}-${difficulty}`;
       console.log(`\n⏳  ${key}`);
       const questions = await generateQuestions(topic, difficulty);
-      bank.questions[key] = questions;
-      console.log(`✅  ${questions.length} questions`);
+      if (questions.length > 0) {
+        bank.questions[key] = questions;
+        console.log(`✅  ${questions.length} questions`);
+      } else {
+        console.log(`⚠️   Skipped (0 questions returned) — existing bank entry preserved`);
+      }
 
       // Write after every topic/difficulty so a crash doesn't lose everything
       writeFileSync(bankPath, JSON.stringify(bank, null, 2));
-      await sleep(2000); // stay well inside Groq rate limits
+      await sleep(65000); // free tier: 12K TPM limit, each call ~9K tokens → ~65s gap
     }
   }
 
