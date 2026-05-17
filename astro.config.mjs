@@ -184,6 +184,22 @@ export default defineConfig({
         },
         {
           tag: 'script',
+          attrs: {},
+          content: `
+            document.addEventListener('DOMContentLoaded', function() {
+              var active = document.querySelector('.sidebar-content a[aria-current="page"]');
+              if (!active) return;
+              var pane = document.querySelector('.sidebar-pane');
+              if (!pane) return;
+              var aRect = active.getBoundingClientRect();
+              var pRect = pane.getBoundingClientRect();
+              var offset = aRect.top - pRect.top - pane.clientHeight / 2 + active.clientHeight / 2;
+              pane.scrollTop += offset;
+            });
+          `,
+        },
+        {
+          tag: 'script',
           attrs: { type: 'module' },
           content: `
             import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
