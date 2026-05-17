@@ -305,6 +305,7 @@ export default defineConfig({
               label: 'Core Architecture',
               collapsed: true,
               items: [
+                { label: 'Neural Networks', slug: 'deep-dive/neural-networks' },
                 { label: 'How LLMs Work', slug: 'deep-dive/how-llms-work' },
                 { label: 'Reasoning Models', slug: 'deep-dive/reasoning-models' },
                 { label: 'Multimodal AI', slug: 'deep-dive/multimodal-ai' },
