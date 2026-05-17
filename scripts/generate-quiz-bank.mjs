@@ -111,6 +111,7 @@ Rules:
 - Explanation: one sentence, max 25 words
 - Base all questions on the content below only
 - Return ONLY a valid JSON array — no markdown, no text outside the array
+- IMPORTANT: Distribute correct answers evenly — roughly 7-8 questions each should have answer A, B, C, and D. Do NOT cluster correct answers at B or C. Vary the position of the correct option across all questions.
 
 Output format:
 [{"question":"...","options":["A. ...","B. ...","C. ...","D. ..."],"answer":"A","explanation":"..."}]

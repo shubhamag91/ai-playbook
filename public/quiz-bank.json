@@ -18,33 +18,177 @@
   ],
   "questions": {
     "rag-architecture-easy": [
-      { "id": "rag-easy-001", "question": "What does RAG stand for?", "options": ["A. Retrieval-Augmented Generation", "B. Random Aggregation of Graphs", "C. Recursive Answer Generation", "D. Rule-Aligned Grounding"], "answer": "A", "explanation": "RAG combines retrieval of relevant documents with LLM generation to ground answers in real content." },
-      { "id": "rag-easy-002", "question": "What is 'chunking' in a RAG pipeline?", "options": ["A. Encrypting documents before indexing", "B. Splitting documents into smaller segments for embedding", "C. Merging multiple vector stores into one", "D. Batching API requests to the LLM"], "answer": "B", "explanation": "Chunking breaks long documents into segments so each embedding captures focused meaning rather than diluted whole-document content." },
-      { "id": "rag-easy-003", "question": "What is a vector embedding?", "options": ["A. A compressed image format", "B. A numerical representation of text capturing semantic meaning", "C. A type of relational database index", "D. A prompt template variable"], "answer": "B", "explanation": "Embeddings map text to high-dimensional vectors where semantically similar content lands geometrically close together." },
-      { "id": "rag-easy-004", "question": "Which metric is most commonly used for similarity search in RAG?", "options": ["A. Euclidean distance", "B. Jaccard similarity", "C. Cosine similarity", "D. Levenshtein distance"], "answer": "C", "explanation": "Cosine similarity measures the angle between vectors, making it scale-invariant and well-suited for semantic search." },
-      { "id": "rag-easy-005", "question": "What is the purpose of a vector database in RAG?", "options": ["A. Storing raw LLM weights", "B. Caching API responses", "C. Efficiently retrieving semantically similar chunks", "D. Logging user queries"], "answer": "C", "explanation": "Vector databases index embeddings and support fast nearest-neighbor search for retrieval." },
-      { "id": "rag-easy-006", "question": "What is HyDE in RAG?", "options": ["A. High-Yield Document Extraction", "B. Hypothetical Document Embeddings — generating a fake answer to improve retrieval", "C. Hierarchical Document Encoding", "D. Hybrid Dense-Exact search"], "answer": "B", "explanation": "HyDE generates a hypothetical answer first, embeds it, then retrieves real chunks close to that embedding." },
-      { "id": "rag-easy-007", "question": "What problem does reranking solve in RAG pipelines?", "options": ["A. It speeds up embedding generation", "B. It reduces LLM API costs", "C. It improves relevance by rescoring retrieved chunks before sending to the LLM", "D. It eliminates the need for chunking"], "answer": "C", "explanation": "Initial vector retrieval is fast but imprecise; rerankers apply a slower, more accurate model to pick the best chunks." },
-      { "id": "rag-easy-008", "question": "What is RAGAS used for?", "options": ["A. Generating embeddings", "B. Evaluating RAG pipeline quality", "C. Building vector databases", "D. Fine-tuning retrieval models"], "answer": "B", "explanation": "RAGAS measures RAG quality via metrics like faithfulness, answer relevance, context recall, and context precision." },
-      { "id": "rag-easy-009", "question": "What does 'faithfulness' measure in RAGAS?", "options": ["A. Whether retrieved chunks are relevant to the query", "B. Whether the LLM answer is consistent with the retrieved context", "C. Whether the query was rephrased correctly", "D. Whether the embeddings are normalized"], "answer": "B", "explanation": "Faithfulness checks if the generated answer can be inferred from retrieved context, detecting hallucinations." },
-      { "id": "rag-easy-010", "question": "What is hybrid search in RAG?", "options": ["A. Using two different LLMs simultaneously", "B. Combining vector similarity search with keyword (BM25) search", "C. Searching across multiple vector databases", "D. Running retrieval and generation in parallel"], "answer": "B", "explanation": "Hybrid search blends dense semantic retrieval with sparse keyword matching, improving coverage for both conceptual and exact-match queries." },
-      { "id": "rag-easy-011", "question": "What is a typical chunk size for RAG?", "options": ["A. 10–50 tokens", "B. 256–512 tokens", "C. 5,000–10,000 tokens", "D. The entire document"], "answer": "B", "explanation": "256–512 tokens balances enough context for meaning while keeping embeddings focused and retrieval precise." },
-      { "id": "rag-easy-012", "question": "What does 'context window stuffing' mean in RAG?", "options": ["A. Adding system prompts to every request", "B. Injecting retrieved chunks into the prompt before LLM generation", "C. Compressing the model's weights", "D. Batching multiple queries into one"], "answer": "B", "explanation": "RAG places retrieved context directly into the prompt so the LLM can reference it when generating an answer." }
+      {
+        "id": "rag-easy-001",
+        "question": "What does RAG stand for?",
+        "options": ["A. Retrieval-Augmented Generation", "B. Random Aggregation of Graphs", "C. Recursive Answer Generation", "D. Rule-Aligned Grounding"],
+        "answer": "A",
+        "explanation": "RAG combines retrieval of relevant documents with LLM generation to ground answers in real content."
+      },
+      {
+        "id": "rag-easy-002",
+        "question": "What is 'chunking' in a RAG pipeline?",
+        "options": ["A. Encrypting documents before indexing", "B. Splitting documents into smaller segments for embedding", "C. Merging multiple vector stores into one", "D. Batching API requests to the LLM"],
+        "answer": "B",
+        "explanation": "Chunking breaks long documents into segments so each embedding captures focused meaning rather than diluted whole-document content."
+      },
+      {
+        "id": "rag-easy-003",
+        "question": "What is a vector embedding?",
+        "options": ["A. A compressed image format", "B. A type of relational database index", "C. A numerical representation of text capturing semantic meaning", "D. A prompt template variable"],
+        "answer": "C",
+        "explanation": "Embeddings map text to high-dimensional vectors where semantically similar content lands geometrically close together."
+      },
+      {
+        "id": "rag-easy-004",
+        "question": "Which metric is most commonly used for similarity search in RAG?",
+        "options": ["A. Euclidean distance", "B. Jaccard similarity", "C. Levenshtein distance", "D. Cosine similarity"],
+        "answer": "D",
+        "explanation": "Cosine similarity measures the angle between vectors, making it scale-invariant and well-suited for semantic search."
+      },
+      {
+        "id": "rag-easy-005",
+        "question": "What is the purpose of a vector database in RAG?",
+        "options": ["A. Efficiently retrieving semantically similar chunks", "B. Storing raw LLM weights", "C. Caching API responses", "D. Logging user queries"],
+        "answer": "A",
+        "explanation": "Vector databases index embeddings and support fast nearest-neighbor search for retrieval."
+      },
+      {
+        "id": "rag-easy-006",
+        "question": "What is HyDE in RAG?",
+        "options": ["A. High-Yield Document Extraction", "B. Hypothetical Document Embeddings — generating a fake answer to improve retrieval", "C. Hierarchical Document Encoding", "D. Hybrid Dense-Exact search"],
+        "answer": "B",
+        "explanation": "HyDE generates a hypothetical answer first, embeds it, then retrieves real chunks close to that embedding."
+      },
+      {
+        "id": "rag-easy-007",
+        "question": "What problem does reranking solve in RAG pipelines?",
+        "options": ["A. It speeds up embedding generation", "B. It reduces LLM API costs", "C. It improves relevance by rescoring retrieved chunks before sending to the LLM", "D. It eliminates the need for chunking"],
+        "answer": "C",
+        "explanation": "Initial vector retrieval is fast but imprecise; rerankers apply a slower, more accurate model to pick the best chunks."
+      },
+      {
+        "id": "rag-easy-008",
+        "question": "What is RAGAS used for?",
+        "options": ["A. Generating embeddings", "B. Building vector databases", "C. Fine-tuning retrieval models", "D. Evaluating RAG pipeline quality"],
+        "answer": "D",
+        "explanation": "RAGAS measures RAG quality via metrics like faithfulness, answer relevance, context recall, and context precision."
+      },
+      {
+        "id": "rag-easy-009",
+        "question": "What does 'faithfulness' measure in RAGAS?",
+        "options": ["A. Whether the LLM answer is consistent with the retrieved context", "B. Whether retrieved chunks are relevant to the query", "C. Whether the query was rephrased correctly", "D. Whether the embeddings are normalized"],
+        "answer": "A",
+        "explanation": "Faithfulness checks if the generated answer can be inferred from retrieved context, detecting hallucinations."
+      },
+      {
+        "id": "rag-easy-010",
+        "question": "What is hybrid search in RAG?",
+        "options": ["A. Using two different LLMs simultaneously", "B. Combining vector similarity search with keyword (BM25) search", "C. Searching across multiple vector databases", "D. Running retrieval and generation in parallel"],
+        "answer": "B",
+        "explanation": "Hybrid search blends dense semantic retrieval with sparse keyword matching, improving coverage for both conceptual and exact-match queries."
+      },
+      {
+        "id": "rag-easy-011",
+        "question": "What is a typical chunk size for RAG?",
+        "options": ["A. 10–50 tokens", "B. 5,000–10,000 tokens", "C. 256–512 tokens", "D. The entire document"],
+        "answer": "C",
+        "explanation": "256–512 tokens balances enough context for meaning while keeping embeddings focused and retrieval precise."
+      },
+      {
+        "id": "rag-easy-012",
+        "question": "What does 'context window stuffing' mean in RAG?",
+        "options": ["A. Adding system prompts to every request", "B. Compressing the model's weights", "C. Batching multiple queries into one", "D. Injecting retrieved chunks into the prompt before LLM generation"],
+        "answer": "D",
+        "explanation": "RAG places retrieved context directly into the prompt so the LLM can reference it when generating an answer."
+      }
     ],
     "rag-architecture-hard": [],
     "prompt-engineering-easy": [
-      { "id": "pe-easy-001", "question": "What is a 'system prompt'?", "options": ["A. The user's first message in a conversation", "B. Instructions given to the model before user input that define its behavior", "C. A prompt that triggers model fine-tuning", "D. A template for generating images"], "answer": "B", "explanation": "System prompts set the model's persona, constraints, and behavior before any user interaction begins." },
-      { "id": "pe-easy-002", "question": "What is few-shot prompting?", "options": ["A. Using very short prompts to save tokens", "B. Providing example input-output pairs in the prompt to guide the model", "C. Generating multiple completions and picking the best", "D. Fine-tuning on a small dataset"], "answer": "B", "explanation": "Few-shot examples demonstrate the desired format or reasoning, helping the model generalize to the actual task." },
-      { "id": "pe-easy-003", "question": "What is Chain-of-Thought (CoT) prompting?", "options": ["A. Linking multiple API calls together", "B. Asking the model to reason step-by-step before giving its final answer", "C. Chaining multiple prompts into a pipeline", "D. Using a sequence of system prompts"], "answer": "B", "explanation": "CoT prompting improves accuracy on reasoning tasks by eliciting explicit intermediate reasoning steps." },
-      { "id": "pe-easy-004", "question": "What does 'temperature' control in LLM generation?", "options": ["A. The speed of token generation", "B. The randomness and creativity of the output", "C. The maximum length of the response", "D. The number of beams in beam search"], "answer": "B", "explanation": "Higher temperature makes outputs more creative and varied; lower temperature makes them more deterministic." },
-      { "id": "pe-easy-005", "question": "What is zero-shot prompting?", "options": ["A. Prompting with no system message", "B. Asking the model to perform a task with no examples in the prompt", "C. Using a model that has not been trained", "D. Generating responses at temperature zero"], "answer": "B", "explanation": "Zero-shot relies entirely on the model's pre-trained knowledge without any demonstrations in the prompt." },
-      { "id": "pe-easy-006", "question": "What is 'prompt injection'?", "options": ["A. Adding variables into a prompt template", "B. A security attack where malicious input overrides the system prompt", "C. Injecting retrieved context into a prompt", "D. Programmatically generating prompts"], "answer": "B", "explanation": "Prompt injection occurs when user-supplied text manipulates the model into ignoring or overriding its original instructions." },
-      { "id": "pe-easy-007", "question": "What is a 'persona prompt'?", "options": ["A. A prompt that generates user profiles", "B. Instructions that give the model a specific identity or role to play", "C. A prompt optimized for image generation", "D. A template for named entity recognition"], "answer": "B", "explanation": "Persona prompts define who the model 'is' — e.g., 'You are a senior engineer' — shaping its communication style." },
-      { "id": "pe-easy-008", "question": "What is 'self-consistency' in prompting?", "options": ["A. Ensuring the system prompt doesn't contradict itself", "B. Generating multiple reasoning paths and selecting the most common answer", "C. Using the same temperature for all requests", "D. Repeating the prompt until the model converges"], "answer": "B", "explanation": "Self-consistency samples multiple chain-of-thought outputs and picks the answer that appears most often." },
-      { "id": "pe-easy-009", "question": "What is ReAct prompting?", "options": ["A. A technique for reactive user interfaces", "B. A framework combining reasoning and acting — think, act, observe", "C. A method for refactoring prompts automatically", "D. A way to re-execute failed API calls"], "answer": "B", "explanation": "ReAct interleaves thought, action, and observation steps, enabling models to use tools while reasoning about results." },
-      { "id": "pe-easy-010", "question": "What does 'top-p' (nucleus sampling) do?", "options": ["A. Limits the response to the top P sentences", "B. Samples from the smallest set of tokens whose cumulative probability exceeds P", "C. Controls the maximum number of tokens generated", "D. Ranks outputs by probability before returning"], "answer": "B", "explanation": "Top-p ensures the model only considers tokens covering at least P% of the probability mass." },
-      { "id": "pe-easy-011", "question": "What are delimiters used for in prompts?", "options": ["A. Ending the conversation with the model", "B. Separating distinct sections of a prompt to prevent confusion", "C. Setting token limits", "D. Formatting code blocks for execution"], "answer": "B", "explanation": "Delimiters like triple backticks or XML tags clearly delineate user input, instructions, and context sections." },
-      { "id": "pe-easy-012", "question": "What is the main risk of very long system prompts?", "options": ["A. They cause the model to hallucinate more frequently", "B. They consume context window space and may dilute attention on key instructions", "C. They permanently alter the model's weights", "D. They disable few-shot examples from working"], "answer": "B", "explanation": "Extremely long system prompts consume context and can dilute the model's attention on critical constraints." }
+      {
+        "id": "pe-easy-001",
+        "question": "What is a 'system prompt'?",
+        "options": ["A. Instructions given to the model before user input that define its behavior", "B. The user's first message in a conversation", "C. A prompt that triggers model fine-tuning", "D. A template for generating images"],
+        "answer": "A",
+        "explanation": "System prompts set the model's persona, constraints, and behavior before any user interaction begins."
+      },
+      {
+        "id": "pe-easy-002",
+        "question": "What is few-shot prompting?",
+        "options": ["A. Using very short prompts to save tokens", "B. Providing example input-output pairs in the prompt to guide the model", "C. Generating multiple completions and picking the best", "D. Fine-tuning on a small dataset"],
+        "answer": "B",
+        "explanation": "Few-shot examples demonstrate the desired format or reasoning, helping the model generalize to the actual task."
+      },
+      {
+        "id": "pe-easy-003",
+        "question": "What is Chain-of-Thought (CoT) prompting?",
+        "options": ["A. Linking multiple API calls together", "B. Chaining multiple prompts into a pipeline", "C. Asking the model to reason step-by-step before giving its final answer", "D. Using a sequence of system prompts"],
+        "answer": "C",
+        "explanation": "CoT prompting improves accuracy on reasoning tasks by eliciting explicit intermediate reasoning steps."
+      },
+      {
+        "id": "pe-easy-004",
+        "question": "What does 'temperature' control in LLM generation?",
+        "options": ["A. The speed of token generation", "B. The maximum length of the response", "C. The number of beams in beam search", "D. The randomness and creativity of the output"],
+        "answer": "D",
+        "explanation": "Higher temperature makes outputs more creative and varied; lower temperature makes them more deterministic."
+      },
+      {
+        "id": "pe-easy-005",
+        "question": "What is zero-shot prompting?",
+        "options": ["A. Asking the model to perform a task with no examples in the prompt", "B. Prompting with no system message", "C. Using a model that has not been trained", "D. Generating responses at temperature zero"],
+        "answer": "A",
+        "explanation": "Zero-shot relies entirely on the model's pre-trained knowledge without any demonstrations in the prompt."
+      },
+      {
+        "id": "pe-easy-006",
+        "question": "What is 'prompt injection'?",
+        "options": ["A. Adding variables into a prompt template", "B. A security attack where malicious input overrides the system prompt", "C. Injecting retrieved context into a prompt", "D. Programmatically generating prompts"],
+        "answer": "B",
+        "explanation": "Prompt injection occurs when user-supplied text manipulates the model into ignoring or overriding its original instructions."
+      },
+      {
+        "id": "pe-easy-007",
+        "question": "What is a 'persona prompt'?",
+        "options": ["A. A prompt that generates user profiles", "B. A prompt optimized for image generation", "C. Instructions that give the model a specific identity or role to play", "D. A template for named entity recognition"],
+        "answer": "C",
+        "explanation": "Persona prompts define who the model 'is' — e.g., 'You are a senior engineer' — shaping its communication style."
+      },
+      {
+        "id": "pe-easy-008",
+        "question": "What is 'self-consistency' in prompting?",
+        "options": ["A. Ensuring the system prompt doesn't contradict itself", "B. Using the same temperature for all requests", "C. Repeating the prompt until the model converges", "D. Generating multiple reasoning paths and selecting the most common answer"],
+        "answer": "D",
+        "explanation": "Self-consistency samples multiple chain-of-thought outputs and picks the answer that appears most often."
+      },
+      {
+        "id": "pe-easy-009",
+        "question": "What is ReAct prompting?",
+        "options": ["A. A framework combining reasoning and acting — think, act, observe", "B. A technique for reactive user interfaces", "C. A method for refactoring prompts automatically", "D. A way to re-execute failed API calls"],
+        "answer": "A",
+        "explanation": "ReAct interleaves thought, action, and observation steps, enabling models to use tools while reasoning about results."
+      },
+      {
+        "id": "pe-easy-010",
+        "question": "What does 'top-p' (nucleus sampling) do?",
+        "options": ["A. Limits the response to the top P sentences", "B. Samples from the smallest set of tokens whose cumulative probability exceeds P", "C. Controls the maximum number of tokens generated", "D. Ranks outputs by probability before returning"],
+        "answer": "B",
+        "explanation": "Top-p ensures the model only considers tokens covering at least P% of the probability mass."
+      },
+      {
+        "id": "pe-easy-011",
+        "question": "What are delimiters used for in prompts?",
+        "options": ["A. Ending the conversation with the model", "B. Setting token limits", "C. Separating distinct sections of a prompt to prevent confusion", "D. Formatting code blocks for execution"],
+        "answer": "C",
+        "explanation": "Delimiters like triple backticks or XML tags clearly delineate user input, instructions, and context sections."
+      },
+      {
+        "id": "pe-easy-012",
+        "question": "What is the main risk of very long system prompts?",
+        "options": ["A. They cause the model to hallucinate more frequently", "B. They permanently alter the model's weights", "C. They disable few-shot examples from working", "D. They consume context window space and may dilute attention on key instructions"],
+        "answer": "D",
+        "explanation": "Extremely long system prompts consume context and can dilute the model's attention on critical constraints."
+      }
     ],
     "prompt-engineering-hard": [],
     "llm-basics-easy": [],
