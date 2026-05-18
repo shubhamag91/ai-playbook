@@ -830,6 +830,234 @@ In finance this matters enormously — Harvey, Liu & Zhu (2016) showed most publ
 
 ---
 
+## Part 10: Distribution Statistics
+
+Before running regressions or tests, understanding the shape of your data's distribution matters — especially in finance where returns are decidedly non-normal.
+
+### Moments
+
+The first four moments of a distribution describe its shape completely:
+
+| Moment | Formula | What it measures |
+|---|---|---|
+| **Mean** | $\mu = \mathbb{E}[X]$ | Central tendency |
+| **Variance** | $\sigma^2 = \mathbb{E}[(X-\mu)^2]$ | Spread |
+| **Skewness** | $\gamma_1 = \mathbb{E}\!\left[\left(\frac{X-\mu}{\sigma}\right)^3\right]$ | Asymmetry |
+| **Kurtosis** | $\gamma_2 = \mathbb{E}\!\left[\left(\frac{X-\mu}{\sigma}\right)^4\right]$ | Tail heaviness |
+
+**Skewness:** Zero = symmetric. Positive = right tail (large positive outliers). Negative = left tail (crash risk in equity returns — large negative outliers dominate).
+
+**Kurtosis:** Normal distribution has kurtosis = 3. **Excess kurtosis** = kurtosis − 3. Positive excess kurtosis means **fat tails** — extreme events are far more common than a normal distribution predicts.
+
+Financial returns typically show: negative skew + excess kurtosis > 0. This is why the Gaussian assumption in Black-Scholes systematically underprices out-of-the-money options.
+
+### Fat Tails vs Normal
+
+<svg viewBox="0 0 400 230" xmlns="http://www.w3.org/2000/svg" style="max-width:460px;width:100%;display:block;margin:1.5rem auto">
+  <!-- Shaded tail areas (fat-tailed, shown first so curves render on top) -->
+  <polygon points="40,199 65,180 90,164 40,200" fill="#f87171" fill-opacity="0.25"/>
+  <polygon points="315,180 340,199 340,200 315,200" fill="#f87171" fill-opacity="0.25"/>
+  <!-- Baseline -->
+  <line x1="40" y1="200" x2="340" y2="200" stroke="#888" stroke-width="1.2"/>
+  <line x1="40" y1="20" x2="40" y2="200" stroke="#888" stroke-width="1.2"/>
+  <!-- Normal distribution curve (blue) -->
+  <polyline points="40,199 65,193 90,178 115,148 140,103 165,59 190,40 215,59 240,103 265,148 290,178 315,193 340,199"
+    fill="none" stroke="#818cf8" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Fat-tailed distribution (red, t₃) -->
+  <polyline points="40,180 65,173 90,164 115,142 140,118 165,80 190,53 215,80 240,118 265,142 290,164 315,173 340,180"
+    fill="none" stroke="#f87171" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Tail risk annotations -->
+  <text x="42" y="172" font-size="10" fill="#f87171" font-family="inherit" font-weight="600">Tail</text>
+  <text x="42" y="183" font-size="10" fill="#f87171" font-family="inherit" font-weight="600">risk</text>
+  <text x="318" y="172" font-size="10" fill="#f87171" font-family="inherit" font-weight="600">Tail</text>
+  <text x="318" y="183" font-size="10" fill="#f87171" font-family="inherit" font-weight="600">risk</text>
+  <!-- X axis labels -->
+  <g font-size="11" fill="currentColor" fill-opacity="0.45" text-anchor="middle" font-family="inherit">
+    <text x="40" y="215">−3σ</text><text x="90" y="215">−2σ</text><text x="140" y="215">−1σ</text>
+    <text x="190" y="215">0</text>
+    <text x="240" y="215">+1σ</text><text x="290" y="215">+2σ</text><text x="340" y="215">+3σ</text>
+  </g>
+  <!-- Legend -->
+  <g font-size="11" font-family="inherit">
+    <line x1="100" y1="18" x2="120" y2="18" stroke="#818cf8" stroke-width="2.5"/>
+    <text x="125" y="22" fill="currentColor" fill-opacity="0.65">Normal (excess kurtosis = 0)</text>
+    <line x1="100" y1="34" x2="120" y2="34" stroke="#f87171" stroke-width="2.5"/>
+    <text x="125" y="38" fill="currentColor" fill-opacity="0.65">Fat-tailed (excess kurtosis > 0)</text>
+  </g>
+</svg>
+
+The **Jarque-Bera test** tests jointly for zero skewness and zero excess kurtosis:
+
+$$
+JB = \frac{n}{6}\left(\gamma_1^2 + \frac{\gamma_2^2}{4}\right) \sim \chi^2_2 \quad \text{under normality}
+$$
+
+---
+
+## Part 11: Inequality and Concentration Measures
+
+### Gini Coefficient
+
+The Gini coefficient measures inequality in a distribution — how concentrated values are among a subset of the population. It ranges from 0 (perfect equality) to 1 (perfect inequality).
+
+**Construction via the Lorenz Curve:**
+
+The Lorenz curve plots the cumulative share of total income (or wealth) held by the bottom $x\%$ of the population:
+
+$$
+L(F) = \frac{\int_0^F Q(p)\, dp}{\int_0^1 Q(p)\, dp}
+$$
+
+Where $Q(p)$ is the quantile function (inverse CDF). Perfect equality means $L(F) = F$ — the bottom 50% holds 50% of income.
+
+The Gini coefficient is twice the area between the perfect equality line and the Lorenz curve:
+
+$$
+G = 1 - 2\int_0^1 L(F)\, dF = \frac{\text{Area between diagonal and Lorenz curve}}{\text{Total area under diagonal}}
+$$
+
+<svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" style="max-width:360px;width:100%;display:block;margin:1.5rem auto">
+  <!-- Shaded area between equality line and Lorenz curves -->
+  <!-- Gini area for high inequality curve (darker shade) -->
+  <polygon points="40,260 84,260 128,254 172,232 216,170 260,40 216,107 172,168 128,210 84,233 40,260"
+    fill="#f87171" fill-opacity="0.12"/>
+  <!-- Gini area for moderate inequality (lighter) -->
+  <polygon points="40,260 84,233 128,210 172,168 216,107 260,40 216,107 172,168 128,210 84,233 40,260"
+    fill="none"/>
+  <!-- Perfect equality line -->
+  <line x1="40" y1="260" x2="260" y2="40" stroke="#888" stroke-opacity="0.5" stroke-dasharray="5,3" stroke-width="1.5"/>
+  <!-- Axes -->
+  <line x1="40" y1="260" x2="262" y2="260" stroke="#888" stroke-width="1.5"/>
+  <line x1="40" y1="38" x2="40" y2="262" stroke="#888" stroke-width="1.5"/>
+  <!-- Moderate inequality Lorenz curve (L≈x^2.2) -->
+  <polyline points="40,260 84,233 128,210 172,168 216,107 260,40"
+    fill="none" stroke="#818cf8" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- High inequality Lorenz curve (L≈x^4) -->
+  <polyline points="40,260 84,260 128,254 172,232 216,170 260,40"
+    fill="none" stroke="#f87171" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Gini annotation arrow -->
+  <text x="145" y="210" font-size="10" fill="#f87171" fill-opacity="0.7" font-family="inherit">Gini = 2 ×</text>
+  <text x="145" y="222" font-size="10" fill="#f87171" fill-opacity="0.7" font-family="inherit">shaded area</text>
+  <!-- Axis labels -->
+  <g font-size="11" fill="currentColor" fill-opacity="0.45" text-anchor="middle" font-family="inherit">
+    <text x="150" y="278">Cumulative % of population</text>
+    <text x="40" y="275">0%</text><text x="150" y="275">50%</text><text x="260" y="275">100%</text>
+  </g>
+  <text x="14" y="152" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity="0.45" font-family="inherit" transform="rotate(-90,14,152)">Cumulative % of income</text>
+  <g font-size="10" fill="currentColor" fill-opacity="0.4" text-anchor="end" font-family="inherit">
+    <text x="36" y="263">0%</text><text x="36" y="152">50%</text><text x="36" y="43">100%</text>
+  </g>
+  <!-- Legend -->
+  <g font-size="11" font-family="inherit">
+    <line x1="45" y1="22" x2="65" y2="22" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <text x="70" y="26" fill="currentColor" fill-opacity="0.65">Perfect equality (G=0)</text>
+    <line x1="45" y1="38" x2="65" y2="38" stroke="#818cf8" stroke-width="2.5"/>
+    <text x="70" y="42" fill="currentColor" fill-opacity="0.65">Moderate inequality (G≈0.35)</text>
+    <line x1="45" y1="54" x2="65" y2="54" stroke="#f87171" stroke-width="2.5"/>
+    <text x="70" y="58" fill="currentColor" fill-opacity="0.65">High inequality (G≈0.60)</text>
+  </g>
+</svg>
+
+### Gini in Model Validation (Credit Scoring)
+
+The Gini coefficient has a second life in quantitative model evaluation — particularly in credit risk. A credit model ranks borrowers by predicted default probability; the Gini measures how well it separates defaulters from non-defaulters.
+
+The relationship to the **AUC (Area Under the ROC Curve)**:
+
+$$
+\text{Gini} = 2 \times \text{AUC} - 1
+$$
+
+A random model has AUC = 0.5, Gini = 0. A perfect model has AUC = 1, Gini = 1. In practice, credit scorecards with Gini > 0.4 are considered good; > 0.6 is excellent.
+
+### Herfindahl-Hirschman Index (HHI)
+
+HHI measures market concentration — how dominant the largest players are:
+
+$$
+\text{HHI} = \sum_{i=1}^n s_i^2
+$$
+
+Where $s_i$ is firm $i$'s market share (as a fraction). Ranges from $1/n$ (perfectly equal shares) to 1 (monopoly).
+
+- HHI < 0.15: unconcentrated market
+- 0.15–0.25: moderate concentration
+- HHI > 0.25: highly concentrated (US DOJ merger review threshold)
+
+Used in: antitrust analysis, portfolio concentration risk, factor concentration in quant portfolios.
+
+---
+
+## Part 12: Non-parametric Methods
+
+Non-parametric methods make no assumptions about the underlying distribution. Essential when data is ordinal, heavily skewed, or has fat tails.
+
+### Rank Correlations
+
+**Pearson correlation** measures linear dependence between two variables. It can be misleading when relationships are monotonic but non-linear, or when outliers distort the picture.
+
+**Spearman's $\rho$** replaces values with their ranks, then computes Pearson correlation on the ranks:
+
+$$
+\rho_s = 1 - \frac{6 \sum_i d_i^2}{n(n^2-1)}
+$$
+
+Where $d_i = \text{rank}(x_i) - \text{rank}(y_i)$. Captures any monotonic relationship, not just linear.
+
+**Kendall's $\tau$** counts concordant vs discordant pairs:
+
+$$
+\tau = \frac{C - D}{\binom{n}{2}}
+$$
+
+Where $C$ = concordant pairs (both $x$ and $y$ rank the same way) and $D$ = discordant pairs. More robust than Spearman to small samples and tied values.
+
+| Method | Measures | Sensitive to outliers? | Use when |
+|---|---|---|---|
+| Pearson | Linear dependence | Yes | Normal data, linear relationship |
+| Spearman | Monotonic dependence | No | Ordinal data, non-linear monotone |
+| Kendall | Ordinal association | No | Small samples, many ties |
+
+### Bootstrap
+
+The bootstrap estimates the sampling distribution of any statistic by resampling with replacement from the observed data. No distributional assumptions required.
+
+**Algorithm:**
+1. Draw $B$ bootstrap samples of size $n$ from the data (with replacement)
+2. Compute the statistic $\hat{\theta}^*_b$ on each sample
+3. The distribution of $\{\hat{\theta}^*_1, \ldots, \hat{\theta}^*_B\}$ approximates the sampling distribution of $\hat{\theta}$
+
+**Bootstrap confidence interval (percentile method):**
+
+$$
+\text{CI}_{95\%} = [\hat{\theta}^*_{(0.025)},\; \hat{\theta}^*_{(0.975)}]
+$$
+
+The bootstrap is invaluable when:
+- The statistic has no closed-form sampling distribution (e.g., Sharpe ratio, Gini)
+- The data is clearly non-normal
+- You want robust standard errors for complex estimators
+
+**In finance:** Bootstrap is used to test whether a backtest's Sharpe ratio is statistically significant, controlling for look-ahead bias and non-normality.
+
+### Kernel Density Estimation (KDE)
+
+KDE estimates the probability density function of a dataset without assuming a parametric form:
+
+$$
+\hat{f}(x) = \frac{1}{nh} \sum_{i=1}^n K\!\left(\frac{x - x_i}{h}\right)
+$$
+
+Where $K$ is a kernel function (usually Gaussian) and $h$ is the **bandwidth** — the smoothing parameter.
+
+- Small $h$: wiggly, overfits to noise
+- Large $h$: over-smoothed, loses shape detail
+- Optimal $h$ (Silverman's rule of thumb): $h = 1.06 \hat{\sigma} n^{-1/5}$
+
+KDE is used to visualise return distributions, compare empirical vs theoretical densities, and detect multimodality (e.g., bimodal return distributions suggesting regime changes).
+
+---
+
 ## Common Pitfalls
 
 | Pitfall | What happens | Fix |
