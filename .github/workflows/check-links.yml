@@ -44,9 +44,13 @@ jobs:
           args: >-
             --config .github/lychee.toml
             --cache
-            --format json
-            --output link-check-report.json
           fail: false
+
+      - name: Export broken links as JSON
+        if: steps.lychee.outputs.exit_code != 0
+        run: |
+          lychee --config .github/lychee.toml --cache --format json --output link-check-report.json \
+            README.md 'src/content/docs/' || true
 
       - name: Create issue on broken links
         if: steps.lychee.outputs.exit_code != 0
