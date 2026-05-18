@@ -47,8 +47,10 @@ jobs:
               return results;
             }
 
+            const EXCLUDED = new Set(['404.md', '404.mdx']);
+
             const docsDir = 'src/content/docs';
-            const files = walkDocs(docsDir);
+            const files = walkDocs(docsDir).filter(f => !EXCLUDED.has(path.basename(f)));
             const overduePages = [];
             const now = new Date();
 
