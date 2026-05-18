@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "generated": "2026-05-17",
+  "generated": "2026-05-18",
   "topics": [
     {
       "id": "llm-basics",
@@ -5954,7 +5954,356 @@
         "explanation": "Solve issues."
       }
     ],
-    "eval-testing-hard": [],
+    "eval-testing-hard": [
+      {
+        "id": "eval-testing-hard-001",
+        "question": "What is the primary challenge in evaluating LLM applications?",
+        "options": [
+          "A. Non-deterministic outputs",
+          "B. Lack of training data",
+          "C. Insufficient computational resources",
+          "D. High development costs"
+        ],
+        "answer": "A",
+        "explanation": "Non-deterministic outputs."
+      },
+      {
+        "id": "eval-testing-hard-002",
+        "question": "What is the purpose of a layered evaluation strategy?",
+        "options": [
+          "A. To simplify the evaluation process",
+          "B. To increase the accuracy of evaluations",
+          "C. To reduce the complexity of LLM applications",
+          "D. To eliminate the need for human evaluation"
+        ],
+        "answer": "B",
+        "explanation": "Increase accuracy."
+      },
+      {
+        "id": "eval-testing-hard-003",
+        "question": "What is the focus of Unit Tests in LLM evaluation?",
+        "options": [
+          "A. Property-based testing",
+          "B. Semantic evaluation",
+          "C. Individual prompt templates",
+          "D. Production monitoring"
+        ],
+        "answer": "C",
+        "explanation": "Individual prompts."
+      },
+      {
+        "id": "eval-testing-hard-004",
+        "question": "What is the purpose of property-based tests?",
+        "options": [
+          "A. To test individual prompt templates",
+          "B. To evaluate the semantic meaning of outputs",
+          "C. To check output properties",
+          "D. To monitor production systems"
+        ],
+        "answer": "C",
+        "explanation": "Check properties."
+      },
+      {
+        "id": "eval-testing-hard-005",
+        "question": "How is output quality measured in semantic evaluation?",
+        "options": [
+          "A. Using a rule-based system",
+          "B. Using another LLM as a judge",
+          "C. Using human evaluators only",
+          "D. Using a combination of metrics"
+        ],
+        "answer": "B",
+        "explanation": "Another LLM."
+      },
+      {
+        "id": "eval-testing-hard-006",
+        "question": "What is the purpose of the LLM-as-Judge approach?",
+        "options": [
+          "A. To simplify the evaluation process",
+          "B. To increase the accuracy of evaluations",
+          "C. To reduce the need for human evaluation",
+          "D. To provide a practical evaluation method"
+        ],
+        "answer": "D",
+        "explanation": "Practical method."
+      },
+      {
+        "id": "eval-testing-hard-007",
+        "question": "What is a potential pitfall of the LLM-as-Judge approach?",
+        "options": [
+          "A. Judge prefers shorter responses",
+          "B. Judge agrees with itself",
+          "C. Position bias is eliminated",
+          "D. Verbosity bias is not a concern"
+        ],
+        "answer": "B",
+        "explanation": "Judge agrees."
+      },
+      {
+        "id": "eval-testing-hard-008",
+        "question": "What is the purpose of A/B testing in LLM evaluation?",
+        "options": [
+          "A. To compare two versions of a prompt",
+          "B. To evaluate the effectiveness of a model",
+          "C. To compare two different models",
+          "D. To monitor production systems"
+        ],
+        "answer": "A",
+        "explanation": "Compare prompts."
+      },
+      {
+        "id": "eval-testing-hard-009",
+        "question": "What is the purpose of the sample size calculator in A/B testing?",
+        "options": [
+          "A. To determine the required sample size",
+          "B. To evaluate the effectiveness of a model",
+          "C. To compare two different models",
+          "D. To monitor production systems"
+        ],
+        "answer": "A",
+        "explanation": "Determine sample."
+      },
+      {
+        "id": "eval-testing-hard-010",
+        "question": "What is the purpose of benchmark methodology in LLM evaluation?",
+        "options": [
+          "A. To simplify the evaluation process",
+          "B. To increase the accuracy of evaluations",
+          "C. To understand how benchmarks work",
+          "D. To eliminate the need for human evaluation"
+        ],
+        "answer": "C",
+        "explanation": "Understand benchmarks."
+      },
+      {
+        "id": "eval-testing-hard-011",
+        "question": "What is the purpose of the MMLU benchmark?",
+        "options": [
+          "A. To evaluate the reasoning capabilities of LLMs",
+          "B. To evaluate the language understanding capabilities of LLMs",
+          "C. To evaluate the mathematical capabilities of LLMs",
+          "D. To evaluate the programming capabilities of LLMs"
+        ],
+        "answer": "B",
+        "explanation": "Language understanding."
+      },
+      {
+        "id": "eval-testing-hard-012",
+        "question": "What is the purpose of the HumanEval benchmark?",
+        "options": [
+          "A. To evaluate the reasoning capabilities of LLMs",
+          "B. To evaluate the language understanding capabilities of LLMs",
+          "C. To evaluate the programming capabilities of LLMs",
+          "D. To evaluate the mathematical capabilities of LLMs"
+        ],
+        "answer": "C",
+        "explanation": "Programming capabilities."
+      },
+      {
+        "id": "eval-testing-hard-013",
+        "question": "What is the purpose of the GPQA benchmark?",
+        "options": [
+          "A. To evaluate the reasoning capabilities of LLMs",
+          "B. To evaluate the language understanding capabilities of LLMs",
+          "C. To evaluate the programming capabilities of LLMs",
+          "D. To evaluate the domain-specific knowledge of LLMs"
+        ],
+        "answer": "D",
+        "explanation": "Domain-specific knowledge."
+      },
+      {
+        "id": "eval-testing-hard-014",
+        "question": "What is the purpose of the SWE-bench benchmark?",
+        "options": [
+          "A. To evaluate the reasoning capabilities of LLMs",
+          "B. To evaluate the language understanding capabilities of LLMs",
+          "C. To evaluate the programming capabilities of LLMs",
+          "D. To evaluate the software engineering capabilities of LLMs"
+        ],
+        "answer": "D",
+        "explanation": "Software engineering."
+      },
+      {
+        "id": "eval-testing-hard-015",
+        "question": "What is the purpose of the GSM8K benchmark?",
+        "options": [
+          "A. To evaluate the reasoning capabilities of LLMs",
+          "B. To evaluate the language understanding capabilities of LLMs",
+          "C. To evaluate the mathematical capabilities of LLMs",
+          "D. To evaluate the grade-school math capabilities of LLMs"
+        ],
+        "answer": "D",
+        "explanation": "Grade-school math."
+      },
+      {
+        "id": "eval-testing-hard-016",
+        "question": "What is the purpose of the Design Arena benchmark?",
+        "options": [
+          "A. To evaluate the reasoning capabilities of LLMs",
+          "B. To evaluate the language understanding capabilities of LLMs",
+          "C. To evaluate the creative capabilities of LLMs",
+          "D. To evaluate the programming capabilities of LLMs"
+        ],
+        "answer": "C",
+        "explanation": "Creative capabilities."
+      },
+      {
+        "id": "eval-testing-hard-017",
+        "question": "What is the primary issue with benchmarks?",
+        "options": [
+          "A. Lack of training data",
+          "B. Insufficient computational resources",
+          "C. Data leakage",
+          "D. High development costs"
+        ],
+        "answer": "C",
+        "explanation": "Data leakage."
+      },
+      {
+        "id": "eval-testing-hard-018",
+        "question": "What is the purpose of detecting benchmark contamination?",
+        "options": [
+          "A. To simplify the evaluation process",
+          "B. To increase the accuracy of evaluations",
+          "C. To reduce the complexity of LLM applications",
+          "D. To ensure the validity of benchmark results"
+        ],
+        "answer": "D",
+        "explanation": "Ensure validity."
+      },
+      {
+        "id": "eval-testing-hard-019",
+        "question": "What is the purpose of N-gram overlap analysis in detecting benchmark contamination?",
+        "options": [
+          "A. To evaluate the reasoning capabilities of LLMs",
+          "B. To evaluate the language understanding capabilities of LLMs",
+          "C. To detect verbatim occurrences of benchmark questions",
+          "D. To evaluate the programming capabilities of LLMs"
+        ],
+        "answer": "C",
+        "explanation": "Detect verbatim."
+      },
+      {
+        "id": "eval-testing-hard-020",
+        "question": "What is the purpose of perplexity analysis in detecting benchmark contamination?",
+        "options": [
+          "A. To evaluate the reasoning capabilities of LLMs",
+          "B. To evaluate the language understanding capabilities of LLMs",
+          "C. To detect unusually low perplexity on contaminated questions",
+          "D. To evaluate the programming capabilities of LLMs"
+        ],
+        "answer": "C",
+        "explanation": "Detect low perplexity."
+      },
+      {
+        "id": "eval-testing-hard-021",
+        "question": "What is the purpose of time of release analysis in detecting benchmark contamination?",
+        "options": [
+          "A. To evaluate the reasoning capabilities of LLMs",
+          "B. To evaluate the language understanding capabilities of LLMs",
+          "C. To detect if a benchmark was released before the model's training cutoff",
+          "D. To evaluate the programming capabilities of LLMs"
+        ],
+        "answer": "C",
+        "explanation": "Detect release time."
+      },
+      {
+        "id": "eval-testing-hard-022",
+        "question": "What is the purpose of the Bradley-Terry Elo rating in the Design Arena benchmark?",
+        "options": [
+          "A. To evaluate the reasoning capabilities of LLMs",
+          "B. To evaluate the language understanding capabilities of LLMs",
+          "C. To measure creative/aesthetic output",
+          "D. To evaluate the programming capabilities of LLMs"
+        ],
+        "answer": "C",
+        "explanation": "Measure creativity."
+      },
+      {
+        "id": "eval-testing-hard-023",
+        "question": "What is the purpose of the statistical significance test in A/B testing?",
+        "options": [
+          "A. To determine the required sample size",
+          "B. To evaluate the effectiveness of a model",
+          "C. To compare two different models",
+          "D. To ensure the reliability of the results"
+        ],
+        "answer": "D",
+        "explanation": "Ensure reliability."
+      },
+      {
+        "id": "eval-testing-hard-024",
+        "question": "What is the purpose of the min_sample_size function in A/B testing?",
+        "options": [
+          "A. To determine the required sample size",
+          "B. To evaluate the effectiveness of a model",
+          "C. To compare two different models",
+          "D. To monitor production systems"
+        ],
+        "answer": "A",
+        "explanation": "Determine sample."
+      },
+      {
+        "id": "eval-testing-hard-025",
+        "question": "What is the purpose of the z_alpha value in the min_sample_size function?",
+        "options": [
+          "A. To determine the required sample size",
+          "B. To evaluate the effectiveness of a model",
+          "C. To represent the 95% confidence level",
+          "D. To monitor production systems"
+        ],
+        "answer": "C",
+        "explanation": "95% confidence."
+      },
+      {
+        "id": "eval-testing-hard-026",
+        "question": "What is the purpose of the z_beta value in the min_sample_size function?",
+        "options": [
+          "A. To determine the required sample size",
+          "B. To evaluate the effectiveness of a model",
+          "C. To represent the 80% power level",
+          "D. To monitor production systems"
+        ],
+        "answer": "C",
+        "explanation": "80% power."
+      },
+      {
+        "id": "eval-testing-hard-027",
+        "question": "What is the purpose of the effect_size parameter in the min_sample_size function?",
+        "options": [
+          "A. To determine the required sample size",
+          "B. To evaluate the effectiveness of a model",
+          "C. To represent the expected difference between variants",
+          "D. To monitor production systems"
+        ],
+        "answer": "C",
+        "explanation": "Expected difference."
+      },
+      {
+        "id": "eval-testing-hard-028",
+        "question": "What is the purpose of the alpha parameter in the min_sample_size function?",
+        "options": [
+          "A. To determine the required sample size",
+          "B. To evaluate the effectiveness of a model",
+          "C. To represent the significance level",
+          "D. To monitor production systems"
+        ],
+        "answer": "C",
+        "explanation": "Significance level."
+      },
+      {
+        "id": "eval-testing-hard-029",
+        "question": "What is the purpose of the power parameter in the min_sample_size function?",
+        "options": [
+          "A. To determine the required sample size",
+          "B. To evaluate the effectiveness of a model",
+          "C. To represent the desired power level",
+          "D. To monitor production systems"
+        ],
+        "answer": "C",
+        "explanation": "Desired power."
+      }
+    ],
     "interview-llm-easy": [
       {
         "id": "interview-llm-easy-001",
@@ -6317,8 +6666,730 @@
         "explanation": "Stores K and V values"
       }
     ],
-    "interview-llm-hard": [],
-    "interview-ml-easy": [],
+    "interview-llm-hard": [
+      {
+        "id": "interview-llm-hard-001",
+        "question": "What is the purpose of the √d_k scaling in the scaled dot-product attention formula?",
+        "options": [
+          "A. To increase the variance of the dot product",
+          "B. To decrease the variance of the dot product",
+          "C. To keep the variance constant regardless of dimension",
+          "D. To reduce the computational cost of the attention mechanism"
+        ],
+        "answer": "C",
+        "explanation": "Scaling keeps variance constant."
+      },
+      {
+        "id": "interview-llm-hard-002",
+        "question": "What is the difference between encoder-only and decoder-only models?",
+        "options": [
+          "A. Encoder-only models are used for text generation, while decoder-only models are used for classification",
+          "B. Encoder-only models are used for classification, while decoder-only models are used for text generation",
+          "C. Encoder-only models are used for both classification and text generation",
+          "D. Decoder-only models are used for both classification and text generation"
+        ],
+        "answer": "B",
+        "explanation": "Encoder-only for classification."
+      },
+      {
+        "id": "interview-llm-hard-003",
+        "question": "What are the benefits of using Mixture-of-Experts (MoE) models?",
+        "options": [
+          "A. Increased computational cost and reduced parameter efficiency",
+          "B. Decreased parameter efficiency and increased computational cost",
+          "C. Improved parameter efficiency and reduced computational cost",
+          "D. No benefits, only trade-offs"
+        ],
+        "answer": "C",
+        "explanation": "Parameters scale efficiently."
+      },
+      {
+        "id": "interview-llm-hard-004",
+        "question": "What is the purpose of Rotary Position Embeddings (RoPE)?",
+        "options": [
+          "A. To encode absolute positions in a sequence",
+          "B. To encode relative positions in a sequence",
+          "C. To reduce the dimensionality of the input sequence",
+          "D. To increase the computational cost of the model"
+        ],
+        "answer": "B",
+        "explanation": "RoPE encodes relative positions."
+      },
+      {
+        "id": "interview-llm-hard-005",
+        "question": "What is Flash Attention and why is it important?",
+        "options": [
+          "A. A type of attention mechanism that is not suitable for long sequences",
+          "B. A type of attention mechanism that is only used for short sequences",
+          "C. A type of attention mechanism that reduces memory usage",
+          "D. A type of attention mechanism that increases computational cost"
+        ],
+        "answer": "C",
+        "explanation": "Flash Attention reduces memory."
+      },
+      {
+        "id": "interview-llm-hard-006",
+        "question": "How does the KV cache work in autoregressive generation?",
+        "options": [
+          "A. It stores the K and V values for all past positions in memory",
+          "B. It stores the Q values for all past positions in memory",
+          "C. It stores the attention weights for all past positions in memory",
+          "D. It does not store any values in memory"
+        ],
+        "answer": "A",
+        "explanation": "KV cache stores K and V."
+      },
+      {
+        "id": "interview-llm-hard-007",
+        "question": "What is the difference between pre-training, fine-tuning, and instruction tuning?",
+        "options": [
+          "A. Pre-training is for instruction tuning, fine-tuning is for pre-training, and instruction tuning is for fine-tuning",
+          "B. Pre-training is for learning language, fine-tuning is for learning instructions, and instruction tuning is for aligning with human preferences",
+          "C. Pre-training is for aligning with human preferences, fine-tuning is for learning language, and instruction tuning is for learning instructions",
+          "D. Pre-training is for learning instructions, fine-tuning is for aligning with human preferences, and instruction tuning is for learning language"
+        ],
+        "answer": "B",
+        "explanation": "Pre-training learns language."
+      },
+      {
+        "id": "interview-llm-hard-008",
+        "question": "What is RLHF and how does it work?",
+        "options": [
+          "A. RLHF is a type of supervised fine-tuning that uses a reward model to align the model with human preferences",
+          "B. RLHF is a type of reinforcement learning that uses a reward model to align the model with human preferences",
+          "C. RLHF is a type of unsupervised learning that does not use a reward model",
+          "D. RLHF is a type of semi-supervised learning that uses a reward model to align the model with human preferences"
+        ],
+        "answer": "B",
+        "explanation": "RLHF uses reinforcement learning."
+      },
+      {
+        "id": "interview-llm-hard-009",
+        "question": "What is DPO and how does it differ from PPO?",
+        "options": [
+          "A. DPO is a type of PPO that uses a separate reward model",
+          "B. DPO is a type of PPO that does not use a separate reward model",
+          "C. DPO is a type of reinforcement learning that is not related to PPO",
+          "D. DPO is a type of supervised learning that is not related to PPO"
+        ],
+        "answer": "B",
+        "explanation": "DPO eliminates reward model."
+      },
+      {
+        "id": "interview-llm-hard-010",
+        "question": "What is LoRA and what problem does it solve?",
+        "options": [
+          "A. LoRA is a type of fine-tuning that solves the problem of overfitting",
+          "B. LoRA is a type of fine-tuning that solves the problem of underfitting",
+          "C. LoRA is a type of fine-tuning that solves the problem of updating all model weights",
+          "D. LoRA is a type of fine-tuning that solves the problem of not updating all model weights"
+        ],
+        "answer": "C",
+        "explanation": "LoRA solves updating all weights."
+      },
+      {
+        "id": "interview-llm-hard-011",
+        "question": "What is the purpose of the router in Mixture-of-Experts (MoE) models?",
+        "options": [
+          "A. To send each token to all experts",
+          "B. To send each token to the top-K experts",
+          "C. To send each token to a random expert",
+          "D. To send each token to the expert with the highest weight"
+        ],
+        "answer": "B",
+        "explanation": "Router sends to top-K experts."
+      },
+      {
+        "id": "interview-llm-hard-012",
+        "question": "What is the benefit of using Rotary Position Embeddings (RoPE) over absolute learned positions?",
+        "options": [
+          "A. RoPE can only handle sequences up to a certain length",
+          "B. RoPE can handle sequences of any length, but is less efficient",
+          "C. RoPE can handle sequences of any length and is more efficient",
+          "D. RoPE is less efficient and can only handle sequences up to a certain length"
+        ],
+        "answer": "C",
+        "explanation": "RoPE handles any sequence length."
+      },
+      {
+        "id": "interview-llm-hard-013",
+        "question": "What is the purpose of the KV cache in autoregressive generation?",
+        "options": [
+          "A. To store the attention weights for all past positions",
+          "B. To store the K and V values for all past positions",
+          "C. To store the Q values for all past positions",
+          "D. To store the input sequence"
+        ],
+        "answer": "B",
+        "explanation": "KV cache stores K and V."
+      },
+      {
+        "id": "interview-llm-hard-014",
+        "question": "What is the difference between encoder-decoder models and decoder-only models?",
+        "options": [
+          "A. Encoder-decoder models are used for text generation, while decoder-only models are used for classification",
+          "B. Encoder-decoder models are used for classification, while decoder-only models are used for text generation",
+          "C. Encoder-decoder models are used for sequence-to-sequence tasks, while decoder-only models are used for autoregressive generation",
+          "D. Encoder-decoder models are used for autoregressive generation, while decoder-only models are used for sequence-to-sequence tasks"
+        ],
+        "answer": "C",
+        "explanation": "Encoder-decoder for sequence-to-sequence."
+      },
+      {
+        "id": "interview-llm-hard-015",
+        "question": "What is the purpose of Flash Attention?",
+        "options": [
+          "A. To increase the computational cost of the attention mechanism",
+          "B. To decrease the computational cost of the attention mechanism",
+          "C. To reduce the memory usage of the attention mechanism",
+          "D. To increase the memory usage of the attention mechanism"
+        ],
+        "answer": "C",
+        "explanation": "Flash Attention reduces memory."
+      },
+      {
+        "id": "interview-llm-hard-016",
+        "question": "What is the benefit of using Mixture-of-Experts (MoE) models?",
+        "options": [
+          "A. MoE models are less efficient than standard transformer models",
+          "B. MoE models are more efficient than standard transformer models",
+          "C. MoE models are less scalable than standard transformer models",
+          "D. MoE models are more scalable than standard transformer models"
+        ],
+        "answer": "B",
+        "explanation": "MoE models are more efficient."
+      },
+      {
+        "id": "interview-llm-hard-017",
+        "question": "What is the purpose of the reward model in RLHF?",
+        "options": [
+          "A. To predict the next token in the sequence",
+          "B. To predict the reward for a given action",
+          "C. To predict the attention weights for a given sequence",
+          "D. To predict the input sequence"
+        ],
+        "answer": "B",
+        "explanation": "Reward model predicts reward."
+      },
+      {
+        "id": "interview-llm-hard-018",
+        "question": "What is the difference between DPO and PPO?",
+        "options": [
+          "A. DPO uses a separate reward model, while PPO does not",
+          "B. DPO does not use a separate reward model, while PPO does",
+          "C. DPO is a type of supervised learning, while PPO is a type of reinforcement learning",
+          "D. DPO is a type of reinforcement learning, while PPO is a type of supervised learning"
+        ],
+        "answer": "B",
+        "explanation": "DPO does not use reward model."
+      },
+      {
+        "id": "interview-llm-hard-019",
+        "question": "What is LoRA and what problem does it solve?",
+        "options": [
+          "A. LoRA is a type of fine-tuning that solves the problem of overfitting",
+          "B. LoRA is a type of fine-tuning that solves the problem of underfitting",
+          "C. LoRA is a type of fine-tuning that solves the problem of updating all model weights",
+          "D. LoRA is a type of fine-tuning that solves the problem of not updating all model weights"
+        ],
+        "answer": "C",
+        "explanation": "LoRA solves updating all weights."
+      },
+      {
+        "id": "interview-llm-hard-020",
+        "question": "What is the purpose of the router in Mixture-of-Experts (MoE) models?",
+        "options": [
+          "A. To send each token to all experts",
+          "B. To send each token to the top-K experts",
+          "C. To send each token to a random expert",
+          "D. To send each token to the expert with the highest weight"
+        ],
+        "answer": "B",
+        "explanation": "Router sends to top-K experts."
+      },
+      {
+        "id": "interview-llm-hard-021",
+        "question": "What is the benefit of using Rotary Position Embeddings (RoPE) over absolute learned positions?",
+        "options": [
+          "A. RoPE can only handle sequences up to a certain length",
+          "B. RoPE can handle sequences of any length, but is less efficient",
+          "C. RoPE can handle sequences of any length and is more efficient",
+          "D. RoPE is less efficient and can only handle sequences up to a certain length"
+        ],
+        "answer": "C",
+        "explanation": "RoPE handles any sequence length."
+      },
+      {
+        "id": "interview-llm-hard-022",
+        "question": "What is the purpose of the KV cache in autoregressive generation?",
+        "options": [
+          "A. To store the attention weights for all past positions",
+          "B. To store the K and V values for all past positions",
+          "C. To store the Q values for all past positions",
+          "D. To store the input sequence"
+        ],
+        "answer": "B",
+        "explanation": "KV cache stores K and V."
+      },
+      {
+        "id": "interview-llm-hard-023",
+        "question": "What is the difference between encoder-decoder models and decoder-only models?",
+        "options": [
+          "A. Encoder-decoder models are used for text generation, while decoder-only models are used for classification",
+          "B. Encoder-decoder models are used for classification, while decoder-only models are used for text generation",
+          "C. Encoder-decoder models are used for sequence-to-sequence tasks, while decoder-only models are used for autoregressive generation",
+          "D. Encoder-decoder models are used for autoregressive generation, while decoder-only models are used for sequence-to-sequence tasks"
+        ],
+        "answer": "C",
+        "explanation": "Encoder-decoder for sequence-to-sequence."
+      },
+      {
+        "id": "interview-llm-hard-024",
+        "question": "What is the purpose of Flash Attention?",
+        "options": [
+          "A. To increase the computational cost of the attention mechanism",
+          "B. To decrease the computational cost of the attention mechanism",
+          "C. To reduce the memory usage of the attention mechanism",
+          "D. To increase the memory usage of the attention mechanism"
+        ],
+        "answer": "C",
+        "explanation": "Flash Attention reduces memory."
+      },
+      {
+        "id": "interview-llm-hard-025",
+        "question": "What is the benefit of using Mixture-of-Experts (MoE) models?",
+        "options": [
+          "A. MoE models are less efficient than standard transformer models",
+          "B. MoE models are more efficient than standard transformer models",
+          "C. MoE models are less scalable than standard transformer models",
+          "D. MoE models are more scalable than standard transformer models"
+        ],
+        "answer": "B",
+        "explanation": "MoE models are more efficient."
+      },
+      {
+        "id": "interview-llm-hard-026",
+        "question": "What is the purpose of the reward model in RLHF?",
+        "options": [
+          "A. To predict the next token in the sequence",
+          "B. To predict the reward for a given action",
+          "C. To predict the attention weights for a given sequence",
+          "D. To predict the input sequence"
+        ],
+        "answer": "B",
+        "explanation": "Reward model predicts reward."
+      },
+      {
+        "id": "interview-llm-hard-027",
+        "question": "What is the difference between DPO and PPO?",
+        "options": [
+          "A. DPO uses a separate reward model, while PPO does not",
+          "B. DPO does not use a separate reward model, while PPO does",
+          "C. DPO is a type of supervised learning, while PPO is a type of reinforcement learning",
+          "D. DPO is a type of reinforcement learning, while PPO is a type of supervised learning"
+        ],
+        "answer": "B",
+        "explanation": "DPO does not use reward model."
+      },
+      {
+        "id": "interview-llm-hard-028",
+        "question": "What is LoRA and what problem does it solve?",
+        "options": [
+          "A. LoRA is a type of fine-tuning that solves the problem of overfitting",
+          "B. LoRA is a type of fine-tuning that solves the problem of underfitting",
+          "C. LoRA is a type of fine-tuning that solves the problem of updating all model weights",
+          "D. LoRA is a type of fine-tuning that solves the problem of not updating all model weights"
+        ],
+        "answer": "C",
+        "explanation": "LoRA solves updating all weights."
+      },
+      {
+        "id": "interview-llm-hard-029",
+        "question": "What is the purpose of the router in Mixture-of-Experts (MoE) models?",
+        "options": [
+          "A. To send each token to all experts",
+          "B. To send each token to the top-K experts",
+          "C. To send each token to a random expert",
+          "D. To send each token to the expert with the highest weight"
+        ],
+        "answer": "B",
+        "explanation": "Router sends to top-K experts."
+      },
+      {
+        "id": "interview-llm-hard-030",
+        "question": "What is the benefit of using Rotary Position Embeddings (RoPE) over absolute learned positions?",
+        "options": [
+          "A. RoPE can only handle sequences up to a certain length",
+          "B. RoPE can handle sequences of any length, but is less efficient",
+          "C. RoPE can handle sequences of any length and is more efficient",
+          "D. RoPE is less efficient and can only handle sequences up to a certain length"
+        ],
+        "answer": "C",
+        "explanation": "RoPE handles any sequence length."
+      }
+    ],
+    "interview-ml-easy": [
+      {
+        "id": "interview-ml-easy-001",
+        "question": "What is the primary goal of a decision tree in classical ML algorithms?",
+        "options": [
+          "A. To minimize Gini impurity",
+          "B. To maximize information gain",
+          "C. To reduce variance",
+          "D. To increase bias"
+        ],
+        "answer": "B",
+        "explanation": "Maximizes info gain"
+      },
+      {
+        "id": "interview-ml-easy-002",
+        "question": "How does Random Forest reduce variance in classical ML algorithms?",
+        "options": [
+          "A. By reducing bias",
+          "B. By increasing variance",
+          "C. By averaging decorrelated trees",
+          "D. By using gradient boosting"
+        ],
+        "answer": "C",
+        "explanation": "Averages decorrelated trees"
+      },
+      {
+        "id": "interview-ml-easy-003",
+        "question": "What is the key innovation of XGBoost over vanilla gradient boosting?",
+        "options": [
+          "A. Regularization",
+          "B. Parallel tree construction",
+          "C. Approximate split finding",
+          "D. All of the above"
+        ],
+        "answer": "D",
+        "explanation": "Multiple innovations"
+      },
+      {
+        "id": "interview-ml-easy-004",
+        "question": "What is the difference between bagging and boosting in classical ML algorithms?",
+        "options": [
+          "A. Bagging reduces bias, boosting reduces variance",
+          "B. Bagging reduces variance, boosting reduces bias",
+          "C. Bagging is sequential, boosting is parallel",
+          "D. Bagging is used for regression, boosting for classification"
+        ],
+        "answer": "B",
+        "explanation": "Bagging reduces variance"
+      },
+      {
+        "id": "interview-ml-easy-005",
+        "question": "What is the purpose of the kernel trick in Support Vector Machines?",
+        "options": [
+          "A. To reduce dimensionality",
+          "B. To increase computational cost",
+          "C. To map data to a higher-dimensional space",
+          "D. To decrease accuracy"
+        ],
+        "answer": "C",
+        "explanation": "Maps to higher-dimensional space"
+      },
+      {
+        "id": "interview-ml-easy-006",
+        "question": "What are the computational challenges of k-Nearest Neighbors?",
+        "options": [
+          "A. High memory usage",
+          "B. Computational complexity of O(Nd)",
+          "C. Difficulty in handling high-dimensional data",
+          "D. All of the above"
+        ],
+        "answer": "D",
+        "explanation": "Multiple challenges"
+      },
+      {
+        "id": "interview-ml-easy-007",
+        "question": "How do you address the computational challenges of k-Nearest Neighbors?",
+        "options": [
+          "A. By using exact search",
+          "B. By using approximate nearest neighbor search",
+          "C. By reducing the number of features",
+          "D. By increasing the number of samples"
+        ],
+        "answer": "B",
+        "explanation": "Approximate nearest neighbor"
+      },
+      {
+        "id": "interview-ml-easy-008",
+        "question": "What is the bias-variance trade-off in model evaluation?",
+        "options": [
+          "A. High bias and low variance",
+          "B. Low bias and high variance",
+          "C. High bias and high variance",
+          "D. Total error = Bias² + Variance + Irreducible Noise"
+        ],
+        "answer": "D",
+        "explanation": "Total error equation"
+      },
+      {
+        "id": "interview-ml-easy-009",
+        "question": "How do you diagnose high bias or high variance in model evaluation?",
+        "options": [
+          "A. By checking the training error",
+          "B. By checking the test error",
+          "C. By plotting the learning curve",
+          "D. By using cross-validation"
+        ],
+        "answer": "C",
+        "explanation": "Plot learning curve"
+      },
+      {
+        "id": "interview-ml-easy-010",
+        "question": "When is AUC-ROC misleading in model evaluation?",
+        "options": [
+          "A. When the classes are balanced",
+          "B. When the classes are imbalanced",
+          "C. When the model is well-calibrated",
+          "D. When the model is poorly calibrated"
+        ],
+        "answer": "B",
+        "explanation": "Imbalanced classes"
+      },
+      {
+        "id": "interview-ml-easy-011",
+        "question": "What is AUC-PR in model evaluation?",
+        "options": [
+          "A. Area under the receiver operating characteristic curve",
+          "B. Area under the precision-recall curve",
+          "C. Area under the calibration curve",
+          "D. Area under the learning curve"
+        ],
+        "answer": "B",
+        "explanation": "Area under precision-recall curve"
+      },
+      {
+        "id": "interview-ml-easy-012",
+        "question": "What is k-fold cross-validation in model evaluation?",
+        "options": [
+          "A. Splitting data into training and testing sets",
+          "B. Splitting data into training, validation, and testing sets",
+          "C. Splitting data into k folds and rotating them",
+          "D. Splitting data into k folds and averaging performance"
+        ],
+        "answer": "D",
+        "explanation": "Splitting and averaging"
+      },
+      {
+        "id": "interview-ml-easy-013",
+        "question": "When would you use stratified k-fold cross-validation?",
+        "options": [
+          "A. For regression problems",
+          "B. For classification problems with balanced classes",
+          "C. For classification problems with imbalanced classes",
+          "D. For time series problems"
+        ],
+        "answer": "C",
+        "explanation": "Imbalanced classification"
+      },
+      {
+        "id": "interview-ml-easy-014",
+        "question": "What is the purpose of calibration in model evaluation?",
+        "options": [
+          "A. To reduce bias",
+          "B. To reduce variance",
+          "C. To ensure well-calibrated probability outputs",
+          "D. To increase accuracy"
+        ],
+        "answer": "C",
+        "explanation": "Well-calibrated outputs"
+      },
+      {
+        "id": "interview-ml-easy-015",
+        "question": "How do you calibrate a model's probability outputs?",
+        "options": [
+          "A. By using Platt scaling",
+          "B. By using isotonic regression",
+          "C. By using temperature scaling",
+          "D. All of the above"
+        ],
+        "answer": "D",
+        "explanation": "Multiple methods"
+      },
+      {
+        "id": "interview-ml-easy-016",
+        "question": "What is the role of a decision tree in Random Forest?",
+        "options": [
+          "A. To reduce bias",
+          "B. To reduce variance",
+          "C. To increase accuracy",
+          "D. To decrease computational cost"
+        ],
+        "answer": "B",
+        "explanation": "Reduces variance"
+      },
+      {
+        "id": "interview-ml-easy-017",
+        "question": "What is the purpose of feature subsampling in Random Forest?",
+        "options": [
+          "A. To reduce dimensionality",
+          "B. To increase computational cost",
+          "C. To decrease accuracy",
+          "D. To reduce variance"
+        ],
+        "answer": "D",
+        "explanation": "Reduces variance"
+      },
+      {
+        "id": "interview-ml-easy-018",
+        "question": "What is the difference between a ML Engineer and a Data Scientist?",
+        "options": [
+          "A. A ML Engineer focuses on deployment, a Data Scientist on research",
+          "B. A ML Engineer focuses on research, a Data Scientist on deployment",
+          "C. A ML Engineer focuses on data, a Data Scientist on models",
+          "D. A ML Engineer focuses on models, a Data Scientist on data"
+        ],
+        "answer": "A",
+        "explanation": "Deployment vs research"
+      },
+      {
+        "id": "interview-ml-easy-019",
+        "question": "What is the role of an Applied Scientist?",
+        "options": [
+          "A. To conduct research",
+          "B. To develop prototypes",
+          "C. To apply scientific knowledge to practical problems",
+          "D. To manage teams"
+        ],
+        "answer": "C",
+        "explanation": "Applies scientific knowledge"
+      },
+      {
+        "id": "interview-ml-easy-020",
+        "question": "What is the purpose of MLOps?",
+        "options": [
+          "A. To reduce variance",
+          "B. To reduce bias",
+          "C. To streamline ML workflow",
+          "D. To increase accuracy"
+        ],
+        "answer": "C",
+        "explanation": "Streamlines workflow"
+      },
+      {
+        "id": "interview-ml-easy-021",
+        "question": "What is the difference between a ML Platform Engineer and a MLOps Engineer?",
+        "options": [
+          "A. A ML Platform Engineer focuses on infrastructure, a MLOps Engineer on workflow",
+          "B. A ML Platform Engineer focuses on workflow, a MLOps Engineer on infrastructure",
+          "C. A ML Platform Engineer focuses on research, a MLOps Engineer on deployment",
+          "D. A ML Platform Engineer focuses on deployment, a MLOps Engineer on research"
+        ],
+        "answer": "A",
+        "explanation": "Infrastructure vs workflow"
+      },
+      {
+        "id": "interview-ml-easy-022",
+        "question": "What is the purpose of a Research Scientist in ML?",
+        "options": [
+          "A. To conduct research",
+          "B. To develop prototypes",
+          "C. To apply scientific knowledge to practical problems",
+          "D. To manage teams"
+        ],
+        "answer": "A",
+        "explanation": "Conducts research"
+      },
+      {
+        "id": "interview-ml-easy-023",
+        "question": "What is the role of an ML Engineer in the development of ML systems?",
+        "options": [
+          "A. To conduct research",
+          "B. To develop prototypes",
+          "C. To design and deploy ML models",
+          "D. To manage teams"
+        ],
+        "answer": "C",
+        "explanation": "Designs and deploys models"
+      },
+      {
+        "id": "interview-ml-easy-024",
+        "question": "What is the importance of evaluation in ML systems?",
+        "options": [
+          "A. To reduce variance",
+          "B. To reduce bias",
+          "C. To ensure the model is working as expected",
+          "D. To increase accuracy"
+        ],
+        "answer": "C",
+        "explanation": "Ensures model works as expected"
+      },
+      {
+        "id": "interview-ml-easy-025",
+        "question": "What is the purpose of production ML systems?",
+        "options": [
+          "A. To conduct research",
+          "B. To develop prototypes",
+          "C. To deploy ML models in a production environment",
+          "D. To manage teams"
+        ],
+        "answer": "C",
+        "explanation": "Deploys models in production"
+      },
+      {
+        "id": "interview-ml-easy-026",
+        "question": "What is the difference between classical ML and deep learning?",
+        "options": [
+          "A. Classical ML is used for image classification, deep learning for NLP",
+          "B. Classical ML is used for NLP, deep learning for image classification",
+          "C. Classical ML is used for simple problems, deep learning for complex problems",
+          "D. Classical ML is used for complex problems, deep learning for simple problems"
+        ],
+        "answer": "C",
+        "explanation": "Simple vs complex problems"
+      },
+      {
+        "id": "interview-ml-easy-027",
+        "question": "What is the purpose of regularization in ML models?",
+        "options": [
+          "A. To reduce variance",
+          "B. To reduce bias",
+          "C. To prevent overfitting",
+          "D. To increase accuracy"
+        ],
+        "answer": "C",
+        "explanation": "Prevents overfitting"
+      },
+      {
+        "id": "interview-ml-easy-028",
+        "question": "What is the role of hyperparameter tuning in ML models?",
+        "options": [
+          "A. To reduce variance",
+          "B. To reduce bias",
+          "C. To optimize model performance",
+          "D. To increase accuracy"
+        ],
+        "answer": "C",
+        "explanation": "Optimizes performance"
+      },
+      {
+        "id": "interview-ml-easy-029",
+        "question": "What is the importance of data quality in ML systems?",
+        "options": [
+          "A. To reduce variance",
+          "B. To reduce bias",
+          "C. To ensure the model is working as expected",
+          "D. To increase accuracy"
+        ],
+        "answer": "C",
+        "explanation": "Ensures model works as expected"
+      },
+      {
+        "id": "interview-ml-easy-030",
+        "question": "What is the purpose of model interpretability in ML systems?",
+        "options": [
+          "A. To reduce variance",
+          "B. To reduce bias",
+          "C. To understand how the model is making predictions",
+          "D. To increase accuracy"
+        ],
+        "answer": "C",
+        "explanation": "Understands model predictions"
+      }
+    ],
     "interview-ml-hard": [
       {
         "id": "interview-ml-hard-001",
@@ -6669,7 +7740,729 @@
         "explanation": "Model selection purpose"
       }
     ],
-    "interview-quant-easy": [],
-    "interview-quant-hard": []
+    "interview-quant-easy": [
+      {
+        "id": "interview-quant-easy-001",
+        "question": "What is the Central Limit Theorem in banking?",
+        "options": [
+          "A. States that sample means approach normal distribution",
+          "B. States that sample means approach uniform distribution",
+          "C. States that sample means approach binomial distribution",
+          "D. States that sample means approach Poisson distribution"
+        ],
+        "answer": "A",
+        "explanation": "CLT approaches normal"
+      },
+      {
+        "id": "interview-quant-easy-002",
+        "question": "What is p-value in statistics?",
+        "options": [
+          "A. Probability of observing test statistic",
+          "B. Probability of null hypothesis being true",
+          "C. Probability of alternative hypothesis being true",
+          "D. Probability of type I error"
+        ],
+        "answer": "A",
+        "explanation": "p-value definition"
+      },
+      {
+        "id": "interview-quant-easy-003",
+        "question": "What is Type I error in banking?",
+        "options": [
+          "A. Flagging legitimate transaction as fraud",
+          "B. Missing actual fraudulent transaction",
+          "C. Approving high-risk loan applicant",
+          "D. Rejecting low-risk loan applicant"
+        ],
+        "answer": "A",
+        "explanation": "Type I error definition"
+      },
+      {
+        "id": "interview-quant-easy-004",
+        "question": "What is the difference between correlation and causation?",
+        "options": [
+          "A. Correlation implies causation",
+          "B. Causation implies correlation",
+          "C. Correlation and causation are unrelated",
+          "D. Correlation does not imply causation"
+        ],
+        "answer": "D",
+        "explanation": "Correlation vs causation"
+      },
+      {
+        "id": "interview-quant-easy-005",
+        "question": "When would you use a t-test vs chi-square vs ANOVA?",
+        "options": [
+          "A. t-test for categorical data",
+          "B. ANOVA for continuous data",
+          "C. Chi-square for non-parametric data",
+          "D. t-test for continuous data, ANOVA for 3+ groups, chi-square for categorical data"
+        ],
+        "answer": "D",
+        "explanation": "Test usage"
+      },
+      {
+        "id": "interview-quant-easy-006",
+        "question": "What is Bayesian vs Frequentist inference?",
+        "options": [
+          "A. Bayesian is long-run frequency",
+          "B. Frequentist is degree of belief",
+          "C. Bayesian is degree of belief",
+          "D. Frequentist is fixed parameter"
+        ],
+        "answer": "C",
+        "explanation": "Bayesian definition"
+      },
+      {
+        "id": "interview-quant-easy-007",
+        "question": "How do you interpret logistic regression for credit risk?",
+        "options": [
+          "A. Coefficients represent odds multipliers",
+          "B. Coefficients represent probabilities",
+          "C. Coefficients represent default rates",
+          "D. Coefficients represent credit scores"
+        ],
+        "answer": "A",
+        "explanation": "Logistic regression interpretation"
+      },
+      {
+        "id": "interview-quant-easy-008",
+        "question": "What is multicollinearity and how do you handle it?",
+        "options": [
+          "A. High correlation between predictors, remove one feature",
+          "B. High correlation between predictors, use PCA",
+          "C. Low correlation between predictors, use regularization",
+          "D. High correlation between predictors, use interaction terms"
+        ],
+        "answer": "A",
+        "explanation": "Multicollinearity handling"
+      },
+      {
+        "id": "interview-quant-easy-009",
+        "question": "How do you handle class imbalance in a fraud model?",
+        "options": [
+          "A. Threshold adjustment, resampling, class weights",
+          "B. Oversampling minority class only",
+          "C. Undersampling majority class only",
+          "D. Using AUC-ROC metric only"
+        ],
+        "answer": "A",
+        "explanation": "Class imbalance handling"
+      },
+      {
+        "id": "interview-quant-easy-010",
+        "question": "What is AUC-ROC and AUC-PR?",
+        "options": [
+          "A. AUC-ROC for rare positive class, AUC-PR for common positive class",
+          "B. AUC-ROC for common positive class, AUC-PR for rare positive class",
+          "C. AUC-ROC and AUC-PR are interchangeable",
+          "D. AUC-ROC is for classification, AUC-PR is for regression"
+        ],
+        "answer": "B",
+        "explanation": "AUC-ROC vs AUC-PR"
+      },
+      {
+        "id": "interview-quant-easy-011",
+        "question": "What is PD, LGD, EAD and how do they relate to Expected Loss?",
+        "options": [
+          "A. PD is probability of default, LGD is loss given default, EAD is exposure at default",
+          "B. PD is probability of default, LGD is exposure at default, EAD is loss given default",
+          "C. PD is exposure at default, LGD is loss given default, EAD is probability of default",
+          "D. PD is loss given default, LGD is probability of default, EAD is exposure at default"
+        ],
+        "answer": "A",
+        "explanation": "PD, LGD, EAD definition"
+      },
+      {
+        "id": "interview-quant-easy-012",
+        "question": "What is VaR and what are its limitations?",
+        "options": [
+          "A. VaR is maximum loss with given confidence level, limited by normality assumption",
+          "B. VaR is maximum loss with given confidence level, limited by historical data",
+          "C. VaR is expected loss with given confidence level, limited by model complexity",
+          "D. VaR is unexpected loss with given confidence level, limited by regulatory requirements"
+        ],
+        "answer": "A",
+        "explanation": "VaR definition and limitations"
+      },
+      {
+        "id": "interview-quant-easy-013",
+        "question": "What is the purpose of the Central Limit Theorem in banking?",
+        "options": [
+          "A. To model rare events",
+          "B. To model normal distributions",
+          "C. To model portfolio loss distribution",
+          "D. To model credit risk"
+        ],
+        "answer": "C",
+        "explanation": "CLT purpose"
+      },
+      {
+        "id": "interview-quant-easy-014",
+        "question": "What is the difference between a p-value and a confidence interval?",
+        "options": [
+          "A. p-value is a confidence interval",
+          "B. Confidence interval is a p-value",
+          "C. p-value is a probability, confidence interval is a range",
+          "D. p-value is a range, confidence interval is a probability"
+        ],
+        "answer": "C",
+        "explanation": "p-value vs confidence interval"
+      },
+      {
+        "id": "interview-quant-easy-015",
+        "question": "What is the definition of a Type II error in banking?",
+        "options": [
+          "A. Flagging a legitimate transaction as fraud",
+          "B. Missing an actual fraudulent transaction",
+          "C. Approving a high-risk loan applicant",
+          "D. Rejecting a low-risk loan applicant"
+        ],
+        "answer": "B",
+        "explanation": "Type II error definition"
+      },
+      {
+        "id": "interview-quant-easy-016",
+        "question": "What is the purpose of correlation analysis in banking?",
+        "options": [
+          "A. To identify causation",
+          "B. To identify correlation",
+          "C. To identify regression relationships",
+          "D. To identify time series patterns"
+        ],
+        "answer": "B",
+        "explanation": "Correlation analysis purpose"
+      },
+      {
+        "id": "interview-quant-easy-017",
+        "question": "When would you use a chi-square test vs a t-test?",
+        "options": [
+          "A. Chi-square for continuous data, t-test for categorical data",
+          "B. Chi-square for categorical data, t-test for continuous data",
+          "C. Chi-square for non-parametric data, t-test for parametric data",
+          "D. Chi-square for regression analysis, t-test for hypothesis testing"
+        ],
+        "answer": "B",
+        "explanation": "Test usage"
+      },
+      {
+        "id": "interview-quant-easy-018",
+        "question": "What is the definition of Bayesian inference?",
+        "options": [
+          "A. Probability as long-run frequency",
+          "B. Probability as degree of belief",
+          "C. Probability as fixed parameter",
+          "D. Probability as random variable"
+        ],
+        "answer": "B",
+        "explanation": "Bayesian definition"
+      },
+      {
+        "id": "interview-quant-easy-019",
+        "question": "How do you handle missing values in a logistic regression model?",
+        "options": [
+          "A. Remove observations with missing values",
+          "B. Impute missing values with mean or median",
+          "C. Use a missing value indicator",
+          "D. Use a non-parametric model"
+        ],
+        "answer": "B",
+        "explanation": "Missing value handling"
+      },
+      {
+        "id": "interview-quant-easy-020",
+        "question": "What is the purpose of regularization in logistic regression?",
+        "options": [
+          "A. To reduce overfitting",
+          "B. To increase overfitting",
+          "C. To reduce underfitting",
+          "D. To increase underfitting"
+        ],
+        "answer": "A",
+        "explanation": "Regularization purpose"
+      },
+      {
+        "id": "interview-quant-easy-021",
+        "question": "What is the definition of AUC-ROC?",
+        "options": [
+          "A. Area under the precision-recall curve",
+          "B. Area under the receiver operating characteristic curve",
+          "C. Area under the cumulative distribution function",
+          "D. Area under the probability density function"
+        ],
+        "answer": "B",
+        "explanation": "AUC-ROC definition"
+      },
+      {
+        "id": "interview-quant-easy-022",
+        "question": "What is the purpose of Expected Loss calculation in banking?",
+        "options": [
+          "A. To calculate regulatory capital",
+          "B. To calculate credit risk",
+          "C. To calculate market risk",
+          "D. To calculate operational risk"
+        ],
+        "answer": "A",
+        "explanation": "Expected Loss purpose"
+      },
+      {
+        "id": "interview-quant-easy-023",
+        "question": "What is the definition of VaR?",
+        "options": [
+          "A. Value at Risk",
+          "B. Volatility at Risk",
+          "C. Variance at Risk",
+          "D. Vulnerability at Risk"
+        ],
+        "answer": "A",
+        "explanation": "VaR definition"
+      },
+      {
+        "id": "interview-quant-easy-024",
+        "question": "What is the purpose of stress testing in banking?",
+        "options": [
+          "A. To test the bank's liquidity",
+          "B. To test the bank's solvency",
+          "C. To test the bank's credit risk",
+          "D. To test the bank's market risk"
+        ],
+        "answer": "B",
+        "explanation": "Stress testing purpose"
+      },
+      {
+        "id": "interview-quant-easy-025",
+        "question": "What is the definition of PD?",
+        "options": [
+          "A. Probability of default",
+          "B. Probability of repayment",
+          "C. Probability of creditworthiness",
+          "D. Probability of insolvency"
+        ],
+        "answer": "A",
+        "explanation": "PD definition"
+      },
+      {
+        "id": "interview-quant-easy-026",
+        "question": "What is the purpose of LGD calculation in banking?",
+        "options": [
+          "A. To calculate the loss given default",
+          "B. To calculate the probability of default",
+          "C. To calculate the exposure at default",
+          "D. To calculate the credit risk"
+        ],
+        "answer": "A",
+        "explanation": "LGD purpose"
+      },
+      {
+        "id": "interview-quant-easy-027",
+        "question": "What is the definition of EAD?",
+        "options": [
+          "A. Exposure at default",
+          "B. Exposure at repayment",
+          "C. Exposure at creditworthiness",
+          "D. Exposure at insolvency"
+        ],
+        "answer": "A",
+        "explanation": "EAD definition"
+      },
+      {
+        "id": "interview-quant-easy-028",
+        "question": "What is the purpose of VaR calculation in banking?",
+        "options": [
+          "A. To calculate the maximum loss with a given confidence level",
+          "B. To calculate the expected loss",
+          "C. To calculate the credit risk",
+          "D. To calculate the market risk"
+        ],
+        "answer": "A",
+        "explanation": "VaR purpose"
+      },
+      {
+        "id": "interview-quant-easy-029",
+        "question": "What is the definition of AUC-PR?",
+        "options": [
+          "A. Area under the receiver operating characteristic curve",
+          "B. Area under the precision-recall curve",
+          "C. Area under the cumulative distribution function",
+          "D. Area under the probability density function"
+        ],
+        "answer": "B",
+        "explanation": "AUC-PR definition"
+      },
+      {
+        "id": "interview-quant-easy-030",
+        "question": "What is the purpose of logistic regression in banking?",
+        "options": [
+          "A. To model the probability of default",
+          "B. To model the probability of repayment",
+          "C. To model the credit risk",
+          "D. To model the market risk"
+        ],
+        "answer": "A",
+        "explanation": "Logistic regression purpose"
+      }
+    ],
+    "interview-quant-hard": [
+      {
+        "id": "interview-quant-hard-001",
+        "question": "What is the Central Limit Theorem and why does it matter in banking?",
+        "options": [
+          "A. It states that the distribution of sample means approaches normal as sample size grows, regardless of the underlying population distribution.",
+          "B. It states that the distribution of sample means approaches uniform as sample size grows, regardless of the underlying population distribution.",
+          "C. It states that the distribution of sample means approaches binomial as sample size grows, regardless of the underlying population distribution.",
+          "D. It states that the distribution of sample means approaches Poisson as sample size grows, regardless of the underlying population distribution."
+        ],
+        "answer": "A",
+        "explanation": "CLT enables Gaussian-based risk models."
+      },
+      {
+        "id": "interview-quant-hard-002",
+        "question": "What is the difference between correlation and causation? Give a banking example.",
+        "options": [
+          "A. Correlation implies causation, and causation implies correlation.",
+          "B. Correlation does not imply causation, and causation implies correlation.",
+          "C. Correlation implies causation, but causation does not imply correlation.",
+          "D. Correlation and causation are unrelated concepts."
+        ],
+        "answer": "B",
+        "explanation": "Correlation does not imply causation."
+      },
+      {
+        "id": "interview-quant-hard-003",
+        "question": "When would you use a t-test vs chi-square vs ANOVA?",
+        "options": [
+          "A. Use t-test for categorical data, chi-square for continuous data, and ANOVA for non-parametric data.",
+          "B. Use t-test for continuous data, chi-square for categorical data, and ANOVA for continuous data with 3+ groups.",
+          "C. Use t-test for non-parametric data, chi-square for continuous data, and ANOVA for categorical data.",
+          "D. Use t-test for continuous data with 2 groups, chi-square for categorical data, and ANOVA for continuous data with 3+ groups."
+        ],
+        "answer": "D",
+        "explanation": "Correct usage of statistical tests."
+      },
+      {
+        "id": "interview-quant-hard-004",
+        "question": "What is the Central Limit Theorem and why does it matter in banking?",
+        "options": [
+          "A. It states that the distribution of sample means approaches normal as sample size grows, regardless of the underlying population distribution.",
+          "B. It states that the distribution of sample means approaches uniform as sample size grows, regardless of the underlying population distribution.",
+          "C. It states that the distribution of sample means approaches binomial as sample size grows, regardless of the underlying population distribution.",
+          "D. It states that the distribution of sample means approaches Poisson as sample size grows, regardless of the underlying population distribution."
+        ],
+        "answer": "A",
+        "explanation": "CLT enables Gaussian-based risk models."
+      },
+      {
+        "id": "interview-quant-hard-005",
+        "question": "What is Bayesian vs Frequentist inference? Which do you use in banking?",
+        "options": [
+          "A. Bayesian inference is used in banking, while Frequentist inference is used in other fields.",
+          "B. Frequentist inference is used in banking, while Bayesian inference is used in other fields.",
+          "C. Both Bayesian and Frequentist inference are used in banking, depending on the context.",
+          "D. Neither Bayesian nor Frequentist inference is used in banking."
+        ],
+        "answer": "C",
+        "explanation": "Both are used in banking."
+      },
+      {
+        "id": "interview-quant-hard-006",
+        "question": "What is the difference between Type I and Type II error? Give a banking example.",
+        "options": [
+          "A. Type I error is the probability of rejecting a true null hypothesis, while Type II error is the probability of failing to reject a false null hypothesis.",
+          "B. Type I error is the probability of failing to reject a true null hypothesis, while Type II error is the probability of rejecting a false null hypothesis.",
+          "C. Type I error is the probability of rejecting a false null hypothesis, while Type II error is the probability of failing to reject a true null hypothesis.",
+          "D. Type I error is the probability of failing to reject a false null hypothesis, while Type II error is the probability of rejecting a true null hypothesis."
+        ],
+        "answer": "A",
+        "explanation": "Type I and Type II errors."
+      },
+      {
+        "id": "interview-quant-hard-007",
+        "question": "How do you handle class imbalance in a fraud model?",
+        "options": [
+          "A. Use oversampling of the minority class, undersampling of the majority class, and class weights.",
+          "B. Use only oversampling of the minority class.",
+          "C. Use only undersampling of the majority class.",
+          "D. Use only class weights."
+        ],
+        "answer": "A",
+        "explanation": "Strategies for handling class imbalance."
+      },
+      {
+        "id": "interview-quant-hard-008",
+        "question": "What is AUC-ROC and AUC-PR? When is each appropriate?",
+        "options": [
+          "A. AUC-ROC is used for balanced datasets, while AUC-PR is used for imbalanced datasets.",
+          "B. AUC-ROC is used for imbalanced datasets, while AUC-PR is used for balanced datasets.",
+          "C. AUC-ROC is used for classification problems, while AUC-PR is used for regression problems.",
+          "D. AUC-ROC is used for regression problems, while AUC-PR is used for classification problems."
+        ],
+        "answer": "A",
+        "explanation": "AUC-ROC and AUC-PR usage."
+      },
+      {
+        "id": "interview-quant-hard-009",
+        "question": "What is PD, LGD, EAD and how they relate to Expected Loss?",
+        "options": [
+          "A. PD is the probability of default, LGD is the loss given default, and EAD is the exposure at default.",
+          "B. PD is the probability of default, LGD is the exposure at default, and EAD is the loss given default.",
+          "C. PD is the loss given default, LGD is the exposure at default, and EAD is the probability of default.",
+          "D. PD is the exposure at default, LGD is the probability of default, and EAD is the loss given default."
+        ],
+        "answer": "A",
+        "explanation": "Components of Expected Loss."
+      },
+      {
+        "id": "interview-quant-hard-010",
+        "question": "What is VaR and what are its limitations?",
+        "options": [
+          "A. VaR is the maximum loss expected over a period with a given confidence level, and its limitation is that it assumes normal returns.",
+          "B. VaR is the minimum loss expected over a period with a given confidence level, and its limitation is that it assumes normal returns.",
+          "C. VaR is the maximum loss expected over a period with a given confidence level, and its limitation is that it does not assume normal returns.",
+          "D. VaR is the minimum loss expected over a period with a given confidence level, and its limitation is that it does not assume normal returns."
+        ],
+        "answer": "A",
+        "explanation": "VaR definition and limitation."
+      },
+      {
+        "id": "interview-quant-hard-011",
+        "question": "What is the purpose of stress testing beyond the normal approximation?",
+        "options": [
+          "A. To account for tail risks that are not captured by the normal approximation.",
+          "B. To reduce the complexity of the risk model.",
+          "C. To increase the accuracy of the risk model for normal scenarios.",
+          "D. To decrease the computational requirements of the risk model."
+        ],
+        "answer": "A",
+        "explanation": "Purpose of stress testing."
+      },
+      {
+        "id": "interview-quant-hard-012",
+        "question": "How do you interpret the coefficients of a logistic regression model for credit risk?",
+        "options": [
+          "A. The coefficients represent the change in the odds of default for a one-unit change in the predictor variable.",
+          "B. The coefficients represent the change in the probability of default for a one-unit change in the predictor variable.",
+          "C. The coefficients represent the change in the exposure at default for a one-unit change in the predictor variable.",
+          "D. The coefficients represent the change in the loss given default for a one-unit change in the predictor variable."
+        ],
+        "answer": "A",
+        "explanation": "Interpretation of logistic regression coefficients."
+      },
+      {
+        "id": "interview-quant-hard-013",
+        "question": "What is the purpose of regularization in logistic regression?",
+        "options": [
+          "A. To reduce overfitting by penalizing large coefficients.",
+          "B. To increase overfitting by penalizing small coefficients.",
+          "C. To reduce underfitting by penalizing large coefficients.",
+          "D. To increase underfitting by penalizing small coefficients."
+        ],
+        "answer": "A",
+        "explanation": "Purpose of regularization."
+      },
+      {
+        "id": "interview-quant-hard-014",
+        "question": "How do you handle multicollinearity in a regression model?",
+        "options": [
+          "A. By removing one of the correlated features or using PCA to create orthogonal components.",
+          "B. By removing all of the correlated features.",
+          "C. By using only one of the correlated features.",
+          "D. By not addressing multicollinearity."
+        ],
+        "answer": "A",
+        "explanation": "Strategies for handling multicollinearity."
+      },
+      {
+        "id": "interview-quant-hard-015",
+        "question": "What is the difference between a t-test and an ANOVA?",
+        "options": [
+          "A. A t-test is used for comparing two groups, while an ANOVA is used for comparing three or more groups.",
+          "B. A t-test is used for comparing three or more groups, while an ANOVA is used for comparing two groups.",
+          "C. A t-test is used for non-parametric data, while an ANOVA is used for parametric data.",
+          "D. A t-test is used for parametric data, while an ANOVA is used for non-parametric data."
+        ],
+        "answer": "A",
+        "explanation": "Difference between t-test and ANOVA."
+      },
+      {
+        "id": "interview-quant-hard-016",
+        "question": "What is the purpose of using class weights in a classification model?",
+        "options": [
+          "A. To penalize the majority class for incorrect predictions.",
+          "B. To penalize the minority class for incorrect predictions.",
+          "C. To increase the importance of the majority class in the model.",
+          "D. To decrease the importance of the minority class in the model."
+        ],
+        "answer": "A",
+        "explanation": "Purpose of class weights."
+      },
+      {
+        "id": "interview-quant-hard-017",
+        "question": "How do you evaluate the performance of a classification model?",
+        "options": [
+          "A. Using metrics such as accuracy, precision, recall, and F1 score.",
+          "B. Using metrics such as mean squared error and R-squared.",
+          "C. Using metrics such as mean absolute error and mean absolute percentage error.",
+          "D. Using metrics such as coefficient of variation and interquartile range."
+        ],
+        "answer": "A",
+        "explanation": "Metrics for evaluating classification models."
+      },
+      {
+        "id": "interview-quant-hard-018",
+        "question": "What is the difference between a Bayesian and a Frequentist approach to inference?",
+        "options": [
+          "A. A Bayesian approach updates prior beliefs with data, while a Frequentist approach uses only the data to make inference.",
+          "B. A Bayesian approach uses only the data to make inference, while a Frequentist approach updates prior beliefs with data.",
+          "C. A Bayesian approach is used for classification problems, while a Frequentist approach is used for regression problems.",
+          "D. A Bayesian approach is used for regression problems, while a Frequentist approach is used for classification problems."
+        ],
+        "answer": "A",
+        "explanation": "Difference between Bayesian and Frequentist approaches."
+      },
+      {
+        "id": "interview-quant-hard-019",
+        "question": "How do you handle missing values in a dataset?",
+        "options": [
+          "A. By imputing them using mean or median imputation, or by using a more advanced imputation method such as multiple imputation by chained equations.",
+          "B. By removing the rows or columns that contain missing values.",
+          "C. By using only the rows or columns that do not contain missing values.",
+          "D. By not addressing missing values."
+        ],
+        "answer": "A",
+        "explanation": "Strategies for handling missing values."
+      },
+      {
+        "id": "interview-quant-hard-020",
+        "question": "What is the purpose of using ensemble methods in machine learning?",
+        "options": [
+          "A. To combine the predictions of multiple models to improve overall performance.",
+          "B. To select the best model from a set of candidate models.",
+          "C. To tune the hyperparameters of a single model.",
+          "D. To evaluate the performance of a single model."
+        ],
+        "answer": "A",
+        "explanation": "Purpose of ensemble methods."
+      },
+      {
+        "id": "interview-quant-hard-021",
+        "question": "How do you evaluate the performance of a regression model?",
+        "options": [
+          "A. Using metrics such as mean squared error, mean absolute error, and R-squared.",
+          "B. Using metrics such as accuracy, precision, recall, and F1 score.",
+          "C. Using metrics such as coefficient of variation and interquartile range.",
+          "D. Using metrics such as mean absolute percentage error and mean squared logarithmic error."
+        ],
+        "answer": "A",
+        "explanation": "Metrics for evaluating regression models."
+      },
+      {
+        "id": "interview-quant-hard-022",
+        "question": "What is the difference between a parametric and a non-parametric test?",
+        "options": [
+          "A. A parametric test assumes a specific distribution for the data, while a non-parametric test does not make this assumption.",
+          "B. A parametric test does not assume a specific distribution for the data, while a non-parametric test assumes a specific distribution.",
+          "C. A parametric test is used for classification problems, while a non-parametric test is used for regression problems.",
+          "D. A parametric test is used for regression problems, while a non-parametric test is used for classification problems."
+        ],
+        "answer": "A",
+        "explanation": "Difference between parametric and non-parametric tests."
+      },
+      {
+        "id": "interview-quant-hard-023",
+        "question": "How do you handle outliers in a dataset?",
+        "options": [
+          "A. By removing them or using a robust regression method that is less sensitive to outliers.",
+          "B. By transforming the data to reduce the effect of outliers.",
+          "C. By using only the outliers to train the model.",
+          "D. By not addressing outliers."
+        ],
+        "answer": "A",
+        "explanation": "Strategies for handling outliers."
+      },
+      {
+        "id": "interview-quant-hard-024",
+        "question": "What is the purpose of using cross-validation in machine learning?",
+        "options": [
+          "A. To evaluate the performance of a model on unseen data and prevent overfitting.",
+          "B. To select the best model from a set of candidate models.",
+          "C. To tune the hyperparameters of a single model.",
+          "D. To evaluate the performance of a single model on the training data."
+        ],
+        "answer": "A",
+        "explanation": "Purpose of cross-validation."
+      },
+      {
+        "id": "interview-quant-hard-025",
+        "question": "How do you evaluate the performance of a time series forecasting model?",
+        "options": [
+          "A. Using metrics such as mean absolute error, mean squared error, and mean absolute percentage error.",
+          "B. Using metrics such as accuracy, precision, recall, and F1 score.",
+          "C. Using metrics such as coefficient of variation and interquartile range.",
+          "D. Using metrics such as mean squared logarithmic error and mean absolute logarithmic error."
+        ],
+        "answer": "A",
+        "explanation": "Metrics for evaluating time series forecasting models."
+      },
+      {
+        "id": "interview-quant-hard-026",
+        "question": "What is the difference between a stationary and a non-stationary time series?",
+        "options": [
+          "A. A stationary time series has a constant mean and variance over time, while a non-stationary time series does not have these properties.",
+          "B. A stationary time series does not have a constant mean and variance over time, while a non-stationary time series has these properties.",
+          "C. A stationary time series is used for classification problems, while a non-stationary time series is used for regression problems.",
+          "D. A stationary time series is used for regression problems, while a non-stationary time series is used for classification problems."
+        ],
+        "answer": "A",
+        "explanation": "Difference between stationary and non-stationary time series."
+      },
+      {
+        "id": "interview-quant-hard-027",
+        "question": "How do you handle seasonality in a time series?",
+        "options": [
+          "A. By using a seasonal decomposition method or a seasonal ARIMA model.",
+          "B. By removing the seasonal component from the data.",
+          "C. By using only the seasonal component to train the model.",
+          "D. By not addressing seasonality."
+        ],
+        "answer": "A",
+        "explanation": "Strategies for handling seasonality."
+      },
+      {
+        "id": "interview-quant-hard-028",
+        "question": "What is the purpose of using a walk-forward optimization in time series forecasting?",
+        "options": [
+          "A. To evaluate the performance of a model on unseen data and prevent overfitting.",
+          "B. To select the best model from a set of candidate models.",
+          "C. To tune the hyperparameters of a single model.",
+          "D. To evaluate the performance of a single model on the training data."
+        ],
+        "answer": "A",
+        "explanation": "Purpose of walk-forward optimization."
+      },
+      {
+        "id": "interview-quant-hard-029",
+        "question": "How do you evaluate the performance of a portfolio optimization model?",
+        "options": [
+          "A. Using metrics such as return, volatility, and Sharpe ratio.",
+          "B. Using metrics such as accuracy, precision, recall, and F1 score.",
+          "C. Using metrics such as coefficient of variation and interquartile range.",
+          "D. Using metrics such as mean absolute error and mean squared error."
+        ],
+        "answer": "A",
+        "explanation": "Metrics for evaluating portfolio optimization models."
+      },
+      {
+        "id": "interview-quant-hard-030",
+        "question": "What is the difference between a Markowitz model and a Black-Litterman model?",
+        "options": [
+          "A. A Markowitz model is a traditional portfolio optimization model, while a Black-Litterman model is a Bayesian portfolio optimization model.",
+          "B. A Markowitz model is a Bayesian portfolio optimization model, while a Black-Litterman model is a traditional portfolio optimization model.",
+          "C. A Markowitz model is used for classification problems, while a Black-Litterman model is used for regression problems.",
+          "D. A Markowitz model is used for regression problems, while a Black-Litterman model is used for classification problems."
+        ],
+        "answer": "A",
+        "explanation": "Difference between Markowitz and Black-Litterman models."
+      }
+    ]
   }
 }
