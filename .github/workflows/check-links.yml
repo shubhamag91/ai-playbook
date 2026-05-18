@@ -45,7 +45,7 @@ jobs:
             --config .github/lychee.toml
             --cache
             --format json
-          output: link-check-report.json
+            --output link-check-report.json
           fail: false
 
       - name: Create issue on broken links
