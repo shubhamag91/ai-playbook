@@ -300,7 +300,7 @@ This only works in `.mdx` files, not `.md` files.
 
 ## Deployment Notes
 
-- **Cloudflare Pages:** Recommended. Free, global CDN, auto-deploys on push to `main`
+- **Cloudflare Pages:** Deployed at `https://ai-playbook-9y9.pages.dev`. Auto-deploys on push to `main`
 - **Vercel / Netlify:** Also supported; use `astro.build` guide for setup
 - **Environment:** Builds run on Linux (likely x64). Ensure `package-lock.json` reflects x64 dependencies to avoid "Unsupported platform" errors
 - **Build time:** ~10–15 seconds for this playbook size
@@ -339,7 +339,7 @@ Edit `src/styles/custom.css`. Changes hot-reload in dev mode.
 | Hot reload not working | Restart `npm run dev`, check file is in `src/content/docs/` |
 | Build fails with "Unsupported platform" | Regenerated `package-lock.json` on wrong architecture. Restore from git or rebuild on x64 Linux |
 | Page not appearing in sidebar | Check `astro.config.mjs` sidebar config; manually add if file is not in an autogenerate folder |
-| Mermaid diagram not rendering | Check syntax, refresh browser, look for console errors |
+| Mermaid diagram not rendering | Check syntax: avoid `>` in edge labels (`\|VIF > 10\|`), avoid unicode chars (→ ✓ Δ subscripts) in node labels — use plain ASCII. Mermaid fails silently and shows raw code. |
 | YAML frontmatter errors | Ensure proper indentation (2 spaces, not tabs); don't nest `lastUpdated` under `sidebar` |
 | Chatbot returning errors | Check `GROQ_API_KEY` and `SERPER_API_KEY` in Cloudflare Pages environment variables |
 | Chat widget not appearing | Verify Footer component override in `astro.config.mjs` |
@@ -439,13 +439,21 @@ All use Astro components with inline vanilla JS for interactivity (no React/Vue 
 
 ## GitHub Actions
 
-| Workflow | File | Schedule |
-|---|---|---|
-| **Link Checker** | `.github/workflows/check-links.yml` | Weekly (Monday) |
-| **Stale Content** | `.github/workflows/stale-content.yml` | Weekly (Monday) |
-| **Weekly Checklist** | `.github/workflows/weekly-checklist.yml` | Weekly (Monday) |
+| Workflow | File | Schedule | What it does |
+|---|---|---|---|
+| **Link Checker** | `.github/workflows/check-links.yml` | Monday 6am UTC | Runs lychee on all `.md`/`.mdx` files; creates an issue with a broken-links table if any found |
+| **Stale Content** | `.github/workflows/stale-content.yml` | Monday 6am UTC | Scans `lastUpdated` / `nextVerificationDue` frontmatter; creates issue listing overdue pages |
+| **Weekly Checklist** | `.github/workflows/weekly-checklist.yml` | Monday 7am UTC | Creates a maintenance checklist issue with pricing/link/build tasks |
 
-All workflows auto-create GitHub Issues with reports/checklists.
+**Important:** These workflows create GitHub Issues as reminders — they do **not** auto-edit any content files. Content only changes when a human pushes a commit.
+
+### Workflow permissions
+
+All three workflows require `permissions: issues: write` in the YAML **and** the repository must have "Read and write permissions" enabled at **Settings → Actions → General → Workflow permissions**. Without both, issue creation returns a 403.
+
+### Link checker config
+
+`.github/lychee.toml` configures lychee. Only use valid lychee fields — invalid fields cause exit code 1 (config error) and no output file is written. Valid fields include: `exclude`, `accept`, `timeout`, `max_concurrency`, `max_retries`, `retry_wait_time`, `cache`, `max_cache_age`. The `exclude` patterns are **regex**, not globs.
 
 ---
 
@@ -485,7 +493,10 @@ The sidebar is manually configured in `astro.config.mjs`. Current sections:
 - What's New → Model Releases → Open-Source Models → Trends → History → Vocabulary
 
 ### Deep Dives
-- How LLMs Work → RAG Architecture → Agents & Frameworks → Prompt Engineering → Training & Fine-tuning → Inference Optimization → Evaluation & Testing
+- **Core Architecture**: Neural Networks → How LLMs Work → Reasoning Models → Multimodal AI
+- **Techniques & Methods**: RAG Architecture → Agents & Frameworks → Training & Fine-tuning → Prompt Engineering
+- **Production & Operations**: Inference Optimization → Production LLMOps → Evaluation & Testing → LLM Backend Engineering → Observability & Tracing → Safety & Security
+- **Quantitative Methods**: Regression & Quant Methods (18 parts: OLS → variable transformations → regularisation → panel data → time series → PCA → factor models → statistical testing → distribution stats → Gini/inequality → non-parametric → logistic regression → WoE/scorecards → survival analysis → model monitoring → risk metrics/VaR/ECL)
 
 ### Resources
 - Overview → Papers → Communities → Tools & Frameworks → Case Studies → Templates
