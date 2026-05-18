@@ -340,6 +340,13 @@ export default defineConfig({
                 { label: 'Safety & Security', slug: 'deep-dive/safety-security' },
               ],
             },
+            {
+              label: 'Quantitative Methods',
+              collapsed: true,
+              items: [
+                { label: 'Regression & Quant Methods', slug: 'deep-dive/quantitative-methods' },
+              ],
+            },
           ],
         },
         {
