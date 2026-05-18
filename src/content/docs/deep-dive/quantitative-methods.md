@@ -343,19 +343,20 @@ $D_i > 1$ is a common threshold for "influential." Examine these observations: d
 
 ```mermaid
 flowchart TD
-    Fit[Fit OLS] --> R[Plot residuals vs fitted]
-    R --> Fan{Fan shape\noutward?}
-    Fan -->|Yes| HET[Heteroscedasticity\n→ HC standard errors or WLS]
-    R --> Curve{Curved /\nU-shape?}
-    Curve -->|Yes| NL[Non-linearity\n→ Add polynomial or log transform]
-    R --> Wave{Wave / drift\nover time?}
-    Wave -->|Yes| AC[Autocorrelation\n→ HAC errors or ARIMA residuals]
-    R --> OK{Random\nscatter?}
-    OK -->|Yes| VIF[Check VIF]
-    VIF -->|VIF > 10| MC[Multicollinearity\n→ Ridge or drop variable]
-    VIF -->|VIF ok| Cook[Check Cook's D]
-    Cook -->|D > 1| Out[Influential observation\n→ Investigate / robust regression]
-    Cook -->|ok| Done[✓ OLS assumptions satisfied]
+    Fit[Fit OLS] --> RvF[Plot residuals vs fitted]
+    RvF --> Q1{Fan / funnel shape?}
+    Q1 -->|Yes| A1[Heteroscedasticity\nFix: HC errors or WLS]
+    Q1 -->|No| Q2{Curved or U-shape?}
+    Q2 -->|Yes| A2[Non-linearity\nFix: polynomial or log transform]
+    Q2 -->|No| Q3{Wave or drift over time?}
+    Q3 -->|Yes| A3[Autocorrelation\nFix: HAC errors or ARIMA residuals]
+    Q3 -->|No| VIF[Check VIF for each predictor]
+    VIF --> Q4{Any VIF above 10?}
+    Q4 -->|Yes| A4[Multicollinearity\nFix: Ridge regression or drop variable]
+    Q4 -->|No| Cook[Compute Cook's D]
+    Cook --> Q5{Any D above 1?}
+    Q5 -->|Yes| A5[Influential observation\nFix: investigate or robust regression]
+    Q5 -->|No| Done[OLS assumptions satisfied]
 ```
 
 ---
@@ -634,19 +635,20 @@ Current value is a linear combination of $q$ past shocks. ACF cuts off at lag $q
 
 ```mermaid
 flowchart TD
-    Raw[Raw time series] --> ADF{ADF + KPSS\nStationary?}
-    ADF -->|No| Diff[First-difference\nΔyₜ = yₜ − yₜ₋₁]
+    Raw[Raw time series] --> ADF{ADF + KPSS test\nStationary?}
+    ADF -->|No| Diff[First-difference the series\nRepeat until stationary]
     Diff --> ADF
-    ADF -->|Yes| Plots[Plot ACF + PACF\nof stationary series]
+    ADF -->|Yes| Plots[Plot ACF and PACF\nof stationary series]
     Plots --> AR{PACF cuts off\nat lag p?}
     Plots --> MA{ACF cuts off\nat lag q?}
     AR -->|Yes| ARm[Include AR terms]
     MA -->|Yes| MAm[Include MA terms]
-    ARm & MAm --> Fit[Fit ARIMA p,d,q\ncandidates]
-    Fit --> IC[Compare AIC / BIC]
+    ARm --> Fit[Fit ARIMA candidates]
+    MAm --> Fit
+    Fit --> IC[Compare AIC and BIC]
     IC --> Diag[Ljung-Box Q-test\non residuals]
     Diag -->|Autocorrelation remains| Fit
-    Diag -->|White noise ✓| Done[Final model]
+    Diag -->|White noise| Done[Final model selected]
 ```
 
 ### GARCH (Volatility Modelling)
@@ -1287,12 +1289,12 @@ CSI applies the same formula as PSI but to individual input variables. Workflow:
 
 ```mermaid
 flowchart LR
-    Score[Compute score\nfor monitoring window] --> PSI{PSI > 0.10?}
-    PSI -->|No| OK[Model stable\n✓ continue]
-    PSI -->|Yes| CSI[Compute CSI\nfor each variable]
-    CSI --> Driver[Identify driver\nvariable]
-    Driver --> Root[Root cause:\ndata issue / population shift]
-    Root --> Fix[Recalibrate or\nredevelop model]
+    Score[Score monitoring window] --> PSI{PSI above 0.10?}
+    PSI -->|No| OK[Model stable - continue]
+    PSI -->|Yes| CSI[Compute CSI for each variable]
+    CSI --> Driver[Identify driver variable]
+    Driver --> Root[Root cause: data issue or population shift]
+    Root --> Fix[Recalibrate or redevelop model]
 ```
 
 ### Performance Monitoring
