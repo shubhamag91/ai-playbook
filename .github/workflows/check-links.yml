@@ -35,6 +35,8 @@ jobs:
             README.md src/content/docs/
           LYCHEE_EXIT=$?
           set -e
+          echo "lychee exit code: $LYCHEE_EXIT"
+          ls -la link-check-report.json 2>/dev/null || echo "WARNING: link-check-report.json not created"
           echo "exit_code=$LYCHEE_EXIT" >> $GITHUB_OUTPUT
 
       - name: Ensure labels exist

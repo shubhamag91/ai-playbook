@@ -1,42 +1,31 @@
 # lychee link checker configuration
+# Valid options: https://lychee.cli.rs/usage/config/
 
-# Exclude patterns (URLs that are expected to be ephemeral or require auth)
+# URLs to skip (regex patterns)
 exclude = [
-  'https://twitter.com',
-  'https://x.com',
-  'https://github.com/your-handle/ai-playbook',
-  'https://your-playbook.example.com',
+  'twitter\.com',
+  'x\.com',
+  'github\.com/your-handle',
+  'your-playbook\.example\.com',
+  'ai-playbook-9y9\.pages\.dev',
   'chrome://',
   'mailto:',
+  'localhost',
 ]
 
-# Only check these file types
-include_paths = [
-  'README.md',
-  'src/content/docs/',
-  '*.md',
-  '*.mdx',
-]
-
-# Skip checking file:/// URLs
-exclude_file_paths = []
-
-# Max concurrency
+# Max concurrent requests
 max_concurrency = 8
 
-# Cache valid links for 7 days
+# Cache valid links (avoids re-checking on each run)
 cache = true
 max_cache_age = '7d'
 
-# Timeout per request
+# Per-request timeout in seconds
 timeout = 15
 
-# Retry on failure
+# Retry settings
 retry_wait_time = 5
 max_retries = 2
 
-# Accept these status codes as valid
-accept = [200, 301, 302, 303, 307, 308]
-
-# Skip checking anchor fragments (e.g., #section)
-include_fragments = false
+# Accept redirects as valid
+accept = [200, 201, 204, 301, 302, 303, 307, 308]
