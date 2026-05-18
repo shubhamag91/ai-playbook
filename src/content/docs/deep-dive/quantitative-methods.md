@@ -81,6 +81,49 @@ This is the OLS estimator. It has a closed-form solution — no iteration requir
 
 **Intuition:** OLS projects $\mathbf{y}$ orthogonally onto the column space of $X$. The fitted values $\hat{\mathbf{y}} = X\hat{\boldsymbol{\beta}}$ are the point in that column space closest to $\mathbf{y}$ under the Euclidean norm.
 
+<svg viewBox="0 0 460 305" xmlns="http://www.w3.org/2000/svg" style="max-width:520px;width:100%;display:block;margin:1.5rem auto">
+  <g stroke="#888" stroke-opacity="0.15" stroke-width="1">
+    <line x1="55" y1="217" x2="428" y2="217"/><line x1="55" y1="169" x2="428" y2="169"/>
+    <line x1="55" y1="121" x2="428" y2="121"/><line x1="55" y1="73" x2="428" y2="73"/>
+    <line x1="129" y1="25" x2="129" y2="265"/><line x1="203" y1="25" x2="203" y2="265"/>
+    <line x1="277" y1="25" x2="277" y2="265"/><line x1="351" y1="25" x2="351" y2="265"/>
+  </g>
+  <line x1="55" y1="234" x2="428" y2="64" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="148" y1="167" x2="148" y2="192" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="222" y1="126" x2="222" y2="158" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="314" y1="92" x2="314" y2="116" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <g fill="#818cf8">
+    <circle cx="92" cy="214" r="4.5"/><circle cx="129" cy="198" r="4.5"/>
+    <circle cx="148" cy="167" r="4.5"/><circle cx="166" cy="172" r="4.5"/>
+    <circle cx="203" cy="164" r="4.5"/><circle cx="222" cy="126" r="4.5"/>
+    <circle cx="240" cy="143" r="4.5"/><circle cx="277" cy="114" r="4.5"/>
+    <circle cx="296" cy="128" r="4.5"/><circle cx="314" cy="92" r="4.5"/>
+    <circle cx="351" cy="95" r="4.5"/><circle cx="388" cy="78" r="4.5"/>
+    <circle cx="406" cy="52" r="4.5"/>
+  </g>
+  <text x="154" y="183" font-size="11" fill="#fbbf24" font-style="italic" font-family="inherit">ε</text>
+  <text x="228" y="146" font-size="11" fill="#fbbf24" font-style="italic" font-family="inherit">ε</text>
+  <text x="320" y="107" font-size="11" fill="#fbbf24" font-style="italic" font-family="inherit">ε</text>
+  <line x1="55" y1="265" x2="428" y2="265" stroke="#888" stroke-width="1.5"/>
+  <line x1="55" y1="25" x2="55" y2="265" stroke="#888" stroke-width="1.5"/>
+  <g font-size="11" fill="currentColor" fill-opacity="0.45" text-anchor="middle" font-family="inherit">
+    <text x="55" y="280">0</text><text x="129" y="280">2</text><text x="203" y="280">4</text>
+    <text x="277" y="280">6</text><text x="351" y="280">8</text><text x="428" y="280">10</text>
+  </g>
+  <g font-size="11" fill="currentColor" fill-opacity="0.45" text-anchor="end" font-family="inherit">
+    <text x="50" y="269">0</text><text x="50" y="221">2</text><text x="50" y="173">4</text>
+    <text x="50" y="125">6</text><text x="50" y="77">8</text><text x="50" y="29">10</text>
+  </g>
+  <text x="241" y="298" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity="0.55" font-family="inherit">Predictor x</text>
+  <text x="16" y="145" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity="0.55" font-family="inherit" transform="rotate(-90,16,145)">Response y</text>
+  <g font-size="11" font-family="inherit">
+    <circle cx="265" cy="250" r="4" fill="#818cf8"/>
+    <text x="275" y="254" fill="currentColor" fill-opacity="0.65">observed</text>
+    <line x1="330" y1="250" x2="350" y2="250" stroke="#f87171" stroke-width="2.5"/>
+    <text x="356" y="254" fill="currentColor" fill-opacity="0.65">ŷ = β₀+β₁x</text>
+  </g>
+</svg>
+
 ### The Gauss-Markov Theorem
 
 Under five assumptions, OLS is the **Best Linear Unbiased Estimator (BLUE)** — it has the smallest variance among all linear unbiased estimators.
@@ -179,6 +222,68 @@ Always start with residual plots:
 - **Scale-location plot** — $\sqrt{|\hat{\varepsilon}_i|}$ vs. fitted values. Increasing spread = heteroscedasticity.
 - **Residuals vs. time** — for time-ordered data. Patterns indicate autocorrelation.
 
+Each pattern tells you something different and has a different fix:
+
+<svg viewBox="0 0 510 370" xmlns="http://www.w3.org/2000/svg" style="max-width:580px;width:100%;display:block;margin:1.5rem auto">
+  <!-- Panel titles -->
+  <text x="140" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#22c55e" font-family="inherit">✓ Good — random scatter</text>
+  <text x="370" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#f87171" font-family="inherit">✗ Heteroscedastic — fan shape</text>
+  <text x="140" y="215" text-anchor="middle" font-size="12" font-weight="600" fill="#f87171" font-family="inherit">✗ Non-linear — curved pattern</text>
+  <text x="370" y="215" text-anchor="middle" font-size="12" font-weight="600" fill="#f87171" font-family="inherit">✗ Autocorrelated — wave pattern</text>
+  <!-- Zero lines (dashed) -->
+  <line x1="60" y1="100" x2="220" y2="100" stroke="#888" stroke-opacity="0.4" stroke-dasharray="4,3" stroke-width="1"/>
+  <line x1="290" y1="100" x2="450" y2="100" stroke="#888" stroke-opacity="0.4" stroke-dasharray="4,3" stroke-width="1"/>
+  <line x1="60" y1="285" x2="220" y2="285" stroke="#888" stroke-opacity="0.4" stroke-dasharray="4,3" stroke-width="1"/>
+  <line x1="290" y1="285" x2="450" y2="285" stroke="#888" stroke-opacity="0.4" stroke-dasharray="4,3" stroke-width="1"/>
+  <!-- Panel axes -->
+  <line x1="60" y1="45" x2="60" y2="155" stroke="#888" stroke-width="1"/>
+  <line x1="60" y1="155" x2="220" y2="155" stroke="#888" stroke-width="1"/>
+  <line x1="290" y1="45" x2="290" y2="155" stroke="#888" stroke-width="1"/>
+  <line x1="290" y1="155" x2="450" y2="155" stroke="#888" stroke-width="1"/>
+  <line x1="60" y1="235" x2="60" y2="335" stroke="#888" stroke-width="1"/>
+  <line x1="60" y1="335" x2="220" y2="335" stroke="#888" stroke-width="1"/>
+  <line x1="290" y1="235" x2="290" y2="335" stroke="#888" stroke-width="1"/>
+  <line x1="290" y1="335" x2="450" y2="335" stroke="#888" stroke-width="1"/>
+  <!-- "Fitted values →" labels -->
+  <text x="140" y="167" text-anchor="middle" font-size="10" fill="currentColor" fill-opacity="0.4" font-family="inherit">Fitted values →</text>
+  <text x="370" y="167" text-anchor="middle" font-size="10" fill="currentColor" fill-opacity="0.4" font-family="inherit">Fitted values →</text>
+  <text x="140" y="347" text-anchor="middle" font-size="10" fill="currentColor" fill-opacity="0.4" font-family="inherit">Fitted values →</text>
+  <text x="370" y="347" text-anchor="middle" font-size="10" fill="currentColor" fill-opacity="0.4" font-family="inherit">Fitted values →</text>
+  <!-- TL: Good residuals (random) -->
+  <g fill="#818cf8">
+    <circle cx="68" cy="84" r="4"/><circle cx="84" cy="124" r="4"/><circle cx="100" cy="70" r="4"/>
+    <circle cx="116" cy="110" r="4"/><circle cx="132" cy="136" r="4"/><circle cx="148" cy="58" r="4"/>
+    <circle cx="164" cy="106" r="4"/><circle cx="180" cy="80" r="4"/><circle cx="196" cy="128" r="4"/>
+    <circle cx="212" cy="86" r="4"/>
+  </g>
+  <!-- TR: Heteroscedastic (fan) -->
+  <g fill="#f87171">
+    <circle cx="298" cy="96" r="4"/><circle cx="314" cy="106" r="4"/><circle cx="330" cy="84" r="4"/>
+    <circle cx="346" cy="110" r="4"/><circle cx="362" cy="60" r="4"/><circle cx="378" cy="130" r="4"/>
+    <circle cx="394" cy="64" r="4"/><circle cx="410" cy="148" r="4"/><circle cx="426" cy="44" r="4"/>
+    <circle cx="442" cy="154" r="4"/>
+  </g>
+  <!-- BL: Non-linear (inverted U) -->
+  <g fill="#f87171">
+    <circle cx="68" cy="325" r="4"/><circle cx="84" cy="301" r="4"/><circle cx="100" cy="269" r="4"/>
+    <circle cx="116" cy="249" r="4"/><circle cx="132" cy="235" r="4"/><circle cx="148" cy="239" r="4"/>
+    <circle cx="164" cy="255" r="4"/><circle cx="180" cy="281" r="4"/><circle cx="196" cy="311" r="4"/>
+    <circle cx="212" cy="329" r="4"/>
+  </g>
+  <!-- BR: Autocorrelated (wave) -->
+  <g fill="#f87171">
+    <circle cx="298" cy="245" r="4"/><circle cx="314" cy="235" r="4"/><circle cx="330" cy="241" r="4"/>
+    <circle cx="346" cy="265" r="4"/><circle cx="362" cy="295" r="4"/><circle cx="378" cy="325" r="4"/>
+    <circle cx="394" cy="335" r="4"/><circle cx="410" cy="329" r="4"/><circle cx="426" cy="305" r="4"/>
+    <circle cx="442" cy="275" r="4"/>
+  </g>
+  <!-- "0" zero line labels -->
+  <g font-size="10" fill="currentColor" fill-opacity="0.4" text-anchor="end" font-family="inherit">
+    <text x="57" y="103">0</text><text x="287" y="103">0</text>
+    <text x="57" y="288">0</text><text x="287" y="288">0</text>
+  </g>
+</svg>
+
 ### Heteroscedasticity
 
 When $\text{Var}(\varepsilon_i) = \sigma_i^2$ varies across observations, OLS is still unbiased but no longer efficient. Standard errors are wrong — t-tests and confidence intervals are invalid.
@@ -233,6 +338,25 @@ $$
 
 $D_i > 1$ is a common threshold for "influential." Examine these observations: data errors, legitimate outliers, or regime changes.
 
+### Diagnostic Decision Tree
+
+```mermaid
+flowchart TD
+    Fit[Fit OLS] --> R[Plot residuals vs fitted]
+    R --> Fan{Fan shape\noutward?}
+    Fan -->|Yes| HET[Heteroscedasticity\n→ HC standard errors or WLS]
+    R --> Curve{Curved /\nU-shape?}
+    Curve -->|Yes| NL[Non-linearity\n→ Add polynomial or log transform]
+    R --> Wave{Wave / drift\nover time?}
+    Wave -->|Yes| AC[Autocorrelation\n→ HAC errors or ARIMA residuals]
+    R --> OK{Random\nscatter?}
+    OK -->|Yes| VIF[Check VIF]
+    VIF -->|VIF > 10| MC[Multicollinearity\n→ Ridge or drop variable]
+    VIF -->|VIF ok| Cook[Check Cook's D]
+    Cook -->|D > 1| Out[Influential observation\n→ Investigate / robust regression]
+    Cook -->|ok| Done[✓ OLS assumptions satisfied]
+```
+
 ---
 
 ## Part 4: Regularised Regression
@@ -277,6 +401,67 @@ Useful when predictors number in the thousands (genomics, factor zoo in finance)
 | Ridge | $\lambda \|\boldsymbol{\beta}\|_2^2$ | No | Yes |
 | Lasso | $\lambda \|\boldsymbol{\beta}\|_1$ | Yes | Partially |
 | Elastic Net | Both | Yes | Yes |
+
+As $\lambda$ increases from 0, Ridge shrinks all coefficients smoothly toward (but never to) zero. Lasso drives coefficients to **exactly zero** at different thresholds — automatic variable selection:
+
+<svg viewBox="0 0 500 245" xmlns="http://www.w3.org/2000/svg" style="max-width:560px;width:100%;display:block;margin:1.5rem auto">
+  <!-- Panel labels -->
+  <text x="135" y="16" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor" fill-opacity="0.8" font-family="inherit">Ridge (L2)</text>
+  <text x="365" y="16" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor" fill-opacity="0.8" font-family="inherit">Lasso (L1)</text>
+  <!-- Zero lines -->
+  <line x1="55" y1="140" x2="215" y2="140" stroke="#888" stroke-opacity="0.3" stroke-dasharray="4,3" stroke-width="1"/>
+  <line x1="275" y1="140" x2="435" y2="140" stroke="#888" stroke-opacity="0.3" stroke-dasharray="4,3" stroke-width="1"/>
+  <!-- Axes -->
+  <line x1="55" y1="20" x2="55" y2="200" stroke="#888" stroke-width="1.5"/>
+  <line x1="55" y1="200" x2="215" y2="200" stroke="#888" stroke-width="1.5"/>
+  <line x1="275" y1="20" x2="275" y2="200" stroke="#888" stroke-width="1.5"/>
+  <line x1="275" y1="200" x2="435" y2="200" stroke="#888" stroke-width="1.5"/>
+  <!-- Ridge: 4 smooth curves (coefficients shrink asymptotically) -->
+  <!-- β1=2.5 (red) -->
+  <polyline points="55,40 89,98 122,118 155,128 188,133 215,135" fill="none" stroke="#f87171" stroke-width="2" stroke-linejoin="round"/>
+  <!-- β2=1.5 (indigo) -->
+  <polyline points="55,80 89,111 122,124 155,130 188,135 215,137" fill="none" stroke="#818cf8" stroke-width="2" stroke-linejoin="round"/>
+  <!-- β3=-1.0 (emerald) -->
+  <polyline points="55,180 89,156 122,147 155,143 188,141 215,141" fill="none" stroke="#34d399" stroke-width="2" stroke-linejoin="round"/>
+  <!-- β4=0.8 (amber) -->
+  <polyline points="55,108 89,127 122,132 155,136 188,138 215,139" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Lasso: coefficients hit exactly zero (kinks) -->
+  <!-- β1=2.5 → 0 at λ=0.88 -->
+  <polyline points="275,40 419,140 435,140" fill="none" stroke="#f87171" stroke-width="2" stroke-linejoin="round"/>
+  <!-- β2=1.5 → 0 at λ=0.62 -->
+  <polyline points="275,80 374,140 435,140" fill="none" stroke="#818cf8" stroke-width="2" stroke-linejoin="round"/>
+  <!-- β3=-1.0 → 0 at λ=0.50 -->
+  <polyline points="275,180 355,140 435,140" fill="none" stroke="#34d399" stroke-width="2" stroke-linejoin="round"/>
+  <!-- β4=0.8 → 0 at λ=0.35 -->
+  <polyline points="275,108 331,140 435,140" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Axis labels -->
+  <text x="135" y="213" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity="0.5" font-family="inherit">Regularisation strength (λ) →</text>
+  <text x="365" y="213" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity="0.5" font-family="inherit">Regularisation strength (λ) →</text>
+  <text x="20" y="110" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity="0.5" font-family="inherit" transform="rotate(-90,20,110)">Coefficient β̂</text>
+  <!-- Y tick labels (left panel) -->
+  <g font-size="10" fill="currentColor" fill-opacity="0.4" text-anchor="end" font-family="inherit">
+    <text x="50" y="43">3</text><text x="50" y="83">1.5</text>
+    <text x="50" y="143">0</text><text x="50" y="183">−1</text>
+  </g>
+  <!-- X tick labels -->
+  <g font-size="10" fill="currentColor" fill-opacity="0.4" text-anchor="middle" font-family="inherit">
+    <text x="55" y="210">0</text><text x="135" y="210">0.5</text><text x="215" y="210">1</text>
+    <text x="275" y="210">0</text><text x="355" y="210">0.5</text><text x="435" y="210">1</text>
+  </g>
+  <!-- "β→0 but never zero" label for Ridge -->
+  <text x="175" y="120" font-size="9" fill="currentColor" fill-opacity="0.45" font-family="inherit">shrinks but</text>
+  <text x="175" y="130" font-size="9" fill="currentColor" fill-opacity="0.45" font-family="inherit">never zero</text>
+  <!-- "exact zeros" label for Lasso -->
+  <text x="390" y="127" font-size="9" fill="currentColor" fill-opacity="0.45" font-family="inherit">exact</text>
+  <text x="390" y="137" font-size="9" fill="currentColor" fill-opacity="0.45" font-family="inherit">zeros →</text>
+  <!-- Legend -->
+  <g font-size="10" font-family="inherit" fill="currentColor" fill-opacity="0.6">
+    <line x1="55" y1="232" x2="72" y2="232" stroke="#f87171" stroke-width="2"/><text x="75" y="235">β₁</text>
+    <line x1="95" y1="232" x2="112" y2="232" stroke="#818cf8" stroke-width="2"/><text x="115" y="235">β₂</text>
+    <line x1="135" y1="232" x2="152" y2="232" stroke="#34d399" stroke-width="2"/><text x="155" y="235">β₃</text>
+    <line x1="175" y1="232" x2="192" y2="232" stroke="#fbbf24" stroke-width="2"/><text x="195" y="235">β₄</text>
+  </g>
+</svg>
 
 ### Quantile Regression
 
@@ -355,6 +540,75 @@ Non-stationary series (trending prices, unit root processes) produce **spurious 
 
 Use ACF/PACF plots to identify model order before fitting ARIMA.
 
+The chart below shows an AR(1) process with $\phi = 0.7$. ACF decays geometrically (never cuts off); PACF has a single spike at lag 1 then drops to zero — the diagnostic signature of a pure AR(1):
+
+<svg viewBox="0 0 460 260" xmlns="http://www.w3.org/2000/svg" style="max-width:520px;width:100%;display:block;margin:1.5rem auto">
+  <!-- Panel labels -->
+  <text x="120" y="15" text-anchor="middle" font-size="12" font-weight="600" fill="currentColor" fill-opacity="0.75" font-family="inherit">ACF — geometric decay</text>
+  <text x="350" y="15" text-anchor="middle" font-size="12" font-weight="600" fill="currentColor" fill-opacity="0.75" font-family="inherit">PACF — cuts off at lag 1</text>
+  <!-- Confidence bounds (dashed blue) -->
+  <!-- ACF panel -->
+  <line x1="30" y1="79" x2="210" y2="79" stroke="#60a5fa" stroke-opacity="0.5" stroke-dasharray="5,3" stroke-width="1"/>
+  <line x1="30" y1="138" x2="210" y2="138" stroke="#60a5fa" stroke-opacity="0.5" stroke-dasharray="5,3" stroke-width="1"/>
+  <!-- PACF panel -->
+  <line x1="250" y1="79" x2="430" y2="79" stroke="#60a5fa" stroke-opacity="0.5" stroke-dasharray="5,3" stroke-width="1"/>
+  <line x1="250" y1="138" x2="430" y2="138" stroke="#60a5fa" stroke-opacity="0.5" stroke-dasharray="5,3" stroke-width="1"/>
+  <!-- Baseline (zero) -->
+  <line x1="30" y1="108" x2="210" y2="108" stroke="#888" stroke-width="1.2"/>
+  <line x1="250" y1="108" x2="430" y2="108" stroke="#888" stroke-width="1.2"/>
+  <!-- Axes -->
+  <line x1="30" y1="20" x2="30" y2="180" stroke="#888" stroke-width="1.5"/>
+  <line x1="30" y1="180" x2="212" y2="180" stroke="#888" stroke-width="1.5"/>
+  <line x1="250" y1="20" x2="250" y2="180" stroke="#888" stroke-width="1.5"/>
+  <line x1="250" y1="180" x2="432" y2="180" stroke="#888" stroke-width="1.5"/>
+  <!-- ACF bars: lags 0-7, ACF(k)=0.7^k -->
+  <!-- yScale: 0 at y=108, 1.0 at y=20, scale=88px/unit -->
+  <!-- k=0: 1.0→y=20; k=1: 0.70→y=47; k=2: 0.49→y=65; k=3: 0.34→y=78; k=4: 0.24→y=87; k=5: 0.17→y=93; k=6: 0.12→y=98; k=7: 0.08→y=101 -->
+  <!-- xSlot = 30 + (k+0.5)*22.5, bar width=14 -->
+  <g fill="#818cf8" fill-opacity="0.85">
+    <rect x="24" y="20" width="14" height="88"/><rect x="46" y="47" width="14" height="61"/>
+    <rect x="69" y="65" width="14" height="43"/><rect x="91" y="78" width="14" height="30"/>
+    <rect x="114" y="87" width="14" height="21"/><rect x="136" y="93" width="14" height="15"/>
+    <rect x="159" y="98" width="14" height="10"/><rect x="181" y="101" width="14" height="7"/>
+  </g>
+  <!-- PACF bars: lag 0: skip, lag 1: 0.70, lags 2-7: ~0 -->
+  <g fill="#818cf8" fill-opacity="0.85">
+    <rect x="244" y="20" width="14" height="88"/>
+    <rect x="266" y="47" width="14" height="61"/>
+    <!-- lags 2-7: near zero (noise within confidence band) -->
+    <rect x="289" y="103" width="14" height="5"/><rect x="311" y="105" width="14" height="3"/>
+    <rect x="334" y="104" width="14" height="4"/><rect x="356" y="106" width="14" height="2"/>
+    <rect x="379" y="105" width="14" height="3"/><rect x="401" y="104" width="14" height="4"/>
+  </g>
+  <!-- X labels (lag numbers) -->
+  <g font-size="10" fill="currentColor" fill-opacity="0.45" text-anchor="middle" font-family="inherit">
+    <text x="31" y="193">0</text><text x="53" y="193">1</text><text x="76" y="193">2</text>
+    <text x="98" y="193">3</text><text x="121" y="193">4</text><text x="143" y="193">5</text>
+    <text x="166" y="193">6</text><text x="188" y="193">7</text>
+    <text x="251" y="193">0</text><text x="273" y="193">1</text><text x="296" y="193">2</text>
+    <text x="318" y="193">3</text><text x="341" y="193">4</text><text x="363" y="193">5</text>
+    <text x="386" y="193">6</text><text x="408" y="193">7</text>
+  </g>
+  <!-- X axis labels -->
+  <text x="120" y="205" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity="0.45" font-family="inherit">Lag</text>
+  <text x="340" y="205" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity="0.45" font-family="inherit">Lag</text>
+  <!-- Y labels -->
+  <g font-size="10" fill="currentColor" fill-opacity="0.4" text-anchor="end" font-family="inherit">
+    <text x="26" y="23">1.0</text><text x="26" y="111">0</text><text x="26" y="141">−0.3</text>
+  </g>
+  <!-- Confidence band label -->
+  <text x="215" y="77" font-size="9" fill="#60a5fa" fill-opacity="0.8" font-family="inherit">±1.96/√n</text>
+  <!-- Annotation: "cuts off" -->
+  <text x="340" y="38" font-size="10" fill="currentColor" fill-opacity="0.5" font-family="inherit">cuts off</text>
+  <text x="340" y="49" font-size="10" fill="currentColor" fill-opacity="0.5" font-family="inherit">after lag 1 →</text>
+</svg>
+
+| Pattern | ACF | PACF | Model |
+|---|---|---|---|
+| Geometric decay | Geometric decay | Cuts off at lag p | AR(p) |
+| Cuts off at lag q | Geometric decay | Geometric decay | MA(q) |
+| Both decay slowly | Both decay slowly | — | ARMA(p,q) |
+
 ### ARIMA
 
 **AR(p) — Autoregressive:**
@@ -376,11 +630,23 @@ Current value is a linear combination of $q$ past shocks. ACF cuts off at lag $q
 **ARIMA(p, d, q):** Apply AR($p$) and MA($q$) to the $d$-times differenced series. $d=1$ handles a linear trend; $d=2$ handles a quadratic trend.
 
 **Model selection:**
-1. Plot series → identify obvious non-stationarity
-2. Difference until stationary (confirm with ADF)
-3. ACF/PACF to identify $p$ and $q$
-4. Fit candidates, compare AIC/BIC
-5. Diagnose residuals (should be white noise — no significant ACF)
+
+```mermaid
+flowchart TD
+    Raw[Raw time series] --> ADF{ADF + KPSS\nStationary?}
+    ADF -->|No| Diff[First-difference\nΔyₜ = yₜ − yₜ₋₁]
+    Diff --> ADF
+    ADF -->|Yes| Plots[Plot ACF + PACF\nof stationary series]
+    Plots --> AR{PACF cuts off\nat lag p?}
+    Plots --> MA{ACF cuts off\nat lag q?}
+    AR -->|Yes| ARm[Include AR terms]
+    MA -->|Yes| MAm[Include MA terms]
+    ARm & MAm --> Fit[Fit ARIMA p,d,q\ncandidates]
+    Fit --> IC[Compare AIC / BIC]
+    IC --> Diag[Ljung-Box Q-test\non residuals]
+    Diag -->|Autocorrelation remains| Fit
+    Diag -->|White noise ✓| Done[Final model]
+```
 
 ### GARCH (Volatility Modelling)
 
