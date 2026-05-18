@@ -400,6 +400,29 @@ kbd {
   border-radius: 6px;
 }
 
+/* ─── Sidebar scrollbar styling — thin, Paperclip-themed ──── */
+.sidebar-pane {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sl-color-gray-5) transparent;
+}
+
+.sidebar-pane::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-pane::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-pane::-webkit-scrollbar-thumb {
+  background: var(--sl-color-gray-5);
+  border-radius: 3px;
+}
+
+.sidebar-pane::-webkit-scrollbar-thumb:hover {
+  background: var(--sl-color-gray-4);
+}
+
 /* ─── Right sidebar — permanently hidden, replaced by Info/Pages dropdown ── */
 @media (min-width: 72rem) {
   .right-sidebar-container {
