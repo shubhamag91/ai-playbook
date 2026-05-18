@@ -36,9 +36,7 @@ function remarkImportant() {
 // https://astro.build/config
 export default defineConfig({
   // Change to your deployed URL when ready
-        // Uncomment and set your actual URL when deploying:
-        // site: 'https://ai-playbook.pages.dev',
-      site: 'https://your-playbook.example.com',
+      site: 'https://ai-playbook.pages.dev',
 
   compressHTML: true,
 
@@ -156,11 +154,11 @@ export default defineConfig({
         // Create a social card image at public/social-card.png (1200×630px)
         // {
         //   tag: 'meta',
-        //   attrs: { property: 'og:image', content: 'https://your-playbook.example.com/social-card.png' },
+        //   attrs: { property: 'og:image', content: 'https://ai-playbook.pages.dev/social-card.png' },
         // },
         // {
         //   tag: 'meta',
-        //   attrs: { name: 'twitter:image', content: 'https://your-playbook.example.com/social-card.png' },
+        //   attrs: { name: 'twitter:image', content: 'https://ai-playbook.pages.dev/social-card.png' },
         // },
         // {
         //   tag: 'meta',
@@ -175,10 +173,10 @@ export default defineConfig({
             '@type': 'WebSite',
             name: 'AI Playbook',
             description: 'A personal reference for navigating the modern AI ecosystem — tools, workflows, models, and principles.',
-            url: 'https://your-playbook.example.com',
+            url: 'https://ai-playbook.pages.dev',
             potentialAction: {
               '@type': 'SearchAction',
-              target: 'https://your-playbook.example.com/?q={search_term_string}',
+              target: 'https://ai-playbook.pages.dev/?q={search_term_string}',
               'query-input': 'required name=search_term_string',
             },
           }),
