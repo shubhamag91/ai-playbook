@@ -45,7 +45,7 @@ jobs:
             --config .github/lychee.toml
             --cache
             --format markdown
-            --output link-check-report.md
+          output: link-check-report.md
           fail: false
 
       - name: Create issue on broken links
