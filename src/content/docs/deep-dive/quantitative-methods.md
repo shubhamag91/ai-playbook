@@ -361,7 +361,150 @@ flowchart TD
 
 ---
 
-## Part 4: Regularised Regression
+## Part 4: Variable Transformations
+
+Transformations serve two purposes: fixing violated OLS assumptions (non-normality, heteroscedasticity, non-linearity) and changing how coefficients are interpreted. Applying the wrong transformation — or not applying one when needed — is a common source of misleading models.
+
+---
+
+### Dependent Variable Transformations
+
+#### Log transformation: $\ln(y)$
+
+Use when $y$ is strictly positive, right-skewed, or when variance grows with the mean (common in income, prices, exposure).
+
+$$
+\ln(y_i) = \beta_0 + \beta_1 x_i + \varepsilon_i
+$$
+
+**Interpretation:** A one-unit increase in $x$ multiplies $y$ by $e^{\beta_1}$, or equivalently, changes $y$ by approximately $100 \cdot \beta_1\%$ (exact for small $\beta_1$).
+
+**When to use:** residuals fan outward (heteroscedasticity), $y$ is a monetary amount or count that can't be negative.
+
+**Watch out:** $\ln(0)$ is undefined — you need $y > 0$. A common fix is $\ln(y + 1)$ or $\ln(y + c)$ for small $c$.
+
+Retransforming to the original scale: $\hat{y} = e^{\hat{\ln y}}$ is biased downward. The **smearing estimator** (Duan, 1983) corrects this:
+
+$$
+\hat{y} = e^{\hat{\mu}} \cdot \frac{1}{n} \sum_{i=1}^n e^{\hat{\varepsilon}_i}
+$$
+
+#### Square-root transformation: $\sqrt{y}$
+
+Gentler than log — useful for count data or moderate right skew. Variance-stabilising for Poisson-distributed outcomes (where $\text{Var}(y) \propto \mu$).
+
+#### Box-Cox transformation
+
+A family of power transformations parameterised by $\lambda$:
+
+$$
+y^{(\lambda)} = \begin{cases} \dfrac{y^\lambda - 1}{\lambda} & \lambda \neq 0 \\ \ln(y) & \lambda = 0 \end{cases}
+$$
+
+Special cases: $\lambda = 1$ is no transformation, $\lambda = 0$ is log, $\lambda = 0.5$ is square root, $\lambda = -1$ is reciprocal.
+
+Estimate $\lambda$ by maximum likelihood — the optimal $\lambda$ maximises the log-likelihood of the transformed residuals being normal. In Python: `scipy.stats.boxcox(y)`.
+
+**Limitation:** Requires $y > 0$. Yeo-Johnson extends this to allow $y \leq 0$.
+
+#### Logit transformation: $\ln\left(\frac{y}{1-y}\right)$
+
+For bounded outcomes $y \in (0, 1)$ such as rates or proportions. Expands the bounded range to $(-\infty, +\infty)$, making OLS applicable. The fractional logit model is an alternative that avoids retransformation.
+
+---
+
+### Independent Variable Transformations
+
+#### Log transformation: $\ln(x)$
+
+Use when the relationship between $x$ and $y$ is concave (diminishing returns) or when $x$ spans several orders of magnitude (income, asset size, market cap).
+
+**Interpretation depends on the model form:**
+
+| Model | Equation | Interpretation of $\beta_1$ |
+|---|---|---|
+| **Linear-linear** | $y = \beta_0 + \beta_1 x$ | $\Delta y = \beta_1$ per unit increase in $x$ |
+| **Log-linear** | $\ln y = \beta_0 + \beta_1 x$ | $\approx 100\beta_1\%$ change in $y$ per unit increase in $x$ |
+| **Linear-log** | $y = \beta_0 + \beta_1 \ln x$ | $\Delta y = \beta_1 / 100$ per 1% increase in $x$ |
+| **Log-log** | $\ln y = \beta_0 + \beta_1 \ln x$ | $\beta_1$ is the **elasticity**: 1% increase in $x$ → $\beta_1\%$ change in $y$ |
+
+The log-log form is widely used in economics and finance because elasticities are unit-free and directly comparable across variables.
+
+#### Polynomial features
+
+Include $x^2$, $x^3$ to capture non-linear relationships while staying within the OLS framework:
+
+$$
+y = \beta_0 + \beta_1 x + \beta_2 x^2 + \varepsilon
+$$
+
+The marginal effect is $\partial y / \partial x = \beta_1 + 2\beta_2 x$ — it varies with $x$. The turning point is at $x^* = -\beta_1 / (2\beta_2)$.
+
+**Caution:** High-degree polynomials overfit at the extremes. Splines or piecewise linear functions are more robust.
+
+#### Standardisation vs normalisation
+
+**Standardisation** (z-score): $x' = (x - \mu) / \sigma$. After standardising, $\beta_j$ is interpreted as the effect of a one-standard-deviation increase in $x_j$. Makes coefficients directly comparable across predictors with different units. Required before applying Ridge or Lasso (otherwise the penalty treats variables unequally).
+
+**Min-max normalisation**: $x' = (x - x_{\min}) / (x_{\max} - x_{\min})$. Scales to $[0, 1]$. Sensitive to outliers. Rarely used for regression; more common in ML preprocessing.
+
+Standardisation does not change $R^2$, $t$-statistics, or $p$-values — only the scale of $\hat{\beta}$.
+
+---
+
+### Categorical Variables: Dummy Encoding
+
+A categorical variable with $k$ levels is encoded as $k - 1$ binary (0/1) dummy variables. The omitted level is the **reference category** — all coefficients are interpreted relative to it.
+
+**Example:** Credit rating with levels AAA, AA, A, BBB → create dummies for AA, A, BBB; AAA is the reference.
+
+$$
+y = \beta_0 + \beta_1 D_{\text{AA}} + \beta_2 D_{\text{A}} + \beta_3 D_{\text{BBB}} + \gamma x + \varepsilon
+$$
+
+$\beta_1$ is the average difference in $y$ between AA and AAA, holding $x$ constant.
+
+**Dummy variable trap:** Including all $k$ dummies creates perfect multicollinearity with the intercept (they sum to 1). Always use $k - 1$ dummies. Software handles this automatically, but be aware if constructing features manually.
+
+**Ordered categories:** For ordinal variables (e.g., credit grades with a natural ranking), a single integer encoding can be appropriate if the spacing is roughly equal. Dummy encoding is safer when spacing is unequal.
+
+---
+
+### Interaction Terms
+
+An interaction term $x_1 \cdot x_2$ allows the effect of $x_1$ to depend on the level of $x_2$:
+
+$$
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 (x_1 \cdot x_2) + \varepsilon
+$$
+
+The marginal effect of $x_1$ is $\partial y / \partial x_1 = \beta_1 + \beta_3 x_2$ — it varies with $x_2$.
+
+**When to include interactions:**
+- Theory suggests the effect of one variable depends on another (e.g., income × age in credit scoring)
+- Residual plots show systematic patterns that disappear after adding the interaction
+- You want to test whether a relationship differs across groups (equivalent to separate slopes)
+
+**Hierarchy principle:** If you include an interaction $x_1 x_2$, include the main effects $x_1$ and $x_2$ too, even if their main-effect coefficients are insignificant. Omitting them changes the interpretation of the interaction.
+
+---
+
+### Choosing the Right Transformation
+
+| Symptom | Likely fix |
+|---|---|
+| Right-skewed $y$, variance grows with mean | $\ln(y)$ |
+| $y$ is a count (Poisson) | $\sqrt{y}$ or Poisson regression |
+| $y$ is a proportion in $(0,1)$ | Logit$(y)$ or fractional logit |
+| $y$ is continuous, optimal $\lambda$ unknown | Box-Cox |
+| Residuals show a curve (concave/convex) | $\ln(x)$ or add $x^2$ |
+| $x$ spans orders of magnitude | $\ln(x)$ |
+| Predictors on different scales (for regularisation) | Standardise all $x$ |
+| Non-linear group differences | Interaction terms |
+
+---
+
+## Part 5: Regularised Regression
 
 When predictors are numerous or collinear, OLS over-fits. Regularisation adds a penalty term to the loss function, shrinking coefficients toward zero.
 
@@ -481,7 +624,7 @@ Where $\rho_\tau(u) = u(\tau - \mathbf{1}[u < 0])$ and $\tau \in (0,1)$ is the q
 
 ---
 
-## Part 5: Panel Data and Fixed Effects
+## Part 6: Panel Data and Fixed Effects
 
 Panel data has both a cross-sectional dimension ($i$, e.g., stocks) and a time dimension ($t$). Standard OLS ignores the panel structure.
 
@@ -511,7 +654,7 @@ Assumes $\alpha_i \sim \mathcal{N}(0, \sigma_\alpha^2)$ and $\text{Cov}(\alpha_i
 
 ---
 
-## Part 6: Time Series
+## Part 7: Time Series
 
 OLS assumes independent observations. Financial time series violates this — returns and prices are autocorrelated. Time series methods model the temporal dependence explicitly.
 
@@ -696,7 +839,7 @@ Applications: pairs trading (equity or fixed income), purchasing power parity, y
 
 ---
 
-## Part 7: Principal Component Analysis (PCA)
+## Part 8: Principal Component Analysis (PCA)
 
 PCA finds directions of maximum variance in high-dimensional data. It's used for dimensionality reduction, factor construction, and dealing with multicollinearity.
 
@@ -737,7 +880,7 @@ When predictors are collinear, regress on the first $k$ principal components ins
 
 ---
 
-## Part 8: Factor Models
+## Part 9: Factor Models
 
 Factor models decompose returns into systematic and idiosyncratic components:
 
@@ -780,7 +923,7 @@ Where $B$ is the factor exposure matrix, $\Sigma_F$ is the factor covariance mat
 
 ---
 
-## Part 9: Statistical Testing Framework
+## Part 10: Statistical Testing Framework
 
 ### Hypothesis Testing
 
@@ -833,7 +976,7 @@ In finance this matters enormously — Harvey, Liu & Zhu (2016) showed most publ
 
 ---
 
-## Part 10: Distribution Statistics
+## Part 11: Distribution Statistics
 
 Before running regressions or tests, understanding the shape of your data's distribution matters — especially in finance where returns are decidedly non-normal.
 
@@ -897,7 +1040,7 @@ $$
 
 ---
 
-## Part 11: Inequality and Concentration Measures
+## Part 12: Inequality and Concentration Measures
 
 ### Gini Coefficient
 
@@ -991,7 +1134,7 @@ Used in: antitrust analysis, portfolio concentration risk, factor concentration 
 
 ---
 
-## Part 12: Non-parametric Methods
+## Part 13: Non-parametric Methods
 
 Non-parametric methods make no assumptions about the underlying distribution. Essential when data is ordinal, heavily skewed, or has fat tails.
 
@@ -1061,7 +1204,7 @@ KDE is used to visualise return distributions, compare empirical vs theoretical 
 
 ---
 
-## Part 13: Logistic Regression and Classification
+## Part 14: Logistic Regression and Classification
 
 Linear regression predicts a continuous outcome. When the outcome is binary — default or no-default, fraud or not, churn or not — logistic regression is the standard tool.
 
@@ -1160,7 +1303,7 @@ In credit risk, **Gini > 0.4** is typically the minimum acceptable threshold; **
 
 ---
 
-## Part 14: Scorecard Development — WoE and Information Value
+## Part 15: Scorecard Development — WoE and Information Value
 
 Credit scorecards translate continuous and categorical predictors into integer points. The standard preprocessing pipeline uses **Weight of Evidence (WoE)** encoding.
 
@@ -1210,7 +1353,7 @@ The final score is additive across characteristics — easy to explain to regula
 
 ---
 
-## Part 15: Survival Analysis
+## Part 16: Survival Analysis
 
 Survival analysis models the time until an event occurs — time to default, time to prepayment, time to customer churn. Unlike logistic regression (which asks "will it happen?"), survival analysis asks "when will it happen?"
 
@@ -1261,7 +1404,7 @@ Where $h_0(t)$ is an unspecified baseline hazard. The **proportional hazards ass
 
 ---
 
-## Part 16: Model Monitoring and Validation
+## Part 17: Model Monitoring and Validation
 
 Models degrade over time as the population they're applied to drifts away from the development sample. Model monitoring is a regulatory requirement (SR 11-7, PRA SS1/23) and a risk management necessity.
 
@@ -1322,7 +1465,7 @@ For through-the-cycle models (PD, LGD), backtesting compares predicted values ag
 
 ---
 
-## Part 17: Risk Metrics — VaR and Expected Shortfall
+## Part 18: Risk Metrics — VaR and Expected Shortfall
 
 ### Value at Risk (VaR)
 
