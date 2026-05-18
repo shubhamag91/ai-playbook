@@ -1,6 +1,6 @@
 ---
 title: Quantitative Methods
-description: Linear regression in depth — OLS derivation, Gauss-Markov assumptions, diagnostics, regularisation, extensions — plus time series, factor models, PCA, and the statistical testing framework used in quantitative analytics.
+description: A comprehensive reference for quantitative analytics — regression, credit risk models, scorecard development, survival analysis, model monitoring, time series, factor models, and risk metrics.
 sidebar:
   order: 7
 lastUpdated: 2026-05-18
@@ -11,13 +11,14 @@ tags:
   - regression
   - time-series
   - finance
+  - credit-risk
 tldr:
   - OLS finds the coefficient vector that minimises the sum of squared residuals; the closed-form solution is β = (XᵀX)⁻¹Xᵀy.
-  - The Gauss-Markov theorem guarantees OLS is the Best Linear Unbiased Estimator (BLUE) — but only when its five assumptions hold.
-  - Violations (heteroscedasticity, autocorrelation, multicollinearity) have specific diagnostics and specific fixes — don't guess.
-  - Ridge and Lasso add regularisation to handle multicollinearity and variable selection; quantile regression handles non-normal error distributions.
-  - Time series requires stationarity before modelling — the ARIMA family handles autocorrelated residuals that OLS ignores.
-  - Factor models (PCA, Fama-French) decompose returns into systematic and idiosyncratic components.
+  - Logistic regression models binary outcomes (default/no-default); coefficients are log-odds ratios and the output is a probability.
+  - Weight of Evidence (WoE) and Information Value (IV) are the standard feature engineering and selection tools for credit scorecards.
+  - Survival analysis models time-to-event (time to default); the Cox proportional hazards model estimates relative default risk.
+  - PSI detects population drift post-deployment — it is the first check in any model monitoring framework.
+  - VaR and Expected Shortfall quantify market and credit risk; ES is now the regulatory standard under Basel IV.
 seeAlso:
   - label: Interview Prep — Quantitative Analytics
     href: /learn/interview-prep-quant-banking
@@ -1055,6 +1056,353 @@ Where $K$ is a kernel function (usually Gaussian) and $h$ is the **bandwidth** �
 - Optimal $h$ (Silverman's rule of thumb): $h = 1.06 \hat{\sigma} n^{-1/5}$
 
 KDE is used to visualise return distributions, compare empirical vs theoretical densities, and detect multimodality (e.g., bimodal return distributions suggesting regime changes).
+
+---
+
+## Part 13: Logistic Regression and Classification
+
+Linear regression predicts a continuous outcome. When the outcome is binary — default or no-default, fraud or not, churn or not — logistic regression is the standard tool.
+
+### The Model
+
+Instead of modelling $y$ directly, logistic regression models the log-odds of the event:
+
+$$
+\log\frac{P(y=1|\mathbf{x})}{1 - P(y=1|\mathbf{x})} = \boldsymbol{\beta}^\top \mathbf{x}
+$$
+
+Solving for the probability:
+
+$$
+P(y=1|\mathbf{x}) = \frac{1}{1+e^{-\boldsymbol{\beta}^\top \mathbf{x}}} = \sigma(\boldsymbol{\beta}^\top \mathbf{x})
+$$
+
+The sigmoid function $\sigma$ maps any real number to $(0,1)$, giving a valid probability.
+
+<svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" style="max-width:460px;width:100%;display:block;margin:1.5rem auto">
+  <!-- Grid -->
+  <g stroke="#888" stroke-opacity="0.12" stroke-width="1">
+    <line x1="50" y1="200" x2="350" y2="200"/><line x1="50" y1="110" x2="350" y2="110"/>
+    <line x1="50" y1="20" x2="350" y2="20"/>
+    <line x1="200" y1="20" x2="200" y2="210"/>
+  </g>
+  <!-- Decision threshold line -->
+  <line x1="50" y1="110" x2="350" y2="110" stroke="#fbbf24" stroke-opacity="0.6" stroke-dasharray="5,3" stroke-width="1.5"/>
+  <!-- Sigmoid curve -->
+  <polyline points="50,199 80,197 110,192 140,178 170,152 200,110 230,68 260,42 290,29 320,23 350,21"
+    fill="none" stroke="#818cf8" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- Sample data points: non-defaults (y=0) -->
+  <g fill="#22c55e" fill-opacity="0.8">
+    <circle cx="90" cy="205" r="4"/><circle cx="115" cy="205" r="4"/>
+    <circle cx="130" cy="205" r="4"/><circle cx="155" cy="205" r="4"/>
+  </g>
+  <!-- Sample data points: defaults (y=1) -->
+  <g fill="#f87171" fill-opacity="0.8">
+    <circle cx="255" cy="15" r="4"/><circle cx="275" cy="15" r="4"/>
+    <circle cx="305" cy="15" r="4"/><circle cx="325" cy="15" r="4"/>
+  </g>
+  <!-- Axes -->
+  <line x1="50" y1="20" x2="50" y2="212" stroke="#888" stroke-width="1.5"/>
+  <line x1="50" y1="210" x2="352" y2="210" stroke="#888" stroke-width="1.5"/>
+  <!-- Labels -->
+  <text x="200" y="225" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity="0.5" font-family="inherit">Linear predictor β₀ + β₁x₁ + …</text>
+  <text x="14" y="115" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity="0.5" font-family="inherit" transform="rotate(-90,14,115)">P(default)</text>
+  <g font-size="10" fill="currentColor" fill-opacity="0.4" text-anchor="end" font-family="inherit">
+    <text x="46" y="23">1.0</text><text x="46" y="113">0.5</text><text x="46" y="203">0.0</text>
+  </g>
+  <text x="210" y="105" font-size="10" fill="#fbbf24" fill-opacity="0.8" font-family="inherit">threshold = 0.5</text>
+  <!-- Legend -->
+  <g font-size="11" font-family="inherit">
+    <circle cx="165" cy="232" r="4" fill="#22c55e" fill-opacity="0.8"/>
+    <text x="175" y="236" fill="currentColor" fill-opacity="0.6">non-default (y=0)</text>
+    <circle cx="270" cy="232" r="4" fill="#f87171" fill-opacity="0.8"/>
+    <text x="280" y="236" fill="currentColor" fill-opacity="0.6">default (y=1)</text>
+  </g>
+</svg>
+
+### Estimation: Maximum Likelihood
+
+Logistic regression has no closed-form solution. Parameters are found by maximising the log-likelihood:
+
+$$
+\ell(\boldsymbol{\beta}) = \sum_{i=1}^n \left[ y_i \log \hat{p}_i + (1-y_i) \log(1-\hat{p}_i) \right]
+$$
+
+Solved iteratively with Newton-Raphson or gradient descent.
+
+### Interpreting Coefficients
+
+A one-unit increase in $x_j$ multiplies the odds by $e^{\beta_j}$:
+
+$$
+\text{OR}_j = e^{\beta_j}
+$$
+
+- $\beta_j > 0$ → higher $x_j$ increases default probability
+- $\beta_j < 0$ → higher $x_j$ decreases default probability
+- $|\beta_j|$ → effect size (on the log-odds scale)
+
+Unlike OLS, marginal effects on the probability scale depend on the values of all other variables — they are not constant.
+
+### Model Performance Metrics
+
+| Metric | Formula | Interpretation |
+|---|---|---|
+| **AUC** | Area under ROC curve | 0.5 = random; 1.0 = perfect |
+| **Gini** | $2 \times \text{AUC} - 1$ | 0 = random; 1 = perfect |
+| **KS Statistic** | $\max\|F_1(x) - F_0(x)\|$ | Max separation between default/non-default CDFs |
+| **Log-loss** | $-\ell(\hat{\boldsymbol{\beta}})/n$ | Lower is better; measures calibration |
+| **Brier Score** | $\frac{1}{n}\sum(y_i - \hat{p}_i)^2$ | Mean squared error of probability forecasts |
+
+In credit risk, **Gini > 0.4** is typically the minimum acceptable threshold; **Gini > 0.6** is strong.
+
+---
+
+## Part 14: Scorecard Development — WoE and Information Value
+
+Credit scorecards translate continuous and categorical predictors into integer points. The standard preprocessing pipeline uses **Weight of Evidence (WoE)** encoding.
+
+### Weight of Evidence (WoE)
+
+For a predictor binned into groups, WoE for bin $i$ is:
+
+$$
+\text{WoE}_i = \ln\left(\frac{\text{Distribution of Events}_i}{\text{Distribution of Non-Events}_i}\right) = \ln\left(\frac{P(\text{event in bin } i)}{P(\text{non-event in bin } i)}\right)
+$$
+
+- **Positive WoE** → bin has a higher proportion of defaults than the overall population (risky)
+- **Negative WoE** → bin has lower proportion of defaults (safe)
+- **WoE = 0** → bin default rate equals the population average
+
+WoE transforms all variables to a common, interpretable scale and handles non-linearity and missing values naturally.
+
+### Information Value (IV)
+
+IV summarises a variable's predictive power across all its bins:
+
+$$
+\text{IV} = \sum_i (\text{Events}_i\% - \text{Non-Events}_i\%) \times \text{WoE}_i
+$$
+
+| IV | Predictive Power |
+|---|---|
+| < 0.02 | Useless |
+| 0.02–0.1 | Weak |
+| 0.1–0.3 | Medium |
+| 0.3–0.5 | Strong |
+| > 0.5 | Suspicious (check for data leakage) |
+
+IV is the primary variable selection criterion in scorecard development. Variables with IV < 0.02 are typically dropped; IV > 0.5 triggers a data quality review.
+
+### From WoE to Scorecard Points
+
+Once logistic regression is fit on WoE-transformed variables, scorecard points are assigned by scaling coefficients to an integer range (e.g., 300–850 for consumer credit):
+
+$$
+\text{Points}_j = -\left(\beta_j \times \text{WoE}_{ij} + \frac{\beta_0}{k}\right) \times \text{Factor} + \text{Offset}
+$$
+
+Where Factor and Offset are chosen to anchor the score to a target odds at a target score (e.g., odds of 50:1 at score 600).
+
+The final score is additive across characteristics — easy to explain to regulators and customers.
+
+---
+
+## Part 15: Survival Analysis
+
+Survival analysis models the time until an event occurs — time to default, time to prepayment, time to customer churn. Unlike logistic regression (which asks "will it happen?"), survival analysis asks "when will it happen?"
+
+### Core Functions
+
+**Survival function** $S(t)$ — probability the event has not occurred by time $t$:
+
+$$
+S(t) = P(T > t), \quad S(0) = 1, \quad S(\infty) = 0
+$$
+
+**Hazard function** $h(t)$ — instantaneous rate of the event at time $t$, given survival to $t$:
+
+$$
+h(t) = \lim_{\Delta t \to 0} \frac{P(t \leq T < t+\Delta t \mid T \geq t)}{\Delta t} = -\frac{S'(t)}{S(t)}
+$$
+
+**Cumulative hazard** $H(t) = \int_0^t h(s)\, ds = -\ln S(t)$
+
+### Kaplan-Meier Estimator
+
+The non-parametric estimate of $S(t)$ from censored data:
+
+$$
+\hat{S}(t) = \prod_{t_i \leq t} \left(1 - \frac{d_i}{n_i}\right)
+$$
+
+Where $d_i$ is the number of events and $n_i$ is the number at risk at time $t_i$. Censored observations (e.g., loans that were paid off before defaulting) are handled naturally — they contribute to the risk set up to their exit time, then drop out.
+
+### Cox Proportional Hazards Model
+
+The Cox model is the standard regression approach for survival data. It relates covariates to the hazard without specifying the baseline hazard shape (semi-parametric):
+
+$$
+h(t|\mathbf{x}) = h_0(t) \cdot \exp(\boldsymbol{\beta}^\top \mathbf{x})
+$$
+
+Where $h_0(t)$ is an unspecified baseline hazard. The **proportional hazards assumption**: the hazard ratio between two individuals with different covariates is constant over time.
+
+**Hazard ratio (HR):** $\text{HR}_j = e^{\beta_j}$ — a one-unit increase in $x_j$ multiplies the hazard by $e^{\beta_j}$. HR > 1 means higher risk; HR < 1 means lower risk.
+
+**Estimated with partial likelihood** — the baseline hazard cancels out, making estimation tractable without specifying it.
+
+**Applications in credit:**
+- Probability of default over a 12-month horizon (IFRS 9 Stage migration)
+- Lifetime probability of default (IFRS 9 ECL)
+- Time to repayment / prepayment modelling
+
+---
+
+## Part 16: Model Monitoring and Validation
+
+Models degrade over time as the population they're applied to drifts away from the development sample. Model monitoring is a regulatory requirement (SR 11-7, PRA SS1/23) and a risk management necessity.
+
+### Population Stability Index (PSI)
+
+PSI measures how much a variable's distribution has shifted between the development (reference) period and a monitoring period:
+
+$$
+\text{PSI} = \sum_i \left(A_i - E_i\right) \times \ln\left(\frac{A_i}{E_i}\right)
+$$
+
+Where $A_i$ = actual proportion in bin $i$ (monitoring), $E_i$ = expected proportion in bin $i$ (development).
+
+| PSI | Interpretation |
+|---|---|
+| < 0.10 | No significant shift — model still valid |
+| 0.10–0.25 | Moderate shift — investigate |
+| > 0.25 | Major shift — model may need redevelopment |
+
+PSI is computed on the **score distribution** (overall stability) and on each input characteristic (Characteristic Stability Index, CSI). A high PSI on one characteristic identifies which variable is driving the drift.
+
+### Characteristic Stability Index (CSI)
+
+CSI applies the same formula as PSI but to individual input variables. Workflow:
+
+```mermaid
+flowchart LR
+    Score[Compute score\nfor monitoring window] --> PSI{PSI > 0.10?}
+    PSI -->|No| OK[Model stable\n✓ continue]
+    PSI -->|Yes| CSI[Compute CSI\nfor each variable]
+    CSI --> Driver[Identify driver\nvariable]
+    Driver --> Root[Root cause:\ndata issue / population shift]
+    Root --> Fix[Recalibrate or\nredevelop model]
+```
+
+### Performance Monitoring
+
+Track discrimination and calibration separately — a model can remain discriminatory (Gini stable) while becoming poorly calibrated (predicted rates diverge from actuals):
+
+| Metric | Monitors | Alert threshold |
+|---|---|---|
+| **Gini / AUC** | Discrimination (rank ordering) | Drop > 5 pp from development Gini |
+| **KS Statistic** | Separation between default/non-default | Drop > 5 pp |
+| **Predicted vs Actual Default Rate** | Calibration | Predicted/Actual ratio outside 0.8–1.2 |
+| **Hosmer-Lemeshow test** | Calibration (formal) | p-value < 0.05 across score bands |
+| **PSI** | Population drift | > 0.25 on score or key characteristic |
+
+### Backtesting
+
+For through-the-cycle models (PD, LGD), backtesting compares predicted values against realised outcomes:
+
+**Binomial test for PD:** Under $H_0$ that predicted PD is correct, the number of defaults in a cohort follows a Binomial distribution. Test whether actual defaults are consistent with predicted.
+
+**Traffic light framework (Basel):**
+- Green zone: actual defaults within expected range
+- Amber zone: borderline — increase monitoring
+- Red zone: model materially over/underpredicts — regulatory notification required
+
+---
+
+## Part 17: Risk Metrics — VaR and Expected Shortfall
+
+### Value at Risk (VaR)
+
+VaR is the loss not exceeded with probability $1-\alpha$ over a given horizon:
+
+$$
+P(L > \text{VaR}_\alpha) = \alpha
+$$
+
+Equivalently, VaR$_\alpha$ is the $\alpha$-quantile of the loss distribution (e.g., 99th percentile for 1% VaR).
+
+**Three estimation approaches:**
+
+| Method | How | Assumptions |
+|---|---|---|
+| **Historical simulation** | Sort past P&L; read off percentile | Distribution-free; captures fat tails and correlations |
+| **Parametric (variance-covariance)** | Assume normal returns; $\text{VaR} = \mu + z_\alpha \sigma$ | Fast; underestimates tail risk for non-normal returns |
+| **Monte Carlo** | Simulate thousands of scenarios from a model | Flexible; computationally expensive |
+
+**Limitations of VaR:**
+- Not subadditive — a portfolio of two positions can have higher VaR than the sum of their individual VaRs (violates diversification intuition)
+- Tells you nothing about the magnitude of losses beyond the threshold
+
+### Expected Shortfall (CVaR / ES)
+
+Expected Shortfall is the expected loss conditional on exceeding VaR:
+
+$$
+\text{ES}_\alpha = \mathbb{E}[L \mid L > \text{VaR}_\alpha] = \frac{1}{\alpha} \int_{1-\alpha}^1 \text{VaR}_u\, du
+$$
+
+ES is the average of all losses in the tail beyond VaR. It is:
+- **Subadditive** — always rewards diversification
+- **More sensitive to tail shape** — captures the severity, not just the threshold
+- **The regulatory standard under Basel IV (FRTB)** — replaced VaR at the 97.5th percentile
+
+### Duration and DV01 (Fixed Income Risk)
+
+For fixed income portfolios, interest rate sensitivity is measured by:
+
+**Modified Duration:**
+$$
+D_\text{mod} = -\frac{1}{P}\frac{dP}{dy} \approx \frac{\Delta P / P}{\Delta y}
+$$
+
+A bond with modified duration of 5 loses approximately 5% in value for a 1% (100bp) rise in yield.
+
+**DV01 (Dollar Value of a Basis Point):**
+$$
+\text{DV01} = -\frac{dP}{dy} \times 0.0001 \approx D_\text{mod} \times P \times 0.0001
+$$
+
+DV01 is the P&L change for a 1 basis point (0.01%) move in yield. The standard unit for expressing interest rate risk on a trading desk.
+
+**Convexity** measures the curvature of the price-yield relationship (duration is the first-order approximation; convexity is the second-order correction):
+
+$$
+\Delta P \approx -D_\text{mod} \cdot P \cdot \Delta y + \frac{1}{2} \cdot C \cdot P \cdot (\Delta y)^2
+$$
+
+Positive convexity (standard bonds) means the bond gains more when yields fall than it loses when yields rise by the same amount.
+
+### Expected Credit Loss (ECL — IFRS 9)
+
+Under IFRS 9, banks must recognise lifetime expected credit losses on all financial instruments:
+
+$$
+\text{ECL} = \text{PD} \times \text{LGD} \times \text{EAD} \times \text{DF}
+$$
+
+Where:
+- **PD** — Probability of Default (from logistic/survival model)
+- **LGD** — Loss Given Default (fraction of exposure lost; modelled via beta regression or OLS on logit-transformed LGD)
+- **EAD** — Exposure at Default (outstanding balance at time of default)
+- **DF** — Discount factor (to present value)
+
+**Staging under IFRS 9:**
+- **Stage 1** — 12-month ECL (no significant credit deterioration since origination)
+- **Stage 2** — Lifetime ECL (significant increase in credit risk)
+- **Stage 3** — Lifetime ECL, credit-impaired
+
+The transition between stages is the critical modelling decision — typically driven by PD relative to origination PD, delinquency triggers, or watchlist flags.
 
 ---
 
