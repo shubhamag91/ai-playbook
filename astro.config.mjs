@@ -76,6 +76,7 @@ export default defineConfig({
       components: {
         Footer: './src/components/FooterOverride.astro',
         MarkdownContent: './src/components/ContentOverride.astro',
+        Search: './src/components/SearchOverride.astro',
       },
       title: 'AI Playbook',
       description: 'A living playbook of AI & LLM knowledge — notes, cheatsheets, diagrams, and decks.',
@@ -230,6 +231,12 @@ export default defineConfig({
         },
       ],
       customCss: ['./src/styles/custom.css'],
+      pagefind: {
+        ranking: {
+          pageLength: 0.3,
+          termFrequency: 0.2,
+        },
+      },
       sidebar: [
         {
           label: 'Start Here',

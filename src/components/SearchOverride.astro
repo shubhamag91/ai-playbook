@@ -1,0 +1,126 @@
+---
+import StarlightSearch from '@astrojs/starlight/components/Search.astro';
+---
+
+<StarlightSearch />
+
+<script is:inline>
+(function() {
+  var RECENT_KEY = 'playbook_recent_searches';
+  var MAX_RECENT = 6;
+
+  function getRecent() {
+    try { return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); }
+    catch(e) { return []; }
+  }
+
+  function saveRecent(q) {
+    var searches = getRecent();
+    searches = [q, ...searches.filter(function(s) { return s !== q; })].slice(0, MAX_RECENT);
+    localStorage.setItem(RECENT_KEY, JSON.stringify(searches));
+  }
+
+  function clearRecent() {
+    localStorage.removeItem(RECENT_KEY);
+  }
+
+  function renderRecent(container, input) {
+    var searches = getRecent();
+    if (searches.length === 0) { container.style.display = 'none'; return; }
+    container.style.display = '';
+    container.innerHTML = '';
+    var header = document.createElement('div');
+    header.className = 'recent-header';
+    header.innerHTML = '<span class="recent-label">Recent searches</span><button class="recent-clear">Clear</button>';
+    container.appendChild(header);
+
+    header.querySelector('.recent-clear').addEventListener('click', function(e) {
+      e.stopPropagation();
+      clearRecent();
+      renderRecent(container, input);
+    });
+
+    var list = document.createElement('div');
+    list.className = 'recent-list';
+    searches.forEach(function(q) {
+      var chip = document.createElement('button');
+      chip.className = 'recent-chip';
+      chip.textContent = q;
+      chip.addEventListener('click', function() {
+        input.value = q;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        saveRecent(q);
+        // Focus input to trigger Pagefind search
+        input.focus();
+        // Hide recent list
+        container.style.display = 'none';
+      });
+      list.appendChild(chip);
+    });
+    container.appendChild(list);
+  }
+
+  function initRecent() {
+    var dialog = document.querySelector('dialog');
+    var container = document.getElementById('recent-searches');
+    if (!dialog || !container) return;
+
+    // Watch for dialog open
+    var observer = new MutationObserver(function() {
+      if (dialog.hasAttribute('open')) {
+        // Pagefind needs time to initialize after dialog opens
+        setTimeout(function() {
+          var input = document.querySelector('#starlight__search .pagefind-ui__search-input');
+          if (input) {
+            if (!input.dataset.recentWatched) {
+              input.dataset.recentWatched = '1';
+              // Save search on input (after debounce)
+              var timer;
+              input.addEventListener('input', function() {
+                clearTimeout(timer);
+                timer = setTimeout(function() {
+                  if (input.value.trim()) {
+                    saveRecent(input.value.trim());
+                    container.style.display = 'none';
+                  }
+                }, 2000);
+              });
+              // Also save on Enter
+              input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && input.value.trim()) {
+                  saveRecent(input.value.trim());
+                  container.style.display = 'none';
+                }
+              });
+              // Show recent when focused with empty input
+              input.addEventListener('focus', function() {
+                if (!input.value.trim()) {
+                  renderRecent(container, input);
+                }
+              });
+              input.addEventListener('blur', function() {
+                setTimeout(function() { container.style.display = 'none'; }, 200);
+              });
+              // Handle clicking inside recent list
+              container.addEventListener('mousedown', function(e) { e.preventDefault(); });
+            }
+            // Show recent if input is empty when dialog opens
+            if (!input.value.trim()) {
+              renderRecent(container, input);
+            }
+          }
+        }, 100);
+      }
+    });
+    observer.observe(dialog, { attributes: true, attributeFilter: ['open'] });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initRecent);
+  } else {
+    initRecent();
+  }
+})();
+</script>
+
+<div id="recent-searches" class="recent-searches-panel" style="display:none"></div>
