@@ -32,18 +32,13 @@
   --content-gutter: 2rem;
 }
 
-/* Scale content width up on larger screens */
-@media (min-width: 1440px) {
-  :root { --sl-content-width: 70rem; }
-}
-@media (min-width: 1920px) {
-  :root { --sl-content-width: 85rem; }
-}
-@media (min-width: 2560px) {
-  :root { --sl-content-width: 100rem; }
-}
-@media (min-width: 3200px) {
-  :root { --sl-content-width: 118rem; }
+/* Scale content width to fill available space on larger screens.
+   clamp(min, viewport - sidebar - padding, max):
+   sidebar ≈ 18.75rem, content padding ≈ 5rem on each side → subtract ~22rem total. */
+@media (min-width: 72rem) {
+  :root {
+    --sl-content-width: clamp(60rem, calc(100vw - 22rem), 160rem);
+  }
 }
 
 /* ─── Accent color ────────────────────────────────────── */
