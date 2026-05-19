@@ -358,6 +358,7 @@ export default defineConfig({
                 { label: 'System Design', slug: 'resources/interview-prep/system-design' },
                 { label: 'Behavioral', slug: 'resources/interview-prep/behavioral' },
                 { label: 'AI Product', slug: 'resources/interview-prep/product' },
+                { label: 'AI Data Scientist', slug: 'resources/interview-prep/ai-data-scientist' },
               ],
             },
             { label: 'Case Studies', autogenerate: { directory: 'resources/case-studies' } },
