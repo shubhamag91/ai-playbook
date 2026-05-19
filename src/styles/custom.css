@@ -461,10 +461,6 @@ kbd {
     width: 100%;
     --sl-content-margin-inline: auto;
   }
-
-  :root {
-    --sl-content-width: 60rem;
-  }
 }
 
 /* ─── Prev/Next pagination styling ──────────────────────── */
