@@ -32,12 +32,12 @@
   --content-gutter: 2rem;
 }
 
-/* Scale content width to fill available space on larger screens.
-   clamp(min, viewport - sidebar - padding, max):
-   sidebar ≈ 18.75rem, content padding ≈ 5rem on each side → subtract ~22rem total. */
-@media (min-width: 72rem) {
-  :root {
-    --sl-content-width: clamp(60rem, calc(100vw - 22rem), 160rem);
+/* Large-screen content width: bypass the CSS variable and target .sl-container directly.
+   Fills available width (viewport minus sidebar ~320px, minus small padding) up to 2400px. */
+@media (min-width: 1100px) {
+  .sl-container {
+    max-width: min(2400px, calc(100vw - 360px)) !important;
+    width: 100% !important;
   }
 }
 
