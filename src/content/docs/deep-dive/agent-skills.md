@@ -1,6 +1,6 @@
 ---
 title: Agent Skills
-description: What agent skills are, how they differ from tools and MCP, the SKILL.md open standard, and how to write and use skills across Claude Code and other AI coding agents.
+description: What agent skills are, how they differ from tools and MCP, the SKILL.md open standard, sub-agents and orchestration patterns, and how to write and use skills across Claude Code and other AI coding agents.
 sidebar:
   order: 5
   badge:
@@ -197,6 +197,80 @@ The specification lives at **agentskills.io** and is intentionally minimal — Y
 
 ---
 
+## Sub-Agents
+
+A **sub-agent** is a child agent instance spawned by a parent (orchestrator) agent to handle a delegated task. The orchestrator retains overall responsibility for the goal; the sub-agent focuses on one well-defined piece of it.
+
+This is the same concept as "hierarchical agents" in multi-agent theory, but grounded in how modern coding tools actually implement it.
+
+### How it works
+
+```
+User: "Review all 8 PRs opened today"
+
+Orchestrator agent
+  ├─ spawns sub-agent A → reviews PR #101
+  ├─ spawns sub-agent B → reviews PR #102
+  ├─ spawns sub-agent C → reviews PR #103
+  └─ (all run in parallel)
+
+Orchestrator collects results → writes summary
+```
+
+The sub-agents run independently. They each see only their slice of work and have no awareness of each other. The orchestrator assembles the results.
+
+### Why spawn a sub-agent instead of doing it inline?
+
+| Reason | Example |
+|---|---|
+| **Parallelism** | Reviewing 8 PRs at once is ~8x faster than sequential |
+| **Isolation** | Sub-agent makes code changes in a separate git worktree — parent's working directory is untouched |
+| **Context protection** | Delegating deep research keeps the orchestrator's context window clean |
+| **Specialisation** | Route tasks to agents configured for a specific job (search-only, read-only, etc.) |
+
+### Specialised agent types
+
+Rather than spawning a generic agent, orchestrators can target purpose-built types that come with tighter tool permissions and tuned system prompts:
+
+| Type | Best for |
+|---|---|
+| **Explore** | Fast read-only codebase search — finding files, symbols, references |
+| **Plan** | Designing implementation strategies; returns a step-by-step plan |
+| **General-purpose** | Catch-all for multi-step tasks that don't fit a narrower type |
+| **Custom** | Domain-specific agents you define via the Agent SDK with their own skill sets |
+
+### Isolation modes
+
+Sub-agents can run in an **isolated git worktree** — a temporary copy of the repository on a separate branch. The sub-agent's file edits don't touch the main working directory. If the sub-agent makes no changes, the worktree is cleaned up automatically; if it does, the branch path is returned so the orchestrator can review or merge.
+
+This makes it safe to let a sub-agent attempt a refactor or generate a fix without risking the parent's in-progress work.
+
+### Skills + sub-agents together
+
+Skills and sub-agents are complementary:
+
+- A **skill** defines *how* to do a task (methodology, conventions, output format).
+- A **sub-agent** defines *who* does the task (isolated, parallel, specialised).
+
+A `pr-review` skill loaded into a sub-agent gives you both: the sub-agent handles isolation and parallelism; the skill ensures every review follows the same checklist and output format.
+
+```
+Orchestrator loads pr-review skill
+  └─ for each PR: spawn sub-agent(worktree=isolated) + pr-review skill
+       → consistent reviews, fully parallel, no cross-contamination
+```
+
+### When not to use sub-agents
+
+Sub-agents start cold — they have no memory of the current conversation and must re-derive context from your prompt. The overhead is real. Skip them when:
+
+- The task takes fewer than 3–4 tool calls to complete
+- You need the result immediately and can't do other work in parallel
+- The task requires back-and-forth with you (sub-agents are one-shot)
+- The same search you'd delegate can be done with a single `grep` or `find`
+
+---
+
 ## When to Use What
 
 | Situation | Use |
@@ -204,8 +278,10 @@ The specification lives at **agentskills.io** and is intentionally minimal — Y
 | You need live data (database, API, web) | MCP server |
 | You need a specific atomic action (send email, run shell command) | Tool / function call |
 | You have a multi-step workflow or judgment-heavy process | Skill |
+| You need parallel execution of independent tasks | Sub-agent |
+| You need file changes isolated from the current working tree | Sub-agent with worktree isolation |
 | Knowledge is stable (changes weekly, not per-request) | Skill |
 | You want the whole team to share a process | Project skill in `.claude/skills/` |
 | Personal shortcuts and preferences | Global skill in `~/.claude/skills/` |
 
-> **Rule of thumb:** if you could write it in a runbook and have it be right for weeks, it's a skill. If it needs to fetch live state, it's a tool or MCP.
+> **Rule of thumb:** if you could write it in a runbook and have it be right for weeks, it's a skill. If it needs to fetch live state, it's a tool or MCP. If it can run independently and in parallel, it's a sub-agent.
