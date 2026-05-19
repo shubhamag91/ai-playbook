@@ -32,6 +32,20 @@
   --content-gutter: 2rem;
 }
 
+/* Scale content width up on larger screens */
+@media (min-width: 1440px) {
+  :root { --sl-content-width: 70rem; }
+}
+@media (min-width: 1920px) {
+  :root { --sl-content-width: 85rem; }
+}
+@media (min-width: 2560px) {
+  :root { --sl-content-width: 100rem; }
+}
+@media (min-width: 3200px) {
+  :root { --sl-content-width: 118rem; }
+}
+
 /* ─── Accent color ────────────────────────────────────── */
 :root {
   --sl-color-accent-low: #1a2d4d;
