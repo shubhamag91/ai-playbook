@@ -268,7 +268,7 @@ Comprehensive Paperclip-inspired design system (680+ lines):
 - Pagefind search modal styling (Paperclip-themed)
 - Sidebar icons + L1/L3/L4 visual hierarchy
 - Mobile: 44px touch targets, content h3 specificity override, pagination stacking, card active state
-- Large-screen: `.sl-container` max-width override (note: constrained by `.main-frame { max-width: 1400px }` at ≥1600px)
+- Large-screen: `.main-frame { max-width: 1400px; margin: 0 auto }` at ≥1600px caps and centers the page frame on wide monitors
 
 ### Design Version Tag
 
