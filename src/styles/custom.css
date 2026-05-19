@@ -246,6 +246,20 @@ header {
   background: var(--sl-color-gray-5);
 }
 
+/* Scroll shadows for horizontally-scrollable table wrappers */
+.benchmark-viz__table-wrapper,
+.model-matrix__table-wrapper,
+.tool-comparison__table {
+  background:
+    linear-gradient(to right, var(--sl-color-bg) 30%, transparent),
+    linear-gradient(to left, var(--sl-color-bg) 30%, transparent) right,
+    radial-gradient(farthest-side at 0% 50%, rgba(0,0,0,0.12), transparent),
+    radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,0.12), transparent) right;
+  background-repeat: no-repeat;
+  background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+  background-attachment: local, local, scroll, scroll;
+}
+
 /* ─── Blockquote styling ───────────────────────────────── */
 .content blockquote {
   border-left: 3px solid var(--sl-color-accent);
