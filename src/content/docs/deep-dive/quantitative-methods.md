@@ -21,7 +21,7 @@ tldr:
   - VaR and Expected Shortfall quantify market and credit risk; ES is now the regulatory standard under Basel IV.
 seeAlso:
   - label: Interview Prep — Quantitative Analytics
-    href: /learn/interview-prep-quant-banking
+    href: /resources/interview-prep/quant-banking
     description: Interview questions for quant roles
   - label: Neural Networks
     href: /deep-dive/neural-networks

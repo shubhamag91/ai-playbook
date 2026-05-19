@@ -429,8 +429,8 @@ Five main causes:
 
 ## See Also
 
-- [LLM Engineering Interview Track](/learn/interview-prep-llm)
-- [Quantitative Analytics Interview Track](/learn/interview-prep-quant-banking)
+- [LLM Engineering Interview Track](/resources/interview-prep/llm)
+- [Quantitative Analytics Interview Track](/resources/interview-prep/quant-banking)
 - [Training & Fine-tuning Deep Dive](/deep-dive/training-finetuning)
 - [Evaluation & Testing Deep Dive](/deep-dive/eval-and-testing)
-- [Interview Prep Overview](/learn/interview-prep)
+- [Interview Prep Overview](/resources/interview-prep)

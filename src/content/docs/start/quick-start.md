@@ -35,7 +35,7 @@ Choose based on your goal:
 Complete introduction covering what LLMs are, how they work, and what they're good at. No prerequisites.
 
 ### **Preparing for interviews?**
-→ **[Interview Prep](/learn/interview-prep)** (2-week curriculum)
+→ **[Interview Prep](/resources/interview-prep)** (2-week curriculum)
 Structured checklists for AI roles. Covers models, tools, concepts, and real-world scenarios.
 
 ### **Want to build AI products?**

@@ -86,7 +86,7 @@ Advanced patterns and best practices for better LLM outputs.
 - [Beginner Path](/learn/beginner)  -  4-hour intro to LLMs
 - [Builder Path](/learn/builder)  -  1-week hands-on coding guide
 - [Researcher Path](/learn/researcher)  -  Stay current with AI
-- [Interview Prep](/learn/interview-prep)  -  2-week interview curriculum
+- [Interview Prep](/resources/interview-prep)  -  2-week interview curriculum
 
 ### Deep Dives
 - [How LLMs Work](/deep-dive/how-llms-work)  -  Technical fundamentals

@@ -489,8 +489,8 @@ Good signal: You escalated when the model gave counterintuitive results in a new
 
 ## See Also
 
-- [Machine Learning Interview Track](/learn/interview-prep-ml)
-- [LLM Engineering Interview Track](/learn/interview-prep-llm)
+- [Machine Learning Interview Track](/resources/interview-prep/ml)
+- [LLM Engineering Interview Track](/resources/interview-prep/llm)
 - [Training & Fine-tuning Deep Dive](/deep-dive/training-finetuning)
 - [Evaluation & Testing Deep Dive](/deep-dive/eval-and-testing)
-- [Interview Prep Overview](/learn/interview-prep)
+- [Interview Prep Overview](/resources/interview-prep)

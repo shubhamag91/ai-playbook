@@ -383,9 +383,9 @@ No, do not put secrets in the system prompt. Several extraction techniques can r
 
 ## See Also
 
-- [Machine Learning Interview Track](/learn/interview-prep-ml)
-- [Quantitative Analytics Interview Track](/learn/interview-prep-quant-banking)
+- [Machine Learning Interview Track](/resources/interview-prep/ml)
+- [Quantitative Analytics Interview Track](/resources/interview-prep/quant-banking)
 - [How LLMs Work Deep Dive](/deep-dive/how-llms-work)
 - [RAG Architecture Deep Dive](/deep-dive/rag-architecture)
 - [Training & Fine-tuning Deep Dive](/deep-dive/training-finetuning)
-- [Interview Prep Overview](/learn/interview-prep)
+- [Interview Prep Overview](/resources/interview-prep)
