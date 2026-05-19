@@ -325,6 +325,7 @@ export default defineConfig({
               items: [
                 { label: 'RAG Architecture', slug: 'deep-dive/rag-architecture' },
                 { label: 'Agents & Frameworks', slug: 'deep-dive/agents-frameworks' },
+                { label: 'Agent Skills', slug: 'deep-dive/agent-skills' },
                 { label: 'Training & Fine-tuning', slug: 'deep-dive/training-finetuning' },
                 { label: 'Prompt Engineering', slug: 'deep-dive/prompt-engineering' },
               ],
