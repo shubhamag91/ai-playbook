@@ -32,14 +32,6 @@
   --content-gutter: 2rem;
 }
 
-/* Large-screen content width: bypass the CSS variable and target .sl-container directly.
-   Fills available width (viewport minus sidebar ~320px, minus small padding) up to 2400px. */
-@media (min-width: 1100px) {
-  .sl-container {
-    max-width: min(2400px, calc(100vw - 360px)) !important;
-    width: 100% !important;
-  }
-}
 
 /* ─── Accent color ────────────────────────────────────── */
 :root {
