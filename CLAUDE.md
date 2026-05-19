@@ -259,14 +259,16 @@ Wires the docs collection into Starlight with extended schema (tags, glossaryLin
 
 ### `src/styles/custom.css`
 
-Comprehensive Paperclip-inspired design system (640+ lines):
+Comprehensive Paperclip-inspired design system (680+ lines):
 - Color palette (warm tones in light mode, deep charcoal in dark mode)
 - Typography: Instrument Serif (h1/h2), Inter (body), JetBrains Mono (code)
-- Glassmorphism header, card hover effects, table borders/zebra/rounded corners
+- Glassmorphism header, card hover effects (gated `@media (hover: hover)`), table borders/zebra/rounded corners
 - Right sidebar removed — replaced by pill toggle buttons in metadata row
 - Sidebar scrollbar styling (thin, themed)
 - Pagefind search modal styling (Paperclip-themed)
 - Sidebar icons + L1/L3/L4 visual hierarchy
+- Mobile: 44px touch targets, content h3 specificity override, pagination stacking, card active state
+- Large-screen: `.sl-container` max-width override (note: constrained by `.main-frame { max-width: 1400px }` at ≥1600px)
 
 ### Design Version Tag
 

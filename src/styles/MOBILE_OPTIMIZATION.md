@@ -36,8 +36,8 @@ All interactive elements (buttons, links, form inputs) have a minimum size of 44
 - **Touch**: Slider thumbs are 16px with hover scale, minimum 44px on form inputs
 
 ### ToolComparison Component
-- **Desktop**: Tabs + sortable table with 4 categories
-- **Mobile (≤768px)**: Responsive table with horizontal scroll
+- **Desktop**: Tabs + sortable table with 5 categories
+- **Mobile (≤768px)**: Tabs flex-wrap, full-width search input, table horizontally scrollable
 - **Table**: Horizontally scrollable with edge shadow indication
 
 ### PathSelector Component
@@ -49,6 +49,11 @@ All interactive elements (buttons, links, form inputs) have a minimum size of 44
 ### ContentOverride (Page Metadata Row)
 - **Desktop**: Reading time, tags, Key Info pill, On this page pill in a row
 - **Mobile (≤640px)**: Pills show icons only (text labels hidden), compact padding
+
+### FeedbackWidget Component
+- **Desktop**: Thumbs up/down buttons side by side with label
+- **Mobile (≤640px)**: Buttons expand to full width (flex: 1), 44px min-height, larger tap area
+- **Present on every page** via FooterOverride
 
 ### Chat Widget
 - **Desktop**: 544x544px floating panel
@@ -64,8 +69,20 @@ All interactive elements (buttons, links, form inputs) have a minimum size of 44
 ### Font and Spacing
 - Line height increased to 1.6 on mobile for readability
 - Paragraph margins: 0.75rem on mobile, 1rem on desktop
-- Heading spacing adjusted per breakpoint
 - Body font size reduces to 0.95rem at ≤480px
+
+### Heading Sizes on Mobile
+Content headings (inside `.content :where(hN)`) have a specificity override to ensure mobile breakpoints apply correctly:
+- `h2`: 1.5rem at ≤768px
+- `h3`: 1.1rem at ≤768px, 1rem at ≤480px
+- `h1`: 1.75rem at ≤768px, 1.5rem at ≤480px
+
+### Card Hover Effects
+Card hover transforms (`translateY(-2px)`) are gated behind `@media (hover: hover)` so they only fire on devices with a real pointer — not on touch screens where they would "stick" after a tap. A subtle `scale(0.99)` `:active` state provides touch feedback instead.
+
+### Pagination Navigation
+- **Desktop**: Previous/Next links shown side by side
+- **Mobile (≤768px)**: Links stack vertically, each full-width, 44px minimum height
 
 ### Table Scroll Shadows
 Horizontally scrollable table wrappers (BenchmarkViz, ModelMatrix, ToolComparison) display gradient fade shadows at left and right edges. The shadows only appear when there's content overflowing the viewport, providing a visual hint that the table can be scrolled. Implemented via CSS `background-attachment: local/scrolled` layered gradients.
@@ -85,13 +102,13 @@ Test at these viewports:
 - 320px (iPhone SE)
 - 375px (iPhone 12)
 - 480px (Mobile landscape)
-- 640px (Pill breakpoint)
+- 640px (Pill/FeedbackWidget breakpoint)
 - 768px (iPad/tablet)
 - 1024px+ (Desktop)
 
 ## Performance
 Mobile optimizations focus on:
-- Reduced animation complexity on lower-end devices
-- Touch-friendly active states (`scale(0.98)`)
+- Reduced animation complexity on lower-end devices (hover gated behind `@media (hover: hover)`)
+- Touch-friendly active states (`scale(0.99)` on cards, `scale(0.97)` on chips)
 - Optimized font loading (via Astro/Starlight)
 - Minimal layout shifts (proper sizing for images, embeds)
