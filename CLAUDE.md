@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**AI Playbook** is a static documentation site built with **Astro 5.5.6** + **Starlight 0.32.6** (Astro's docs theme). It's a personal reference for AI & LLM knowledge with cheatsheets, guides, diagrams, and slide decks. Content is 100% Markdown/MDX files that live in Git, deployed to Cloudflare Pages (auto-deploys on push to `main`).
+**AI Playbook** is a static documentation site built with **Astro 5.5.6** + **Starlight 0.32.6** (Astro's docs theme). It's a personal reference for AI & LLM knowledge with cheatsheets, guides, diagrams, slide decks, and a quiz system. Content is 100% Markdown/MDX files that live in Git, deployed to Cloudflare Pages (auto-deploys on push to `main`).
 
 **Key tech stack:**
 - Astro 5.5.6 (static site generator)
@@ -12,7 +12,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - MDX + Markdown content
 - Mermaid 10 for diagrams (client-side rendering)
 - KaTeX for math equations
-- Custom CSS for theme tweaks
+- Custom CSS (Paperclip-inspired design system)
+- Pagefind for full-text search
+- Cloudflare Pages + Functions for chatbot
 
 ## Development Workflow
 
@@ -45,47 +47,77 @@ Requires **Node.js 20+**. Check with `node --version`. The project uses ES modul
 
 ```
 ai-playbook/
-├── astro.config.mjs          # Starlight config, sidebar definition, plugins
-├── package.json              # Dependencies: astro, @astrojs/starlight, @astrojs/mdx
+├── astro.config.mjs          # Starlight config, sidebar, plugins, pagefind ranking
+├── package.json              # Dependencies + prebuild script for search index
 ├── tsconfig.json
+├── CLAUDE.md                 # Guidance for AI coding tools working in this repo
+├── public/                   # Static files served as-is
+│   ├── chat-widget.js        # AI chatbot widget (floating chat bubble)
+│   ├── search-index.json     # Auto-generated search index (prebuild)
+│   ├── quiz-bank.json        # Pre-generated quiz questions (694 questions)
+│   ├── cheatsheets/          # Printable cheatsheet PDFs (llm-primer.html, etc.)
+│   ├── decks/                # Exported Slidev/Reveal HTML
+│   └── mindmaps/             # Exported Markmap HTML + source .md
+├── scripts/
+│   ├── build-search-index.mjs  # Prebuild script — chunks content for chatbot search
+│   └── generate-quiz-bank.mjs  # Generates quiz questions via Groq
+├── functions/
+│   ├── api/chat.js           # Cloudflare Pages Function — chatbot backend
+│   └── admin/logs.js         # Chatbot query log dashboard
+├── .github/
+│   ├── workflows/            # GitHub Actions: link check, stale content, checklist
+│   ├── ISSUE_TEMPLATE/       # Templates: bug, content, outdated, question, help-wanted
+│   └── PULL_REQUEST_TEMPLATE/
 ├── src/
 │   ├── assets/
 │   │   ├── logo.svg
-│   │   └── infographics/     # SVG graphics imported into MDX pages
-│   ├── content.config.ts     # Configures Astro content collection
-│   ├── content/docs/         # ALL MARKDOWN CONTENT LIVES HERE
-│   │   ├── index.md          # Home/Welcome page
-│   │   ├── tools.md          # AI tools landscape
-│   │   ├── workflows.md      # AI workflows by use case
-│   │   ├── agents.md         # Agentic AI systems
-│   │   ├── open-source.md    # Open-weight models
-│   │   ├── glossary.mdx      # 60+ AI terms with component imports
-│   │   ├── history.mdx       # Timeline with Mermaid diagrams
-│   │   ├── confusions.mdx    # 30+ misconceptions (uses Card/CardGrid)
-│   │   ├── follow.mdx        # Researchers & practitioners (uses Card)
-│   │   ├── principles.mdx    # 7 guiding principles (uses Card/CardGrid)
-│   │   ├── guides/
-│   │   │   └── how-it-works.md
-│   │   ├── cheatsheets/      # 11 interview prep & reference cards
-│   │   ├── diagrams/         # Mermaid-only pages
-│   │   ├── mind-maps/        # Markmap embed pages
-│   │   ├── slides/           # Slidev/Reveal embed pages
-│   │   └── infographics/     # SVG-based narrative pages
+│   │   └── infographics/     # SVG infographics imported into MDX pages
+│   ├── components/           # Interactive Astro components
+│   │   ├── BenchmarkViz.astro      # Sortable/filterable benchmark explorer
+│   │   ├── Breadcrumb.astro        # Navigation breadcrumb
+│   │   ├── ContentAudit.astro      # Auto-generated page audit table
+│   │   ├── ContentOverride.astro   # Metadata row (reading time, tags, pill dropdowns)
+│   │   ├── ContributorsList.astro  # Contributor cards
+│   │   ├── CostCalculator.astro    # Interactive API cost calculator (14 models)
+│   │   ├── DesignArenaLeaderboards # Design Arena leaderboard cards
+│   │   ├── FeedbackWidget.astro    # Thumbs up/down feedback
+│   │   ├── FooterOverride.astro    # Combines SeeAlso + feedback + default footer
+│   │   ├── ModelCompare.astro      # Model specs table from models.ts
+│   │   ├── ModelMatrix.astro       # Model capability heatmap (9×9)
+│   │   ├── ModelSelector.astro     # Interactive model filter by use case
+│   │   ├── PathSelector.astro      # Role-based path cards (Quick Start)
+│   │   ├── ProgressTracker.astro   # Learning path progress (localStorage)
+│   │   ├── Quiz.astro              # Knowledge quiz component
+│   │   ├── SearchOverride.astro    # Search bar with recent searches
+│   │   ├── SeeAlso.astro           # Auto-generated related content links
+│   │   ├── ToolComparison.astro    # Sortable tool comparison tables
+│   │   └── TrendingWidget.astro    # Latest AI trends card grid
+│   ├── content.config.ts     # Extended schema (tags, glossaryLinks, tldr, seeAlso)
+│   ├── data/                 # Structured data files
+│   │   ├── benchmarks.ts     # Benchmark scores (30+ entries, 7 families)
+│   │   ├── capabilities.ts   # Model capability ratings (1-5)
+│   │   ├── models.ts         # Model entries (name, company, pricing, context)
+│   │   ├── trends.ts         # Trending topics (10 entries)
+│   │   └── contributors.ts   # Contributor entries
+│   ├── content/docs/         # ALL MARKDOWN CONTENT (~77 pages)
+│   │   ├── learn/            # Beginner, Builder, Researcher, Interview Prep, Quiz
+│   │   ├── decide/           # Tools Guide, Models Guide, Frameworks, Cost Calculator
+│   │   ├── reference/        # Glossary, Cheatsheets, Confusions, Principles, Benchmarks
+│   │   ├── research/         # What's New, Open-Source Models, Trends, History
+│   │   ├── deep-dive/        # 11 deep dives (How LLMs Work, RAG, Agents, etc.)
+│   │   ├── community/        # Contributing, audit, help-wanted, contributors
+│   │   └── resources/        # Papers, communities, templates, case studies
 │   └── styles/
-│       └── custom.css        # Minor theme overrides (1300px max-width)
-├── public/
-│   ├── decks/                # Exported Slidev/Reveal HTML for embedding
-│   └── mindmaps/             # Exported Markmap HTML + source .md
-└── dist/                     # Build output (gitignored)
+│       └── custom.css        # Paperclip-inspired design system (640+ lines)
 ```
 
 ### URL Routing (Critical Pattern)
 
-**Starlight routes by folder/filename.** A file at `src/content/docs/tools.md` becomes `/tools/`. A file at `src/content/docs/cheatsheets/ai-product-interview.md` becomes `/cheatsheets/ai-product-interview/`.
+**Starlight routes by folder/filename.** A file at `src/content/docs/tools.md` becomes `/tools/`. A file at `src/content/docs/decide/models/guide.mdx` becomes `/decide/models/guide/`.
 
-**Sidebar is manually configured** in `astro.config.mjs` (lines 70–133):
-- Main pages (tools, open-source, glossary, etc.) have explicit `{ label, link }` entries
-- Subfolders use `autogenerate: { directory: 'cheatsheets' }` to auto-populate from files
+**Sidebar is manually configured** in `astro.config.mjs` (lines 217-376):
+- Main pages have explicit `{ label, slug }` entries
+- Subfolders (cheatsheets, case studies, templates) use `autogenerate` to auto-populate
 
 **When you add a new page**, either:
 1. Create a file in a folder with `autogenerate` — it auto-appears in the sidebar
@@ -106,7 +138,13 @@ sidebar:
   badge:
     text: New
     variant: tip      # Optional: shows a colored badge
-lastUpdated: 2026-05-08  # Update this when refreshing content
+tags:                 # Used by SeeAlso for auto-related content
+  - reference
+glossaryLinks:        # Optional: links to glossary terms
+  - llm
+  - token
+lastUpdated: 2026-05-16  # Update when refreshing content
+nextVerificationDue: 2026-08-16
 ---
 ```
 
@@ -142,7 +180,7 @@ flowchart LR
 ```
 ````
 
-Mermaid theme (light/dark) syncs with Starlight's theme toggle automatically via JavaScript in `astro.config.mjs` (lines 40–67).
+Mermaid theme (light/dark) syncs with Starlight's theme toggle automatically via JavaScript in `astro.config.mjs`.
 
 ### Math Equations (KaTeX)
 
@@ -155,7 +193,7 @@ $$
 $$
 ```
 
-KaTeX stylesheet is loaded via CDN in `astro.config.mjs`.
+KaTeX stylesheet is loaded via CDN in `astro.config.mjs`. Avoid unmatched `$` signs — they break rendering.
 
 ### SVG Infographics
 
@@ -208,37 +246,34 @@ KaTeX stylesheet is loaded via CDN in `astro.config.mjs`.
 
 ### `astro.config.mjs`
 
-- **Lines 8–10:** Site URL (update when deploying to custom domain)
-- **Lines 12–15:** Markdown plugins (remark-math, rehype-katex for equations; Mermaid loaded via script in head)
-- **Lines 17–135:** Starlight integration
-  - **Lines 70–133:** Sidebar structure (manual links + autogenerate directives)
-  - **Lines 30–68:** KaTeX + Mermaid client-side initialization
-  - **Line 69:** Custom CSS file
+- **Lines 8–10:** Site URL (currently `https://ai-playbook-9y9.pages.dev`)
+- **Lines 12–15:** Markdown plugins (remark-math, rehype-katex)
+- **Lines 74–376:** Starlight integration
+  - **Lines 76–80:** Component overrides (Footer, MarkdownContent, Search)
+  - **Lines 218–375:** Sidebar structure (manual links + autogenerate directives)
+  - Added section: `pagefind: { ranking: { pageLength: 0.3, termFrequency: 0.2 } }`
 
 ### `src/content.config.ts`
 
-Wires the docs collection into Starlight. Don't modify unless adding a new collection type.
+Wires the docs collection into Starlight with extended schema (tags, glossaryLinks, tldr, seeAlso, nextVerificationDue).
 
 ### `src/styles/custom.css`
 
-Comprehensive Paperclip-inspired design system:
+Comprehensive Paperclip-inspired design system (640+ lines):
 - Color palette (warm tones in light mode, deep charcoal in dark mode)
 - Typography: Instrument Serif (h1/h2), Inter (body), JetBrains Mono (code)
 - Glassmorphism header, card hover effects, table borders/zebra/rounded corners
-- Heading hierarchy (h2 bottom border, h3 body-size bold, h4 tiny uppercase)
 - Right sidebar removed — replaced by pill toggle buttons in metadata row
+- Sidebar scrollbar styling (thin, themed)
+- Pagefind search modal styling (Paperclip-themed)
 - Sidebar icons + L1/L3/L4 visual hierarchy
 
 ### Design Version Tag
 
-A Git tag **`pre-paperclip-theme`** (commit `a5ccc74`) captures the state before the Paperclip design upgrade. To revert to the old design:
+A Git tag **`pre-paperclip-theme`** (commit `a5ccc74`) captures the state before the Paperclip design upgrade. To revert:
 ```bash
 git checkout pre-paperclip-theme
-git push origin pre-paperclip-theme:main -f   # deploy old version
-```
-To switch back to current:
-```bash
-git checkout main
+git push origin pre-paperclip-theme:main -f
 ```
 
 ## Important Patterns & Gotchas
@@ -252,10 +287,7 @@ title: Title
 description: Desc
 sidebar:
   order: 1
-  badge:
-    text: New
-    variant: tip
-lastUpdated: 2026-05-08
+lastUpdated: 2026-05-16
 ---
 ```
 
@@ -264,28 +296,21 @@ lastUpdated: 2026-05-08
 ### Git & Deployment
 
 - **Deployment:** Cloudflare Pages auto-builds on push to `main`. Build command: `npm run build`, output: `dist/`
-- **SSH in Sandbox:** If running in Claude's sandboxed bash environment, SSH keys aren't available. **Commit changes locally, but push from your machine** with configured SSH keys.
-- **package-lock.json:** Generated on your machine's architecture (arm64 Mac or x64 Linux). Cloudflare's builder expects x64. Keep lock file in sync; don't regenerate on the wrong architecture or deployments will fail.
+- **Site URL:** `https://ai-playbook-9y9.pages.dev` (set in `astro.config.mjs`)
+- **package-lock.json:** Keep in sync; don't regenerate on wrong architecture or deployments will fail.
 
 ### Sidebar Configuration
 
-The sidebar is **manually configured** in `astro.config.mjs` because Starlight doesn't auto-generate for root-level files. If you:
-- **Add a root `.md` file** → manually add a line to `astro.config.mjs` sidebar
-- **Add a file in an autogenerate folder** (cheatsheets, guides, diagrams, etc.) → it auto-appears; no manual sidebar edit needed
-
-### Content Updates
-
-When refreshing existing content:
-1. Update the `lastUpdated: YYYY-MM-DD` field (currently May 2026)
-2. Keep descriptions short and SEO-friendly
-3. For cards using `Card`/`CardGrid`, the first line is the title, content follows
-4. Commit, push to `main`, Cloudflare deploys in ~30 seconds
+The sidebar is **manually configured** in `astro.config.mjs`. If you:
+- **Add a file outside autogenerate folders** → manually add a `{ label, slug }` entry
+- **Add a file in an autogenerate folder** (cheatsheets, case studies, templates) → auto-appears
 
 ### Component Imports in MDX
 
-If you use Starlight components, always import at the top:
+If you use Starlight components or custom Astro components, always import at the top:
 ```mdx
-import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
 ```
 
 This only works in `.mdx` files, not `.md` files.
@@ -295,41 +320,50 @@ This only works in `.mdx` files, not `.md` files.
 1. **Local iteration:** Run `npm run dev`, edit `.md` files, refresh browser (or it auto-reloads)
 2. **Build locally before pushing:** Run `npm run build` to catch errors, then `npm run preview` to inspect production bundle
 3. **Git workflow:** Commit content changes only; don't commit `node_modules/` or `dist/`
-4. **Search:** Starlight uses PageFind for full-text search; indexed at build time automatically
-5. **Hot reload:** Edits to `.md`, `.mdx`, `astro.config.mjs`, and `custom.css` trigger hot reload. Edits to `package.json` or dependencies require restart
+4. **Search:** Starlight uses Pagefind for full-text search. Indexed at build time. Not available in dev mode.
+5. **Hot reload:** Edits to `.md`, `.mdx`, `astro.config.mjs`, and `custom.css` trigger hot reload. Edits to `package.json` or dependencies require restart.
 
 ## Deployment Notes
 
-- **Cloudflare Pages:** Deployed at `https://ai-playbook-9y9.pages.dev`. Auto-deploys on push to `main`
-- **Vercel / Netlify:** Also supported; use `astro.build` guide for setup
-- **Environment:** Builds run on Linux (likely x64). Ensure `package-lock.json` reflects x64 dependencies to avoid "Unsupported platform" errors
-- **Build time:** ~10–15 seconds for this playbook size
+- **Cloudflare Pages:** Free, global CDN, auto-deploys on push to `main`. Build takes ~10-15 seconds.
+- **Environment variables:** `GROQ_API_KEY` (required), `SERPER_API_KEY` (optional), `CHAT_LOGS` (KV binding)
+- **Build command:** `npm run build` → outputs to `dist/`
+- **Build platform:** Linux x64. Keep `package-lock.json` compatible.
 
 ## Common Editing Tasks
 
-### Add a new cheatsheet
-1. Create `src/content/docs/cheatsheets/name.md`
-2. Add YAML frontmatter with `sidebar: { order: N }`
-3. Write content, save
-4. Dev server hot-reloads; appears in sidebar automatically
+### Create a new page
 
-### Add a root page (like `tools.md`)
-1. Create `src/content/docs/name.md`
-2. Add YAML frontmatter
-3. Manually add to `astro.config.mjs` sidebar (around line 70)
-4. Commit, push, deploy
+1. Create file: `src/content/docs/path/to/page.md` or `.mdx`
+2. Add YAML frontmatter with `title`, `description`, `sidebar.order`, `tags`, `lastUpdated`, `nextVerificationDue`
+3. If not in an autogenerate folder, add sidebar entry in `astro.config.mjs`
+4. Write content, save, verify with `npm run build`
 
-### Update a page with May 2026 content
+### Update existing content
+
 1. Edit the file
-2. Update `lastUpdated: 2026-05-08` in frontmatter
+2. Update `lastUpdated` to today's date
 3. Save, verify locally with `npm run dev`
 4. Commit, push to `main`
 
+### Add a cheatsheet
+
+1. Create `src/content/docs/reference/cheatsheets/name.md`
+2. Add frontmatter with `sidebar: { order: N }`
+3. Appears automatically in sidebar (autogenerate)
+
 ### Add a Mermaid diagram
+
 Just include a ` ```mermaid ``` ` block in any `.md` or `.mdx` file. Renders at build time.
 
 ### Fix styling
+
 Edit `src/styles/custom.css`. Changes hot-reload in dev mode.
+
+### Add a quiz topic
+
+1. Edit `scripts/generate-quiz-bank.mjs` to add new topic
+2. Regenerate: `npm run build` (runs prebuild script)
 
 ## Troubleshooting
 
@@ -337,61 +371,62 @@ Edit `src/styles/custom.css`. Changes hot-reload in dev mode.
 |-------|----------|
 | Dev server won't start | Kill existing process (`lsof -i :4321`), ensure Node 20+, run `npm install` |
 | Hot reload not working | Restart `npm run dev`, check file is in `src/content/docs/` |
-| Build fails with "Unsupported platform" | Regenerated `package-lock.json` on wrong architecture. Restore from git or rebuild on x64 Linux |
-| Page not appearing in sidebar | Check `astro.config.mjs` sidebar config; manually add if file is not in an autogenerate folder |
-| Mermaid diagram not rendering | Check syntax: avoid `>` in edge labels (`\|VIF > 10\|`), avoid unicode chars (→ ✓ Δ subscripts) in node labels — use plain ASCII. Mermaid fails silently and shows raw code. |
-| YAML frontmatter errors | Ensure proper indentation (2 spaces, not tabs); don't nest `lastUpdated` under `sidebar` |
-| Chatbot returning errors | Check `GROQ_API_KEY` and `SERPER_API_KEY` in Cloudflare Pages environment variables |
+| Page not appearing in sidebar | Check `astro.config.mjs` sidebar config; manually add if not in autogenerate folder |
+| Mermaid not rendering | Check syntax, refresh browser, look for console errors |
+| YAML frontmatter errors | Proper indentation (2 spaces); don't nest `lastUpdated` under `sidebar` |
+| Chatbot returning errors | Check `GROQ_API_KEY` and `SERPER_API_KEY` in Cloudflare Pages env vars |
 | Chat widget not appearing | Verify Footer component override in `astro.config.mjs` |
-| Search index stale | Run `npm run build` which triggers `prebuild` script to regenerate `search-index.json` |
+| Search index stale | Run `npm run build` which triggers prebuild script |
+| Quiz questions not showing | Regenerate: `rm public/quiz-bank.json && npm run build` |
 
 ---
 
 ## AI Chatbot
 
 ### Architecture
+
 ```
 User question → chat-widget.js → Cloudflare Function → Groq API (Llama 3.3 70B) → answer
-                                  ↕
-                    search-index.json (prebuilt at deploy time)
+                      ↕                    ↕                      ↕
+                search-index.json    Serper.dev (web)       KV: CHAT_LOGS (logs)
 ```
+
+The chatbot uses a multi-step pipeline:
+1. **Query rewriting** — Llama 3.1 8B generates 3 search queries from user question, resolving pronouns from conversation history
+2. **Playbook search** — Each query runs TF-IDF against `search-index.json`, results merged via RRF (k=60). No threshold.
+3. **Web search** — Always runs in parallel via Serper.dev when API key is configured
+4. **Prompt construction** — Playbook context + web results combined in system prompt
+5. **Groq inference** — Llama 3.3 70B answers with context, temperature 0.3, max 800 tokens
+6. **Source tracking** — Post-checks answer for playbook links → "playbook", "web", or "model"
+7. **KV logging** — Every query logged to `CHAT_LOGS` KV namespace via `waitUntil`
 
 ### Key Files
 
 | File | Purpose |
 |---|---|
-| `public/chat-widget.js` | Chat widget UI (all JS + CSS inline) |
-| `functions/api/chat.js` | Cloudflare Pages Function — search + inference |
+| `public/chat-widget.js` | Chat widget UI (all JS + CSS inline). 544x544 panel. |
+| `public/search-index.json` | Auto-generated search index (~700+ chunks) |
 | `scripts/build-search-index.mjs` | Prebuild script — chunks content for search |
-| `public/search-index.json` | Auto-generated search index |
-| `src/data/models.ts` | Structured model data for better search matching |
+| `functions/api/chat.js` | Cloudflare Pages Function — query rewrite + search + inference |
+| `functions/admin/logs.js` | Admin dashboard for chatbot query logs |
+| `src/data/models.ts` | Structured model data for search matching |
 
 ### Chat Widget Features
-- Markdown rendering (bold, code blocks, lists, blockquotes)
+- Markdown rendering (bold, code blocks, lists, blockquotes, links [text](url))
+- Source badges: green (playbook), blue (web), orange (model knowledge)
 - Key term highlighting (MMLU, HumanEval, SWE-bench, RLHF, LoRA)
 - Conversation memory (last 5 exchanges)
-- Suggested questions, copy button, timestamps, new chat, scroll-to-bottom
+- Suggested questions, copy button, timestamps, new chat
 - Auto-resizing textarea input
-
-### Cloudflare Pages Function
-
-**Endpoint:** `POST /api/chat`
-**Request:** `{ "question": "...", "history": [...] }`
-**Response:** `{ "answer": "..." }`
-
-The function:
-1. Loads `search-index.json` (bundled static asset)
-2. TF-IDF scoring finds top 3 relevant chunks (threshold ≥ 80)
-3. Sends context + question to Groq API (Llama 3.3 70B)
-4. Falls back to model knowledge when no chunks match
-5. Web search via Serper.dev when `SERPER_API_KEY` is set
+- 544x544 panel, full-screen on mobile
 
 ### Environment Variables
 
-| Variable | Required | Source | Free Tier |
+| Variable | Required | Source | Notes |
 |---|---|---|---|
-| `GROQ_API_KEY` | ✅ | https://console.groq.com | Free (rate-limited) |
-| `SERPER_API_KEY` | ❌ | https://serper.dev | 2500 searches/month |
+| `GROQ_API_KEY` | ✅ | https://console.groq.com | Free tier, rate-limited |
+| `SERPER_API_KEY` | ❌ | https://serper.dev | 2500 free searches/month |
+| `CHAT_LOGS` | ❌ (KV binding) | Cloudflare KV namespace | Logs all chatbot queries |
 
 ### Search Index
 
@@ -400,26 +435,64 @@ Built automatically during `npm run build` via the `prebuild` script:
 node scripts/build-search-index.mjs
 ```
 
-Indexes:
-- All `.md`/`.mdx` files in `src/content/docs/` (~400+ chunks)
-- Structured model data from `src/data/models.ts` (12 models, 3 comparison groups)
-- MDX imports are stripped; content is chunked into ~300-token segments
+Indexes (~700+ chunks):
+- All `.md`/`.mdx` files in `src/content/docs/` (chunked into ~300-token segments)
+- Structured model data from `src/data/models.ts`
+- Comparison chunks (top-5 by context window, pricing, parameters)
+- MDX imports stripped; absolute URLs included
+
+### Admin Dashboard
+
+URL: `/admin/logs` — reviews all logged queries with source badges, filtering, and search. No password currently.
+
+---
+
+## Quiz System
+
+### Architecture
+
+```
+Quiz bank: public/quiz-bank.json (pre-generated, 694 questions)
+Component: src/components/Quiz.astro (642 lines)
+Script:    scripts/generate-quiz-bank.mjs
+Page:      /learn/quiz
+```
+
+Questions are pre-generated via Groq and stored as static JSON — no runtime API calls. 24 topic/difficulty sets, 25-30 questions each.
+
+### Regenerating Quiz Questions
+
+```bash
+node scripts/generate-quiz-bank.mjs
+```
+
+Generates `public/quiz-bank.json`. Requires `GROQ_API_KEY` env variable.
 
 ---
 
 ## Interactive Components
 
-| Component | Location | Page |
+| Component | File | Page |
 |---|---|---|
-| **BenchmarkViz** | `src/components/BenchmarkViz.astro` | `/reference/benchmarks` |
-| **ModelMatrix** | `src/components/ModelMatrix.astro` | `/reference/model-capability-matrix` |
-| **CostCalculator** | `src/components/CostCalculator.astro` | `/decide/cost-calculator` |
-| **ToolComparison** | `src/components/ToolComparison.astro` | `/decide/tools/comparison` |
-| **TrendingWidget** | `src/components/TrendingWidget.astro` | Homepage + `/research/whats-new` |
-| **ProgressTracker** | `src/components/ProgressTracker.astro` | `/learn/beginner`, `/learn/interview-prep` |
-| **SeeAlso** | `src/components/SeeAlso.astro` | Auto-injected on all pages (tag-based) |
-| **ContributorsList** | `src/components/ContributorsList.astro` | `/community/contributors` |
-| **ContentAudit** | `src/components/ContentAudit.astro` | `/community/audit` |
+| **BenchmarkViz** | `BenchmarkViz.astro` | `/reference/benchmarks` |
+| **Breadcrumb** | `Breadcrumb.astro` | Deep-dive pages |
+| **ContentAudit** | `ContentAudit.astro` | `/community/audit` |
+| **ContentOverride** | `ContentOverride.astro` | All pages (Starlight override) |
+| **ContributorsList** | `ContributorsList.astro` | `/community/contributors` |
+| **CostCalculator** | `CostCalculator.astro` | `/decide/cost-calculator` (14 models) |
+| **DesignArenaLeaderboards** | `DesignArenaLeaderboards.astro` | `/reference/benchmarks` |
+| **FeedbackWidget** | `FeedbackWidget.astro` | All pages (footer) |
+| **FooterOverride** | `FooterOverride.astro` | All pages (override) |
+| **ModelCompare** | `ModelCompare.astro` | `/decide/models/guide` (from models.ts) |
+| **ModelMatrix** | `ModelMatrix.astro` | `/decide/models/guide` (9×9 heatmap) |
+| **ModelSelector** | `ModelSelector.astro` | `/decide/models/guide` |
+| **PathSelector** | `PathSelector.astro` | `/start/quick-start` |
+| **ProgressTracker** | `ProgressTracker.astro` | `/learn/beginner`, `/learn/interview-prep` |
+| **Quiz** | `Quiz.astro` | `/learn/quiz` |
+| **SearchOverride** | `SearchOverride.astro` | Header search bar (with recent searches) |
+| **SeeAlso** | `SeeAlso.astro` | Auto-injected on all pages (tag-based) |
+| **ToolComparison** | `ToolComparison.astro` | `/decide/tools/comparison`, `/decide/tools/guide` |
+| **TrendingWidget** | `TrendingWidget.astro` | Homepage, `/research/whats-new` |
 
 All use Astro components with inline vanilla JS for interactivity (no React/Vue dependencies).
 
@@ -429,31 +502,23 @@ All use Astro components with inline vanilla JS for interactivity (no React/Vue 
 
 | File | Content |
 |---|---|
-| `src/data/benchmarks.ts` | Benchmark scores (30+ entries across 4 categories, 7 model families) |
-| `src/data/capabilities.ts` | Model capability ratings (8+ models × 9 tasks, scored 1-5) |
-| `src/data/models.ts` | Structured model data (name, company, context, pricing, capabilities) for search index |
-| `src/data/trends.ts` | Trending topics (10 entries with links to playbook pages) |
+| `src/data/benchmarks.ts` | Benchmark scores (30+ entries, 7 model families) |
+| `src/data/capabilities.ts` | Model capability ratings (9 models × 9 tasks) |
+| `src/data/models.ts` | Structured model data (name, company, pricing, context) |
+| `src/data/trends.ts` | Trending topics (10 entries with links) |
 | `src/data/contributors.ts` | Contributor entries (name, GitHub, contribution types) |
 
 ---
 
 ## GitHub Actions
 
-| Workflow | File | Schedule | What it does |
-|---|---|---|---|
-| **Link Checker** | `.github/workflows/check-links.yml` | Monday 6am UTC | Runs lychee on all `.md`/`.mdx` files; creates an issue with a broken-links table if any found |
-| **Stale Content** | `.github/workflows/stale-content.yml` | Monday 6am UTC | Scans `lastUpdated` / `nextVerificationDue` frontmatter; creates issue listing overdue pages |
-| **Weekly Checklist** | `.github/workflows/weekly-checklist.yml` | Monday 7am UTC | Creates a maintenance checklist issue with pricing/link/build tasks |
+| Workflow | File | Schedule |
+|---|---|---|
+| **Link Checker** | `.github/workflows/check-links.yml` | Weekly (Monday) |
+| **Stale Content** | `.github/workflows/stale-content.yml` | Weekly (Monday) |
+| **Weekly Checklist** | `.github/workflows/weekly-checklist.yml` | Weekly (Monday) |
 
-**Important:** These workflows create GitHub Issues as reminders — they do **not** auto-edit any content files. Content only changes when a human pushes a commit.
-
-### Workflow permissions
-
-All three workflows require `permissions: issues: write` in the YAML **and** the repository must have "Read and write permissions" enabled at **Settings → Actions → General → Workflow permissions**. Without both, issue creation returns a 403.
-
-### Link checker config
-
-`.github/lychee.toml` configures lychee. Only use valid lychee fields — invalid fields cause exit code 1 (config error) and no output file is written. Valid fields include: `exclude`, `accept`, `timeout`, `max_concurrency`, `max_retries`, `retry_wait_time`, `cache`, `max_cache_age`. The `exclude` patterns are **regex**, not globs.
+All workflows auto-create GitHub Issues with reports/checklists.
 
 ---
 
@@ -472,35 +537,30 @@ All three workflows require `permissions: issues: write` in the YAML **and** the
 
 ## Sidebar Structure
 
-The sidebar is manually configured in `astro.config.mjs`. Current sections:
+The sidebar is manually configured in `astro.config.mjs`. Current sections (~77 pages):
 
-### Decide
-- **Tools Guide** — Feature Matrix (collapsible parent)
-  - Feature Matrix (`/decide/tools/guide`)
-  - Decision Tree (`/decide/tools/decision-tree`)
-- Tool Comparison (`/decide/tools/comparison`)
-- Models Guide (`/decide/models/guide`)
-- Frameworks Guide (`/decide/frameworks/guide`)
-- Cost Calculator (`/decide/cost-calculator`)
+### Start Here
+Welcome → Quick Start
 
-### Learn
-- Beginner → Builder → Researcher → Interview Prep
+### Learn (collapsed)
+Beginner Path → Builder Path → Researcher Path → Workflows → Interview Prep (collapsed: Overview, LLM Engineering, Quantitative Analytics, Machine Learning, System Design, Behavioral, AI Product) → Knowledge Quiz
 
-### Reference
-- Glossary → Cheatsheets (autogenerate) → Confusions → Principles → Benchmarks → Model Specs → Model Capability Matrix
+### Decide (collapsed)
+Tools Guide → Tool Comparison → AI Tools Navigator → Models Guide → Frameworks Guide → Cost Calculator
 
-### Research
-- What's New → Model Releases → Open-Source Models → Trends → History → Vocabulary
+### Reference (collapsed)
+Glossary → Cheatsheets (collapsed) → Who to Follow → Confusions → Principles → Benchmarks → Economics of AI
 
-### Deep Dives
-- **Core Architecture**: Neural Networks → How LLMs Work → Reasoning Models → Multimodal AI
-- **Techniques & Methods**: RAG Architecture → Agents & Frameworks → Training & Fine-tuning → Prompt Engineering
-- **Production & Operations**: Inference Optimization → Production LLMOps → Evaluation & Testing → LLM Backend Engineering → Observability & Tracing → Safety & Security
-- **Quantitative Methods**: Regression & Quant Methods (18 parts: OLS → variable transformations → regularisation → panel data → time series → PCA → factor models → statistical testing → distribution stats → Gini/inequality → non-parametric → logistic regression → WoE/scorecards → survival analysis → model monitoring → risk metrics/VaR/ECL)
+### Research (collapsed)
+What's New → Open-Source Models → Chinese AI Ecosystem → Trends → History → Vocabulary
 
-### Resources
-- Overview → Papers → Communities → Tools & Frameworks → Case Studies → Templates
+### Deep Dives (collapsed)
+- **Core Architecture:** How LLMs Work → Neural Networks → Reasoning Models → Multimodal AI → Quantitative Methods
+- **Techniques & Methods:** RAG Architecture → Agents & Frameworks → Training & Fine-tuning → Prompt Engineering
+- **Production & Operations:** Inference Optimization → Production LLMOps → Evaluation & Testing → LLM Backend Engineering → Observability & Tracing → Safety & Security
 
-### Community
-- Contributing → Report Outdated → Help Wanted → Content Audit → Analytics → Contributors
+### Resources (collapsed)
+Overview & Downloads → Papers → Build an LLM from Scratch → Communities → Tools & Frameworks → Case Studies → Templates
 
+### Community (collapsed)
+Contributing → Report Outdated → Help Wanted → Content Audit → Analytics → Contributors
