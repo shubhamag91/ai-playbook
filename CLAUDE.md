@@ -104,7 +104,7 @@ ai-playbook/
 │   │   ├── decide/           # Tools Guide, Models Guide, Frameworks, Cost Calculator
 │   │   ├── reference/        # Glossary, Cheatsheets, Confusions, Principles, Benchmarks
 │   │   ├── research/         # What's New, Open-Source Models, Trends, History
-│   │   ├── deep-dive/        # 11 deep dives (How LLMs Work, RAG, Agents, etc.)
+│   │   ├── deep-dive/        # 12 deep dives (How LLMs Work, RAG, Agents, Agent Skills, etc.)
 │   │   ├── community/        # Contributing, audit, help-wanted, contributors
 │   │   └── resources/        # Papers, communities, templates, case studies
 │   └── styles/
@@ -558,7 +558,7 @@ What's New → Open-Source Models → Chinese AI Ecosystem → Trends → Histor
 
 ### Deep Dives (collapsed)
 - **Core Architecture:** How LLMs Work → Neural Networks → Reasoning Models → Multimodal AI → Quantitative Methods
-- **Techniques & Methods:** RAG Architecture → Agents & Frameworks → Training & Fine-tuning → Prompt Engineering
+- **Techniques & Methods:** RAG Architecture → Agents & Frameworks → Agent Skills (+ Sub-Agents) → Training & Fine-tuning → Prompt Engineering
 - **Production & Operations:** Inference Optimization → Production LLMOps → Evaluation & Testing → LLM Backend Engineering → Observability & Tracing → Safety & Security
 
 ### Resources (collapsed)
