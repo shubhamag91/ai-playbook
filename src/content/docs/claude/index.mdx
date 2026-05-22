@@ -27,44 +27,11 @@ Claude is Anthropic's family of AI models and the full platform ecosystem built 
 ## How the Ecosystem Connects
 
 ```mermaid
-graph LR
-    subgraph Models["Claude Models"]
-        Opus["Opus 4.7<br/>Most capable<br/>1M ctx · $5/$25"]
-        Sonnet["Sonnet 4.6<br/>Balanced<br/>1M ctx · $3/$15"]
-        Haiku["Haiku 4.5<br/>Fastest<br/>200K ctx · $1/$5"]
-    end
-
-    subgraph API["Claude API"]
-        Messages["Messages API"]
-        Caching["Prompt Caching<br/>90% savings"]
-        Batch["Batch API<br/>50% discount"]
-        Tools["Tool Use<br/>Web, Code, Files"]
-    end
-
-    subgraph Builders["Developer Tools"]
-        CC["Claude Code<br/>Terminal · IDE · Desktop · Web"]
-        MCP["MCP Protocol<br/>Open standard"]
-        SDKs["SDKs<br/>Python · TS · Java · Go"]
-        Console["Console<br/>Dashboard"]
-    end
-
-    subgraph Products["Products"]
-        Chat["claude.ai<br/>Chat + Projects"]
-        Teams["Claude for Teams<br/>Enterprise"]
-        Cowork["Cowork<br/>Computer use"]
-        Dispatch["Dispatch<br/>Mobile → Desktop"]
-    end
-
-    Models --> API
-    API --> Builders
-    Builders --> Products
-    API --> Products
-
-    style Opus fill:#166534,stroke:#4ade80,color:#fff
-    style Sonnet fill:#1e3a8a,stroke:#60a5fa,color:#fff
-    style Haiku fill:#7c3aed,stroke:#a78bfa,color:#fff
-    style CC fill:#3b82f6,stroke:#93c5fd,color:#fff
-    style MCP fill:#d97706,stroke:#fcd34d,color:#fff
+flowchart LR
+    A["Claude Models\nOpus 4.7 · Sonnet 4.6 · Haiku 4.5"] --> B["Claude API\nMessages · Caching · Batch · Tools"]
+    B --> C["Developer Platform\nClaude Code · MCP · SDKs · Skills"]
+    B --> D["End Products\nclaude.ai · Teams · Cowork · Dispatch"]
+    C --> D
 ```
 
 ## Product Directory — At a Glance

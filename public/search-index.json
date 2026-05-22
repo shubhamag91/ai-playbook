@@ -309,13 +309,7 @@
     "slug": "claude/index",
     "title": "\"Claude: The Anthropic Ecosystem\"",
     "description": "Complete guide to Anthropic's Claude platform — models, API, Claude Code, MCP, agent skills, enterprise deployment, and the full product ecosystem.",
-    "chunk": "Claude is Anthropic's family of AI models and the full platform ecosystem built around them. This section is a complete reference for technical users — covering every product, capability, API, and workflow.\n\n## How the Ecosystem Connects\n\n```mermaid\ngraph LR\n    subgraph Models[\"Claude Models\"]\n        Opus[\"Opus 4.7<br/>Most capable<br/>1M ctx · $5/$25\"]\n        Sonnet[\"Sonnet 4.6<br/>Balanced<br/>1M ctx · $3/$15\"]\n        Haiku[\"Haiku 4.5<br/>Fastest<br/>200K ctx · $1/$5\"]\n    end\n\n    subgraph API[\"Claude API\"]\n        Messages[\"Messages API\"]\n        Caching[\"Prompt Caching<br/>90% savings\"]\n        Batch[\"Batch API<br/>50% discount\"]\n        Tools[\"Tool Use<br/>Web, Code, Files\"]\n    end\n\n    subgraph Builders[\"Developer Tools\"]\n        CC[\"Claude Code<br/>Terminal · IDE · Desktop · Web\"]\n        MCP[\"MCP Protocol<br/>Open standard\"]\n        SDKs[\"SDKs<br/>Python · TS · Java · Go\"]\n        Console[\"Console<br/>Dashboard\"]\n    end\n\n    subgraph Products[\"Products\"]\n        Chat[\"claude.ai<br/>Chat + Projects\"]\n        Teams[\"Claude for Teams<br/>Enterprise\"]\n        Cowork[\"Cowork<br/>Computer use\"]\n        Dispatch[\"Dispatch<br/>Mobile → Desktop\"]\n    end"
-  },
-  {
-    "slug": "claude/index",
-    "title": "\"Claude: The Anthropic Ecosystem\"",
-    "description": "Complete guide to Anthropic's Claude platform — models, API, Claude Code, MCP, agent skills, enterprise deployment, and the full product ecosystem.",
-    "chunk": "Models --> API\n    API --> Builders\n    Builders --> Products\n    API --> Products\n\n    style Opus fill:#166534,stroke:#4ade80,color:#fff\n    style Sonnet fill:#1e3a8a,stroke:#60a5fa,color:#fff\n    style Haiku fill:#7c3aed,stroke:#a78bfa,color:#fff\n    style CC fill:#3b82f6,stroke:#93c5fd,color:#fff\n    style MCP fill:#d97706,stroke:#fcd34d,color:#fff\n```\n\n## Product Directory — At a Glance"
+    "chunk": "Claude is Anthropic's family of AI models and the full platform ecosystem built around them. This section is a complete reference for technical users — covering every product, capability, API, and workflow.\n\n## How the Ecosystem Connects\n\n```mermaid\nflowchart LR\n    A[\"Claude Models\\nOpus 4.7 · Sonnet 4.6 · Haiku 4.5\"] --> B[\"Claude API\\nMessages · Caching · Batch · Tools\"]\n    B --> C[\"Developer Platform\\nClaude Code · MCP · SDKs · Skills\"]\n    B --> D[\"End Products\\nclaude.ai · Teams · Cowork · Dispatch\"]\n    C --> D\n```\n\n## Product Directory — At a Glance"
   },
   {
     "slug": "claude/index",
