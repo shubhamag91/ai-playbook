@@ -74,9 +74,8 @@ Advanced patterns and best practices for better LLM outputs.
 - Include in training materials
 
 ### Stay Updated
-- Bookmark [What's New](/research/whats-new) for monthly updates
+- Bookmark [What's New](/research/whats-new) for monthly updates and new tool announcements
 - Follow [Who to Follow](/reference/follow) for newsletters and researchers
-- Check [What's New](/research/whats-new) for new tool announcements
 
 ---
 
@@ -93,8 +92,7 @@ Press Cmd+K for full-text search.
 - [Who to Follow](/reference/follow)  -  Researchers, practitioners, newsletters
 
 ### Recent Updates
-- [What's New](/research/whats-new)  -  May 2026 releases and trends
-- [What's New](/research/whats-new)  -  Latest developments and releases
+- [What's New](/research/whats-new)  -  Latest releases and trends
 - [Emerging Trends](/research/emerging-trends)  -  15 key trends
 
 ---
