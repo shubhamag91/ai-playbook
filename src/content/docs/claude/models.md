@@ -8,6 +8,7 @@ tags:
   - anthropic
   - models
   - reference
+  - vendor-comparison
 glossaryLinks:
   - llm
   - token
@@ -125,4 +126,4 @@ What 200K tokens enables:
 
 ## Comparing Across Models
 
-For a broader comparison across Claude, GPT, Gemini, DeepSeek, and other providers, see the [Models Decision Guide](/decide/models/guide).
+For a broader comparison across Claude, GPT, Gemini, DeepSeek, and other providers, see the [Models Decision Guide](/decide/models/guide/).

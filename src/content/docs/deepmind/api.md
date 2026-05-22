@@ -10,12 +10,13 @@ tags:
   - api
   - sdk
   - development
+  - provider-api
 glossaryLinks:
   - api
   - token
   - streaming
 tldr:
-  - "Google AI Studio is the free developer IDE — no credit card required, 1M token context, Gemini 3.5 access"
+  - "Google AI Studio is the free developer IDE — no credit card required, 1M token context, access to the full Gemini 3 lineup (3.1 Pro preview, 3.5 Flash, 3.1 Flash-Lite)"
   - "Gemini API: text, image, audio, video input. Function calling, streaming, structured output"
   - "Vertex AI: enterprise deployment with Google Cloud integration, VPC, IAM, compliance"
   - "Gemini Live API: real-time bidirectional voice and audio streaming"

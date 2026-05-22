@@ -8,12 +8,13 @@ tags:
   - gpt
   - models
   - reference
+  - vendor-comparison
 glossaryLinks:
   - llm
   - token
   - context-window
 tldr:
-  - "Four current GPT tiers: GPT-5.5 ($5/$30, 1M ctx), GPT-5.4 ($2.50/$15, 1M), GPT-5.4 mini ($0.75/$4.50, 400K), GPT-5.4 nano (~$0.15/~$0.60, 400K)"
+  - "Four current GPT tiers: GPT-5.5 ($5/$30, 1M ctx), GPT-5.4 ($2.50/$15, 1M), GPT-5.4 mini ($0.75/$4.50, 400K), GPT-5.4 nano ($0.20/$1.25, 400K)"
   - "All GPT models support text + image input, tool use, streaming, structured outputs, and prompt caching"
   - "GPT-5.5 has configurable reasoning levels (none/low/medium/high/xhigh) for balancing speed vs depth"
   - "Specialized models: GPT Image 2 (image), Realtime-2 (voice), Sora (video), Whisper/TTS (speech)"
@@ -26,12 +27,12 @@ nextVerificationDue: 2026-08-22
 | Feature | GPT-5.5 | GPT-5.4 | GPT-5.4 mini | GPT-5.4 nano |
 |---|---|---|---|---|
 | **Description** | Flagship — new class of intelligence | Affordable professional tier | Strong mini for coding & agents | Fastest, cheapest |
-| **Model ID** | `gpt-5.5` | `gpt-5.4` | `gpt-5.4-mini` | `gpt-4.1-nano` |
-| **Input Pricing** | $5 / 1M tokens | $2.50 / 1M tokens | $0.75 / 1M tokens | ~$0.15 / 1M tokens |
-| **Cached Input** | $0.50 / 1M tokens | $0.25 / 1M tokens | $0.075 / 1M tokens | ~$0.015 / 1M tokens |
-| **Output Pricing** | $30 / 1M tokens | $15 / 1M tokens | $4.50 / 1M tokens | ~$0.60 / 1M tokens |
+| **Model ID** | `gpt-5.5` | `gpt-5.4` | `gpt-5.4-mini` | `gpt-5.4-nano` |
+| **Input Pricing** | $5 / 1M tokens | $2.50 / 1M tokens | $0.75 / 1M tokens | $0.20 / 1M tokens |
+| **Cached Input** | $0.50 / 1M tokens | $0.25 / 1M tokens | $0.075 / 1M tokens | $0.02 / 1M tokens |
+| **Output Pricing** | $30 / 1M tokens | $15 / 1M tokens | $4.50 / 1M tokens | $1.25 / 1M tokens |
 | **Context Window** | 1M tokens | 1M tokens | 400K tokens | 400K tokens |
-| **Max Output** | 128K tokens | 128K tokens | 128K tokens | — |
+| **Max Output** | 128K tokens | 128K tokens | 128K tokens | 128K tokens |
 | **Reasoning Levels** | none/low/medium/high/xhigh | none/low/medium/high/xhigh | none/low/medium/high/xhigh | none/low/medium |
 | **Vision (Image Input)** | Yes | Yes | Yes | Yes |
 | **Tool Use** | Functions, Web, File search, Computer use | Functions, Web, File search, Computer use | Functions, Web, File search, Computer use | Functions, Web |
@@ -39,7 +40,7 @@ nextVerificationDue: 2026-08-22
 | **Prompt Caching** | Yes (10% of input) | Yes (10% of input) | Yes (10% of input) | Yes |
 | **Batch API (50% off)** | Yes | Yes | Yes | Yes |
 | **Flex Processing** | Yes | Yes | Yes | Yes |
-| **Knowledge Cutoff** | Dec 1, 2025 | Aug 31, 2025 | Aug 31, 2025 | — |
+| **Knowledge Cutoff** | Dec 1, 2025 | Aug 31, 2025 | Aug 31, 2025 | Aug 31, 2025 |
 
 > **Pricing History:** GPT-5.5 dropped from $15/$75 (GPT-4 tier) to $5/$30. GPT-5.4 at $2.50/$15 offers near-flagship capability at a fraction of the price. All models have prompt caching at 10% of base input cost.
 
@@ -112,7 +113,7 @@ What matters most?
 │
 ├─ Fastest, cheapest → GPT-5.4 nano
 │   Use when: classification, routing, simple automation
-│   Cost: ~$0.15/~$0.60 per 1M
+│   Cost: $0.20/$1.25 per 1M
 │
 ├─ Generate images → GPT Image 2
 ├─ Real-time voice/audio → Realtime API
@@ -132,4 +133,4 @@ What matters most?
 
 ## Comparing Across Models
 
-For a broader comparison across GPT, Claude, Gemini, and DeepSeek, see the [Models Decision Guide](/decide/models/guide).
+For a broader comparison across GPT, Claude, Gemini, and DeepSeek, see the [Models Decision Guide](/decide/models/guide/).

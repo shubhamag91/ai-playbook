@@ -207,7 +207,7 @@ Run Claude on a schedule — even when your computer is off:
 | **Sub-agents** | Yes (parallel tasks) | No | No |
 | **Desktop app** | Yes | No | No |
 
-> **Best combo:** Cursor for daily IDE work, Claude Code for complex refactors, Copilot for inline completions. See the [Coding Tools Comparison](/reference/cheatsheets/coding-assistants-agents) for benchmarks.
+> **Best combo:** Cursor for daily IDE work, Claude Code for complex refactors, Copilot for inline completions. See the [Coding Tools Comparison](/reference/cheatsheets/coding-assistants-agents/) for benchmarks.
 
 ## Pricing
 

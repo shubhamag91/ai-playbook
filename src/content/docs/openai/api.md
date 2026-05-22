@@ -9,6 +9,7 @@ tags:
   - api
   - sdk
   - development
+  - provider-api
 glossaryLinks:
   - api
   - token
@@ -249,4 +250,4 @@ flagged = response.results[0].flagged
 - [Workflows & Best Practices](/openai/workflows) — prompt engineering and optimization
 - [Enterprise & Deployment](/openai/enterprise) — security, compliance, deployment
 
-For cross-model comparison, see the [Models Decision Guide](/decide/models/guide).
+For cross-model comparison, see the [Models Decision Guide](/decide/models/guide/).

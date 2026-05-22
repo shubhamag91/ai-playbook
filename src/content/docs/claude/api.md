@@ -9,6 +9,7 @@ tags:
   - api
   - sdk
   - development
+  - provider-api
 glossaryLinks:
   - api
   - token
@@ -273,4 +274,4 @@ Free when combined with web search or web fetch. Otherwise: $0.05/hour/container
 - [Workflows & Best Practices](/claude/workflows) — prompt engineering and optimization
 - [Enterprise & Deployment](/claude/enterprise) — AWS, GCP, Teams, compliance
 
-For cross-model comparison (GPT, Gemini, DeepSeek), see the [Models Decision Guide](/decide/models/guide).
+For cross-model comparison (GPT, Gemini, DeepSeek), see the [Models Decision Guide](/decide/models/guide/).
