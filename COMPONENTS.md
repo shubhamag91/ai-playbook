@@ -41,7 +41,7 @@ If `grep` reports these as "unused," that's a false positive — they're wired t
 | ModelCompare | `ModelCompare.astro` | `/decide/models/guide` | Model specs table from models.ts (single source of truth) |
 | ModelMatrix | `ModelMatrix.astro` | `/decide/models/guide` | Model capability heatmap (9 models x 9 tasks) |
 | ModelSelector | `ModelSelector.astro` | `/decide/models/guide` | Interactive model filter by use case, speed, cost |
-| PathSelector | `PathSelector.astro` | `/start/quick-start` | Homepage/Quick Start path cards (Beginner, Builder, etc.) |
+| PathSelector | `PathSelector.astro` | `/ (homepage)`, `/start/quick-start` | Section cards linking to all 8 sidebar sections |
 | ProgressTracker | `ProgressTracker.astro` | `/learn/beginner`, `/learn/interview-prep` | Section checkboxes with localStorage persistence |
 | SeeAlso | `SeeAlso.astro` | All pages (auto-injected in footer) | Auto-generated related content links from tags |
 | ToolComparison | `ToolComparison.astro` | `/decide/tools/comparison`, `/decide/tools/guide` | Sortable tool comparison tables |
@@ -257,7 +257,7 @@ import ModelSelector from '../../../components/ModelSelector.astro';
 
 **Location:** `src/components/PathSelector.astro`
 
-**Purpose:** Card grid on the Quick Start page offering role-based paths (Beginner, Builder, Researcher, Reference, Research, Deep Dives). Each card shows a description and links to relevant pages.
+**Purpose:** Card grid on the Welcome page and Quick Start page offering role-based sections (Start Here, Learn, Decide, Reference, Research, Deep Dives, Resources, Community). Each card shows a description and links to relevant pages.
 
 **Usage:**
 ```mdx

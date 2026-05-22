@@ -488,7 +488,7 @@ Generates `public/quiz-bank.json`. Requires `GROQ_API_KEY` env variable.
 | **ModelCompare** | `ModelCompare.astro` | `/decide/models/guide` (from models.ts) |
 | **ModelMatrix** | `ModelMatrix.astro` | `/decide/models/guide` (9×9 heatmap) |
 | **ModelSelector** | `ModelSelector.astro` | `/decide/models/guide` |
-| **PathSelector** | `PathSelector.astro` | `/start/quick-start` |
+| **PathSelector** | `PathSelector.astro` | `/ (homepage)`, `/start/quick-start` |
 | **ProgressTracker** | `ProgressTracker.astro` | `/learn/beginner`, `/learn/interview-prep` |
 | **Quiz** | `Quiz.astro` | `/learn/quiz` |
 | **SearchOverride** | `SearchOverride.astro` | Header search bar (with recent searches) |
