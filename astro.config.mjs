@@ -358,6 +358,21 @@ export default defineConfig({
           ],
         },
         {
+          label: 'Claude',
+          collapsed: false,
+          items: [
+            { label: 'Ecosystem Overview', slug: 'claude' },
+            { label: 'Claude Models', slug: 'claude/models' },
+            { label: 'API & SDKs', slug: 'claude/api' },
+            { label: 'Claude Code', slug: 'claude/claude-code' },
+            { label: 'Agent Skills', slug: 'claude/agent-skills' },
+            { label: 'MCP — Model Context Protocol', slug: 'claude/mcp' },
+            { label: 'Cowork & Dispatch', slug: 'claude/cowork-dispatch' },
+            { label: 'Workflows & Best Practices', slug: 'claude/workflows' },
+            { label: 'Enterprise & Deployment', slug: 'claude/enterprise' },
+          ],
+        },
+        {
           label: 'Community',
           collapsed: true,
           items: [
