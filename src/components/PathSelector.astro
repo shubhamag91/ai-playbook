@@ -21,7 +21,9 @@ const paths = [
       { label: 'Beginner Path', href: '/learn/beginner' },
       { label: 'Builder Path', href: '/learn/builder' },
       { label: 'Researcher Path', href: '/learn/researcher' },
-      { label: 'Interview Prep', href: '/resources/interview-prep' }
+      { label: 'Workflows', href: '/learn/workflows' },
+      { label: 'Interview Prep', href: '/resources/interview-prep' },
+      { label: 'Knowledge Quiz', href: '/learn/quiz' }
     ]
   },
   {
@@ -31,6 +33,7 @@ const paths = [
     description: 'Compare tools, models, and frameworks. Make informed choices.',
     links: [
       { label: 'Tools Guide', href: '/decide/tools/guide' },
+      { label: 'Tool Comparison', href: '/decide/tools/comparison' },
       { label: 'Models Guide', href: '/decide/models/guide' },
       { label: 'Frameworks Guide', href: '/decide/frameworks/guide' },
       { label: 'Cost Calculator', href: '/decide/cost-calculator' }
@@ -40,12 +43,15 @@ const paths = [
     id: 'reference',
     emoji: '📖',
     title: 'Reference',
-    description: 'Glossary, cheatsheets, and quick lookups.',
+    description: 'Glossary, cheatsheets, principles, and quick lookups.',
     links: [
       { label: 'Glossary', href: '/reference/glossary' },
       { label: 'Cheatsheets', href: '/reference/cheatsheets' },
-      { label: 'Models Guide', href: '/decide/models/guide' },
-      { label: 'Confusions', href: '/reference/confusions' }
+      { label: 'Who to Follow', href: '/reference/follow' },
+      { label: 'Confusions', href: '/reference/confusions' },
+      { label: 'Principles', href: '/reference/principles' },
+      { label: 'Benchmarks', href: '/reference/benchmarks' },
+      { label: 'Economics of AI', href: '/reference/economics-of-ai' }
     ]
   },
   {
@@ -55,29 +61,43 @@ const paths = [
     description: 'Latest trends, model releases, and open-source developments.',
     links: [
       { label: "What's New", href: '/research/whats-new' },
+      { label: 'Open-Source Models', href: '/research/models/guide' },
+      { label: 'Chinese AI Ecosystem', href: '/research/china-ecosystem' },
       { label: 'Emerging Trends', href: '/research/emerging-trends' },
-      { label: 'Open-Source Models', href: '/research/models/guide' }
+      { label: 'History', href: '/research/history' },
+      { label: 'Vocabulary', href: '/research/vocabulary' }
     ]
   },
   {
     id: 'deep-dive',
     emoji: '⚙️',
     title: 'Deep Dives',
-    description: 'Technical deep dives: how LLMs work, RAG, agents, training.',
+    description: 'Technical deep dives from fundamentals to production systems.',
     links: [
       { label: 'How LLMs Work', href: '/deep-dive/how-llms-work' },
+      { label: 'Neural Networks', href: '/deep-dive/neural-networks' },
+      { label: 'Reasoning Models', href: '/deep-dive/reasoning-models' },
       { label: 'RAG Architecture', href: '/deep-dive/rag-architecture' },
       { label: 'Agents & Frameworks', href: '/deep-dive/agents-frameworks' },
-      { label: 'Prompt Engineering', href: '/deep-dive/prompt-engineering' }
+      { label: 'Agent Skills', href: '/deep-dive/agent-skills' },
+      { label: 'Prompt Engineering', href: '/deep-dive/prompt-engineering' },
+      { label: 'Training & Fine-tuning', href: '/deep-dive/training-finetuning' },
+      { label: 'Production LLMOps', href: '/deep-dive/production-llmops' }
     ]
   },
   {
     id: 'resources',
     emoji: '🌐',
     title: 'Resources',
-    description: 'Curated external resources, papers, tools, and communities.',
+    description: 'Curated papers, tools, communities, templates, and case studies.',
     links: [
-      { label: 'Browse All Resources', href: '/resources' }
+      { label: 'Overview & Downloads', href: '/resources' },
+      { label: 'Papers', href: '/resources/papers' },
+      { label: 'Communities', href: '/resources/communities' },
+      { label: 'Tools & Frameworks', href: '/resources/tools-frameworks' },
+      { label: 'Build an LLM from Scratch', href: '/resources/llm-from-scratch' },
+      { label: 'Case Studies', href: '/resources/case-studies' },
+      { label: 'Templates', href: '/resources/templates' }
     ]
   },
   {
@@ -87,7 +107,11 @@ const paths = [
     description: 'Contribute, report outdated info, and join the conversation.',
     links: [
       { label: 'Contributing Guide', href: '/community/contributing' },
-      { label: 'Report Outdated', href: '/community/report' }
+      { label: 'Report Outdated', href: '/community/report' },
+      { label: 'Help Wanted', href: '/community/help-wanted' },
+      { label: 'Content Audit', href: '/community/audit' },
+      { label: 'Analytics', href: '/community/analytics' },
+      { label: 'Contributors', href: '/community/contributors' }
     ]
   }
 ];
