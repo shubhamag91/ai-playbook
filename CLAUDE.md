@@ -99,7 +99,7 @@ ai-playbook/
 │   │   ├── models.ts         # Model entries (name, company, pricing, context)
 │   │   ├── trends.ts         # Trending topics (10 entries)
 │   │   └── contributors.ts   # Contributor entries
-│   ├── content/docs/         # ALL MARKDOWN CONTENT (~77 pages)
+│   ├── content/docs/         # ALL MARKDOWN CONTENT (~101 pages)
 │   │   ├── learn/            # Beginner, Builder, Researcher, Interview Prep, Quiz
 │   │   ├── decide/           # Tools Guide, Models Guide, Frameworks, Cost Calculator
 │   │   ├── reference/        # Glossary, Cheatsheets, Confusions, Principles, Benchmarks
@@ -539,7 +539,7 @@ All workflows auto-create GitHub Issues with reports/checklists.
 
 ## Sidebar Structure
 
-The sidebar is manually configured in `astro.config.mjs`. Current sections (~77 pages):
+The sidebar is manually configured in `astro.config.mjs`. Current sections (~101 pages):
 
 ### Start Here
 Welcome → Quick Start
@@ -548,7 +548,7 @@ Welcome → Quick Start
 Beginner Path → Builder Path → Researcher Path → Workflows → Interview Prep (collapsed: Overview, LLM Engineering, Quantitative Analytics, Machine Learning, System Design, Behavioral, AI Product) → Knowledge Quiz
 
 ### Decide (collapsed)
-Tools Guide → Tool Comparison → AI Tools Navigator → Models Guide → Frameworks Guide → Cost Calculator
+Tools Guide → Tool Comparison → Models Guide → Frameworks Guide → Cost Calculator
 
 ### Reference (collapsed)
 Glossary → Cheatsheets (collapsed) → Who to Follow → Confusions → Principles → Benchmarks → Economics of AI
@@ -562,7 +562,16 @@ What's New → Open-Source Models → Chinese AI Ecosystem → Trends → Histor
 - **Production & Operations:** Inference Optimization → Production LLMOps → Evaluation & Testing → LLM Backend Engineering → Observability & Tracing → Safety & Security
 
 ### Resources (collapsed)
-Overview & Downloads → Papers → Build an LLM from Scratch → Communities → Tools & Frameworks → Case Studies → Templates
+Overview & Downloads → Papers → Build an LLM from Scratch → Communities → Tools & Frameworks → Interview Prep (collapsed: Overview, LLM Engineering, Quantitative Analytics, Machine Learning, System Design, Behavioral, AI Product, AI Data Scientist) → Case Studies → Templates
+
+### Claude (uncollapsed)
+Ecosystem Overview → Claude Models → API & SDKs → Claude Code → Agent Skills → MCP Protocol → Cowork & Dispatch → Workflows & Best Practices → Enterprise & Deployment
+
+### OpenAI (uncollapsed)
+Ecosystem Overview → GPT Models → API & SDKs → Codex → Agent Skills → MCP & Integrations → Realtime, Image & Media → Workflows & Best Practices → Enterprise & Deployment
+
+### Google DeepMind (uncollapsed)
+Ecosystem Overview → Gemini Models → Gemini API & AI Studio → Antigravity & Flow → Media & Creative → Gemma — Open Models → Science & Research → Workflows & Best Practices → Enterprise & Deployment
 
 ### Community (collapsed)
 Contributing → Report Outdated → Help Wanted → Content Audit → Analytics → Contributors

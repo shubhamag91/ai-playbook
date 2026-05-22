@@ -156,7 +156,11 @@ This is a Cloudflare-native redirect — it only works in production, not local 
 
 ## Recent Sidebar Changes (May 2026)
 
-- model-releases, decision-tree, capability-matrix, model-specs — deleted (content consolidated into canonical pages)
-- Tools Guide — flattened (was nested child, now single entry)
-- Cheatsheets — collapsed by default
-- Deep Dives — grouped into 3 subcategories
+- Added 3 new top-level platform sections: Claude (9 pages), OpenAI (9 pages), Google DeepMind (9 pages)
+- AI Tools Navigator — removed (merged into Tools Guide)
+- Start Here — uncollapsed for new visitor discoverability
+- Vocabulary — moved from Research → Reference
+- Quantitative Methods — merged into Core Architecture sub-section
+- 4 orphan visual pages — removed (slides, mind-maps, infographics) with redirects
+- model-releases, decision-tree, capability-matrix, model-specs — deleted (content consolidated)
+- Tools Guide — flattened, Cheatsheets — collapsed by default, Deep Dives — grouped into 3 subcategories
