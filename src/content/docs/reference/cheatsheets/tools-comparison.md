@@ -15,51 +15,7 @@ lastUpdated: 2026-05-09
 nextVerificationDue: 2026-06-08
 ---
 
-## Conversational AI Tools
-
-| Tool | Best Model | Cost | Speed | Strengths | Best For |
-|------|-----------|------|-------|-----------|----------|
-| **Claude** | Opus 4.7 / Sonnet 4.6 | $20/mo | Medium | Long context (400K), thoughtful reasoning | Writing, analysis, long documents |
-| **ChatGPT** | GPT-5.5 / GPT-5.5 Instant | $20/mo | Fast | Web search built-in, all-purpose | Web research, general tasks, speed |
-| **Gemini** | Gemini 3.1 Pro | $20/mo | Fast | 1M context, Deep Research | Research, massive documents |
-| **Perplexity** | Claude / GPT-5.5 | $20/mo | Fast | Real-time web search + citations | Researched answers with sources |
-| **DeepSeek** | DeepSeek V4 | Free / $10/mo | Fast | 10–50x cheaper | Cost-conscious teams, reasoning |
-
----
-
-## Coding Tools
-
-| Tool | Base Models | IDE | Cost | Best For |
-|------|-----------|-----|------|----------|
-| **Cursor** | Claude Sonnet + GPT-4o (pick one) | Standalone VSCode | $20–40/mo | Large codebases, multi-file refactors |
-| **Claude Code (CLI)** | Claude Sonnet 4.6 | Terminal / VSCode extension | $3/$15 per 1M tokens | Terminal-first developers, automation |
-| **GitHub Copilot** | GPT-4o + Codex | VSCode, JetBrains, VIM | Free tier + $10–20/mo | GitHub-native teams, widest IDE support |
-| **Windsurf** | Codeium + partners | Standalone | $15–30/mo | Agentic workflows, fast iteration |
-| **JetBrains AI** | Claude / GPT-5.5 | JetBrains IDEs | Free tier + $10–15/mo | JetBrains-first developers |
-
----
-
-## Content Creation Tools
-
-| Tool | Type | Cost | Best For |
-|------|------|------|----------|
-| **Midjourney** | Image generation | $10–120/mo | Photorealistic images, illustrations |
-| **Runway** | Video generation & editing | $12–76/mo | AI video generation, post-production |
-| **Suno** | Music generation | Free / $8–32/mo | Original music, background scores |
-| **NotebookLM** | Document analysis | Free | Summarize PDFs, extract insights |
-| **ElevenLabs** | Voice synthesis | Free / $11–99/mo | Narration, voiceovers, audiobooks |
-
----
-
-## API & Building Tools
-
-| Tool | Best For | Language Support | Cost Model |
-|------|----------|-----------------|------------|
-| **Anthropic API** | Building with Claude | Python, JS, Go, Java | Pay-per-token |
-| **OpenAI API** | Building with GPT | All languages | Pay-per-token |
-| **Google Vertex AI** | Building with Gemini | All languages | Pay-per-token + compute |
-| **LangChain** | Framework for LLM apps | Python, JS | Open-source |
-| **CrewAI** | Multi-agent orchestration | Python | Open-source |
+For the full tool comparison tables across all categories, see the [Tools Guide](/decide/tools/guide/).
 
 ---
 

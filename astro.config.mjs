@@ -238,7 +238,6 @@ export default defineConfig({
       sidebar: [
         {
           label: 'Start Here',
-          collapsed: true,
           items: [
             { label: 'Welcome', slug: 'index' },
             { label: 'Quick Start', slug: 'start/quick-start' },
@@ -261,7 +260,6 @@ export default defineConfig({
           items: [
             { label: 'Tools Guide', slug: 'decide/tools/guide' },
             { label: 'Tool Comparison', slug: 'decide/tools/comparison' },
-            { label: 'AI Tools Navigator', slug: 'tools' },
             { label: 'Models Guide', slug: 'decide/models/guide' },
             { label: 'Frameworks Guide', slug: 'decide/frameworks/guide' },
             { label: 'Cost Calculator', slug: 'decide/cost-calculator' },
@@ -289,7 +287,7 @@ export default defineConfig({
             { label: 'Chinese AI Ecosystem', slug: 'research/china-ecosystem' },
             { label: 'Trends', slug: 'research/emerging-trends' },
             { label: 'History', slug: 'research/history' },
-            { label: 'Vocabulary', slug: 'research/vocabulary' },
+            { label: 'Vocabulary', slug: 'reference/vocabulary' },
           ],
         },
         {
@@ -304,6 +302,7 @@ export default defineConfig({
                 { label: 'How LLMs Work', slug: 'deep-dive/how-llms-work' },
                 { label: 'Reasoning Models', slug: 'deep-dive/reasoning-models' },
                 { label: 'Multimodal AI', slug: 'deep-dive/multimodal-ai' },
+                { label: 'Quantitative Methods', slug: 'deep-dive/quantitative-methods' },
               ],
             },
             {
@@ -327,13 +326,6 @@ export default defineConfig({
                 { label: 'LLM Backend Engineering', slug: 'deep-dive/llm-backend-engineering' },
                 { label: 'Observability & Tracing', slug: 'deep-dive/observability' },
                 { label: 'Safety & Security', slug: 'deep-dive/safety-security' },
-              ],
-            },
-            {
-              label: 'Quantitative Methods',
-              collapsed: true,
-              items: [
-                { label: 'Regression & Quant Methods', slug: 'deep-dive/quantitative-methods' },
               ],
             },
           ],

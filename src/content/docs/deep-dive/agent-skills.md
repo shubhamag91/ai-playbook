@@ -2,7 +2,7 @@
 title: Agent Skills
 description: What agent skills are, how they differ from tools and MCP, the SKILL.md open standard, sub-agents and orchestration patterns, and how to write and use skills across Claude Code and other AI coding agents.
 sidebar:
-  order: 5
+  order: 6
   badge:
     text: New
     variant: tip

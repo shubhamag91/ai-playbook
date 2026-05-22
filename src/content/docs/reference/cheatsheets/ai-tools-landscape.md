@@ -119,21 +119,7 @@ sidebar:
 
 ## Decision Tree: Which Tool Should I Use?
 
-```text
-What do you want to do?
-│
-├─ Chat / Ask questions → Claude.ai (best reasoning) or ChatGPT (web search)
-├─ Write something → Claude.ai (best prose quality)
-├─ Research something → Gemini (1M context) or Perplexity (cited sources)
-├─ Code help → Claude Code (complex) or Cursor (daily work)
-├─ Create images → Midjourney (quality) or DALL-E 3 (integrated)
-├─ Create videos → Runway (full control) or Sora (cinematic)
-├─ Automate workflow → Zapier (easy) or n8n (flexible)
-├─ Analyze data → NotebookLM (quick) or Claude (detailed)
-├─ Music/audio → Suno (music) or ElevenLabs (voice-over)
-├─ Build web app → Lovable (full-stack, fastest) or Vercel v0 (React components only)
-└─ Everything → Use Claude daily + Cursor for coding
-```
+For a comprehensive decision tree with detailed recommendations, see the [Tools Guide](/decide/tools/guide/).
 
 ## Tool Pairing Strategies (2026)
 

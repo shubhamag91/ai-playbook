@@ -2,7 +2,7 @@
 title: Neural Networks
 description: The foundational building block of every LLM — how neurons, layers, activation functions, and backpropagation work, from intuition to the math.
 sidebar:
-  order: 1
+  order: 2
 lastUpdated: 2026-05-17
 tags:
   - deep-dive

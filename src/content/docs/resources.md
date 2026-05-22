@@ -80,43 +80,12 @@ Advanced patterns and best practices for better LLM outputs.
 
 ---
 
-## Other Resources
+## Explore More
 
-### Learning Paths
-- [Beginner Path](/learn/beginner)  -  4-hour intro to LLMs
-- [Builder Path](/learn/builder)  -  1-week hands-on coding guide
-- [Researcher Path](/learn/researcher)  -  Stay current with AI
-- [Interview Prep](/resources/interview-prep)  -  2-week interview curriculum
+Use the sidebar to navigate all sections, or visit the [Quick Start](/start/quick-start) to get oriented.
+Press Cmd+K for full-text search.
 
-### Deep Dives
-- [How LLMs Work](/deep-dive/how-llms-work)  -  Technical fundamentals
-- [RAG Architecture](/deep-dive/rag-architecture)  -  Building search systems
-- [Agents & Frameworks](/deep-dive/agents-frameworks)  -  Multi-step AI systems
-- [Prompt Engineering](/deep-dive/prompt-engineering)  -  Advanced techniques
-- [Training & Fine-tuning](/deep-dive/training-finetuning)  -  Customizing models
-
-### Reference
-- [Glossary](/reference/glossary)  -  60+ AI terms explained
-- [Confusions](/reference/confusions)  -  25+ misconceptions debunked
-- [Principles](/reference/principles)  -  27 design principles
-- [AI Vocabulary](/research/vocabulary)  -  Terminology distinctions
-
-### Tools & Decisions
-- [Tools Guide](/decide/tools/guide)  -  Find the right tool
-- [Model Guide](/decide/models/guide)  -  Compare models
-- [Frameworks Guide](/decide/frameworks/guide)  -  Build with LangChain, CrewAI, etc.
-- [Cost Calculator](/decide/cost-calculator)  -  Estimate API costs
-
-### Case Studies
-- [Customer Support Chatbot](/resources/case-studies/customer-support-chatbot)  -  40% deflection
-- [Document Classification](/resources/case-studies/document-classification)  -  72% → 94% accuracy
-- [Research Analysis](/resources/case-studies/research-analysis)  -  20 hours/week saved
-
-### Implementation Templates
-- [RAG System](/resources/templates/rag-system)  -  Ready-to-use code
-- [Single Agent](/resources/templates/single-agent)  -  Basic agent with tools
-- [Multi-Agent Crew](/resources/templates/multi-agent-crew)  -  CrewAI example
-- [Chat API](/resources/templates/chat-api)  -  FastAPI server
+**[Browse all Case Studies](/resources/case-studies)** · **[Browse all Templates](/resources/templates)**
 
 ### Community
 - [Contributing](/community/contributing)  -  How to contribute

@@ -66,15 +66,7 @@ flowchart LR
     style SELECT fill:#166534,stroke:#4ade80,color:#fff
 ```
 
-## What each stage is really doing (May 2026)
 
-1. **Chunk + clean**  -  still the 80% unglamorous work. Recursive chunking > fixed-size chunks. Use semantic boundaries (Claude can help).
-2. **Embed**  -  turns text into vectors. Use cached embeddings (compute once, retrieve many times). Models: OpenAI Ada (cheap), Voyage (quality), local embeddings for privacy.
-3. **Hybrid retrieval**  -  combine BM25 (keyword) + vector search. Rerank top results with a specialized model (bge-reranker, Cohere). >10% improvement for free.
-4. **Prompt caching**  -  with Claude 4.7 or GPT-5.5, cache the retrieved chunks. First request: full cost. Subsequent requests: 90% cheaper. ROI: high-frequency queries.
-5. **Smart model routing**  -  don't use Claude 4.7 for everything. Route simple questions to Instant models (50x cheaper), complex to Claude 4.7, reasoning to o3.
-6. **Context window leverage**  -  Claude 4.7 has 400K tokens. Load entire datasets into context instead of retrieving. No RAG for small datasets.
-7. **Generate + cite**  -  final answer with source attribution. Include chunk ID and position for audit trails.
 
 ## Common failure modes
 
@@ -89,30 +81,7 @@ flowchart TB
     X --> A7[Context too full?<br/>Prompt injection risk]
 ```
 
-## May 2026 Best Practices
-
-**Cost Optimization:**
-- Use Claude Instant or GPT-5.5 Instant ($0.05/1M tokens) for routing queries
-- Use Claude Haiku for chunking & embedding tasks
-- Route complex reasoning to Claude 4.7 only (only 5-10% of queries)
-- Enable prompt caching  -  typical ROI: 3-5x cost savings on repeated queries
-
-**Quality Improvements:**
-- Recursive chunking: split on semantic boundaries, not fixed size
-- Hybrid retrieval: BM25 + vector search + reranking (>10% quality gain)
-- Multi-query retrieval: use agent to ask 3-5 variants of user's question
-- Context window leverage: for <50K tokens of data, skip RAG  -  just put it all in context
-
-**Agentic RAG (Advanced):**
-- Use agent to decide: retrieve → read → follow-up retrieve → answer
-- Example: "find contract → look for clause X → retrieve related clauses → synthesize"
-- Tools: CrewAI, AutoGen, LangChain agents
-
-**Production Safeguards:**
-- Prompt injection: escape chunk content, test with adversarial queries
-- Hallucination detection: require citations, match answers to retrieved chunks
-- Monitoring: log retrieval quality, answer accuracy, cost per query
-- Guardrails: use structured output (JSON schemas) to enforce answer format
+For a comprehensive guide to building RAG systems — including cost optimization, quality improvements, agentic RAG, and production safeguards — see the [RAG Architecture deep dive](/deep-dive/rag-architecture/).
 
 ## Evaluation & Benchmarking
 
