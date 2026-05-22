@@ -388,6 +388,21 @@ export default defineConfig({
           ],
         },
         {
+          label: 'Google DeepMind',
+          collapsed: false,
+          items: [
+            { label: 'Ecosystem Overview', slug: 'deepmind' },
+            { label: 'Gemini Models', slug: 'deepmind/models' },
+            { label: 'Gemini API & AI Studio', slug: 'deepmind/api' },
+            { label: 'Antigravity & Flow', slug: 'deepmind/antigravity' },
+            { label: 'Media & Creative', slug: 'deepmind/media' },
+            { label: 'Gemma — Open Models', slug: 'deepmind/gemma' },
+            { label: 'Science & Research', slug: 'deepmind/science' },
+            { label: 'Workflows & Best Practices', slug: 'deepmind/workflows' },
+            { label: 'Enterprise & Deployment', slug: 'deepmind/enterprise' },
+          ],
+        },
+        {
           label: 'Community',
           collapsed: true,
           items: [
