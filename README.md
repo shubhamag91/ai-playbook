@@ -96,15 +96,19 @@ ai-playbook/
 │   │   ├── models.ts           # Structured model entries for search index
 │   │   ├── trends.ts           # Trending topics data
 │   │   └── contributors.ts     # Contributor data
-│   ├── content/docs/           # ALL MARKDOWN CONTENT
-│   │   ├── decide/tools/       # Feature Matrix + Decision Tree + Comparison
-│   │   ├── deep-dive/          # How LLMs Work, RAG, Agents, Prompt Engineering, etc.
-│   │   ├── reference/          # Benchmarks, Model Specs, Capability Matrix, Glossary
-│   │   ├── research/           # Model releases, trends, history, open-source
-│   │   ├── community/          # Contributing, audit, analytics, help-wanted, contributors
-│   │   └── resources/          # Papers, communities, templates, case studies, tools-frameworks
+│   ├── content/docs/           # ALL MARKDOWN CONTENT (~101 pages)
+│   │   ├── claude/              # Anthropic ecosystem (9 pages)
+│   │   ├── openai/              # OpenAI ecosystem (9 pages)
+│   │   ├── deepmind/            # Google DeepMind ecosystem (9 pages)
+│   │   ├── learn/               # Beginner, Builder, Researcher, Workflows, Quiz
+│   │   ├── decide/tools/        # Feature Matrix + Decision Tree + Comparison
+│   │   ├── deep-dive/           # 12 deep dives + Agent Skills
+│   │   ├── reference/           # Glossary, Cheatsheets, Confusions, Benchmarks
+│   │   ├── research/            # What's New, Open-Source, China Ecosystem, Trends
+│   │   ├── community/           # Contributing, audit, analytics, help-wanted, contributors
+│   │   └── resources/           # Papers, Interview Prep, templates, case studies
 │   └── styles/
-│       └── custom.css          # Theme tweaks + h2→h3 visual separator
+│       └── custom.css           # Paperclip-inspired design system (640+ lines)
 ```
 
 ---
@@ -153,10 +157,12 @@ The chatbot requires environment variables in Cloudflare Pages:
 | Component | Page | What it does |
 |---|---|---|
 | **BenchmarkViz** | `/reference/benchmarks` | Sortable benchmark table with filtering by category/family |
-| **ModelMatrix** | `/reference/model-capability-matrix` | Heatmap: 8 models × 9 tasks with hover tooltips |
-| **CostCalculator** | `/decide/cost-calculator` | Sliders for tokens/requests, live cost estimates for 8 models |
+| **ModelMatrix** | `/decide/models/guide` | Heatmap: 9 models × 9 tasks with hover tooltips |
+| **CostCalculator** | `/decide/cost-calculator` | Sliders for tokens/requests, live cost estimates for 14 models |
 | **ToolComparison** | `/decide/tools/comparison` | Sortable tools table with category tabs |
-| **TrendingWidget** | Homepage + `/research/whats-new` | Latest AI trends and releases card grid |
+| **Quiz** | `/learn/quiz` | Knowledge quiz with 694 questions across 24 topics |
+| **PathSelector** | Homepage + `/start/quick-start` | Role-based path cards for navigation |
+| **SearchOverride** | Header (all pages) | Pagefind search with ranking config + recent searches |
 | **ProgressTracker** | `/learn/beginner`, `/learn/interview-prep` | Section checkboxes with localStorage persistence |
 | **SeeAlso** | All pages (auto-injected) | Auto-generated related content links from tags |
 

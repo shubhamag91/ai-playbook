@@ -60,7 +60,7 @@ These pages show a "Glossary" link in their See Also section:
 
 | Metric | Count |
 |---|---|
-| Total pages | 66 |
+| Total pages | 101 |
 | Pages with manual cross-links | 18 |
 | Pages with glossary links | 15 |
 | Pages with tags (auto SeeAlso) | 62 |

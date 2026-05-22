@@ -43,7 +43,9 @@ If `grep` reports these as "unused," that's a false positive — they're wired t
 | ModelSelector | `ModelSelector.astro` | `/decide/models/guide` | Interactive model filter by use case, speed, cost |
 | PathSelector | `PathSelector.astro` | `/ (homepage)`, `/start/quick-start` | Section cards linking to all 8 sidebar sections |
 | ProgressTracker | `ProgressTracker.astro` | `/learn/beginner`, `/learn/interview-prep` | Section checkboxes with localStorage persistence |
+| Quiz | `Quiz.astro` | `/learn/quiz` | Knowledge quiz with pre-generated question bank (694 questions, 24 topics) |
 | SeeAlso | `SeeAlso.astro` | All pages (auto-injected in footer) | Auto-generated related content links from tags |
+| SearchOverride | `SearchOverride.astro` | All pages (via Starlight override) | Search bar with Pagefind ranking config and recent searches |
 | ToolComparison | `ToolComparison.astro` | `/decide/tools/comparison`, `/decide/tools/guide` | Sortable tool comparison tables |
 | TrendingWidget | `TrendingWidget.astro` | Homepage, `/research/whats-new` | Latest AI trends and releases card grid |
 
@@ -338,6 +340,45 @@ import ToolComparison from '../../../components/ToolComparison.astro';
 import TrendingWidget from '../../../components/TrendingWidget.astro';
 <TrendingWidget />
 ```
+
+---
+
+### 18. Quiz
+
+**Location:** `src/components/Quiz.astro`
+
+**Purpose:** Interactive knowledge quiz with pre-generated question bank (694 questions across 24 topic/difficulty sets from 12 topics). Users select a topic and difficulty, answer 10 questions, and see results with explanations.
+
+**Features:**
+- Topic and difficulty selection (Easy/Hard)
+- 10-question quiz with progress bar
+- Correct/wrong feedback with explanations
+- Score tracking with history (localStorage)
+- Retry and new quiz options
+
+**Usage:**
+```mdx
+import Quiz from '../../../components/Quiz.astro';
+<Quiz />
+```
+
+---
+
+### 19. SearchOverride
+
+**Location:** `src/components/SearchOverride.astro`
+
+**Purpose:** Wraps Starlight's default Search component to add Pagefind ranking configuration and recent searches functionality. Configured in `astro.config.mjs` as the `Search` component override.
+
+**Features:**
+- Pagefind ranking weights (pageLength=0.3, termFrequency=0.2)
+- Recent searches panel with localStorage persistence (max 6)
+- Clickable recent search chips to re-execute queries
+- Clear button for search history
+- Auto-saves searches on Enter or 2s after typing
+- Paperclip-themed search modal CSS
+
+**Integration:** Configured in `astro.config.mjs` as `Search: './src/components/SearchOverride.astro'`
 
 ---
 
