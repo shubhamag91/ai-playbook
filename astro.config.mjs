@@ -373,6 +373,21 @@ export default defineConfig({
           ],
         },
         {
+          label: 'OpenAI',
+          collapsed: false,
+          items: [
+            { label: 'Ecosystem Overview', slug: 'openai' },
+            { label: 'GPT Models', slug: 'openai/models' },
+            { label: 'API & SDKs', slug: 'openai/api' },
+            { label: 'Codex', slug: 'openai/codex' },
+            { label: 'Agent Skills', slug: 'openai/agent-skills' },
+            { label: 'MCP & Integrations', slug: 'openai/mcp' },
+            { label: 'Realtime, Image & Media', slug: 'openai/realtime' },
+            { label: 'Workflows & Best Practices', slug: 'openai/workflows' },
+            { label: 'Enterprise & Deployment', slug: 'openai/enterprise' },
+          ],
+        },
+        {
           label: 'Community',
           collapsed: true,
           items: [
