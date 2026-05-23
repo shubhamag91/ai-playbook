@@ -92,6 +92,7 @@ When a new AI model is released or an existing model is updated (pricing change,
 | Knowledge cutoff | Platform model pages | "Jan 2026" |
 | Benchmark scores | benchmarks.ts | "93.7% HumanEval" |
 | Best for / use case | models.ts | "Complex reasoning, agentic coding" |
+| flagship | models.ts | `true` for top model per company. Used in chatbot comparison chunks |
 
 ## Recent Model Updates (for reference)
 
