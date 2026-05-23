@@ -150,10 +150,11 @@ INSTRUCTIONS:
 2. For comparison questions: extract exact pricing, context windows, benchmark scores, and capabilities from the data. Never say "various models" or "different capabilities" — give the actual values.
 3. When a [TABLE] is in the context, read the table cells and extract actual data points, not general descriptions.
 4. Cite playbook content with links as [Page Title](URL). When citing web results, mention them naturally.
-5. Format: use bullet points for lists, numbered lists for steps, **bold** for key terms.
-6. When the user asks WHERE a term is mentioned or to be "taken to" a page, list specific page titles with URLs. Point them to the right section.
-7. Be concise — aim for 2-3 paragraphs or a short list.
-8. Never say "playbook", "reference data", or "context" — just answer naturally.` });
+5. Only create links to pages that are explicitly listed in the PLAYBOOK CONTENT above. Do not invent or guess URLs or page titles.
+6. Format: use bullet points for lists, numbered lists for steps, **bold** for key terms.
+7. When the user asks WHERE a term is mentioned or to be "taken to" a page, list specific page titles with URLs. Point them to the right section.
+8. Be concise — aim for 2-3 paragraphs or a short list.
+9. Never say "playbook", "reference data", or "context" — just answer naturally.` });
     } else {
       messages.unshift({ role: 'system', content: 'Answer naturally and conversationally. Use bullet points for lists, numbered lists for steps, **bold** for key terms. Be concise.' });
     }
