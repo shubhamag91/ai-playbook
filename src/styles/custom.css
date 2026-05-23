@@ -187,6 +187,22 @@ header {
   background: var(--sl-color-bg-nav) !important;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  /* Fixed header must use viewport width, not document width */
+  width: 100vw !important;
+  max-width: 100vw !important;
+}
+
+/* Mobile menu button: always within viewport */
+starlight-menu-button button {
+  inset-inline-end: var(--sl-nav-pad-x);
+  max-inline-size: 100vw;
+}
+
+/* Page wrapper: clip overflow without breaking sticky elements */
+.page {
+  box-sizing: border-box;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 /* ─── Mermaid diagrams ────────────────────────────────── */
