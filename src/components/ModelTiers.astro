@@ -1,0 +1,47 @@
+---
+// Reusable component: renders model tiers for a given provider from models.ts
+import { models } from '../data/models';
+
+interface Props {
+  provider: string;  // e.g., 'Anthropic', 'OpenAI', 'Google', 'DeepSeek'
+  limit?: number;
+}
+
+const { provider, limit } = Astro.props;
+const providerModels = models
+  .filter(m => m.company === provider && m.latest)
+  .slice(0, limit || 10);
+---
+
+<div class="model-tiers">
+  {providerModels.length === 0 && <p>No models found for {provider}.</p>}
+  {providerModels.map(m => (
+    <div class="model-tier">
+      {m.inputPrice !== undefined && m.outputPrice !== undefined ? (
+        <div class="model-tier__name">
+          <strong>{m.name}</strong>
+          <span class="model-tier__price">${m.inputPrice}/{m.outputPrice} per 1M tokens</span>
+        </div>
+      ) : (
+        <div class="model-tier__name"><strong>{m.name}</strong></div>
+      )}
+      <div class="model-tier__meta">
+        {m.context && <span class="model-tier__context">{m.context} context</span>}
+        {m.capabilities && <span class="model-tier__caps">{m.capabilities}</span>}
+      </div>
+      {m.notes && <p class="model-tier__notes">{m.notes}</p>}
+      {m.pricing && !m.inputPrice && <span class="model-tier__price">{m.pricing}</span>}
+    </div>
+  ))}
+</div>
+
+<style>
+.model-tiers { display: flex; flex-direction: column; gap: 0.5rem; }
+.model-tier { padding: 0.6rem 0.8rem; background: var(--sl-color-gray-6); border-radius: 8px; border: 1px solid var(--sl-color-gray-5); }
+.model-tier__name { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+.model-tier__price { font-size: 0.82rem; color: var(--sl-color-accent); font-weight: 500; white-space: nowrap; }
+.model-tier__meta { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.2rem; }
+.model-tier__context { font-size: 0.72rem; background: var(--sl-color-gray-5); padding: 0.1rem 0.4rem; border-radius: 4px; }
+.model-tier__caps { font-size: 0.72rem; color: var(--sl-color-gray-3); }
+.model-tier__notes { margin-top: 0.2rem; font-size: 0.78rem; color: var(--sl-color-gray-2); }
+</style>
