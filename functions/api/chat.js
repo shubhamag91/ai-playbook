@@ -105,7 +105,9 @@ export async function onRequest({ request, env, waitUntil }) {
           if (!e) return null;
           const isTable = e.chunk.includes('|---') || (e.chunk.split('|').length > 5);
           const prefix = isTable ? '[TABLE — extract specific data points] ' : '';
-          return `${rrfScores[key].toFixed(3)} ${prefix}[${e.title}](${siteOrigin}/${e.slug}): ${e.chunk}`;
+          const isSynthetic = s.startsWith('models/');
+          const link = isSynthetic ? `**${e.title}**` : `[${e.title}](${siteOrigin}/${e.slug})`;
+          return `${rrfScores[key].toFixed(3)} ${prefix}${link}: ${e.chunk}`;
         }).filter(Boolean).join('\n\n')
       : '';
 

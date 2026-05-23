@@ -113,17 +113,17 @@
       // Tables (markdown table format: | col1 | col2 |\n| --- | --- |\n| val1 | val2 |)
       html = html.replace(/(^\|.+\|\n\|[-: |]+\|\n((?:\|.+\|\n?)+))/gm, function(match) {
         var rows = match.trim().split('\n');
-        var result = '<div class="cw-table-wrap"><table>';
+        var tableHtml = '<div class="cw-table-wrap"><table>';
         for (var r = 0; r < rows.length; r++) {
-          if (/^\|[-: |]+\|$/.test(rows[r])) continue; // skip separator row
+          if (/^\|[-: |]+\|$/.test(rows[r])) continue;
           var cells = rows[r].split('|').filter(function(c) { return c.trim(); });
           var tag = (r === 0) ? 'th' : 'td';
-          result += '<tr>' + cells.map(function(c) {
+          tableHtml += '<tr>' + cells.map(function(c) {
             return '<' + tag + '>' + c.trim() + '</' + tag + '>';
           }).join('') + '</tr>';
         }
-        result += '</table></div>';
-        return result;
+        tableHtml += '</table></div>';
+        return tableHtml;
       });
 
       // Bold (**text**)
