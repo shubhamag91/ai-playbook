@@ -1,5 +1,11 @@
 [
   {
+    "slug": "models/claude-opus-4.7",
+    "title": "Claude Opus 4.7",
+    "description": "Anthropic - reasoning, coding, writing, analysis, vision",
+    "chunk": "Claude Opus 4.7 is Anthropic's latest model. It supports reasoning, coding, writing, analysis, vision. Context window: 1M. Pricing: $5/$25 per 1M. Most capable Claude. Best for complex reasoning and agentic coding. Adaptive thinking."
+  },
+  {
     "slug": "models/claude-opus-4.7-(thinking)",
     "title": "Claude Opus 4.7 (Thinking)",
     "description": "Anthropic - reasoning, coding, writing, analysis, vision, design",
@@ -24,6 +30,36 @@
     "chunk": "Claude Opus 4.5 is Anthropic's previous generation model. It supports reasoning, coding, writing, analysis. Context window: 200K. Pricing: $5/$25 per 1M. Earlier generation. Still available for certain use cases."
   },
   {
+    "slug": "models/claude-sonnet-4.6",
+    "title": "Claude Sonnet 4.6",
+    "description": "Anthropic - coding, reasoning, writing, analysis, vision",
+    "chunk": "Claude Sonnet 4.6 is Anthropic's latest model. It supports coding, reasoning, writing, analysis, vision. Context window: 1M. Pricing: $3/$15 per 1M. Best balance of speed & quality. Default pick."
+  },
+  {
+    "slug": "models/claude-haiku-4.5",
+    "title": "Claude Haiku 4.5",
+    "description": "Anthropic - classification, routing, summarization, vision",
+    "chunk": "Claude Haiku 4.5 is Anthropic's latest model. It supports classification, routing, summarization, vision. Context window: 200K. Pricing: $1/$5 per 1M. Ultra-fast, cheapest Claude."
+  },
+  {
+    "slug": "models/gpt-5.5",
+    "title": "GPT-5.5",
+    "description": "OpenAI - general, coding, writing, reasoning, vision",
+    "chunk": "GPT-5.5 is OpenAI's latest model. It supports general, coding, writing, reasoning, vision. Context window: 1M. Pricing: $5/$30 per 1M. Flagship. Reasoning levels none→xhigh. Strong all-around."
+  },
+  {
+    "slug": "models/gpt-5.4",
+    "title": "GPT-5.4",
+    "description": "OpenAI - general, coding, writing, reasoning, vision",
+    "chunk": "GPT-5.4 is OpenAI's latest model. It supports general, coding, writing, reasoning, vision. Context window: 1M. Pricing: $2.50/$15 per 1M. Affordable professional tier. Near-flagship capability."
+  },
+  {
+    "slug": "models/gpt-5.4-mini",
+    "title": "GPT-5.4 mini",
+    "description": "OpenAI - general, coding, computer-use, subagents",
+    "chunk": "GPT-5.4 mini is OpenAI's latest model. It supports general, coding, computer-use, subagents. Context window: 400K. Pricing: $0.75/$4.50 per 1M. Strong mini for coding & agents. Fast."
+  },
+  {
     "slug": "models/gpt-5.4-nano",
     "title": "GPT-5.4 nano",
     "description": "OpenAI - general, classification, routing",
@@ -36,16 +72,46 @@
     "chunk": "GPT-4.1 is OpenAI's previous generation model. It supports general, coding. Context window: 128K. Pricing: $0.50/$1.50 per 1M. Previous gen. Superseded by GPT-5.4 mini."
   },
   {
+    "slug": "models/o3",
+    "title": "o3",
+    "description": "OpenAI - reasoning, math, science, coding",
+    "chunk": "o3 is OpenAI's latest model. It supports reasoning, math, science, coding. Context window: 128K. Pricing: $8/$32 per 1M. Dedicated reasoning model. Spends tokens on hidden thinking."
+  },
+  {
     "slug": "models/o1",
     "title": "o1",
     "description": "OpenAI - reasoning, math, coding",
     "chunk": "o1 is OpenAI's previous generation model. It supports reasoning, math, coding. Context window: 128K. Pricing: $15/$60 per 1M. Earlier reasoning model. Superseded by o3."
   },
   {
+    "slug": "models/gemini-3.5-pro",
+    "title": "Gemini 3.5 Pro",
+    "description": "Google - reasoning, research, vision, long-context, video",
+    "chunk": "Gemini 3.5 Pro is Google's latest model. It supports reasoning, research, vision, long-context, video. Context window: 1M. Pricing: $2/$12 per 1M. Best context window. Excellent multimodal."
+  },
+  {
     "slug": "models/gemini-3.5-ultra",
     "title": "Gemini 3.5 Ultra",
     "description": "Google - reasoning, research, vision, long-context, design, agentic",
     "chunk": "Gemini 3.5 Ultra is Google's latest model. It supports reasoning, research, vision, long-context, design, agentic. Context window: 1M. Pricing: $4/$20 per 1M. Most capable Gemini. Advanced reasoning and agentic capabilities."
+  },
+  {
+    "slug": "models/gemini-3.5-flash",
+    "title": "Gemini 3.5 Flash",
+    "description": "Google - reasoning, coding, vision, speed",
+    "chunk": "Gemini 3.5 Flash is Google's latest model. It supports reasoning, coding, vision, speed. Context window: 1M. Pricing: $0.15/$0.60 per 1M. Fast, affordable Gemini. Free tier on AI Studio."
+  },
+  {
+    "slug": "models/deepseek-v4-flash",
+    "title": "DeepSeek V4 Flash",
+    "description": "DeepSeek - routing, classification, general, reasoning",
+    "chunk": "DeepSeek V4 Flash is DeepSeek's latest model. It supports routing, classification, general, reasoning. Context window: 1M. Pricing: $0.14/$0.28 per 1M. Parameters: ~37B (MoE). Cost leader. MIT license. FREE on OpenCode."
+  },
+  {
+    "slug": "models/deepseek-v4-pro",
+    "title": "DeepSeek V4 Pro",
+    "description": "DeepSeek - reasoning, coding, general, design",
+    "chunk": "DeepSeek V4 Pro is DeepSeek's latest model. It supports reasoning, coding, general, design. Context window: 1M. Pricing: $0.435/$0.87 per 1M (promo). Parameters: 671B (MoE). Premium tier. Thinking mode default. 75% promo until May 31."
   },
   {
     "slug": "models/deepseek-r1",
@@ -60,6 +126,12 @@
     "chunk": "DeepSeek V4 is DeepSeek's previous generation model. It supports reasoning, coding, general. Context window: 128K. Pricing: $0.55/$2.19 per 1M. Parameters: 236B. Previous gen. Superseded by V4 Flash and Pro."
   },
   {
+    "slug": "models/llama-4",
+    "title": "Llama 4",
+    "description": "Meta - general, coding, reasoning, vision",
+    "chunk": "Llama 4 is Meta's latest model. It supports general, coding, reasoning, vision. Context window: varies. Pricing: Free (self-host). Parameters: 405B (MoE). Open weights. MIT license. Run locally."
+  },
+  {
     "slug": "models/llama-4-scout",
     "title": "Llama 4 Scout",
     "description": "Meta - general, coding, long-context, vision",
@@ -69,7 +141,19 @@
     "slug": "models/muse-spark",
     "title": "Muse Spark",
     "description": "Meta - reasoning, coding, design, multimodal",
-    "chunk": "Muse Spark is Meta's latest model. It supports reasoning, coding, design, multimodal. Context window: varies. Pricing: Free (self-host). Parameters: ~70B. Meta\\"
+    "chunk": "Muse Spark is Meta's latest model. It supports reasoning, coding, design, multimodal. Context window: varies. Pricing: Free (self-host). Parameters: ~70B. Meta's latest open-weight model. Replaces Llama. Strong on design."
+  },
+  {
+    "slug": "models/grok-3-pro",
+    "title": "Grok 3 Pro",
+    "description": "xAI - reasoning, coding, real-time, vision",
+    "chunk": "Grok 3 Pro is xAI's latest model. It supports reasoning, coding, real-time, vision. Context window: 128K. Pricing: $3/$15 per 1M. Parameters: Unknown. Premium tier of Grok 3. Real-time X/Twitter data."
+  },
+  {
+    "slug": "models/kimi-k2.6",
+    "title": "Kimi K2.6",
+    "description": "Moonshot AI - reasoning, coding, long-context, vision, design",
+    "chunk": "Kimi K2.6 is Moonshot AI's latest model. It supports reasoning, coding, long-context, vision, design. Context window: 256K. Pricing: ~$0.55/$2.19 per 1M. Latest Kimi. Top-5 on Design Arena. Agent swarm capabilities."
   },
   {
     "slug": "models/kimi-k2.5-(thinking)",
@@ -81,7 +165,7 @@
     "slug": "models/glm-5.1",
     "title": "GLM 5.1",
     "description": "Zhipu AI - reasoning, coding, multilingual, design",
-    "chunk": "GLM 5.1 is Zhipu AI's latest model. It supports reasoning, coding, multilingual, design. Context window: 128K. Pricing: ~$0.50/$2.00 per 1M. Zhipu\\"
+    "chunk": "GLM 5.1 is Zhipu AI's latest model. It supports reasoning, coding, multilingual, design. Context window: 128K. Pricing: ~$0.50/$2.00 per 1M. Zhipu's flagship. Top-5 on Design Arena."
   },
   {
     "slug": "models/glm-5-turbo",
@@ -108,6 +192,12 @@
     "chunk": "GLM 4 is Zhipu AI's previous generation model. It supports reasoning, coding, multilingual. Context window: 128K. Pricing: ~$0.20/$0.80 per 1M. Previous gen. Still solid for Chinese-language tasks."
   },
   {
+    "slug": "models/qwen-3.6",
+    "title": "Qwen 3.6",
+    "description": "Alibaba - reasoning, coding, multilingual, vision",
+    "chunk": "Qwen 3.6 is Alibaba's latest model. It supports reasoning, coding, multilingual, vision. Context window: 128K. Pricing: ~$0.40/$1.50 per 1M. Alibaba's flagship. Strong across all benchmarks."
+  },
+  {
     "slug": "models/minimax-m2.7",
     "title": "MiniMax M2.7",
     "description": "MiniMax - reasoning, coding, long-context, vision",
@@ -117,43 +207,43 @@
     "slug": "models/mimo-m2.7",
     "title": "MiMo M2.7",
     "description": "Xiaomi - reasoning, coding, vision",
-    "chunk": "MiMo M2.7 is Xiaomi's latest model. It supports reasoning, coding, vision. Context window: 128K. Pricing: ~$0.25/$0.80 per 1M. Xiaomi\\"
+    "chunk": "MiMo M2.7 is Xiaomi's latest model. It supports reasoning, coding, vision. Context window: 128K. Pricing: ~$0.25/$0.80 per 1M. Xiaomi's multimodal model. First major AI release."
   },
   {
     "slug": "models/top-context-window",
     "title": "Top models by context window",
     "description": "Models ranked by context window",
-    "chunk": "Top models by context window:\n1. Llama 4 Scout (Meta) — 10M tokens\n2. Claude Opus 4.7 (Thinking) (Anthropic) — 1M tokens\n3. Gemini 3.5 Ultra (Google) — 1M tokens\n4. DeepSeek R1 (DeepSeek) — 1M tokens\n5. GPT-5.4 nano (OpenAI) — 400K tokens"
+    "chunk": "Top models by context window:\n1. Llama 4 Scout (Meta) — 10M tokens\n2. Claude Opus 4.7 (Anthropic) — 1M tokens\n3. Claude Opus 4.7 (Thinking) (Anthropic) — 1M tokens\n4. Claude Sonnet 4.6 (Anthropic) — 1M tokens\n5. GPT-5.5 (OpenAI) — 1M tokens"
   },
   {
     "slug": "models/top-output-price-(cheapest)",
     "title": "Top models by output price (cheapest)",
     "description": "Models ranked by output price (cheapest)",
-    "chunk": "Top models by output price (cheapest):\n1. MiMo M2.7 (Xiaomi) — ~$0.25/$0.80 per 1M\n2. DeepSeek R1 (DeepSeek) — $0.435/$0.87 per 1M (promo)\n3. GLM 5 Turbo (Zhipu AI) — ~$0.30/$1.00 per 1M\n4. MiniMax M2.7 (MiniMax) — ~$0.30/$1.00 per 1M\n5. GLM 5 (Zhipu AI) — ~$0.40/$1.50 per 1M"
+    "chunk": "Top models by output price (cheapest):\n1. DeepSeek V4 Flash (DeepSeek) — $0.14/$0.28 per 1M\n2. Gemini 3.5 Flash (Google) — $0.15/$0.60 per 1M\n3. MiMo M2.7 (Xiaomi) — ~$0.25/$0.80 per 1M\n4. DeepSeek V4 Pro (DeepSeek) — $0.435/$0.87 per 1M (promo)\n5. DeepSeek R1 (DeepSeek) — $0.435/$0.87 per 1M (promo)"
   },
   {
     "slug": "models/top-parameter-count",
     "title": "Top models by parameter count",
     "description": "Models ranked by parameter count",
-    "chunk": "Top models by parameter count:\n1. DeepSeek R1 (DeepSeek) — 671B (MoE) parameters\n2. Llama 4 Scout (Meta) — 109B (MoE) parameters"
+    "chunk": "Top models by parameter count:\n1. DeepSeek V4 Pro (DeepSeek) — 671B (MoE) parameters\n2. DeepSeek R1 (DeepSeek) — 671B (MoE) parameters\n3. Llama 4 (Meta) — 405B (MoE) parameters\n4. Llama 4 Scout (Meta) — 109B (MoE) parameters"
   },
   {
     "slug": "models/comparison-flagship",
     "title": "Latest flagship models comparison",
-    "description": "Compare Claude Opus 4.7 (Thinking), GPT-5.4 nano, Gemini 3.5 Ultra, Llama 4 Scout, Muse Spark",
-    "chunk": "Claude Opus 4.7 (Thinking) (Anthropic): reasoning, coding, writing, analysis, vision, design. Context: 1M. Pricing: $5/$25 per 1M.\nGPT-5.4 nano (OpenAI): general, classification, routing. Context: 400K. Pricing: ~$0.15/~$0.60 per 1M.\nGemini 3.5 Ultra (Google): reasoning, research, vision, long-context, design, agentic. Context: 1M. Pricing: $4/$20 per 1M.\nLlama 4 Scout (Meta): general, coding, long-context, vision. Context: 10M. Pricing: Free (self-host).\nMuse Spark (Meta): reasoning, coding, design, multimodal. Context: varies. Pricing: Free (self-host)."
+    "description": "Compare Claude Opus 4.7, GPT-5.5, Gemini 3.5 Ultra, DeepSeek V4 Pro, Llama 4 Scout",
+    "chunk": "Claude Opus 4.7 (Anthropic): reasoning, coding, writing, analysis, vision. Context: 1M. Pricing: $5/$25 per 1M.\nGPT-5.5 (OpenAI): general, coding, writing, reasoning, vision. Context: 1M. Pricing: $5/$30 per 1M.\nGemini 3.5 Ultra (Google): reasoning, research, vision, long-context, design, agentic. Context: 1M. Pricing: $4/$20 per 1M.\nDeepSeek V4 Pro (DeepSeek): reasoning, coding, general, design. Context: 1M. Pricing: $0.435/$0.87 per 1M (promo).\nLlama 4 Scout (Meta): general, coding, long-context, vision. Context: 10M. Pricing: Free (self-host)."
   },
   {
     "slug": "models/comparison-budget",
     "title": "Budget and cost-efficient models comparison",
-    "description": "Compare GPT-5.4 nano, GPT-4.1, o1, DeepSeek R1, DeepSeek V4",
-    "chunk": "GPT-5.4 nano (OpenAI): general, classification, routing. Context: 400K. Pricing: ~$0.15/~$0.60 per 1M.\nGPT-4.1 (OpenAI): general, coding. Context: 128K. Pricing: $0.50/$1.50 per 1M.\no1 (OpenAI): reasoning, math, coding. Context: 128K. Pricing: $15/$60 per 1M.\nDeepSeek R1 (DeepSeek): reasoning, math, science, coding. Context: 1M. Pricing: $0.435/$0.87 per 1M (promo).\nDeepSeek V4 (DeepSeek): reasoning, coding, general. Context: 128K. Pricing: $0.55/$2.19 per 1M."
+    "description": "Compare Claude Haiku 4.5, GPT-5.5, GPT-5.4, GPT-5.4 mini, GPT-5.4 nano, GPT-4.1, o3, o1, Gemini 3.5 Flash, DeepSeek V4 Flash, DeepSeek V4 Pro, DeepSeek R1, DeepSeek V4",
+    "chunk": "Claude Haiku 4.5 (Anthropic): classification, routing, summarization, vision. Context: 200K. Pricing: $1/$5 per 1M.\nGPT-5.5 (OpenAI): general, coding, writing, reasoning, vision. Context: 1M. Pricing: $5/$30 per 1M.\nGPT-5.4 (OpenAI): general, coding, writing, reasoning, vision. Context: 1M. Pricing: $2.50/$15 per 1M.\nGPT-5.4 mini (OpenAI): general, coding, computer-use, subagents. Context: 400K. Pricing: $0.75/$4.50 per 1M.\nGPT-5.4 nano (OpenAI): general, classification, routing. Context: 400K. Pricing: ~$0.15/~$0.60 per 1M.\nGPT-4.1 (OpenAI): general, coding. Context: 128K. Pricing: $0.50/$1.50 per 1M.\no3 (OpenAI): reasoning, math, science, coding. Context: 128K. Pricing: $8/$32 per 1M.\no1 (OpenAI): reasoning, math, coding. Context: 128K. Pricing: $15/$60 per 1M.\nGemini 3.5 Flash (Google): reasoning, coding, vision, speed. Context: 1M. Pricing: $0.15/$0.60 per 1M.\nDeepSeek V4 Flash (DeepSeek): routing, classification, general, reasoning. Context: 1M. Pricing: $0.14/$0.28 per 1M.\nDeepSeek V4 Pro (DeepSeek): reasoning, coding, general, design. Context: 1M. Pricing: $0.435/$0.87 per 1M (promo).\nDeepSeek R1 (DeepSeek): reasoning, math, science, coding. Context: 1M. Pricing: $0.435/$0.87 per 1M (promo).\nDeepSeek V4 (DeepSeek): reasoning, coding, general. Context: 128K. Pricing: $0.55/$2.19 per 1M."
   },
   {
     "slug": "models/comparison-reasoning",
     "title": "Reasoning models comparison",
-    "description": "Compare Claude Opus 4.7 (Thinking), Claude Opus 4.6, Claude Opus 4.6 (Thinking), Claude Opus 4.5, DeepSeek R1",
-    "chunk": "Claude Opus 4.7 (Thinking) (Anthropic): reasoning, coding, writing, analysis, vision, design. Context: 1M. Pricing: $5/$25 per 1M.\nClaude Opus 4.6 (Anthropic): reasoning, coding, writing, analysis, vision. Context: 1M. Pricing: $5/$25 per 1M.\nClaude Opus 4.6 (Thinking) (Anthropic): reasoning, coding, writing, analysis, vision, design. Context: 1M. Pricing: $5/$25 per 1M.\nClaude Opus 4.5 (Anthropic): reasoning, coding, writing, analysis. Context: 200K. Pricing: $5/$25 per 1M.\nDeepSeek R1 (DeepSeek): reasoning, math, science, coding. Context: 1M. Pricing: $0.435/$0.87 per 1M (promo)."
+    "description": "Compare Claude Opus 4.7, Claude Opus 4.7 (Thinking), Claude Opus 4.6, Claude Opus 4.6 (Thinking), Claude Opus 4.5, o3, DeepSeek R1",
+    "chunk": "Claude Opus 4.7 (Anthropic): reasoning, coding, writing, analysis, vision. Context: 1M. Pricing: $5/$25 per 1M.\nClaude Opus 4.7 (Thinking) (Anthropic): reasoning, coding, writing, analysis, vision, design. Context: 1M. Pricing: $5/$25 per 1M.\nClaude Opus 4.6 (Anthropic): reasoning, coding, writing, analysis, vision. Context: 1M. Pricing: $5/$25 per 1M.\nClaude Opus 4.6 (Thinking) (Anthropic): reasoning, coding, writing, analysis, vision, design. Context: 1M. Pricing: $5/$25 per 1M.\nClaude Opus 4.5 (Anthropic): reasoning, coding, writing, analysis. Context: 200K. Pricing: $5/$25 per 1M.\no3 (OpenAI): reasoning, math, science, coding. Context: 128K. Pricing: $8/$32 per 1M.\nDeepSeek R1 (DeepSeek): reasoning, math, science, coding. Context: 1M. Pricing: $0.435/$0.87 per 1M (promo)."
   },
   {
     "slug": "claude/agent-skills",

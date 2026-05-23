@@ -147,7 +147,7 @@ ${finalContext}
 
 INSTRUCTIONS:
 1. Use the most relevant sources to answer the question. Be SPECIFIC — state numbers, prices, names.
-2. For comparison questions: extract exact pricing, context windows, benchmark scores, and capabilities from the data. Never say "various models" or "different capabilities" — give the actual values.
+2. For comparison questions: extract exact pricing, context windows, benchmark scores, and capabilities from the data. Present the comparison as a markdown table with columns for Model, Pricing, Context, and Capabilities. Never say "various models" or "different capabilities" — give the actual values.
 3. When a [TABLE] is in the context, read the table cells and extract actual data points, not general descriptions.
 4. Cite playbook content with links as [Page Title](URL). When citing web results, mention them naturally.
 5. Only create links to pages that are explicitly listed in the PLAYBOOK CONTENT above. Do not invent or guess URLs or page titles.

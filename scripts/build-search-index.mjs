@@ -55,18 +55,35 @@ const files = walkDir(docsDir);
 // Index structured model data for better search
 const modelsPath = path.resolve(__dirname, '../src/data/models.ts');
 const modelsContent = fs.readFileSync(modelsPath, 'utf8');
-const modelRegex = /{ name: '([^']+)', company: '([^']+)', latest: ([^,]+), context: '([^']*)', pricing: '([^']*)', capabilities: '([^']+)'(?:, parameters: '([^']*)')?(?:, notes: '([^']*)')?/g;
+
+// Extract models using eval — safer than regex for complex entries
 const modelEntries = [];
-let modelMatch;
-while ((modelMatch = modelRegex.exec(modelsContent)) !== null) {
-  const [, name, company, latest, context, pricing, capabilities, parameters, notes] = modelMatch;
-  modelEntries.push({ name, company, latest, context, pricing, capabilities, parameters, notes });
-  allChunks.push({
-    slug: `models/${name.toLowerCase().replace(/\s+/g, '-')}`,
-    title: name,
-    description: `${company} - ${capabilities}`,
-    chunk: `${name} is ${company}'s ${latest === 'true' ? 'latest' : 'previous generation'} model. It supports ${capabilities}. Context window: ${context}. Pricing: ${pricing}.${parameters ? ` Parameters: ${parameters}.` : ''} ${notes || ''}`,
-  });
+try {
+  // Extract just the models array: find "export const models" through the closing "];"
+  const arrayMatch = modelsContent.match(/export const models[^=]*=\s*(\[[\s\S]*?\]);/);
+  if (arrayMatch) {
+    // Replace TS type annotations and single-line fields we don't need
+    const cleaned = arrayMatch[1]
+      .replace(/as const/g, '');
+    // Use Function constructor to evaluate the array
+    const models = new Function(`return ${cleaned}`)();
+    for (const m of models) {
+      modelEntries.push({
+        name: m.name, company: m.company, latest: m.latest,
+        context: m.context, pricing: m.pricing,
+        capabilities: m.capabilities, parameters: m.parameters,
+        notes: m.notes,
+      });
+      allChunks.push({
+        slug: `models/${m.name.toLowerCase().replace(/\s+/g, '-')}`,
+        title: m.name,
+        description: `${m.company} - ${m.capabilities}`,
+        chunk: `${m.name} is ${m.company}'s ${m.latest ? 'latest' : 'previous generation'} model. It supports ${m.capabilities}. Context window: ${m.context}. Pricing: ${m.pricing}.${m.parameters ? ` Parameters: ${m.parameters}.` : ''} ${m.notes || ''}`,
+      });
+    }
+  }
+} catch (e) {
+  console.error('Failed to parse models.ts:', e.message);
 }
 
 // Helper: context string → comparable number
@@ -107,7 +124,7 @@ function topN(entries, keyFn, label, formatFn, reverse = false) {
 }
 
 // Add attribute-based comparison chunks
-const onlyLatest = modelEntries.filter(m => m.latest === 'true' || m.latest === true);
+const onlyLatest = modelEntries.filter(m => m.latest === true);
 
 const attrComparisons = [
   topN(onlyLatest, m => contextToNum(m.context), 'context window',
@@ -127,7 +144,7 @@ for (const comp of attrComparisons) {
 const comparisons = [
   {
     topic: 'Latest flagship models comparison',
-    models: modelEntries.filter(m => m.latest === 'true' && ['Anthropic', 'OpenAI', 'Google', 'Meta'].includes(m.company)),
+    models: modelEntries.filter(m => ['Claude Opus 4.7', 'GPT-5.5', 'Gemini 3.5 Ultra', 'DeepSeek V4 Pro', 'Llama 4 Scout'].includes(m.name)),
     slug: 'models/comparison-flagship',
   },
   {

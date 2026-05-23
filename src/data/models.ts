@@ -7,6 +7,8 @@ export interface ModelEntry {
   capabilities: string;
   parameters?: string;
   notes?: string;
+  // Model categorization
+  flagship?: boolean;  // True for the single top model per company
   // Numeric pricing (per 1M tokens)
   inputPrice?: number;
   outputPrice?: number;
@@ -34,6 +36,7 @@ export const models: ModelEntry[] = [
     name: 'Claude Opus 4.7', company: 'Anthropic', latest: true, context: '1M',
     pricing: '$5/$25 per 1M', capabilities: 'reasoning, coding, writing, analysis, vision',
     notes: 'Most capable Claude. Best for complex reasoning and agentic coding. Adaptive thinking.',
+    flagship: true,
     inputPrice: 5, outputPrice: 25,
     showInCalculator: true, calcOrder: 3, calcClass: 'opus', calcFamily: 'Anthropic',
     calcDisplayName: 'Claude Opus', calcRate: '$5/$25 per 1M',
@@ -70,6 +73,7 @@ export const models: ModelEntry[] = [
     name: 'GPT-5.5', company: 'OpenAI', latest: true, context: '1M',
     pricing: '$5/$30 per 1M', capabilities: 'general, coding, writing, reasoning, vision',
     notes: 'Flagship. Reasoning levels none→xhigh. Strong all-around.',
+    flagship: true,
     inputPrice: 5, outputPrice: 30,
     showInCalculator: true, calcOrder: 5, calcClass: 'gpt', calcFamily: 'OpenAI',
     calcDisplayName: 'GPT-5.5', calcRate: '$5/$30 per 1M', calcBadge: 'Balanced', calcBadgeClass: 'balanced',
@@ -118,7 +122,7 @@ export const models: ModelEntry[] = [
     showInSelector: true, selectorId: 'gemini', speed: 'medium', costTier: 'mid',
     useCases: ['long-context', 'vision', 'research'], bestFor: 'Massive documents & vision',
   },
-  { name: 'Gemini 3.5 Ultra', company: 'Google', latest: true, context: '1M', pricing: '$4/$20 per 1M', capabilities: 'reasoning, research, vision, long-context, design, agentic', notes: 'Most capable Gemini. Advanced reasoning and agentic capabilities.' },
+  {     name: 'Gemini 3.5 Ultra', company: 'Google', latest: true, context: '1M', pricing: '$4/$20 per 1M', capabilities: 'reasoning, research, vision, long-context, design, agentic', notes: 'Most capable Gemini. Advanced reasoning and agentic capabilities.', flagship: true },
   {
     name: 'Gemini 3.5 Flash', company: 'Google', latest: true, context: '1M',
     pricing: '$0.15/$0.60 per 1M', capabilities: 'reasoning, coding, vision, speed',
@@ -143,6 +147,7 @@ export const models: ModelEntry[] = [
     name: 'DeepSeek V4 Pro', company: 'DeepSeek', latest: true, context: '1M',
     pricing: '$0.435/$0.87 per 1M (promo)', capabilities: 'reasoning, coding, general, design',
     parameters: '671B (MoE)', notes: 'Premium tier. Thinking mode default. 75% promo until May 31.',
+    flagship: true,
     inputPrice: 0.435, outputPrice: 0.87,
     showInCalculator: true, calcOrder: 8, calcClass: 'deepseek-pro', calcFamily: 'DeepSeek',
     calcDisplayName: 'DeepSeek V4 Pro', calcRate: '$0.435/$0.87 per 1M', calcBadge: 'Premium', calcBadgeClass: 'balanced',
@@ -161,7 +166,7 @@ export const models: ModelEntry[] = [
     showInSelector: true, selectorId: 'llama', speed: 'varies', costTier: 'budget',
     useCases: ['open-source', 'privacy'], bestFor: 'Private, self-hosted',
   },
-  { name: 'Llama 4 Scout', company: 'Meta', latest: true, context: '10M', pricing: 'Free (self-host)', capabilities: 'general, coding, long-context, vision', parameters: '109B (MoE)', notes: 'MoE variant. 10M context window, 109B total params.' },
+  {     name: 'Llama 4 Scout', company: 'Meta', latest: true, context: '10M', pricing: 'Free (self-host)', capabilities: 'general, coding, long-context, vision', parameters: '109B (MoE)', notes: 'MoE variant. 10M context window, 109B total params.', flagship: true },
   { name: 'Muse Spark', company: 'Meta', latest: true, context: 'varies', pricing: 'Free (self-host)', capabilities: 'reasoning, coding, design, multimodal', parameters: '~70B', notes: 'Meta\'s latest open-weight model. Replaces Llama. Strong on design.' },
 
   // xAI
