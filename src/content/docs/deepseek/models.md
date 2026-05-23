@@ -23,25 +23,53 @@ nextVerificationDue: 2026-08-22
 
 ## Current Models — May 2026
 
-| Feature | DeepSeek V4 Pro | DeepSeek V4 Flash |
-|---|---|---|
-| **Description** | Most capable, thinking mode default | Cost-optimized, near-Pro quality |
-| **API Model ID** | `deepseek-v4-pro` | `deepseek-v4-flash` |
-| **Input Pricing** | $1.74 / 1M (promo: $0.435*) | $0.14 / 1M |
-| **Cache Hit (Input)** | $0.0036 / 1M | $0.0028 / 1M |
-| **Output Pricing** | $3.48 / 1M (promo: $0.87*) | $0.28 / 1M |
-| **Context Window** | 1M tokens | 1M tokens |
-| **Max Output** | 384K tokens | 384K tokens |
-| **Thinking Mode** | Yes (enabled by default) | Yes (both thinking and non-thinking) |
-| **Tool Calls** | Yes | Yes |
-| **JSON Output** | Yes | Yes |
-| **FIM Completion** | Non-thinking only | Non-thinking only |
-| **Chat Prefix Completion** | Yes | Yes |
-| **Concurrency Limit** | 500 | 2500 |
+| Feature | DeepSeek V4 Pro | DeepSeek V4 Flash | DeepSeek R1 |
+|---|---|---|---|
+| **Description** | Most capable, thinking mode default | Cost-optimized, near-Pro quality | Dedicated reasoning — chain-of-thought specialist |
+| **API Model ID** | `deepseek-v4-pro` | `deepseek-v4-flash` | `deepseek-v4-pro` (R1 pipeline) |
+| **Input Pricing** | $1.74 / 1M (promo: $0.435*) | $0.14 / 1M | $1.74 / 1M (promo: $0.435*) |
+| **Cache Hit (Input)** | $0.0036 / 1M | $0.0028 / 1M | $0.0036 / 1M |
+| **Output Pricing** | $3.48 / 1M (promo: $0.87*) | $0.28 / 1M | $3.48 / 1M (promo: $0.87*) |
+| **Context Window** | 1M tokens | 1M tokens | 1M tokens |
+| **Max Output** | 384K tokens | 384K tokens | 384K tokens |
+| **Thinking Mode** | Yes (enabled by default) | Yes (both thinking and non-thinking) | Yes (deep chain-of-thought, always on) |
+| **Tool Calls** | Yes | Yes | Yes |
+| **JSON Output** | Yes | Yes | Yes |
+| **Best For** | Complex reasoning, coding, production | High-volume, cost-sensitive workloads | Math, hard coding problems, scientific reasoning |
+| **FIM Completion** | Non-thinking only | Non-thinking only | No |
+| **Chat Prefix Completion** | Yes | Yes | No |
+| **Concurrency Limit** | 500 | 2500 | 500 |
 | **API Base URL (OpenAI)** | `https://api.deepseek.com` | `https://api.deepseek.com` |
 | **API Base URL (Anthropic)** | `https://api.deepseek.com/anthropic` | `https://api.deepseek.com/anthropic` |
 
 *\*75% promotional discount until May 31, 2026. After this date, V4 Pro pricing becomes $1.74/$3.48*
+
+> **DeepSeek V4 Flash on OpenCode:** OpenCode includes DeepSeek V4 Flash as a **free, unlimited backend** — no API key required. See [Agent Integrations](/deepseek/agents#opencode) for setup.
+
+## DeepSeek R1 — Dedicated Reasoning
+
+DeepSeek R1 is the dedicated reasoning model, optimized exclusively for multi-step, chain-of-thought problems:
+
+| Capability | Description |
+|---|---|
+| **Chain-of-Thought** | Always-on deep reasoning — breaks problems into steps, verifies answers |
+| **Math** | Top-tier on MATH benchmark, complex proofs, numerical analysis |
+| **Coding** | Excels at debugging, algorithm design, complex refactoring |
+| **Science** | Scientific reasoning, hypothesis evaluation, data analysis |
+| **Architecture** | Runs on V4 Pro infrastructure with an optimized reasoning pipeline |
+
+R1 is the go-to choice when you need maximum reasoning depth — it outthinks standard models on problems that require step-by-step logic.
+
+**When to use R1 vs V4 Pro vs V4 Flash:**
+
+| Task | Best Model | Why |
+|---|---|---|
+| Simple Q&A, classification | V4 Flash | Fast, cheap |
+| Code generation, analysis | V4 Pro | Balanced quality |
+| Complex math proofs | **R1** | Maximum reasoning depth |
+| Debugging hard bugs | **R1** | Chain-of-thought traces through logic |
+| Architecture design | V4 Pro or R1 | Depending on complexity |
+| High-volume processing | V4 Flash | 2500 concurrency, $0.14/$0.28 |
 
 ## Thinking Mode
 
@@ -98,4 +126,4 @@ For a typical workload (100K conversations, avg 5K input + 2K output each):
 
 DeepSeek V4 Flash is **7x cheaper than GPT-5.4 mini** and **21x cheaper than Claude Sonnet**.
 
-For a broader comparison, see [Comparison & Migration](/deepseek/comparison).
+For a broader comparison, see [Comparison & Migration](/deepseek/comparison). For cross-model comparisons across all providers (Claude, GPT, Gemini), see the [Models Decision Guide](/decide/models/guide).

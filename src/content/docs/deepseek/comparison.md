@@ -27,6 +27,7 @@ nextVerificationDue: 2026-08-22
 |---|---|---|---|---|---|
 | DeepSeek | V4 Flash | $0.14 | $0.28 | $0.0028 | 1× |
 | DeepSeek | V4 Pro* | $0.435 | $0.87 | $0.0036 | 3× |
+| DeepSeek | **R1** | $0.435 | $0.87 | $0.0036 | 3× |
 | Anthropic | Claude Haiku 4.5 | $1 | $5 | $0.10 | 7× |
 | OpenAI | GPT-5.4 nano | ~$0.15 | ~$0.60 | — | ~1× |
 | OpenAI | GPT-5.4 mini | $0.75 | $4.50 | $0.075 | 5× |

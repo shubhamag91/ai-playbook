@@ -67,13 +67,19 @@ Configure Copilot to use DeepSeek as the LLM backend:
 
 ## OpenCode
 
-[OpenCode](https://github.com/anomalyco/opencode) is a terminal-based AI coding assistant that supports DeepSeek natively:
+[OpenCode](https://github.com/anomalyco/opencode) is a terminal-based AI coding assistant that supports DeepSeek natively. **DeepSeek V4 Flash is available FREE and UNLIMITED on OpenCode** — no API key required for basic usage, no usage limits, no credit card needed.
 
 ```bash
+# Use DeepSeek V4 Flash — free, unlimited
+opencode --model deepseek-v4-flash
+
+# Or set environment for any model
 export OPENAI_API_KEY=sk-your-deepseek-api-key
 export OPENAI_BASE_URL=https://api.deepseek.com
 export OPENAI_MODEL=deepseek-v4-pro
 ```
+
+OpenCode automatically selects the best DeepSeek model for your task. See [opencode.ai](https://opencode.ai) for documentation.
 
 ## Kilo Code
 
@@ -132,3 +138,5 @@ No agent code changes needed. For agents not listed, check if they support custo
 - [API & SDKs](/deepseek/api) — code examples for both API formats
 - [Comparison & Migration](/deepseek/comparison) — detailed cost analysis
 - [Workflows & Best Practices](/deepseek/workflows) — thinking mode and optimization
+- [Claude Code](/claude/claude-code) — full Claude Code ecosystem guide
+- [OpenAI Codex](/openai/codex) — OpenAI's agentic coding platform (also DeepSeek-compatible)
