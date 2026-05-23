@@ -156,7 +156,7 @@ This is a Cloudflare-native redirect — it only works in production, not local 
 
 ## Recent Sidebar Changes (May 2026)
 
-- Added 3 new top-level platform sections: Claude (9 pages), OpenAI (9 pages), Google DeepMind (9 pages)
+- Added 4 new top-level platform sections: Claude (9 pages), OpenAI (9 pages), Google DeepMind (9 pages), DeepSeek (8 pages)
 - AI Tools Navigator — removed (merged into Tools Guide)
 - Start Here — uncollapsed for new visitor discoverability
 - Vocabulary — moved from Research → Reference

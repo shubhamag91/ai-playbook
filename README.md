@@ -100,6 +100,7 @@ ai-playbook/
 │   │   ├── claude/              # Anthropic ecosystem (9 pages)
 │   │   ├── openai/              # OpenAI ecosystem (9 pages)
 │   │   ├── deepmind/            # Google DeepMind ecosystem (9 pages)
+│   │   ├── deepseek/            # DeepSeek platform (8 pages)
 │   │   ├── learn/               # Beginner, Builder, Researcher, Workflows, Quiz
 │   │   ├── decide/tools/        # Feature Matrix + Decision Tree + Comparison
 │   │   ├── deep-dive/           # 12 deep dives + Agent Skills

@@ -573,5 +573,8 @@ Ecosystem Overview → GPT Models → API & SDKs → Codex → Agent Skills → 
 ### Google DeepMind (uncollapsed)
 Ecosystem Overview → Gemini Models → Gemini API & AI Studio → Antigravity & Flow → Media & Creative → Gemma — Open Models → Science & Research → Workflows & Best Practices → Enterprise & Deployment
 
+### DeepSeek (uncollapsed)
+Ecosystem Overview → DeepSeek Models → API & SDKs → Agent Integrations → Open-Weight & Self-Hosting → Comparison & Migration → Workflows & Best Practices → Research & Community
+
 ### Community (collapsed)
 Contributing → Report Outdated → Help Wanted → Content Audit → Analytics → Contributors
