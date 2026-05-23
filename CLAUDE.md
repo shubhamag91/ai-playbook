@@ -411,10 +411,10 @@ The chatbot uses a multi-step pipeline:
 | `scripts/build-search-index.mjs` | Prebuild script — chunks content for search |
 | `functions/api/chat.js` | Cloudflare Pages Function — query rewrite + search + inference |
 | `functions/admin/logs.js` | Admin dashboard for chatbot query logs |
-| `src/data/models.ts` | Structured model data for search matching |
+| `src/data/models.ts` | Structured model data for search index and pricing components. Includes `flagship: true` for top model per company |
 
 ### Chat Widget Features
-- Markdown rendering (bold, code blocks, lists, blockquotes, links [text](url))
+- Markdown rendering (bold, code blocks, lists, blockquotes, links [text](url), **tables**)
 - Source badges: green (playbook), blue (web), orange (model knowledge)
 - Key term highlighting (MMLU, HumanEval, SWE-bench, RLHF, LoRA)
 - Conversation memory (last 5 exchanges)

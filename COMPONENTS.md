@@ -41,6 +41,7 @@ If `grep` reports these as "unused," that's a false positive — they're wired t
 | ModelCompare | `ModelCompare.astro` | `/decide/models/guide` | Model specs table from models.ts (single source of truth) |
 | ModelMatrix | `ModelMatrix.astro` | `/decide/models/guide` | Model capability heatmap (9 models x 9 tasks) |
 | ModelSelector | `ModelSelector.astro` | `/decide/models/guide` | Interactive model filter by use case, speed, cost |
+| ModelTiers | `ModelTiers.astro` | `/ (homepage)` | Renders provider model tiers from models.ts. Used on Welcome page |
 | PathSelector | `PathSelector.astro` | `/ (homepage)`, `/start/quick-start` | Section cards linking to all 8 sidebar sections |
 | ProgressTracker | `ProgressTracker.astro` | `/learn/beginner`, `/learn/interview-prep` | Section checkboxes with localStorage persistence |
 | Quiz | `Quiz.astro` | `/learn/quiz` | Knowledge quiz with pre-generated question bank (694 questions, 24 topics) |
@@ -255,7 +256,26 @@ import ModelSelector from '../../../components/ModelSelector.astro';
 
 ---
 
-### 13. PathSelector
+### 13. ModelTiers
+
+**Location:** `src/components/ModelTiers.astro`
+
+**Purpose:** Renders model tiers for a given provider from `src/data/models.ts`. Used on the Welcome page to display pricing, context windows, capabilities, and notes for a provider's latest models.
+
+**Features:**
+- `provider` prop: filters models by company (e.g., "Anthropic", "OpenAI")
+- Compact card layout with pricing, context, capabilities, and notes
+- Auto-updates when models.ts is modified
+
+**Usage:**
+```mdx
+import ModelTiers from '../../../components/ModelTiers.astro';
+<ModelTiers provider="Anthropic" />
+```
+
+**Integration:** Used in `index.mdx` (Welcome page) to replace 4 hardcoded model tier sections. Reads from `models.ts` (single source of truth).
+
+### 14. PathSelector
 
 **Location:** `src/components/PathSelector.astro`
 
@@ -269,7 +289,7 @@ import PathSelector from '../../../components/PathSelector.astro';
 
 ---
 
-### 14. ProgressTracker
+### 15. ProgressTracker
 
 **Location:** `src/components/ProgressTracker.astro`
 
@@ -289,7 +309,7 @@ import ProgressTracker from '../../../components/ProgressTracker.astro';
 
 ---
 
-### 15. SeeAlso
+### 16. SeeAlso
 
 **Location:** `src/components/SeeAlso.astro`
 
@@ -305,7 +325,7 @@ import ProgressTracker from '../../../components/ProgressTracker.astro';
 
 ---
 
-### 16. ToolComparison
+### 17. ToolComparison
 
 **Location:** `src/components/ToolComparison.astro`
 
@@ -327,7 +347,7 @@ import ToolComparison from '../../../components/ToolComparison.astro';
 
 ---
 
-### 17. TrendingWidget
+### 18. TrendingWidget
 
 **Location:** `src/components/TrendingWidget.astro`
 
@@ -343,7 +363,7 @@ import TrendingWidget from '../../../components/TrendingWidget.astro';
 
 ---
 
-### 18. Quiz
+### 19. Quiz
 
 **Location:** `src/components/Quiz.astro`
 
@@ -364,7 +384,7 @@ import Quiz from '../../../components/Quiz.astro';
 
 ---
 
-### 19. SearchOverride
+### 20. SearchOverride
 
 **Location:** `src/components/SearchOverride.astro`
 

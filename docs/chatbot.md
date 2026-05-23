@@ -168,6 +168,7 @@ Logged responses can be reviewed at the admin dashboard (`/admin/logs`).
 | New Chat button | Resets conversation, shows suggestions again |
 | Scroll-to-bottom | Button appears when scrolled up |
 | Auto-resizing input | Textarea grows up to 120px |
+| Table rendering | Markdown tables (pipes + alignment) → styled HTML tables with `.cw-table-wrap` |
 | Link rendering | [text](url) → clickable links in bot messages |
 | Timestamps | "just now" below each message |
 
