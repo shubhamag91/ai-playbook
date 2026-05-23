@@ -11,12 +11,6 @@
   --__sl-font-mono: var(--font-mono);
 }
 
-/* Prevent horizontal overflow from breaking mobile nav */
-html, body {
-  overflow-x: hidden;
-  max-width: 100%;
-}
-
 /* Larger screens — Starlight bumps headings by default, scale back */
 @media (min-width: 50rem) {
   :root {
@@ -203,8 +197,14 @@ header {
 }
 
 /* ─── Table styling ────────────────────────────────────── */
+
+/* Scrollable wrapper so wide markdown tables never blow out the viewport */
 .content table {
-  width: 100%;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: max-content;
+  max-width: 100%;
   border-collapse: collapse;
   font-size: 0.82rem;
   border: 1px solid var(--sl-color-gray-5);
@@ -538,7 +538,8 @@ img {
   /* Specificity bump so content h3s also scale up on mobile */
   h3, .content :where(h3) { font-size: 1.1rem; }
   pre { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  table { overflow-x: auto; display: block; margin: 1rem 0; }
+  table { margin: 1rem 0; }
+  .content th { white-space: normal; }
   .path-selector, .trending-widget { max-width: 100%; width: 100%; }
   input[type='text'], input[type='email'], input[type='search'],
   textarea, select {
