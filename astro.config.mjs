@@ -403,6 +403,20 @@ export default defineConfig({
           ],
         },
         {
+          label: 'DeepSeek',
+          collapsed: false,
+          items: [
+            { label: 'Ecosystem Overview', slug: 'deepseek' },
+            { label: 'DeepSeek Models', slug: 'deepseek/models' },
+            { label: 'API & SDKs', slug: 'deepseek/api' },
+            { label: 'Agent Integrations', slug: 'deepseek/agents' },
+            { label: 'Open-Weight & Self-Hosting', slug: 'deepseek/open-source' },
+            { label: 'Comparison & Migration', slug: 'deepseek/comparison' },
+            { label: 'Workflows & Best Practices', slug: 'deepseek/workflows' },
+            { label: 'Research & Community', slug: 'deepseek/research' },
+          ],
+        },
+        {
           label: 'Community',
           collapsed: true,
           items: [

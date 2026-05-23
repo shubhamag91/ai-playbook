@@ -1,0 +1,78 @@
+---
+title: "DeepSeek: Cost Leader & Open-Weight AI"
+description: Complete guide to DeepSeek — the cost-leading, open-weight AI platform with dual API compatibility, agent integrations, thinking mode, and open-source models.
+sidebar:
+  order: 1
+tags:
+  - deepseek
+  - open-source
+  - api
+  - platform
+glossaryLinks:
+  - llm
+  - api
+  - token
+  - inference
+tldr:
+  - "DeepSeek V4 Flash is the cost leader: $0.14/$0.28 per 1M tokens (cache hits at $0.0028). 10-100x cheaper than frontier closed models"
+  - "Dual API compatibility: drop-in replacement for BOTH OpenAI and Anthropic SDKs — no code changes needed"
+  - "Agent integrations: works as backend for Claude Code, GitHub Copilot, OpenCode, and 15+ other coding agents"
+  - "Open-weight models (MIT license): download and self-host V4 Flash and Pro"
+lastUpdated: 2026-05-22
+nextVerificationDue: 2026-08-22
+---
+
+DeepSeek (founded 2023, Hangzhou) has reshaped the AI industry with a simple proposition: frontier-quality models at 10-100x lower cost, with open-weight access and dual API compatibility.
+
+## How the Ecosystem Connects
+
+```mermaid
+flowchart LR
+    A["DeepSeek Models\nV4 Pro · V4 Flash · R1"] --> B["API Access\nOpenAI Format · Anthropic Format\nThinking Mode · Tool Calls"]
+    B --> C["Agent Integrations\nClaude Code · Copilot · OpenCode\n15+ coding agents"]
+    A --> D["Open-Weight\nHuggingFace · Ollama\nMIT License"]
+    B --> E["Chat\nchat.deepseek.com\nFree tier"]
+```
+
+## Product Directory — At a Glance
+
+| Product | What It Is | Who It's For | Cost |
+|---|---|---|---|
+| **DeepSeek V4 Pro** | Most capable model with thinking mode | Complex reasoning, coding, production | $1.74/$3.48 per 1M (75% promo: $0.435/$0.87) |
+| **DeepSeek V4 Flash** | Cost-optimized with near-Pro quality | High-volume, cost-sensitive workloads | $0.14/$0.28 per 1M (cache hits: $0.0028) |
+| **Chat Interface** | Free web chat at chat.deepseek.com | Everyone | Free, unlimited |
+| **API (OpenAI format)** | Drop-in replacement via `api.deepseek.com` | Developers using OpenAI SDKs | Per-token |
+| **API (Anthropic format)** | Drop-in replacement via `api.deepseek.com/anthropic` | Developers using Anthropic SDKs and Claude Code | Per-token |
+| **Agent Integrations** | Use DeepSeek as backend for 15+ coding agents | Developers using Claude Code, Copilot, etc. | Per-token (via API key) |
+| **Open-Weight Models** | Download V4 Flash and Pro for self-hosting | Privacy-sensitive, high-volume users | Free (MIT license) |
+
+## Model Tiers — Quick Compare
+
+| Model | API Price (in/out) | Cache Hit | Context | Best For |
+|---|---|---|---|---|
+| **DeepSeek V4 Pro** | $0.435/$0.87* ($1.74/$3.48 normally) | $0.0036 | 1M tokens | Complex reasoning, coding, thinking mode |
+| **DeepSeek V4 Flash** | $0.14/$0.28 | $0.0028 | 1M tokens | High-volume, cost-sensitive, chat |
+
+*\*75% promotional pricing until May 31, 2026*
+
+## Decision Tree: Which DeepSeek Product?
+
+```
+What do you want to do?
+│
+├─ Build AI apps → DeepSeek API (OpenAI or Anthropic format)
+├─ Use Claude Code/GitHub Copilot → Agent Integration (replace backend model)
+├─ Self-host for privacy/cost → Open-weight models (Ollama, HuggingFace)
+├─ Chat for free → chat.deepseek.com
+├─ Complex reasoning, coding → V4 Pro + Thinking Mode
+├─ High-volume, cost-sensitive → V4 Flash
+├─ Compare costs vs Claude/GPT → See Comparison & Migration page
+└─ Explore Chinese AI ecosystem → See /research/china-ecosystem/
+```
+
+## Where to Go Next
+
+- Start with [DeepSeek Models](/deepseek/models) to understand tiers
+- Read [API & SDKs](/deepseek/api) for both API formats with code examples
+- Explore [Agent Integrations](/deepseek/agents) to replace Claude/GPT in your coding tools
+- Check [Comparison & Migration](/deepseek/comparison) for cost analysis and switching guides
