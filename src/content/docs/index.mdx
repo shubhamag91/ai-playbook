@@ -14,6 +14,7 @@ nextVerificationDue: 2026-08-06
 
 import PathSelector from '../../components/PathSelector.astro';
 import TrendingWidget from '../../components/TrendingWidget.astro';
+import ModelTiers from '../../components/ModelTiers.astro';
 
 A personal reference for navigating the modern AI ecosystem  -  tools, workflows, models, and principles.
 
@@ -43,11 +44,8 @@ Founded 2021 · Safety-focused · San Francisco
 - Powering other apps  -  Cursor, Windsurf use Claude under the hood
 
 **Model Tiers (cheapest → most capable):**
-- Claude Haiku 4.5  -  Fastest, near-frontier ($1/$5 per 1M tokens, 200K context)
-- Claude Sonnet 4.6  -  Balanced (default) ($3/$15 per 1M tokens, 1M context)
-- Claude Opus 4.7  -  Most capable, agentic coding ($5/$25 per 1M tokens, 1M context)
-
-Opus 4.7 and Sonnet 4.6 share 1M token context; Haiku 4.5 has 200K. Opus 4.7 dropped pricing 67% from previous generation ($15/$75 → $5/$25). See the [Claude section](/claude/) for complete ecosystem details.
+<ModelTiers provider="Anthropic" />
+All tiers share 1M token context (Opus 4.7 and Sonnet 4.6); Haiku 4.5 has 200K. See the [Claude section](/claude/) for complete ecosystem details.
 
 ---
 
@@ -68,11 +66,8 @@ Founded 2015 · Microsoft-backed · San Francisco
 - ChatGPT Enterprise  -  Business plan, data privacy, org-wide deployment
 
 **Model Tiers (cheapest → most capable):**
-- GPT-5.5 Instant  -  Cost-effective, fast ($0.05/$0.15 per 1M tokens)
-- GPT-5.5  -  Balanced (default) ($2/$8 per 1M tokens)
-- o3  -  Reasoning model with test-time compute ($8/$32 per 1M tokens)
-
-Note: o3 allocates compute at inference time ("thinking" before answering)  -  slower but dramatically smarter on math, coding, reasoning problems. Trade-off: speed vs. accuracy.
+<ModelTiers provider="OpenAI" />
+o3 allocates compute at inference time ("thinking" before answering) — slower but smarter on math, coding, reasoning.
 
 ---
 
@@ -92,11 +87,8 @@ Founded 1998 (Google) · Alphabet subsidiary · Mountain View
 - Gemini on Android  -  Native assistant replacing Google Assistant
 
 **Model Tiers (cheapest → most capable):**
-- Gemini 3.5 Flash  -  Fastest, most affordable (1M+ context, free tier on AI Studio)
-- Gemini 3.5 Pro  -  Balanced, 1M+ context (most production workloads)
-- Gemini 3.5 Ultra  -  Most capable (advanced reasoning, agentic capabilities)
-
-Gemini 3.5 features frontier intelligence with action capabilities. Gemini Omni adds native multimodal (video, image, audio, text). All Gemini models benefit from DeepMind's research breakthroughs. See the [DeepMind section](/deepmind/) for complete ecosystem details.
+<ModelTiers provider="Google" />
+Gemini 3.5 Pro's 1M-token context enables entire research papers in a single request. See the [DeepMind section](/deepmind/) for complete ecosystem details.
 
 ---
 
@@ -112,11 +104,8 @@ Founded 2023 · Hangzhou, China · Open weights (MIT license)
 - Open weights  -  Run locally via Ollama, Hugging Face, or LM Studio (fully self-hosted)
 
 **Model Tiers (cheapest → most capable):**
-- V4 Flash  -  General purpose ($0.14/$0.28 per 1M tokens)
-- V4  -  Balanced (default) ($0.55/$2.19 per 1M tokens)
-- R1  -  Reasoning model (matches o3 capabilities) ($0.55/$2.19 per 1M tokens)
-
-MIT license = free for commercial use. **Most cost-effective option by far** (15-50x cheaper than Claude/GPT). Trained with optimized techniques on consumer hardware  -  proves you don't need trillion-dollar budgets for frontier models.
+<ModelTiers provider="DeepSeek" />
+MIT license = free for commercial use. Most cost-effective by far (15-100x cheaper). See the [DeepSeek section](/deepseek/) for complete ecosystem details.
 
 ---
 
