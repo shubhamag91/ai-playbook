@@ -11,14 +11,14 @@
 
 .design-arena-leaderboards__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
   gap: 1rem;
   margin-top: 2rem;
 }
 
 @media (max-width: 768px) {
   .design-arena-leaderboards__grid {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
     gap: 0.75rem;
   }
 }

@@ -525,7 +525,7 @@ img {
 
 /* ─── Mobile optimizations ──────────────────────────────── */
 @media (max-width: 768px) {
-  button, a, input[type='checkbox'], input[type='radio'] {
+  button, input[type='checkbox'], input[type='radio'] {
     min-height: 44px;
     min-width: 44px;
   }
