@@ -205,6 +205,47 @@ starlight-menu-button button {
   overflow-x: hidden;
 }
 
+/* Mobile: constrain Starlight elements that grow wider than the viewport.
+   Starlight's mobile TOC <details> and hidden sidebar pane both contain
+   links whose content can push them past 100vw, which inflates
+   documentElement.scrollWidth and pushes the fixed hamburger button
+   off-screen to the right. */
+@media (max-width: 50rem) {
+  .sidebar-pane {
+    max-width: 100vw;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  .sidebar-content,
+  .sidebar-content .top-level,
+  .sidebar-content .top-level a {
+    max-width: 100%;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Mobile "On this page" TOC: constrain its flex children so long heading
+     text wraps instead of growing the container past viewport width. */
+  mobile-starlight-toc nav,
+  mobile-starlight-toc details,
+  mobile-starlight-toc .dropdown,
+  mobile-starlight-toc ul,
+  mobile-starlight-toc li,
+  mobile-starlight-toc a {
+    max-width: 100vw;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  mobile-starlight-toc a {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  mobile-starlight-toc a > span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
 /* ─── Mermaid diagrams ────────────────────────────────── */
 .mermaid, svg[aria-roledescription] {
   display: block;
