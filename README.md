@@ -161,7 +161,7 @@ The chatbot requires environment variables in Cloudflare Pages:
 | **ModelMatrix** | `/decide/models/guide` | Heatmap: 9 models × 9 tasks with hover tooltips |
 | **CostCalculator** | `/decide/cost-calculator` | Sliders for tokens/requests, live cost estimates for 14 models |
 | **ToolComparison** | `/decide/tools/comparison` | Sortable tools table with category tabs |
-| **Quiz** | `/learn/quiz` | Knowledge quiz with 694 questions across 24 topics |
+| **Quiz** | `/learn/quiz` | Knowledge quiz with 645 questions across 24 sets (12 topics × easy/hard) |
 | **PathSelector** | Homepage + `/start/quick-start` | Role-based path cards for navigation |
 | **SearchOverride** | Header (all pages) | Pagefind search with ranking config + recent searches |
 | **ProgressTracker** | `/learn/beginner`, `/learn/interview-prep` | Section checkboxes with localStorage persistence |

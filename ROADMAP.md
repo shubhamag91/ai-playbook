@@ -38,6 +38,9 @@ Transform AI Playbook from a **documentation site** into a **knowledge product**
 - [x] Add /benchmarks page (initial version)
 - [x] Create decision frameworks (/tools, /models)
 
+#### Pending Maintenance Items ⏳
+- [x] **MOS-384**: Complete quiz-bank regeneration — all 24 sets fully generated, quality-fixed (no "all of the above", no length bias, no generic distracters), and two-batch generation architecture implemented to stay within Groq 6,000 TPM limit.
+
 **Lead Metrics:**
 - Beginner funnel completion rate
 - Decision framework usage

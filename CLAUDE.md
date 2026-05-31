@@ -54,7 +54,7 @@ ai-playbook/
 ├── public/                   # Static files served as-is
 │   ├── chat-widget.js        # AI chatbot widget (floating chat bubble)
 │   ├── search-index.json     # Auto-generated search index (prebuild)
-│   ├── quiz-bank.json        # Pre-generated quiz questions (694 questions)
+│   ├── quiz-bank.json        # Pre-generated quiz questions (645 questions)
 │   ├── cheatsheets/          # Printable cheatsheet PDFs (llm-primer.html, etc.)
 │   ├── decks/                # Exported Slidev/Reveal HTML
 │   └── mindmaps/             # Exported Markmap HTML + source .md
@@ -454,21 +454,53 @@ URL: `/admin/logs` — reviews all logged queries with source badges, filtering,
 ### Architecture
 
 ```
-Quiz bank: public/quiz-bank.json (pre-generated, 694 questions)
-Component: src/components/Quiz.astro (642 lines)
+Quiz bank: public/quiz-bank.json (pre-generated, 645 questions)
+Component: src/components/Quiz.astro (680+ lines)
 Script:    scripts/generate-quiz-bank.mjs
+Fixer:     scripts/fix-quiz-quality.mjs
 Page:      /learn/quiz
 ```
 
-Questions are pre-generated via Groq and stored as static JSON — no runtime API calls. 24 topic/difficulty sets, 25-30 questions each.
+Questions are pre-generated via Groq and stored as static JSON — no runtime API calls. 24 topic/difficulty sets across 12 topics.
+
+**Frontend Features (Implemented Phase 3 Upgrades):**
+- **Dynamic Option Shuffling**: Shuffles options per-render using a Fisher-Yates shuffle and dynamically remaps the correct answer letter to eliminate option position bias (the "Always Pick B" exploit).
+- **Keyboard Navigation**: Native arrow key navigation inside options container, auto-focusing the first option on render and auto-focusing the "Next →" button upon selection.
+- **Resilient History Labels**: Fallback lookup checks the `<select id="quiz-topic">` options before querying the JSON bank, so history loads instantly and accurately.
+- **Scrollable History Drawer**: Lists the last 20 attempts inside a custom scrollable container styled with thin scrollbars.
+- **Smooth Transitions**: Score bar transition width is initialized to `0%` and animated inside a `requestAnimationFrame` callback.
 
 ### Regenerating Quiz Questions
 
 ```bash
-node scripts/generate-quiz-bank.mjs
+# Regenerate all sets
+npm run generate-quiz
+
+# Regenerate single topic & difficulty
+node scripts/generate-quiz-bank.mjs [topic-id] [easy|hard]
+
+# Fix quality issues (all-of-above, length bias, generic distracters)
+node scripts/fix-quiz-quality.mjs
+
+# Dry-run to preview what would be fixed
+node scripts/fix-quiz-quality.mjs --dry-run
 ```
 
-Generates `public/quiz-bank.json`. Requires `GROQ_API_KEY` env variable.
+**Environment Key Storage:**
+The `GROQ_API_KEY` is persistently saved in your shell profile at `~/.zshrc`.
+
+**Groq Free-Tier Rate Limits & Architecture:**
+The free tier has a **6,000 TPM** (tokens-per-minute) limit per request. To stay within this:
+- Each generation is split into **two sequential batches of 15 questions** per topic/difficulty set.
+- Content context is capped at `3,500` characters (~900 tokens) to minimise prompt size.
+- Each API call requests `max_tokens: 2200` — giving ~3,400 total tokens per call, safely under the 6,000 TPM cap.
+- A mandatory `sleep(65000)` (65-second gap) runs between each batch call.
+
+**Quality Maintenance:**
+Run `fix-quiz-quality.mjs` after any regeneration to catch:
+- "All of the above" / "None of the above" options (quiz anti-pattern)
+- Answer length bias (correct answer notably longer than wrong options — a giveaway)
+- Generic filler distracters ("To improve accuracy", "To reduce cost" etc.)
 
 ---
 

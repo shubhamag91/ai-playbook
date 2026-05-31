@@ -44,7 +44,7 @@ If `grep` reports these as "unused," that's a false positive — they're wired t
 | ModelTiers | `ModelTiers.astro` | `/ (homepage)` | Renders provider model tiers from models.ts. Used on Welcome page |
 | PathSelector | `PathSelector.astro` | `/ (homepage)`, `/start/quick-start` | Section cards linking to all 8 sidebar sections |
 | ProgressTracker | `ProgressTracker.astro` | `/learn/beginner`, `/learn/interview-prep` | Section checkboxes with localStorage persistence |
-| Quiz | `Quiz.astro` | `/learn/quiz` | Knowledge quiz with pre-generated question bank (694 questions, 24 topics) |
+| Quiz | `Quiz.astro` | `/learn/quiz` | Knowledge quiz with pre-generated question bank (645 questions, 24 sets across 12 topics) |
 | SeeAlso | `SeeAlso.astro` | All pages (auto-injected in footer) | Auto-generated related content links from tags |
 | SearchOverride | `SearchOverride.astro` | All pages (via Starlight override) | Search bar with Pagefind ranking config and recent searches |
 | ToolComparison | `ToolComparison.astro` | `/decide/tools/comparison`, `/decide/tools/guide` | Sortable tool comparison tables |
@@ -367,7 +367,7 @@ import TrendingWidget from '../../../components/TrendingWidget.astro';
 
 **Location:** `src/components/Quiz.astro`
 
-**Purpose:** Interactive knowledge quiz with pre-generated question bank (694 questions across 24 topic/difficulty sets from 12 topics). Users select a topic and difficulty, answer 10 questions, and see results with explanations.
+**Purpose:** Interactive knowledge quiz with pre-generated question bank (645 questions across 24 topic/difficulty sets from 12 topics). Users select a topic and difficulty, answer 10 questions, and see results with explanations.
 
 **Features:**
 - Topic and difficulty selection (Easy/Hard)
