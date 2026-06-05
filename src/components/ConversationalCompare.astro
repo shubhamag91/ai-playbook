@@ -1,0 +1,136 @@
+---
+// Conversational-AI product comparison.
+// Model-spec rows (context, API pricing, reasoning price, vision) are pulled
+// from models.ts so they stay the single source of truth and can never drift
+// from the model guide. Product-level rows (browsing, subscription, daily
+// limits, etc.) live here because they are product facts, not model attributes.
+import { models, modelsLastVerified } from '../data/models';
+
+interface ProductConfig {
+  product: string;       // consumer product name
+  model?: string;        // exact models.ts entry name for spec lookup
+  reasoning: string;     // reasoning option; if it names a models.ts entry, its price is appended
+  webBrowsing: string;
+  codeExec: string;
+  subscription: string;
+  freeLimit: string;
+  agentic: string;
+  bestFor: string;
+  // Manual fallbacks for products with no models.ts entry (e.g. Perplexity)
+  contextManual?: string;
+  pricingManual?: string;
+  visionManual?: string;
+}
+
+const productConfig: ProductConfig[] = [
+  {
+    product: 'ChatGPT', model: 'GPT-5.5',
+    reasoning: 'o3',
+    webBrowsing: '✅', codeExec: '✅ (Code Interpreter)',
+    subscription: 'Plus $20/mo', freeLimit: 'GPT-5.5 Instant generous',
+    agentic: 'Operator, integrations', bestFor: 'General + reasoning',
+  },
+  {
+    product: 'Claude', model: 'Claude Opus 4.7',
+    reasoning: 'Extended thinking (built-in)',
+    webBrowsing: '✅ (claude.ai)', codeExec: '✅ (Artifacts)',
+    subscription: 'Pro $20/mo', freeLimit: '~20–40 msgs/day',
+    agentic: 'Claude Code, Cursor, Windsurf', bestFor: 'Writing, long docs, complex reasoning',
+  },
+  {
+    product: 'Gemini', model: 'Gemini 3.5 Pro',
+    reasoning: 'Deep Think (built-in)',
+    webBrowsing: '✅', codeExec: '✅',
+    subscription: 'AI Pro $20/mo', freeLimit: 'Generous Flash tier',
+    agentic: 'Workspace integrations', bestFor: 'Very long context research',
+  },
+  {
+    product: 'DeepSeek', model: 'DeepSeek V4 Pro',
+    reasoning: 'DeepSeek R1',
+    webBrowsing: '❌', codeExec: '✅',
+    subscription: 'Free + API', freeLimit: 'Unlimited (chat)',
+    agentic: 'Open weights', bestFor: 'Cost-conscious teams',
+  },
+  {
+    product: 'Perplexity',
+    contextManual: 'Varies by model', pricingManual: 'Uses partner models', visionManual: '✅',
+    reasoning: 'Uses partner models',
+    webBrowsing: '✅ Core feature', codeExec: '❌',
+    subscription: 'Pro $20/mo', freeLimit: '5 Pro searches/day',
+    agentic: 'Research synthesis', bestFor: 'Real-time + cited sources',
+  },
+];
+
+function findModel(name?: string) {
+  return name ? models.find(m => m.name === name) : undefined;
+}
+
+// Resolve each product's display values, pulling model facts from models.ts.
+const rows = productConfig.map(p => {
+  const m = findModel(p.model);
+  const context = m?.context ?? p.contextManual ?? '—';
+  const pricing = m?.pricing ?? p.pricingManual ?? '—';
+  const vision = m
+    ? (m.capabilities.includes('vision') ? '✅' : '❌')
+    : (p.visionManual ?? '—');
+
+  // If the reasoning option names a model in models.ts, append its price.
+  const reasoningModel = findModel(p.reasoning);
+  // Show just the numeric in/out price, dropping " per 1M" and any note like "(promo)".
+  const reasoning = reasoningModel
+    ? `${reasoningModel.name} (${reasoningModel.pricing.split(' per 1M')[0]})`
+    : p.reasoning;
+
+  return {
+    header: m ? `${p.product} (${m.name})` : p.product,
+    context, pricing, vision, reasoning,
+    webBrowsing: p.webBrowsing, codeExec: p.codeExec,
+    subscription: p.subscription, freeLimit: p.freeLimit,
+    agentic: p.agentic, bestFor: p.bestFor,
+  };
+});
+
+// Row definitions: label + key into each resolved row.
+const specRows: { label: string; key: keyof typeof rows[number] }[] = [
+  { label: 'Context window', key: 'context' },
+  { label: 'API pricing (in/out per 1M)', key: 'pricing' },
+  { label: 'Reasoning model', key: 'reasoning' },
+  { label: 'Image input', key: 'vision' },
+  { label: 'Web browsing', key: 'webBrowsing' },
+  { label: 'Code execution', key: 'codeExec' },
+  { label: 'Subscription', key: 'subscription' },
+  { label: 'Free tier', key: 'freeLimit' },
+  { label: 'Agentic tools', key: 'agentic' },
+  { label: 'Best for', key: 'bestFor' },
+];
+---
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      {rows.map(r => <th>{r.header}</th>)}
+    </tr>
+  </thead>
+  <tbody>
+    {specRows.map(sr => (
+      <tr>
+        <td><strong>{sr.label}</strong></td>
+        {rows.map(r => <td>{r[sr.key]}</td>)}
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+<p class="cc-verified">
+  Model specs (context, pricing, reasoning, vision) are pulled from the
+  playbook's model dataset. Verified as of <strong>{modelsLastVerified}</strong>.
+</p>
+
+<style>
+  .cc-verified {
+    font-size: 0.72rem;
+    color: var(--sl-color-gray-3);
+    margin-top: 0.4rem;
+  }
+</style>

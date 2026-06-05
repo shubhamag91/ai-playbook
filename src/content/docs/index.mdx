@@ -15,6 +15,7 @@ nextVerificationDue: 2026-08-06
 import PathSelector from '../../components/PathSelector.astro';
 import TrendingWidget from '../../components/TrendingWidget.astro';
 import ModelTiers from '../../components/ModelTiers.astro';
+import ConversationalCompare from '../../components/ConversationalCompare.astro';
 
 A personal reference for navigating the modern AI ecosystem  -  tools, workflows, models, and principles.
 
@@ -156,20 +157,9 @@ These tools don't provide AI themselves  -  they help you build systems that con
 
 ---
 
-## Quick Comparison: Top Conversational AI (May 2026)
+## Quick Comparison: Top Conversational AI
 
-| Feature | ChatGPT (GPT-5.5) | Claude (Opus 4.7) | Gemini (3.1 Pro) | DeepSeek (V4) | Perplexity |
-|---------|------------------|-------------------|------------------|------------|-----------------|
-| **Context window** | 128K tokens | 200K (Opus: 400K) | 1M tokens | 128K tokens | Varies by model |
-| **Image input** | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Web browsing** | ✅ | ✅ (claude.ai) | ✅ | ❌ | ✅ Core feature |
-| **Code execution** | ✅ (Code Interpreter) | ✅ (Artifacts) | ✅ | ✅ | ❌ |
-| **Reasoning model** | o3 ($8/$32) | ❌ | ❌ | R1 ($0.55/$2.19) | Uses partner models |
-| **API pricing** | $2/$8 (GPT-5.5) | $3/$15 (Sonnet 4.6) | $2/$12 | **$0.14/$0.28 Flash** | ~$8/month |
-| **Web/Mobile** | ChatGPT Plus $20/mo | Claude Pro $20/mo | $20/mo | Free + API | Pro $20/mo |
-| **Free daily limit** | GPT-5.5 Instant generous | ~20–40 msgs/day | Generous Flash | Unlimited | 5 Pro/day |
-| **Agentic tools** | Integrations | Claude Code, Cursor, Windsurf | Integrations | Open weights | Research synthesis |
-| **Best for** | General + reasoning (o3) | Writing, long docs, complex reasoning | Very long context research | Cost-conscious teams | Real-time + cited sources |
+<ConversationalCompare />
 
 **Tip:** If you hit free limits often, the **API** is often cheaper for heavy use  -  you pay per token with no daily cap. For regular personal use, a $20/mo Pro plan on your most-used tool pays for itself quickly.
 

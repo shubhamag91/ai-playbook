@@ -30,6 +30,11 @@ export interface ModelEntry {
   bestFor?: string;
 }
 
+// Date the model facts below were last verified against provider docs.
+// Surfaced to readers anywhere model specs are compared (e.g. the homepage
+// conversational-AI table). Bump this whenever you reconcile pricing/context.
+export const modelsLastVerified = '2026-06-05';
+
 export const models: ModelEntry[] = [
   // Anthropic
   {
@@ -145,8 +150,8 @@ export const models: ModelEntry[] = [
   },
   {
     name: 'DeepSeek V4 Pro', company: 'DeepSeek', latest: true, context: '1M',
-    pricing: '$0.435/$0.87 per 1M (promo)', capabilities: 'reasoning, coding, general, design',
-    parameters: '671B (MoE)', notes: 'Premium tier. Thinking mode default. 75% promo until May 31.',
+    pricing: '$0.435/$0.87 per 1M', capabilities: 'reasoning, coding, general, design',
+    parameters: '671B (MoE)', notes: 'Premium tier. Thinking mode default. 75% price cut now permanent (announced May 22, 2026).',
     flagship: true,
     inputPrice: 0.435, outputPrice: 0.87,
     showInCalculator: true, calcOrder: 8, calcClass: 'deepseek-pro', calcFamily: 'DeepSeek',
@@ -154,7 +159,7 @@ export const models: ModelEntry[] = [
     showInSelector: true, selectorId: 'deepseek-pro', speed: 'medium', costTier: 'budget',
     useCases: ['reasoning', 'budget', 'coding'], bestFor: 'Frontier quality at fraction of cost',
   },
-  { name: 'DeepSeek R1', company: 'DeepSeek', latest: true, context: '1M', pricing: '$0.435/$0.87 per 1M (promo)', capabilities: 'reasoning, math, science, coding', parameters: '671B (MoE)', notes: 'Dedicated reasoning. Chain-of-thought specialist. Open-weight.' },
+  { name: 'DeepSeek R1', company: 'DeepSeek', latest: true, context: '1M', pricing: '$0.435/$0.87 per 1M', capabilities: 'reasoning, math, science, coding', parameters: '671B (MoE)', notes: 'Dedicated reasoning. Chain-of-thought specialist. Open-weight.' },
   { name: 'DeepSeek V4', company: 'DeepSeek', latest: false, context: '128K', pricing: '$0.55/$2.19 per 1M', capabilities: 'reasoning, coding, general', parameters: '236B', notes: 'Previous gen. Superseded by V4 Flash and Pro.' },
 
   // Meta
