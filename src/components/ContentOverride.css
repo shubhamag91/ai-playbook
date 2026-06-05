@@ -257,31 +257,37 @@
 
 /* ─── Light mode ─────────────────────────────────────── */
 :root[data-theme='light'] .page-meta__tag {
-  background: var(--sl-color-gray-2);
-  border-color: var(--sl-color-gray-3);
+  background: var(--sl-color-gray-5);
+  border-color: var(--sl-color-gray-4);
+  color: var(--sl-color-gray-2);
 }
 
 :root[data-theme='light'] .page-meta__pill {
-  background: var(--sl-color-gray-2);
-  border-color: var(--sl-color-gray-3);
+  background: var(--sl-color-gray-6);
+  border-color: var(--sl-color-gray-4);
+  color: var(--sl-color-gray-2);
 }
 
 :root[data-theme='light'] .page-meta__pill:hover {
-  background: var(--sl-color-gray-3);
-  color: var(--sl-color-black);
+  background: var(--sl-color-gray-5);
+  border-color: var(--sl-color-gray-3);
+  color: var(--sl-color-gray-1);
 }
 
 :root[data-theme='light'] .page-meta__pill[aria-expanded="true"] {
-  background: var(--sl-color-gray-1);
+  background: var(--sl-color-gray-5);
+  border-color: var(--sl-color-accent);
+  color: var(--sl-color-accent);
 }
 
 :root[data-theme='light'] .page-meta__dropdown {
   background: var(--sl-color-white);
-  border-color: var(--sl-color-gray-3);
+  border-color: var(--sl-color-gray-4);
 }
 
 :root[data-theme='light'] .page-meta__dd-link {
-  background: var(--sl-color-gray-1);
+  background: var(--sl-color-gray-6);
+  color: var(--sl-color-gray-1);
 }
 
 /* ─── Mobile: compact pills, hide labels ────────────── */
