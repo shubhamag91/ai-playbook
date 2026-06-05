@@ -16,7 +16,7 @@ export async function onRequest({ request, env, waitUntil }) {
   }
 
   try {
-    const { question, history } = await request.json();
+    const { question, history, pageContext } = await request.json();
     if (!question || !question.trim()) {
       return new Response(JSON.stringify({ error: 'Question is required' }), { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } });
     }
@@ -111,6 +111,18 @@ export async function onRequest({ request, env, waitUntil }) {
         }).filter(Boolean).join('\n\n')
       : '';
 
+    // Distinct playbook pages actually retrieved — returned so the UI can show
+    // honest source chips instead of guessing from the answer text.
+    const seenSlugs = new Set();
+    const playbookSources = merged.map(([key]) => {
+      const s = key.split('|')[0];
+      if (s.startsWith('models/')) return null;
+      const e = index.find(x => x.slug === s && (x.slug + '|' + x.title) === key);
+      if (!e || seenSlugs.has(e.slug)) return null;
+      seenSlugs.add(e.slug);
+      return { title: e.title, url: `${siteOrigin}/${e.slug}` };
+    }).filter(Boolean);
+
     // ─── Web search (always in parallel) ──────────────────────────
     let webCtx = '';
     if (env.SERPER_API_KEY) {
@@ -134,6 +146,13 @@ export async function onRequest({ request, env, waitUntil }) {
     if (webCtx) parts.push(`WEB SEARCH RESULTS (supplement):\n${webCtx}`);
     const finalContext = parts.join('\n\n---\n\n');
 
+    // ─── Current-page context (copilot awareness) ─────────────────
+    let pageLine = '';
+    if (pageContext && pageContext.title) {
+      const heads = pageContext.headings ? ` Sections on this page: ${String(pageContext.headings).slice(0, 400)}.` : '';
+      pageLine = `\nThe user is currently viewing the page "${String(pageContext.title).slice(0, 160)}"${pageContext.url ? ` (${pageContext.url})` : ''}.${heads} If the question is vague or refers to "this", "this page", or "here", assume it means this page.\n`;
+    }
+
     // ─── Messages ─────────────────────────────────────────────────
     const messages = [];
     if (history && Array.isArray(history)) {
@@ -144,7 +163,7 @@ export async function onRequest({ request, env, waitUntil }) {
 
     if (finalContext) {
       messages.unshift({ role: 'system', content: `You are a knowledgeable AI assistant. You have access to the AI Playbook (reference content about AI models, tools, and techniques) and web search results.
-
+${pageLine}
 ${finalContext}
 
 INSTRUCTIONS:
@@ -158,7 +177,7 @@ INSTRUCTIONS:
 8. Be concise — aim for 2-3 paragraphs or a short list.
 9. Never say "playbook", "reference data", or "context" — just answer naturally.` });
     } else {
-      messages.unshift({ role: 'system', content: 'Answer naturally and conversationally. Use bullet points for lists, numbered lists for steps, **bold** for key terms. Be concise.' });
+      messages.unshift({ role: 'system', content: `Answer naturally and conversationally. Use bullet points for lists, numbered lists for steps, **bold** for key terms. Be concise.${pageLine}` });
     }
     messages.push({ role: 'user', content: question });
 
@@ -197,7 +216,7 @@ INSTRUCTIONS:
       waitUntil(env.CHAT_LOGS.put('log:' + Date.now(), logVal).catch(() => {}));
     }
 
-    return new Response(JSON.stringify({ answer: answerText, source: source }), { headers: { 'Content-Type': 'application/json', ...corsHeaders } });
+    return new Response(JSON.stringify({ answer: answerText, source: source, sources: playbookSources }), { headers: { 'Content-Type': 'application/json', ...corsHeaders } });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } });
   }
