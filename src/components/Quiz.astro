@@ -172,7 +172,28 @@
   color: var(--sl-color-text-accent);
   margin-bottom: 0.6rem;
 }
-.quiz__history-list { display: flex; flex-direction: column; gap: 0.4rem; }
+.quiz__history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+/* Premium scrollbar styling for history list */
+.quiz__history-list::-webkit-scrollbar {
+  width: 6px;
+}
+.quiz__history-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.quiz__history-list::-webkit-scrollbar-thumb {
+  background: var(--sl-color-gray-5);
+  border-radius: 3px;
+}
+.quiz__history-list::-webkit-scrollbar-thumb:hover {
+  background: var(--sl-color-accent);
+}
 .quiz__history-row {
   display: flex;
   gap: 1rem;
@@ -475,15 +496,20 @@
     var listEl    = document.getElementById('quiz-history-list');
     listEl.innerHTML = '';
 
-    entries.slice(-6).reverse().forEach(function (pair) {
+    // Phase 3 Fix: Show up to 20 entries with scroll support
+    entries.slice(-20).reverse().forEach(function (pair) {
       var key = pair[0];
       var v   = pair[1];
-      // Find label from bank topics
+      // Find label from select options or bank topics
       var parts = key.split('-');
       var diff  = parts[parts.length - 1];
       var topicId = parts.slice(0, -1).join('-');
       var label = topicId;
-      if (bank && bank.topics) {
+      if (topicSel) {
+        var opt = topicSel.querySelector('option[value="' + topicId + '"]');
+        if (opt) label = opt.textContent;
+      }
+      if (bank && bank.topics && label === topicId) {
         var found = bank.topics.find(function (t) { return t.id === topicId; });
         if (found) label = found.label;
       }
@@ -553,31 +579,59 @@
     hide(explanationEl);
     hide(nextBtn);
 
-    q.options.forEach(function (opt) {
-      var letter = opt.charAt(0); // "A", "B", "C", "D"
-      var text   = opt.slice(3);  // after "A. "
+    // Phase 3 Fix: Shuffle options per render to prevent position bias exploit (e.g. Always Pick B)
+    var mappedOpts = q.options.map(function (opt) {
+      var origLetter = opt.charAt(0); // "A", "B", "C", "D"
+      var text       = opt.slice(3);  // content after "A. "
+      return {
+        text: text,
+        isCorrect: origLetter === q.answer
+      };
+    });
+
+    var shuffled = shuffle(mappedOpts);
+    var newLetters = ['A', 'B', 'C', 'D'];
+    var dynamicAnswer = 'A';
+
+    shuffled.forEach(function (opt, idx) {
+      var letter = newLetters[idx];
+      if (opt.isCorrect) {
+        dynamicAnswer = letter;
+      }
+
       var btn = document.createElement('button');
       btn.className = 'quiz__option';
       btn.innerHTML =
         '<span class="quiz__option-letter">' + letter + '</span>' +
-        '<span>' + text + '</span>';
+        '<span>' + opt.text + '</span>';
       btn.setAttribute('data-letter', letter);
       btn.addEventListener('click', function () { pickAnswer(letter, q); });
       optionsEl.appendChild(btn);
     });
+
+    // Store the shuffled correct answer letter on the question object for validation
+    q.shuffledAnswer = dynamicAnswer;
+
+    // Phase 3 Fix: Auto-focus the first option for seamless keyboard navigation
+    var firstOpt = optionsEl.querySelector('.quiz__option');
+    if (firstOpt) {
+      firstOpt.focus();
+    }
   }
 
   // ── Handle answer ─────────────────────────────────────────────
   function pickAnswer(letter, q) {
+    var correctAnswer = q.shuffledAnswer || q.answer;
+
     // Disable all options
     optionsEl.querySelectorAll('.quiz__option').forEach(function (btn) {
       btn.disabled = true;
       var l = btn.getAttribute('data-letter');
-      if (l === q.answer) btn.classList.add('is-correct');
-      else if (l === letter && letter !== q.answer) btn.classList.add('is-wrong');
+      if (l === correctAnswer) btn.classList.add('is-correct');
+      else if (l === letter && letter !== correctAnswer) btn.classList.add('is-wrong');
     });
 
-    var correct = letter === q.answer;
+    var correct = letter === correctAnswer;
     if (correct) {
       score++;
     } else {
@@ -592,6 +646,11 @@
 
     // Update live score
     scoreLabel.textContent = 'Score: ' + score;
+
+    // Phase 3 Fix: Auto-focus Next button for seamless keyboard navigation
+    if (nextBtn) {
+      nextBtn.focus();
+    }
   }
 
   // ── Next question / finish ────────────────────────────────────
@@ -610,7 +669,7 @@
 
     var pct = Math.round(score / questions.length * 100);
     finalScore.textContent = score + ' / ' + questions.length;
-    scoreBar.style.width   = pct + '%';
+    scoreBar.style.width   = '0%'; // Initialize to 0% so transition runs
     scorePct.textContent   = pct + '%';
 
     endStats.innerHTML =
@@ -648,6 +707,28 @@
   });
 
   startBtn.addEventListener('click', startQuiz);
+
+  // Phase 3 Fix: Handle keyboard navigation between options via arrow keys
+  optionsEl.addEventListener('keydown', function (e) {
+    var active = document.activeElement;
+    if (!active || active.parentElement !== optionsEl) return;
+
+    var buttons = Array.from(optionsEl.querySelectorAll('.quiz__option:not(:disabled)'));
+    if (buttons.length === 0) return;
+
+    var idx = buttons.indexOf(active);
+    if (idx === -1) return;
+
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      var nextIdx = (idx + 1) % buttons.length;
+      buttons[nextIdx].focus();
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      var prevIdx = (idx - 1 + buttons.length) % buttons.length;
+      buttons[prevIdx].focus();
+    }
+  });
 
   document.getElementById('quiz-empty-back').addEventListener('click', function () {
     showOnly(setup);
