@@ -31,11 +31,14 @@ The bot runs **Llama 3.3 70B via Groq** (`chat.js:170`) on a site that recommend
 
 ## Acceptance criteria
 
-- [ ] Bot receives and uses current-page context
-- [ ] Responses stream token-by-token
-- [ ] Conversation survives page navigation within a session
-- [ ] Markdown rendered by a vetted lib; Shift+Enter inserts a newline
-- [ ] Source badge reflects actually-retrieved pages
+> **Status:** First batch shipped in commit `0d683bc` (page-context, persistence, source chips, Shift+Enter, quick actions). Streaming and the markdown-lib swap are deferred to follow-up changes; the model-choice question is open.
+
+- [x] Bot receives and uses current-page context
+- [ ] Responses stream token-by-token *(deferred — own change)*
+- [x] Conversation survives page navigation within a session
+- [x] Shift+Enter inserts a newline
+- [ ] Markdown rendered by a vetted lib *(deferred — needs CDN/bundling decision)*
+- [x] Source badge reflects actually-retrieved pages *(source chips)*
 
 ## References
 

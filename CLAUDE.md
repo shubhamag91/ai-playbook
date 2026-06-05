@@ -397,9 +397,9 @@ The chatbot uses a multi-step pipeline:
 1. **Query rewriting** — Llama 3.1 8B generates 3 search queries from user question, resolving pronouns from conversation history
 2. **Playbook search** — Each query runs TF-IDF against `search-index.json`, results merged via RRF (k=60). No threshold.
 3. **Web search** — Always runs in parallel via Serper.dev when API key is configured
-4. **Prompt construction** — Playbook context + web results combined in system prompt
+4. **Prompt construction** — Playbook context + web results + **current-page context** (title/URL/section headings sent by the widget) combined in system prompt; the bot resolves "this"/"this page" against it
 5. **Groq inference** — Llama 3.3 70B answers with context, temperature 0.3, max 800 tokens
-6. **Source tracking** — Post-checks answer for playbook links → "playbook", "web", or "model"
+6. **Source tracking** — Post-checks answer for playbook links → "playbook", "web", or "model"; also returns the deduped list of playbook pages actually retrieved (`sources: [{title, url}]`) for the widget's source chips
 7. **KV logging** — Every query logged to `CHAT_LOGS` KV namespace via `waitUntil`
 
 ### Key Files
@@ -416,10 +416,12 @@ The chatbot uses a multi-step pipeline:
 ### Chat Widget Features
 - Markdown rendering (bold, code blocks, lists, blockquotes, links [text](url), **tables**)
 - Source badges: green (playbook), blue (web), orange (model knowledge)
+- **Source chips** — clickable links to the playbook pages actually retrieved for the answer (from the API's `sources` array)
+- **Page-aware copilot** — sends current page title/URL/headings with each request; quick actions "Explain this page" / "Quiz me on this page"
 - Key term highlighting (MMLU, HumanEval, SWE-bench, RLHF, LoRA)
-- Conversation memory (last 5 exchanges)
+- Conversation memory (last 5 exchanges) **persisted to `sessionStorage`** — survives page navigation within the tab; cleared by "New chat"
 - Suggested questions, copy button, timestamps, new chat
-- Auto-resizing textarea input
+- Auto-resizing textarea input — Enter sends, **Shift+Enter** inserts a newline
 - 544x544 panel, full-screen on mobile
 
 ### Environment Variables
