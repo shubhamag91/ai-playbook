@@ -120,7 +120,7 @@ export async function onRequest({ request, env, waitUntil }) {
       const e = index.find(x => x.slug === s && (x.slug + '|' + x.title) === key);
       if (!e || seenSlugs.has(e.slug)) return null;
       seenSlugs.add(e.slug);
-      return { title: e.title, url: `${siteOrigin}/${e.slug}` };
+      return { title: e.title.replace(/^"+|"+$/g, ''), url: `${siteOrigin}/${e.slug}` };
     }).filter(Boolean);
 
     // ─── Web search (always in parallel) ──────────────────────────
@@ -181,42 +181,93 @@ INSTRUCTIONS:
     }
     messages.push({ role: 'user', content: question });
 
-    // ─── Call Groq ────────────────────────────────────────────────
-    const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqKey}` },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        messages: messages,
-        temperature: 0.3,
-        max_tokens: 800,
-      }),
-      signal: AbortSignal.timeout(15000),
+    // ─── Stream Groq completion back as NDJSON frames ─────────────
+    // Frame sequence: {type:'sources',...} → {type:'delta',text}* → {type:'done',source}
+    // (or {type:'error',error}). Sources are sent first (known pre-inference);
+    // source classification + KV logging happen after the stream completes.
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(controller) {
+        const send = (obj) => controller.enqueue(encoder.encode(JSON.stringify(obj) + '\n'));
+        send({ type: 'sources', sources: playbookSources });
+
+        let groqRes;
+        try {
+          groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqKey}` },
+            body: JSON.stringify({
+              model: 'llama-3.3-70b-versatile',
+              messages: messages,
+              temperature: 0.3,
+              max_tokens: 800,
+              stream: true,
+            }),
+            signal: AbortSignal.timeout(20000),
+          });
+        } catch (e) {
+          send({ type: 'error', error: 'Inference request failed' });
+          controller.close();
+          return;
+        }
+
+        if (!groqRes.ok || !groqRes.body) {
+          send({ type: 'error', error: `Groq API error: ${groqRes.status}` });
+          controller.close();
+          return;
+        }
+
+        // Parse Groq's SSE stream; re-emit content deltas as NDJSON.
+        const reader = groqRes.body.getReader();
+        const decoder = new TextDecoder();
+        let buf = '';
+        let full = '';
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            buf += decoder.decode(value, { stream: true });
+            let nl;
+            while ((nl = buf.indexOf('\n')) >= 0) {
+              const line = buf.slice(0, nl).trim();
+              buf = buf.slice(nl + 1);
+              if (!line.startsWith('data:')) continue;
+              const data = line.slice(5).trim();
+              if (data === '[DONE]') continue;
+              try {
+                const j = JSON.parse(data);
+                const delta = j?.choices?.[0]?.delta?.content || '';
+                if (delta) { full += delta; send({ type: 'delta', text: delta }); }
+              } catch (e) { /* skip malformed SSE line */ }
+            }
+          }
+        } catch (e) {
+          send({ type: 'error', error: 'Stream interrupted' });
+          controller.close();
+          return;
+        }
+
+        // Source classification (same heuristic as the non-streaming version)
+        let source = 'model';
+        if (playbookCtx && full.match(/\[([^\]]+)\]\(https?:\/\/[^)]+\)/)) source = 'playbook';
+        else if (webCtx) source = 'web';
+        send({ type: 'done', source });
+
+        // KV log on completion
+        if (env.CHAT_LOGS) {
+          const logVal = JSON.stringify({
+            q: question, source: source, queries: searchQueries,
+            a: (full || '').substring(0, 300), t: new Date().toISOString(),
+          });
+          waitUntil(env.CHAT_LOGS.put('log:' + Date.now(), logVal).catch(() => {}));
+        }
+        controller.close();
+      },
     });
 
-    if (!groqRes.ok) {
-      const err = await groqRes.text();
-      return new Response(JSON.stringify({ error: `Groq API error: ${groqRes.status}` }), { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } });
-    }
-
-    const groqData = await groqRes.json();
-    const answerText = groqData?.choices?.[0]?.message?.content || '';
-
-    // ─── Source tracking: post-check for playbook links ────────────
-    let source = 'model';
-    if (playbookCtx && answerText.match(/\[([^\]]+)\]\(https?:\/\/[^)]+\)/)) source = 'playbook';
-    else if (webCtx) source = 'web';
-
-    // ─── KV log ────────────────────────────────────────────────────
-    if (env.CHAT_LOGS) {
-      const logVal = JSON.stringify({
-        q: question, source: source, queries: searchQueries,
-        a: (answerText || '').substring(0, 300), t: new Date().toISOString(),
-      });
-      waitUntil(env.CHAT_LOGS.put('log:' + Date.now(), logVal).catch(() => {}));
-    }
-
-    return new Response(JSON.stringify({ answer: answerText, source: source, sources: playbookSources }), { headers: { 'Content-Type': 'application/json', ...corsHeaders } });
+    return new Response(stream, {
+      headers: { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'no-cache', ...corsHeaders },
+    });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } });
   }

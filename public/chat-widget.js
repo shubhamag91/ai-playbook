@@ -8,6 +8,14 @@
     style.textContent = '.cw-root{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}.cw-button{width:52px;height:52px;border-radius:50%;border:none;background:var(--sl-color-accent,#3b82f6);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.25);transition:transform .2s,opacity .2s}.cw-button:hover{transform:scale(1.05)}.cw-open .cw-button{opacity:0;pointer-events:none}.cw-panel{position:fixed;bottom:1.5rem;right:1.5rem;width:544px;height:544px;max-height:calc(100vh - 3rem);background:var(--sl-color-gray-6,#1a1a2e);border-radius:12px;border:1px solid var(--sl-color-gray-4,#333);box-shadow:0 8px 32px rgba(0,0,0,0.2);display:flex;flex-direction:column;opacity:0;transform:translateY(20px) scale(0.95);pointer-events:none;transition:all .25s ease}.cw-open .cw-panel{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}.cw-header{display:flex;justify-content:space-between;align-items:center;padding:.85rem 1rem;border-bottom:1px solid var(--sl-color-gray-5,#444);font-size:.9rem}.cw-header div{display:flex;gap:.3rem;align-items:center}.cw-newchat{background:none;border:none;font-size:1rem;cursor:pointer;color:var(--sl-color-gray-3,#888);padding:.2rem;line-height:1;display:flex;align-items:center;border-radius:4px}.cw-newchat:hover{color:var(--sl-color-white,#fff);background:var(--sl-color-gray-5,#333)}.cw-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--sl-color-gray-3,#888);padding:0 .25rem;line-height:1}.cw-close:hover{color:var(--sl-color-white,#fff)}.cw-messages{flex:1;overflow-y:auto;padding:.75rem;display:flex;flex-direction:column}.cw-scroll-btn{position:absolute;bottom:5rem;right:1rem;width:32px;height:32px;border-radius:50%;border:1px solid var(--sl-color-gray-4,#444);background:var(--sl-color-gray-6,#1a1a2e);color:var(--sl-color-gray-2,#ccc);cursor:pointer;display:none;align-items:center;justify-content:center;font-size:.8rem;z-index:5;box-shadow:0 2px 8px rgba(0,0,0,0.2);transition:opacity .2s}.cw-scroll-btn:hover{background:var(--sl-color-gray-5,#333)}.cw-msg{display:flex;max-width:92%;position:relative}.cw-user{margin-left:auto;justify-content:flex-end}.cw-bot{margin-right:auto;justify-content:flex-start}.cw-msg-content{padding:.55rem .85rem;border-radius:10px;font-size:.85rem;line-height:1.5;word-wrap:break-word}.cw-user .cw-msg-content{background:var(--sl-color-accent,#3b82f6);color:#fff;border-bottom-right-radius:3px}.cw-bot .cw-msg-content{background:var(--sl-color-gray-5,#333);color:var(--sl-color-white,#fff);border-bottom-left-radius:3px}.cw-term{color:var(--sl-color-accent,#3b82f6);font-weight:500}.cw-time{font-size:.62rem;color:var(--sl-color-gray-4,#555);padding:0 .85rem;margin-top:.1rem;user-select:none}.cw-msg-divider{height:1px;background:var(--sl-color-gray-5,#444);margin:4px 0 2px 0}.cw-copy{position:absolute;top:.3rem;right:.3rem;width:24px;height:24px;border-radius:4px;border:none;background:var(--sl-color-gray-5,#333);color:var(--sl-color-gray-3,#888);cursor:pointer;display:none;align-items:center;justify-content:center;font-size:.65rem;opacity:.7;z-index:2}.cw-msg:hover .cw-copy{display:flex}.cw-copy:hover{opacity:1;color:var(--sl-color-accent,#3b82f6)}.cw-bot .cw-msg-content code{background:var(--sl-color-gray-6,#1a1a2e);padding:.1rem .3rem;border-radius:3px;font-size:.8rem;font-family:monospace}.cw-bot .cw-msg-content pre{background:var(--sl-color-gray-6,#1a1a2e);padding:.5rem;border-radius:6px;overflow-x:auto;margin:.3rem 0;font-size:.78rem}.cw-bot .cw-msg-content pre code{background:none;padding:0;border-radius:0}.cw-bot .cw-msg-content blockquote{border-left:none;margin:.25rem 0;padding:.25rem .55rem;background:rgba(34,197,94,0.12);border-radius:6px;color:var(--sl-color-gray-2,#ccc);font-size:.82rem;line-height:1.5}.cw-bot .cw-msg-content blockquote+blockquote{margin-top:-.1rem}.cw-highlight{color:#22c55e;font-weight:500}.cw-bot .cw-msg-content ol,.cw-bot .cw-msg-content ul{margin:.2rem 0;padding-left:1.2rem;font-size:.85rem;line-height:1.5}.cw-bot .cw-msg-content li{margin-bottom:0}.cw-suggestions{display:flex;flex-direction:column;gap:6px;padding:4px 8px 8px 8px;user-select:none}.cw-suggestion{text-align:left;padding:8px 12px;border-radius:8px;border:1px solid var(--sl-color-gray-4,#444);background:var(--sl-color-gray-6,#1a1a2e);color:var(--sl-color-gray-2,#ccc);cursor:pointer;font-size:.8rem;transition:all .15s}.cw-suggestion:hover{border-color:var(--sl-color-accent,#3b82f6);background:var(--sl-color-gray-5,#333)}.cw-suggestions.hidden{display:none}.cw-input-area{display:flex;flex-direction:column;gap:2px;padding:.6rem .75rem .45rem;border-top:1px solid var(--sl-color-gray-5,#444)}.cw-input-row{display:flex;gap:.35rem}.cw-input{flex:1;padding:.5rem .75rem;border-radius:8px;border:1px solid var(--sl-color-gray-4,#333);background:var(--sl-color-gray-5,#333);color:var(--sl-color-white,#fff);font-size:.85rem;outline:none;resize:none;font-family:inherit;min-height:36px;max-height:120px;line-height:1.4}.cw-input:focus{border-color:var(--sl-color-accent,#3b82f6)}.cw-input::placeholder{color:var(--sl-color-gray-3,#888)}.cw-send{width:36px;height:36px;border-radius:8px;border:none;background:var(--sl-color-accent,#3b82f6);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;align-self:flex-end}.cw-send:disabled{opacity:.4;cursor:not-allowed}.cw-send:hover:not(:disabled){filter:brightness(1.1)}.cw-hint{font-size:.6rem;color:var(--sl-color-gray-4,#555);text-align:right;padding:0 4px}.cw-typing .cw-msg-content{display:flex;gap:4px;align-items:center;padding:.7rem 1rem}.cw-dot{width:7px;height:7px;border-radius:50%;background:var(--sl-color-gray-3,#888);animation:cw-bounce 1.4s ease-in-out both}@keyframes cw-bounce{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}.cw-dot:nth-child(1){animation-delay:-.32s}.cw-dot:nth-child(2){animation-delay:-.16s}.cw-dot:nth-child(3){animation-delay:0s}.cw-source-badge{display:inline-block;font-size:.6rem;padding:.12rem .4rem;border-radius:3px;margin-top:.35rem;font-weight:500;line-height:1.4}.cw-source-playbook{background:rgba(34,197,94,0.15);color:#22c55e}.cw-source-web{background:rgba(59,130,246,0.15);color:#60a5fa}.cw-source-model{background:rgba(245,158,11,0.15);color:#f59e0b}.cw-table-wrap table{border-collapse:collapse;width:100%;font-size:.8rem;margin:.3rem 0}.cw-table-wrap th{background:var(--sl-color-gray-6,#1a1a2e);color:var(--sl-color-accent,#3b82f6);padding:.25rem .5rem;text-align:left;font-weight:600;font-size:.75rem}.cw-table-wrap td{padding:.2rem .5rem;border-bottom:1px solid var(--sl-color-gray-4,#444);font-size:.78rem}.cw-table-wrap tr:last-child td{border-bottom:none}.cw-table-wrap{overflow-x:auto;margin:.3rem 0}.cw-sources{display:flex;flex-wrap:wrap;gap:4px;margin-top:.45rem}.cw-sources-label{font-size:.58rem;color:var(--sl-color-gray-3,#888);text-transform:uppercase;letter-spacing:.05em;width:100%;margin-bottom:1px}.cw-source-chip{font-size:.62rem;padding:.12rem .45rem;border-radius:99px;border:1px solid var(--sl-color-gray-4,#444);background:var(--sl-color-gray-6,#1a1a2e);color:var(--sl-color-gray-2,#ccc);text-decoration:none;white-space:nowrap;max-width:170px;overflow:hidden;text-overflow:ellipsis}.cw-source-chip:hover{border-color:var(--sl-color-accent,#3b82f6);color:var(--sl-color-accent,#3b82f6)}.cw-suggestion.cw-ctx{border-color:var(--sl-color-accent,#3b82f6);color:var(--sl-color-accent,#3b82f6)}@media(max-width:480px){.cw-panel{right:0;bottom:0;width:100%;height:100vh;max-height:100vh;border-radius:0}}';
     document.head.appendChild(style);
 
+    // Self-hosted markdown renderer + HTML sanitizer. renderMarkdown() uses them
+    // when present and gracefully falls back to the legacy regex parser otherwise.
+    ['/vendor/marked.min.js', '/vendor/purify.min.js'].forEach(function (src) {
+      var s = document.createElement('script');
+      s.src = src; s.async = true;
+      document.head.appendChild(s);
+    });
+
     // Create HTML
     var root = document.createElement('div');
     root.className = 'cw-root';
@@ -140,6 +148,16 @@
     }
 
     function renderMarkdown(text) {
+      // Preferred path: a vetted markdown lib + HTML sanitizer (self-hosted in
+      // /vendor). Handles partial/streaming input far better than the regex
+      // fallback below, which still runs if the libs failed to load.
+      if (window.marked && window.DOMPurify) {
+        try {
+          var parsed = window.marked.parse(text, { breaks: true, gfm: true });
+          return window.DOMPurify.sanitize(parsed, { ADD_ATTR: ['target', 'rel'] });
+        } catch (e) { /* fall through to legacy parser */ }
+      }
+
       // Normalize multiple blank lines into one
       text = text.replace(/\n{3,}/g, '\n\n');
 
@@ -247,6 +265,88 @@
       suggestions.classList.remove('hidden');
     }
 
+    // Render bot HTML (markdown + term highlighting) and force links to open safely
+    function setBotHtml(el, text) {
+      el.innerHTML = highlightTerms(renderMarkdown(text));
+      var links = el.querySelectorAll('a');
+      for (var i = 0; i < links.length; i++) { links[i].target = '_blank'; links[i].rel = 'noopener'; }
+    }
+
+    // Clickable chips for the playbook pages actually retrieved for an answer
+    function appendChips(content, sources) {
+      if (!sources || !sources.length) return;
+      var wrap = document.createElement('div');
+      wrap.className = 'cw-sources';
+      var lbl = document.createElement('span');
+      lbl.className = 'cw-sources-label';
+      lbl.textContent = 'Sources';
+      wrap.appendChild(lbl);
+      sources.slice(0, 4).forEach(function (s) {
+        if (!s || !s.url) return;
+        var a = document.createElement('a');
+        a.className = 'cw-source-chip';
+        a.href = s.url; a.textContent = s.title || s.url; a.title = s.title || s.url;
+        a.target = '_blank'; a.rel = 'noopener';
+        wrap.appendChild(a);
+      });
+      content.appendChild(wrap);
+    }
+
+    var COPY_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
+    function makeCopyButton(text) {
+      var copyBtn = document.createElement('button');
+      copyBtn.className = 'cw-copy';
+      copyBtn.innerHTML = COPY_SVG;
+      copyBtn.title = 'Copy to clipboard';
+      copyBtn.onclick = function () {
+        navigator.clipboard.writeText(text).then(function () {
+          copyBtn.innerHTML = '<span style="color:#10b981">&#10003;</span>';
+          setTimeout(function () { copyBtn.innerHTML = COPY_SVG; }, 2000);
+        });
+      };
+      return copyBtn;
+    }
+
+    // Create an empty bot bubble to stream into; returns its div + content element
+    function createBotBubble() {
+      if (messages.children.length > 0) {
+        var divider = document.createElement('div');
+        divider.className = 'cw-msg-divider';
+        messages.appendChild(divider);
+      }
+      var div = document.createElement('div');
+      div.className = 'cw-msg cw-bot';
+      var content = document.createElement('div');
+      content.className = 'cw-msg-content';
+      div.appendChild(content);
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+      return { div: div, content: content };
+    }
+
+    // Finish a streamed bot message: badge, chips, timestamp, copy, persistence
+    function finalizeBot(div, content, text, source, sources) {
+      setBotHtml(content, text);
+      if (source) {
+        var badge = document.createElement('span');
+        badge.className = 'cw-source-badge cw-source-' + source;
+        badge.textContent = source === 'playbook' ? 'Playbook' : source === 'web' ? 'Web' : 'Knowledge';
+        content.appendChild(badge);
+      }
+      appendChips(content, sources);
+      var time = document.createElement('div');
+      time.className = 'cw-time';
+      time.textContent = 'just now';
+      div.appendChild(time);
+      div.appendChild(makeCopyButton(text));
+      conversation.push({ role: 'assistant', content: text });
+      if (conversation.length > 10) conversation.splice(0, conversation.length - 10);
+      transcript.push({ text: text, isUser: false, source: source, sources: sources });
+      if (transcript.length > 20) transcript.splice(0, transcript.length - 20);
+      persist();
+      messages.scrollTop = messages.scrollHeight;
+    }
+
     function addMsg(text, isUser, source, sources, isRestore) {
       if (!started) {
         started = true;
@@ -268,68 +368,27 @@
       if (isUser) {
         content.textContent = text;
       } else {
-        // Convert markdown to HTML
-        var html = renderMarkdown(text);
-
-        // A: Highlight key AI terms
-        html = highlightTerms(html);
-
-        content.innerHTML = html;
-
-        // Add source badge for non-user messages
+        setBotHtml(content, text);
         if (source) {
           var badge = document.createElement('span');
           badge.className = 'cw-source-badge cw-source-' + source;
           badge.textContent = source === 'playbook' ? 'Playbook' : source === 'web' ? 'Web' : 'Knowledge';
           content.appendChild(badge);
         }
-
-        // Honest source chips: the playbook pages actually retrieved for this answer
-        if (sources && sources.length) {
-          var wrap = document.createElement('div');
-          wrap.className = 'cw-sources';
-          var lbl = document.createElement('span');
-          lbl.className = 'cw-sources-label';
-          lbl.textContent = 'Sources';
-          wrap.appendChild(lbl);
-          sources.slice(0, 4).forEach(function (s) {
-            if (!s || !s.url) return;
-            var a = document.createElement('a');
-            a.className = 'cw-source-chip';
-            a.href = s.url;
-            a.textContent = s.title || s.url;
-            a.title = s.title || s.url;
-            wrap.appendChild(a);
-          });
-          content.appendChild(wrap);
-        }
+        appendChips(content, sources);
       }
 
       div.appendChild(content);
 
-      // D: Timestamp
+      // Timestamp
       var time = document.createElement('div');
       time.className = 'cw-time';
       time.textContent = 'just now';
       div.appendChild(time);
 
-      // F: Copy button (bot messages only)
+      // Copy button (bot messages only)
       if (!isUser) {
-        var copyBtn = document.createElement('button');
-        copyBtn.className = 'cw-copy';
-        copyBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
-        copyBtn.title = 'Copy to clipboard';
-        copyBtn.onclick = function(originalText) {
-          return function() {
-            navigator.clipboard.writeText(originalText).then(function() {
-              copyBtn.innerHTML = '<span style="color:#10b981">&#10003;</span>';
-              setTimeout(function() {
-                copyBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
-              }, 2000);
-            });
-          };
-        }(text);
-        div.appendChild(copyBtn);
+        div.appendChild(makeCopyButton(text));
       }
 
       messages.appendChild(div);
@@ -372,25 +431,74 @@
       addMsg(q, true);
       showTyping();
 
+      var bubble = null;   // {div, content} — created lazily on the first token
+      var full = '';
+      var source = null;
+      var sources = null;
+      function ensureBubble() {
+        if (!bubble) { removeTyping(); bubble = createBotBubble(); }
+        return bubble;
+      }
+
       fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: q, history: conversation, pageContext: getPageContext() }),
       })
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        removeTyping();
-        if (data.error) {
-          addMsg('Error: ' + data.error, false);
-        } else if (data.answer && data.answer.trim()) {
-          addMsg(data.answer, false, data.source, data.sources);
-        } else {
-          addMsg('No response received.', false);
+      .then(function(resp) {
+        if (!resp.ok) {
+          return resp.json().then(function(d) { throw new Error(d && d.error ? d.error : ('HTTP ' + resp.status)); });
         }
+        var ct = resp.headers.get('content-type') || '';
+        // Legacy non-streaming JSON response — render in one shot
+        if (ct.indexOf('x-ndjson') === -1 || !resp.body || !resp.body.getReader) {
+          return resp.json().then(function(data) {
+            removeTyping();
+            if (data.error) addMsg('Error: ' + data.error, false);
+            else if (data.answer && data.answer.trim()) addMsg(data.answer, false, data.source, data.sources);
+            else addMsg('No response received.', false);
+          });
+        }
+        // Stream NDJSON frames: {sources} → {delta}* → {done} (or {error})
+        var reader = resp.body.getReader();
+        var decoder = new TextDecoder();
+        var buf = '';
+        function handleLine(line) {
+          if (!line) return;
+          var f;
+          try { f = JSON.parse(line); } catch (e) { return; }
+          if (f.type === 'sources') { sources = f.sources; }
+          else if (f.type === 'delta') {
+            ensureBubble();
+            full += f.text;
+            setBotHtml(bubble.content, full);
+            messages.scrollTop = messages.scrollHeight;
+          }
+          else if (f.type === 'done') { source = f.source; }
+          else if (f.type === 'error') { full = full || ('Error: ' + (f.error || 'request failed')); }
+        }
+        function pump() {
+          return reader.read().then(function(res) {
+            if (res.done) { if (buf.trim()) handleLine(buf.trim()); return; }
+            buf += decoder.decode(res.value, { stream: true });
+            var nl;
+            while ((nl = buf.indexOf('\n')) >= 0) {
+              handleLine(buf.slice(0, nl).trim());
+              buf = buf.slice(nl + 1);
+            }
+            return pump();
+          });
+        }
+        return pump().then(function() {
+          ensureBubble();
+          if (!full) full = 'No response received.';
+          finalizeBot(bubble.div, bubble.content, full, source, sources);
+        });
       })
       .catch(function(e) {
         removeTyping();
-        addMsg('Network error: ' + e.message, false);
+        if (bubble) finalizeBot(bubble.div, bubble.content, full || ('Error: ' + e.message), source, sources);
+        else addMsg('Error: ' + e.message, false);
       })
       .finally(function() {
         isAsking = false;

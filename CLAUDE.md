@@ -398,15 +398,16 @@ The chatbot uses a multi-step pipeline:
 2. **Playbook search** — Each query runs TF-IDF against `search-index.json`, results merged via RRF (k=60). No threshold.
 3. **Web search** — Always runs in parallel via Serper.dev when API key is configured
 4. **Prompt construction** — Playbook context + web results + **current-page context** (title/URL/section headings sent by the widget) combined in system prompt; the bot resolves "this"/"this page" against it
-5. **Groq inference** — Llama 3.3 70B answers with context, temperature 0.3, max 800 tokens
-6. **Source tracking** — Post-checks answer for playbook links → "playbook", "web", or "model"; also returns the deduped list of playbook pages actually retrieved (`sources: [{title, url}]`) for the widget's source chips
-7. **KV logging** — Every query logged to `CHAT_LOGS` KV namespace via `waitUntil`
+5. **Groq inference (streamed)** — Llama 3.3 70B, temperature 0.3, max 800 tokens, `stream: true`. The function relays Groq's SSE as **newline-delimited JSON (NDJSON)** frames over the response body: `{type:'sources'}` first → `{type:'delta',text}` per token → `{type:'done',source}` (or `{type:'error'}`). `Content-Type: application/x-ndjson`. The widget falls back to one-shot rendering if it ever receives a plain JSON body.
+6. **Source tracking** — Post-checks answer for playbook links → "playbook", "web", or "model"; also returns the deduped list of playbook pages actually retrieved (`sources: [{title, url}]`, sent in the first NDJSON frame) for the widget's source chips
+7. **KV logging** — Every query logged to `CHAT_LOGS` KV namespace via `waitUntil` after the stream completes
 
 ### Key Files
 
 | File | Purpose |
 |---|---|
-| `public/chat-widget.js` | Chat widget UI (all JS + CSS inline). 544x544 panel. |
+| `public/chat-widget.js` | Chat widget UI (all JS + CSS inline). 544x544 panel. Streams NDJSON; renders markdown via vendored marked+DOMPurify with a regex fallback. |
+| `public/vendor/marked.min.js`, `public/vendor/purify.min.js` | Self-hosted markdown renderer + HTML sanitizer (pinned: marked 14.1.4, DOMPurify 3.2.4), loaded by the widget |
 | `public/search-index.json` | Auto-generated search index (~700+ chunks) |
 | `scripts/build-search-index.mjs` | Prebuild script — chunks content for search |
 | `functions/api/chat.js` | Cloudflare Pages Function — query rewrite + search + inference |
@@ -414,7 +415,8 @@ The chatbot uses a multi-step pipeline:
 | `src/data/models.ts` | Structured model data for search index and pricing components. Includes `flagship: true` for top model per company |
 
 ### Chat Widget Features
-- Markdown rendering (bold, code blocks, lists, blockquotes, links [text](url), **tables**)
+- **Streaming responses** — answers render token-by-token as they arrive (NDJSON frames; ~0.5s to first token)
+- Markdown rendering via **marked + DOMPurify** (self-hosted in `public/vendor/`), with the legacy regex parser as a graceful fallback; links forced to `target=_blank rel=noopener`
 - Source badges: green (playbook), blue (web), orange (model knowledge)
 - **Source chips** — clickable links to the playbook pages actually retrieved for the answer (from the API's `sources` array)
 - **Page-aware copilot** — sends current page title/URL/headings with each request; quick actions "Explain this page" / "Quiz me on this page"

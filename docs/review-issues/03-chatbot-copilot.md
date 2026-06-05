@@ -31,14 +31,17 @@ The bot runs **Llama 3.3 70B via Groq** (`chat.js:170`) on a site that recommend
 
 ## Acceptance criteria
 
-> **Status:** First batch shipped in commit `0d683bc` (page-context, persistence, source chips, Shift+Enter, quick actions). Streaming and the markdown-lib swap are deferred to follow-up changes; the model-choice question is open.
+> **Status:** Batch 1 (commit `0d683bc`): page-context, persistence, source chips, Shift+Enter, quick actions. Batch 2 (streaming + markdown lib): SSE→NDJSON streaming and self-hosted marked+DOMPurify (regex fallback retained). Only the model-choice question (#6) remains open.
 
 - [x] Bot receives and uses current-page context
-- [ ] Responses stream token-by-token *(deferred — own change)*
+- [x] Responses stream token-by-token *(Groq SSE relayed as NDJSON; ~0.5s to first token)*
 - [x] Conversation survives page navigation within a session
 - [x] Shift+Enter inserts a newline
-- [ ] Markdown rendered by a vetted lib *(deferred — needs CDN/bundling decision)*
+- [x] Markdown rendered by a vetted lib *(marked + DOMPurify, self-hosted; regex fallback)*
 - [x] Source badge reflects actually-retrieved pages *(source chips)*
+
+### Remaining
+- **#6 Model choice** — Llama 3.3 70B via Groq vs a flagship (Claude/GPT). Product decision, still open.
 
 ## References
 
