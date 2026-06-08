@@ -25,10 +25,21 @@ nextVerificationDue: 2026-08-08
 
 import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
 import Breadcrumb from '../../../components/Breadcrumb.astro';
+import Playground from '../../../components/Playground.astro';
 
 <Breadcrumb />
 
 Retrieval-Augmented Generation (RAG) is how you make LLMs answer questions about your data. This guide covers everything from basic concepts to production patterns.
+
+## See the Generation Step in Action
+
+The "G" in RAG: the model answers a question using *only* retrieved context, and refuses when the answer isn't there. The system prompt below plays the role of retrieved chunks — edit it, change the question, and watch how grounding works.
+
+<Playground
+  title="RAG sandbox — grounded answering"
+  defaultSystem={"Answer ONLY using the context below. If the answer isn't in the context, say \"I don't know based on the provided documents.\"\n\nContext:\n- Acme Cloud free tier: 1 project, 1 GB storage.\n- Pro plan: $20/month — unlimited projects, 50 GB, email support.\n- Enterprise: adds SSO and a dedicated SLA.\n- Refunds are processed within 5–7 business days."}
+  defaultPrompt="How much is the Pro plan, and what extra do I get over the free tier?"
+/>
 
 :::important[Key Principle]
 RAG quality is determined by retrieval quality. No amount of prompt engineering can fix bad retrieval. Invest in your embedding model, chunking strategy, and reranking before optimizing prompts.

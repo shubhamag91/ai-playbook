@@ -465,7 +465,7 @@ In-page interactive sandbox: type a prompt → run a **real, streamed** completi
 
 **Guardrails (in `playground.js`):** server-side **model allowlist** (Groq open models only — `llama-3.3-70b-versatile`, `llama-3.1-8b-instant`), prompt/system length caps, `max_tokens` cap, and **best-effort per-IP rate limiting** (30/hour) via KV — uses `env.RATE_LIMIT` if bound, else falls back to `env.CHAT_LOGS`; if no KV is bound it relies on Groq's own limits. Inference runs on Groq's free open models; the cost table estimates what the same token counts would cost on the listed API models.
 
-**Embedded on:** `/deep-dive/prompt-engineering` (more pages — RAG deep-dive, templates — planned).
+**Embedded on:** prompt-engineering deep-dive (prompt sandbox), rag-architecture deep-dive (grounded-answering demo), and all four template pages (chat-api, single-agent, rag-system, multi-agent-crew) with context-tailored default prompts.
 
 ---
 
@@ -541,7 +541,7 @@ Run `fix-quiz-quality.mjs` after any regeneration to catch:
 | **ModelMatrix** | `ModelMatrix.astro` | `/decide/models/guide` (9×9 heatmap) |
 | **ModelSelector** | `ModelSelector.astro` | `/decide/models/guide` |
 | **PathSelector** | `PathSelector.astro` | `/ (homepage)`, `/start/quick-start` |
-| **Playground** | `Playground.astro` | `/deep-dive/prompt-engineering` (live completions via `/api/playground`) |
+| **Playground** | `Playground.astro` | prompt-engineering & rag-architecture deep-dives + all 4 template pages (live completions via `/api/playground`) |
 | **ProgressTracker** | `ProgressTracker.astro` | `/learn/beginner`, `/learn/interview-prep` |
 | **Quiz** | `Quiz.astro` | `/learn/quiz` |
 | **SearchOverride** | `SearchOverride.astro` | Header search bar (with recent searches) |

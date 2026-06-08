@@ -20,10 +20,21 @@ nextVerificationDue: 2026-08-06
 ---
 
 import Breadcrumb from '../../../../components/Breadcrumb.astro';
+import Playground from '../../../../components/Playground.astro';
 
 <Breadcrumb />
 
 A production-ready FastAPI server for a multi-turn chatbot. Includes conversation memory, streaming responses, and error handling.
+
+## Try It Live
+
+Before you deploy the server below, try the core completion call right here — tweak the system prompt and message, and run it for real.
+
+<Playground
+  title="Chat sandbox"
+  defaultSystem="You are a friendly support assistant for a SaaS product. Keep replies short and warm."
+  defaultPrompt="A customer writes: 'I was charged twice this month.' Draft a helpful reply."
+/>
 
 ---
 

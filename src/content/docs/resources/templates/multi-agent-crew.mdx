@@ -20,10 +20,21 @@ nextVerificationDue: 2026-08-06
 ---
 
 import Breadcrumb from '../../../../components/Breadcrumb.astro';
+import Playground from '../../../../components/Playground.astro';
 
 <Breadcrumb />
 
 Multiple AI agents working together with defined roles and responsibilities. Uses CrewAI for orchestration.
+
+## Try It Live
+
+The orchestration prompt is what turns one model into a coordinated crew. Try having the model act as the manager that assigns subtasks and defines hand-offs (this runs the planning, not the full multi-agent loop).
+
+<Playground
+  title="Crew planning sandbox"
+  defaultSystem="You are the manager of an AI crew: a Researcher, a Writer, and an Editor. Given a goal, assign a clear subtask to each agent and define the order they hand off work."
+  defaultPrompt="Goal: produce a 300-word blog post explaining RAG to non-technical readers."
+/>
 
 ---
 

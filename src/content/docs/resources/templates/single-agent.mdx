@@ -20,10 +20,21 @@ nextVerificationDue: 2026-08-06
 ---
 
 import Breadcrumb from '../../../../components/Breadcrumb.astro';
+import Playground from '../../../../components/Playground.astro';
 
 <Breadcrumb />
 
 An AI agent that can use tools to accomplish tasks autonomously. Includes error handling, tool validation, and conversation memory.
+
+## Try It Live
+
+The heart of an agent is its reasoning prompt — how it decomposes a goal into tool-using steps. Try one below (this runs the model's planning, not the full tool loop).
+
+<Playground
+  title="Agent planning sandbox"
+  defaultSystem="You are a task-planning agent. Break the user's goal into a short numbered plan of concrete, tool-using steps. Name the tool each step would call."
+  defaultPrompt="Goal: research the top 3 vector databases and recommend one for a 10M-document RAG system."
+/>
 
 ---
 

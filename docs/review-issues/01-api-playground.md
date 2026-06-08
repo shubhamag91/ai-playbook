@@ -19,16 +19,17 @@ We already have ~80% of the backend: the Cloudflare Pages Function in `functions
 
 ## Acceptance criteria
 
-> **Status:** v1 shipped — `Playground.astro` + `functions/api/playground.js`, embedded on `/deep-dive/prompt-engineering`. Backend verified against real Groq (streamed, ~0.2s first token, usage captured). Remaining: embed on the RAG deep-dive and template pages; optional in-browser markdown rendering of the output.
+> **Status:** Shipped — `Playground.astro` + `functions/api/playground.js`, embedded on the prompt-engineering & rag-architecture deep-dives and all four template pages. Backend verified against real Groq (streamed, ~0.2s first token, usage captured).
 
 - [x] A user can run a real completion from at least one content page without leaving the site
 - [x] Output shows token usage + estimated cost sourced from `models.ts`
 - [x] Demo-key path is rate-limited and works without the user supplying a key *(best-effort per-IP KV, 30/hr; model allowlist + length/token caps)*
 - [x] Mobile-friendly (controls wrap, full-width textareas)
+- [x] Embedded on rag-architecture deep-dive (grounded-answering demo) and all 4 template pages (context-tailored prompts)
 
-### Remaining
-- Embed on `deep-dive/rag-architecture.mdx` and `resources/templates/*` ("Run this" buttons)
-- Optional: render streamed output as markdown (reuse the vendored marked + DOMPurify)
+### Optional follow-ups
+- Render streamed output as markdown (reuse the vendored marked + DOMPurify)
+- Resolve the #6 model question — demo runs on Groq open models; cost table estimates flagship API pricing
 
 ## References
 

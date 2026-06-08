@@ -21,10 +21,21 @@ nextVerificationDue: 2026-08-06
 ---
 
 import Breadcrumb from '../../../../components/Breadcrumb.astro';
+import Playground from '../../../../components/Playground.astro';
 
 <Breadcrumb />
 
 A complete, production-ready RAG (Retrieval-Augmented Generation) implementation. Load documents, embed them, retrieve relevant chunks, and answer questions with Claude.
+
+## Try It Live
+
+This is the `generate_answer` step in isolation: the system prompt stands in for retrieved chunks, and the model answers only from them. Edit the context to see grounding and refusal behaviour.
+
+<Playground
+  title="RAG sandbox — grounded answering"
+  defaultSystem={"You are a helpful assistant answering ONLY from the provided documents. If the answer isn't in them, say you don't have that information. Cite the document name when relevant.\n\nDocument [handbook.txt]:\nEmployees accrue 1.5 vacation days per month. Unused days roll over up to a maximum of 30. Vacation requests need manager approval at least 5 business days in advance."}
+  defaultPrompt="How many vacation days do I earn per year, and how far in advance must I request time off?"
+/>
 
 ---
 
