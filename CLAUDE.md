@@ -432,7 +432,8 @@ The chatbot uses a multi-step pipeline:
 |---|---|---|---|
 | `GROQ_API_KEY` | ✅ | https://console.groq.com | Free tier, rate-limited |
 | `SERPER_API_KEY` | ❌ | https://serper.dev | 2500 free searches/month |
-| `CHAT_LOGS` | ❌ (KV binding) | Cloudflare KV namespace | Logs all chatbot queries |
+| `CHAT_LOGS` | ❌ (KV binding) | Cloudflare KV namespace | Logs all chatbot queries; also the fallback store for playground rate-limiting |
+| `RATE_LIMIT` | ❌ (KV binding) | Cloudflare KV namespace | Per-IP playground rate-limit counters; falls back to `CHAT_LOGS` if unbound |
 
 ### Search Index
 
@@ -450,6 +451,21 @@ Indexes (~700+ chunks):
 ### Admin Dashboard
 
 URL: `/admin/logs` — reviews all logged queries with source badges, filtering, and search. No password currently.
+
+---
+
+## API Playground
+
+In-page interactive sandbox: type a prompt → run a **real, streamed** completion → see token usage + per-model cost estimates. The goal is hands-on practice instead of static reading.
+
+| File | Purpose |
+|---|---|
+| `src/components/Playground.astro` | UI (textareas, model select, output, cost table). Streams NDJSON; cost estimates rendered from `models.ts` via `define:vars`. Wire-once guard supports multiple instances per page. |
+| `functions/api/playground.js` | Generic completion proxy (no RAG). Streams Groq with `stream:true` + `stream_options.include_usage`; relays NDJSON `{delta}* → {done, usage}`. |
+
+**Guardrails (in `playground.js`):** server-side **model allowlist** (Groq open models only — `llama-3.3-70b-versatile`, `llama-3.1-8b-instant`), prompt/system length caps, `max_tokens` cap, and **best-effort per-IP rate limiting** (30/hour) via KV — uses `env.RATE_LIMIT` if bound, else falls back to `env.CHAT_LOGS`; if no KV is bound it relies on Groq's own limits. Inference runs on Groq's free open models; the cost table estimates what the same token counts would cost on the listed API models.
+
+**Embedded on:** `/deep-dive/prompt-engineering` (more pages — RAG deep-dive, templates — planned).
 
 ---
 
@@ -525,6 +541,7 @@ Run `fix-quiz-quality.mjs` after any regeneration to catch:
 | **ModelMatrix** | `ModelMatrix.astro` | `/decide/models/guide` (9×9 heatmap) |
 | **ModelSelector** | `ModelSelector.astro` | `/decide/models/guide` |
 | **PathSelector** | `PathSelector.astro` | `/ (homepage)`, `/start/quick-start` |
+| **Playground** | `Playground.astro` | `/deep-dive/prompt-engineering` (live completions via `/api/playground`) |
 | **ProgressTracker** | `ProgressTracker.astro` | `/learn/beginner`, `/learn/interview-prep` |
 | **Quiz** | `Quiz.astro` | `/learn/quiz` |
 | **SearchOverride** | `SearchOverride.astro` | Header search bar (with recent searches) |

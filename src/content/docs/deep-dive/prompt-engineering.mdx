@@ -21,10 +21,23 @@ nextVerificationDue: 2026-08-08
 ---
 
 import Breadcrumb from '../../../components/Breadcrumb.astro';
+import Playground from '../../../components/Playground.astro';
 
 <Breadcrumb />
 
 How to write prompts that reliably produce high-quality outputs.
+
+---
+
+## Try It Live
+
+Don't just read about prompting — do it. Edit the prompt below, pick a model, and run a real completion. Try toggling the system prompt or making the request more specific and watch the output change.
+
+<Playground
+  title="Prompt sandbox"
+  defaultSystem="You are a concise technical writer."
+  defaultPrompt="Explain how transformers work in 3 sentences for someone with a CS degree."
+/>
 
 ---
 

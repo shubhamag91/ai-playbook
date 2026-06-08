@@ -1,0 +1,174 @@
+---
+// In-page API Playground: type a prompt → run a real completion (streamed) →
+// see token usage + per-model cost estimates. Inference runs on Groq's free
+// open models via /api/playground (rate-limited demo key). Cost estimates use
+// the playbook's model pricing (models.ts — single source of truth).
+import { models } from '../data/models';
+
+export interface Props {
+  title?: string;
+  defaultPrompt?: string;
+  defaultSystem?: string;
+}
+const { title = 'Try it live', defaultPrompt = '', defaultSystem = '' } = Astro.props;
+
+const modelOptions = [
+  { id: 'llama-3.3-70b-versatile', label: 'Llama 3.3 70B' },
+  { id: 'llama-3.1-8b-instant', label: 'Llama 3.1 8B (fastest)' },
+];
+
+// A small, representative set of models for the cost estimate (from models.ts).
+const costModels = models
+  .filter(m => m.inputPrice != null && m.outputPrice != null && m.showInCalculator)
+  .sort((a, b) => (a.calcOrder ?? 99) - (b.calcOrder ?? 99))
+  .slice(0, 5)
+  .map(m => ({ name: m.calcDisplayName || m.name, inputPrice: m.inputPrice, outputPrice: m.outputPrice }));
+---
+
+<div class="pg" data-pg>
+  <div class="pg__head">
+    <span class="pg__title">{title}</span>
+    <span class="pg__badge">● Live · Groq</span>
+  </div>
+
+  <label class="pg__label">System prompt <span class="pg__opt">(optional)</span></label>
+  <textarea class="pg__system" rows="2" placeholder="e.g. You are a terse assistant.">{defaultSystem}</textarea>
+
+  <label class="pg__label">Prompt</label>
+  <textarea class="pg__prompt" rows="4" placeholder="Type a prompt, then Run (⌘/Ctrl+Enter)…">{defaultPrompt}</textarea>
+
+  <div class="pg__controls">
+    <select class="pg__model" aria-label="Model">
+      {modelOptions.map(o => <option value={o.id}>{o.label}</option>)}
+    </select>
+    <button class="pg__run" type="button">Run ▸</button>
+  </div>
+
+  <div class="pg__output" hidden></div>
+  <div class="pg__stats" hidden></div>
+  <p class="pg__note">Demo runs on Groq's free open models (rate-limited). Cost figures estimate what the same token counts would cost on the listed API models.</p>
+</div>
+
+<script define:vars={{ costModels }}>
+  (function () {
+    function wire() {
+      document.querySelectorAll('[data-pg]').forEach(function (root) {
+        if (root.dataset.pgWired) return;
+        root.dataset.pgWired = '1';
+
+        var systemEl = root.querySelector('.pg__system');
+        var promptEl = root.querySelector('.pg__prompt');
+        var modelEl  = root.querySelector('.pg__model');
+        var runBtn   = root.querySelector('.pg__run');
+        var outEl    = root.querySelector('.pg__output');
+        var statsEl  = root.querySelector('.pg__stats');
+        var busy = false;
+
+        function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+        function showStats(usage, ms) {
+          if (!usage) { statsEl.hidden = true; return; }
+          var pt = usage.prompt_tokens || 0, ct = usage.completion_tokens || 0;
+          var rows = costModels.map(function (m) {
+            var cost = (pt / 1e6) * m.inputPrice + (ct / 1e6) * m.outputPrice;
+            return '<tr><td>' + esc(m.name) + '</td><td>$' + cost.toFixed(5) + '</td></tr>';
+          }).join('');
+          statsEl.innerHTML =
+            '<div class="pg__usage"><strong>' + pt + '</strong> tokens in · <strong>' + ct + '</strong> out · ' + (ms / 1000).toFixed(1) + 's</div>' +
+            '<div class="pg__cost-label">Estimated cost at these token counts</div>' +
+            '<table class="pg__cost"><tbody>' + rows + '</tbody></table>';
+          statsEl.hidden = false;
+        }
+
+        function run() {
+          var prompt = (promptEl.value || '').trim();
+          if (!prompt || busy) return;
+          busy = true; runBtn.disabled = true; runBtn.textContent = 'Running…';
+          outEl.hidden = false; outEl.textContent = '…'; statsEl.hidden = true;
+          var full = '', t0 = Date.now();
+
+          fetch('/api/playground', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: prompt, system: systemEl.value || '', model: modelEl.value }),
+          })
+          .then(function (resp) {
+            if (!resp.ok) return resp.json().then(function (d) { throw new Error(d && d.error ? d.error : ('HTTP ' + resp.status)); });
+            var reader = resp.body.getReader(), dec = new TextDecoder(), buf = '', usage = null;
+            function handle(line) {
+              if (!line) return;
+              var f; try { f = JSON.parse(line); } catch (e) { return; }
+              if (f.type === 'delta') { full += f.text; outEl.textContent = full; }
+              else if (f.type === 'done') { usage = f.usage; }
+              else if (f.type === 'error') { throw new Error(f.error || 'request failed'); }
+            }
+            function pump() {
+              return reader.read().then(function (res) {
+                if (res.done) { if (buf.trim()) handle(buf.trim()); return; }
+                buf += dec.decode(res.value, { stream: true });
+                var nl; while ((nl = buf.indexOf('\n')) >= 0) { handle(buf.slice(0, nl).trim()); buf = buf.slice(nl + 1); }
+                return pump();
+              });
+            }
+            return pump().then(function () { showStats(usage, Date.now() - t0); });
+          })
+          .catch(function (e) { outEl.textContent = (full ? full + '\n\n' : '') + '⚠ ' + e.message; })
+          .finally(function () { busy = false; runBtn.disabled = false; runBtn.textContent = 'Run ▸'; });
+        }
+
+        runBtn.addEventListener('click', run);
+        promptEl.addEventListener('keydown', function (e) {
+          if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); run(); }
+        });
+      });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wire);
+    else wire();
+  })();
+</script>
+
+<style>
+  .pg {
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    background: var(--sl-color-gray-6);
+  }
+  .pg__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
+  .pg__title { font-weight: 600; font-size: 0.95rem; }
+  .pg__badge { font-size: 0.65rem; color: #22c55e; font-weight: 600; letter-spacing: 0.02em; }
+  .pg__label { display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--sl-color-gray-3); margin: 0.5rem 0 0.25rem; }
+  .pg__opt { text-transform: none; font-weight: 400; letter-spacing: 0; }
+  .pg__system, .pg__prompt {
+    width: 100%; box-sizing: border-box; resize: vertical;
+    border: 1px solid var(--sl-color-gray-4); border-radius: 8px;
+    background: var(--sl-color-bg); color: var(--sl-color-white);
+    padding: 0.55rem 0.7rem; font-family: inherit; font-size: 0.85rem; line-height: 1.5;
+  }
+  .pg__system:focus, .pg__prompt:focus { outline: none; border-color: var(--sl-color-accent); }
+  .pg__controls { display: flex; gap: 0.5rem; margin-top: 0.6rem; flex-wrap: wrap; }
+  .pg__model {
+    flex: 1; min-width: 160px; padding: 0.5rem 0.65rem; border-radius: 8px;
+    border: 1px solid var(--sl-color-gray-4); background: var(--sl-color-bg);
+    color: var(--sl-color-white); font-family: inherit; font-size: 0.82rem;
+  }
+  .pg__run {
+    padding: 0.5rem 1.1rem; border: none; border-radius: 8px; cursor: pointer;
+    background: var(--sl-color-accent); color: #fff; font-weight: 600; font-size: 0.85rem;
+  }
+  .pg__run:hover:not(:disabled) { filter: brightness(1.08); }
+  .pg__run:disabled { opacity: 0.5; cursor: not-allowed; }
+  .pg__output {
+    margin-top: 0.75rem; padding: 0.7rem 0.85rem; border-radius: 8px;
+    border: 1px solid var(--sl-color-gray-5); background: var(--sl-color-bg);
+    font-size: 0.85rem; line-height: 1.55; white-space: pre-wrap; word-wrap: break-word;
+    min-height: 2.5rem;
+  }
+  .pg__stats { margin-top: 0.6rem; }
+  .pg__usage { font-size: 0.78rem; color: var(--sl-color-gray-2); }
+  .pg__cost-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--sl-color-gray-3); margin: 0.4rem 0 0.2rem; }
+  .pg__cost { width: auto; border-collapse: collapse; font-size: 0.78rem; }
+  .pg__cost td { padding: 0.15rem 0.9rem 0.15rem 0; border: none; }
+  .pg__cost td:nth-child(2) { font-variant-numeric: tabular-nums; color: var(--sl-color-accent); }
+  .pg__note { font-size: 0.68rem; color: var(--sl-color-gray-3); margin: 0.6rem 0 0; }
+</style>
