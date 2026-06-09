@@ -7,6 +7,7 @@ export interface ModelEntry {
   capabilities: string;
   parameters?: string;
   notes?: string;
+  cutoff?: string;  // knowledge cutoff, e.g. "Jan 2026"
   // Model categorization
   flagship?: boolean;  // True for the single top model per company
   // Numeric pricing (per 1M tokens)
@@ -41,6 +42,7 @@ export const models: ModelEntry[] = [
     name: 'Claude Opus 4.8', company: 'Anthropic', latest: true, context: '1M',
     pricing: '$5/$25 per 1M', capabilities: 'reasoning, coding, writing, analysis, vision',
     notes: 'Most capable Claude (May 2026). Best for complex reasoning and agentic coding. Adaptive thinking. Fast Mode $10/$50.',
+    cutoff: 'Jan 2026',
     flagship: true,
     inputPrice: 5, outputPrice: 25,
     showInCalculator: true, calcOrder: 3, calcClass: 'opus', calcFamily: 'Anthropic',
@@ -57,6 +59,7 @@ export const models: ModelEntry[] = [
     name: 'Claude Sonnet 4.6', company: 'Anthropic', latest: true, context: '1M',
     pricing: '$3/$15 per 1M', capabilities: 'coding, reasoning, writing, analysis, vision',
     notes: 'Best balance of speed & quality. Default pick.',
+    cutoff: 'Jan 2026',
     inputPrice: 3, outputPrice: 15,
     showInCalculator: true, calcOrder: 1, calcClass: 'sonnet', calcFamily: 'Anthropic',
     calcDisplayName: 'Claude Sonnet', calcRate: '$3/$15 per 1M', calcBadge: 'Default', calcBadgeClass: 'default',
@@ -67,6 +70,7 @@ export const models: ModelEntry[] = [
     name: 'Claude Haiku 4.5', company: 'Anthropic', latest: true, context: '200K',
     pricing: '$1/$5 per 1M', capabilities: 'classification, routing, summarization, vision',
     notes: 'Ultra-fast, cheapest Claude.',
+    cutoff: 'Jul 2025',
     inputPrice: 1, outputPrice: 5,
     showInCalculator: true, calcOrder: 2, calcClass: 'haiku', calcFamily: 'Anthropic',
     calcDisplayName: 'Claude Haiku', calcRate: '$1/$5 per 1M',
@@ -79,6 +83,7 @@ export const models: ModelEntry[] = [
     name: 'GPT-5.5', company: 'OpenAI', latest: true, context: '1M',
     pricing: '$5/$30 per 1M', capabilities: 'general, coding, writing, reasoning, vision',
     notes: 'Flagship. Reasoning levels none→xhigh. Strong all-around.',
+    cutoff: 'Dec 2025',
     flagship: true,
     inputPrice: 5, outputPrice: 30,
     showInCalculator: true, calcOrder: 5, calcClass: 'gpt', calcFamily: 'OpenAI',
@@ -122,6 +127,7 @@ export const models: ModelEntry[] = [
     name: 'Gemini 3.1 Pro', company: 'Google', latest: true, context: '1M',
     pricing: '$2/$12 per 1M', capabilities: 'reasoning, research, vision, long-context, video',
     notes: 'Flagship Gemini. Best context window, excellent multimodal. Prompts >200K billed $4/$18.',
+    cutoff: 'Jan 2025',
     flagship: true,
     inputPrice: 2, outputPrice: 12,
     showInCalculator: true, calcOrder: 6, calcClass: 'gemini', calcFamily: 'Google',
