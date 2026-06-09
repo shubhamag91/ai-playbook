@@ -105,7 +105,7 @@ export const models: ModelEntry[] = [
     showInSelector: true, selectorId: 'gpt54-mini', speed: 'ultra-fast', costTier: 'budget',
     useCases: ['speed', 'budget', 'routing', 'coding'], bestFor: 'Cost-efficient coding & agents',
   },
-  { name: 'GPT-5.4 nano', company: 'OpenAI', latest: true, context: '400K', pricing: '~$0.15/~$0.60 per 1M', capabilities: 'general, classification, routing', notes: 'Fastest, cheapest. Ideal for high-throughput.', inputPrice: 0.15, outputPrice: 0.60 },
+  { name: 'GPT-5.4 nano', company: 'OpenAI', latest: true, context: '400K', pricing: '$0.20/$1.25 per 1M', capabilities: 'general, classification, routing', notes: 'Fastest, cheapest. Ideal for high-throughput.', inputPrice: 0.20, outputPrice: 1.25 },
   { name: 'GPT-4.1', company: 'OpenAI', latest: false, context: '128K', pricing: '$0.50/$1.50 per 1M', capabilities: 'general, coding', notes: 'Previous gen. Superseded by GPT-5.4 mini.' },
   {
     name: 'o3', company: 'OpenAI', latest: true, context: '128K',
@@ -130,11 +130,11 @@ export const models: ModelEntry[] = [
   {     name: 'Gemini 3.5 Ultra', company: 'Google', latest: true, context: '1M', pricing: '$4/$20 per 1M', capabilities: 'reasoning, research, vision, long-context, design, agentic', notes: 'Most capable Gemini. Advanced reasoning and agentic capabilities.', flagship: true },
   {
     name: 'Gemini 3.5 Flash', company: 'Google', latest: true, context: '1M',
-    pricing: '$0.15/$0.60 per 1M', capabilities: 'reasoning, coding, vision, speed',
-    notes: 'Fast, affordable Gemini. Free tier on AI Studio.',
-    inputPrice: 0.15, outputPrice: 0.60,
+    pricing: '$1.50/$9 per 1M', capabilities: 'reasoning, coding, vision, speed',
+    notes: 'Fast Gemini. $0.15/M cached input (90% off). Free tier on AI Studio.',
+    inputPrice: 1.50, outputPrice: 9,
     showInCalculator: true, calcOrder: 12, calcClass: 'gemini-mini', calcFamily: 'Google',
-    calcDisplayName: 'Gemini 3.5 Flash', calcRate: '$0.15/$0.60 per 1M', calcBadge: 'Fast', calcBadgeClass: 'fastest',
+    calcDisplayName: 'Gemini 3.5 Flash', calcRate: '$1.50/$9 per 1M', calcBadge: 'Fast', calcBadgeClass: 'fastest',
   },
 
   // DeepSeek

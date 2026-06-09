@@ -20,21 +20,25 @@ The provider pages *do* restate each model's headline **pricing + context window
 - **Added `scripts/check-model-consistency.mjs`** — for every current model whose name appears on its vendor page, it verifies the page contains that model's canonical price tokens + context from `models.ts`. Warns by default; `--strict` fails.
 - Wired into `prebuild` (non-strict, won't break deploys) and exposed as `npm run check:models` (strict, for CI).
 
-## Drift the guard found on first run (needs reconciliation — data decision)
+## Drift the guard found on first run — reconciled (web-verified)
 
-`models.ts` is canonical, so these pages should be aligned to it (or `models.ts` corrected):
+Both flags were **real**, and web verification showed `models.ts` was the wrong side in both cases (the hand-curated provider pages were correct):
 
-- **OpenAI · GPT-5.4 nano** — page says `$0.20/$1.25`; `models.ts` says `~$0.15/~$0.60`.
-- **Google · Gemini 3.5 Flash** — page says `$1.50/$9`; `models.ts` says `$0.15/$0.60` (~10× gap). The deepmind page also uses different version naming ("Gemini 3.1 Pro", "Gemini 3 generation") than `models.ts` ("Gemini 3.5 Pro/Ultra/Flash").
+- **OpenAI · GPT-5.4 nano** — verified **$0.20/$1.25**. `models.ts` had `~$0.15/~$0.60` → corrected to match the page + sources.
+- **Google · Gemini 3.5 Flash** — verified **$1.50/$9**. `models.ts` had `$0.15/$0.60`, which is actually the *cached-input* rate ($0.15/M, 90% off) mistaken for the standard rate → corrected to `$1.50/$9` (cached rate noted in the model's `notes`).
 
-These are left for a human call (which number is intended), exactly like the DeepSeek pricing reconciliation in issue #2.
+Strict check (`npm run check:models`) now passes with no drift. Corrections propagate to the homepage tiers and Cost Calculator (both render from `models.ts`).
+
+### Still open (separate, fuzzier — naming, not price)
+The deepmind page and sources call the flagship **"Gemini 3.1 Pro"** ($2/$12), but `models.ts` names it **"Gemini 3.5 Pro"** (same $2/$12). The price agrees; the version label doesn't. Renaming touches `models.ts`, the homepage comparison, and the deepmind page together, so it's left as a deliberate follow-up rather than folded in here.
 
 ## Acceptance criteria
 
 - [x] Drift between provider pages and `models.ts` is detectable automatically
 - [x] Check runs in prebuild (warn) and is available strict for CI (`npm run check:models`)
 - [x] Rich provider pages preserved (no detail loss, no page deletions)
-- [ ] Reconcile the two drifts the guard found (GPT-5.4 nano, Gemini 3.5 Flash) — pending a data decision
+- [x] Reconcile the two drifts the guard found (GPT-5.4 nano, Gemini 3.5 Flash) — web-verified, `models.ts` corrected; strict check passes
+- [ ] (Follow-up, optional) Reconcile Gemini Pro version naming: `models.ts` "Gemini 3.5 Pro" vs sources/page "Gemini 3.1 Pro"
 
 ## References
 
