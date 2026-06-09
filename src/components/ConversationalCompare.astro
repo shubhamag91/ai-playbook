@@ -84,6 +84,7 @@ const rows = productConfig.map(p => {
   return {
     header: m ? `${p.product} (${m.name})` : p.product,
     context, pricing, vision, reasoning,
+    cutoff: m?.cutoff ?? '—',
     webBrowsing: p.webBrowsing, codeExec: p.codeExec,
     subscription: p.subscription, freeLimit: p.freeLimit,
     agentic: p.agentic, bestFor: p.bestFor,
@@ -93,6 +94,7 @@ const rows = productConfig.map(p => {
 // Row definitions: label + key into each resolved row.
 const specRows: { label: string; key: keyof typeof rows[number] }[] = [
   { label: 'Context window', key: 'context' },
+  { label: 'Knowledge cutoff', key: 'cutoff' },
   { label: 'API pricing (in/out per 1M)', key: 'pricing' },
   { label: 'Reasoning model', key: 'reasoning' },
   { label: 'Image input', key: 'vision' },
