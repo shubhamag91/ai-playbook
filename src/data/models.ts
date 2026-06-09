@@ -106,11 +106,11 @@ export const models: ModelEntry[] = [
     useCases: ['speed', 'budget', 'routing', 'coding'], bestFor: 'Cost-efficient coding & agents',
   },
   { name: 'GPT-5.4 nano', company: 'OpenAI', latest: true, context: '400K', pricing: '$0.20/$1.25 per 1M', capabilities: 'general, classification, routing', notes: 'Fastest, cheapest. Ideal for high-throughput.', inputPrice: 0.20, outputPrice: 1.25 },
-  { name: 'GPT-4.1', company: 'OpenAI', latest: false, context: '128K', pricing: '$0.50/$1.50 per 1M', capabilities: 'general, coding', notes: 'Previous gen. Superseded by GPT-5.4 mini.' },
+  { name: 'GPT-4.1', company: 'OpenAI', latest: false, context: '128K', pricing: '$2/$8 per 1M', capabilities: 'general, coding', notes: 'Previous gen. Superseded by GPT-5.4 mini.' },
   {
     name: 'o3', company: 'OpenAI', latest: true, context: '128K',
-    pricing: '$8/$32 per 1M', capabilities: 'reasoning, math, science, coding',
-    notes: 'Dedicated reasoning model. Spends tokens on hidden thinking.',
+    pricing: '$2/$8 per 1M', capabilities: 'reasoning, math, science, coding',
+    notes: 'Dedicated reasoning model. Spends tokens on hidden thinking. 87% cheaper than o1.',
     showInSelector: true, selectorId: 'o3', speed: 'very-slow', costTier: 'premium',
     useCases: ['reasoning'], bestFor: 'Hardest problems (math, logic)',
   },
@@ -187,33 +187,33 @@ export const models: ModelEntry[] = [
   // Moonshot AI
   {
     name: 'Kimi K2.6', company: 'Moonshot AI', latest: true, context: '256K',
-    pricing: '~$0.55/$2.19 per 1M', capabilities: 'reasoning, coding, long-context, vision, design',
-    notes: 'Latest Kimi. Top-5 on Design Arena. Agent swarm capabilities.',
-    inputPrice: 0.55, outputPrice: 2.19,
+    pricing: '~$0.60/$2.50 per 1M', capabilities: 'reasoning, coding, long-context, vision, design',
+    notes: 'Latest Kimi. Top-5 on Design Arena. Agent swarm capabilities. ($0.16/M cached input.)',
+    inputPrice: 0.60, outputPrice: 2.50,
     showInCalculator: true, calcOrder: 13, calcClass: 'kimi', calcFamily: 'Moonshot AI',
-    calcDisplayName: 'Kimi K2.6', calcRate: '~$0.55/$2.19 per 1M', calcBadge: '256K ctx', calcBadgeClass: 'context',
+    calcDisplayName: 'Kimi K2.6', calcRate: '~$0.60/$2.50 per 1M', calcBadge: '256K ctx', calcBadgeClass: 'context',
   },
   { name: 'Kimi K2.5 (Thinking)', company: 'Moonshot AI', latest: false, context: '256K', pricing: '~$0.55/$2.19 per 1M', capabilities: 'reasoning, coding, long-context, design', notes: 'Previous gen with thinking mode.' },
 
   // Zhipu AI
-  { name: 'GLM 5.1', company: 'Zhipu AI', latest: true, context: '128K', pricing: '~$0.50/$2.00 per 1M', capabilities: 'reasoning, coding, multilingual, design', notes: 'Zhipu\'s flagship. Top-5 on Design Arena.', inputPrice: 0.50, outputPrice: 2.00 },
+  { name: 'GLM 5.1', company: 'Zhipu AI', latest: true, context: '200K', pricing: '~$0.98/$3.08 per 1M', capabilities: 'reasoning, coding, multilingual, design', notes: 'Zhipu\'s flagship. Top-5 on Design Arena. Open-weight.', inputPrice: 0.98, outputPrice: 3.08 },
   { name: 'GLM 5 Turbo', company: 'Zhipu AI', latest: true, context: '128K', pricing: '~$0.30/$1.00 per 1M', capabilities: 'reasoning, coding, multilingual, speed', notes: 'Fast inference variant of GLM 5.', inputPrice: 0.30, outputPrice: 1.00 },
-  { name: 'GLM 5', company: 'Zhipu AI', latest: true, context: '128K', pricing: '~$0.40/$1.50 per 1M', capabilities: 'reasoning, coding, multilingual', notes: 'Base GLM 5 model. Strong multilingual performance.', inputPrice: 0.40, outputPrice: 1.50 },
+  { name: 'GLM 5', company: 'Zhipu AI', latest: true, context: '128K', pricing: '~$0.60/$1.92 per 1M', capabilities: 'reasoning, coding, multilingual', notes: 'Base GLM 5 model. Strong multilingual performance.', inputPrice: 0.60, outputPrice: 1.92 },
   { name: 'GLM 4.7', company: 'Zhipu AI', latest: false, context: '128K', pricing: '~$0.30/$1.00 per 1M', capabilities: 'reasoning, coding, multilingual', notes: 'Mid-cycle update between GLM 4 and GLM 5.' },
   { name: 'GLM 4', company: 'Zhipu AI', latest: false, context: '128K', pricing: '~$0.20/$0.80 per 1M', capabilities: 'reasoning, coding, multilingual', notes: 'Previous gen. Still solid for Chinese-language tasks.' },
 
   // Alibaba
   {
     name: 'Qwen 3.6', company: 'Alibaba', latest: true, context: '128K',
-    pricing: '~$0.40/$1.50 per 1M', capabilities: 'reasoning, coding, multilingual, vision',
-    notes: 'Alibaba\'s flagship. Strong across all benchmarks.',
-    inputPrice: 0.40, outputPrice: 1.50,
+    pricing: '~$0.33/$1.95 per 1M', capabilities: 'reasoning, coding, multilingual, vision',
+    notes: 'Alibaba\'s flagship. Strong across all benchmarks. (DashScope direct pricing.)',
+    inputPrice: 0.33, outputPrice: 1.95,
     showInCalculator: true, calcOrder: 11, calcClass: 'qwen', calcFamily: 'Alibaba',
-    calcDisplayName: 'Qwen 3.6', calcRate: '~$0.40/$1.50 per 1M',
+    calcDisplayName: 'Qwen 3.6', calcRate: '~$0.33/$1.95 per 1M',
   },
 
   // MiniMax
-  { name: 'MiniMax M2.7', company: 'MiniMax', latest: true, context: '128K', pricing: '~$0.30/$1.00 per 1M', capabilities: 'reasoning, coding, long-context, vision', notes: 'Independent Chinese AI lab. Strong long-context performance.', inputPrice: 0.30, outputPrice: 1.00 },
+  { name: 'MiniMax M2.7', company: 'MiniMax', latest: true, context: '128K', pricing: '~$0.30/$1.20 per 1M', capabilities: 'reasoning, coding, long-context, vision', notes: 'Independent Chinese AI lab. Strong long-context performance.', inputPrice: 0.30, outputPrice: 1.20 },
 
   // Xiaomi
   { name: 'MiMo M2.7', company: 'Xiaomi', latest: true, context: '128K', pricing: '~$0.25/$0.80 per 1M', capabilities: 'reasoning, coding, vision', notes: 'Xiaomi\'s multimodal model. First major AI release.', inputPrice: 0.25, outputPrice: 0.80 },
