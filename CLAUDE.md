@@ -100,14 +100,14 @@ ai-playbook/
 │   │   ├── models.ts         # Model entries (name, company, pricing, context)
 │   │   ├── trends.ts         # Trending topics (10 entries)
 │   │   └── contributors.ts   # Contributor entries
-│   ├── content/docs/         # ALL MARKDOWN CONTENT (~101 pages)
+│   ├── content/docs/         # ALL MARKDOWN CONTENT (~110 pages)
 │   │   ├── learn/            # Beginner, Builder, Researcher, Interview Prep, Quiz
 │   │   ├── decide/           # Tools Guide, Models Guide, Frameworks, Cost Calculator
 │   │   ├── reference/        # Glossary, Cheatsheets, Confusions, Principles, Benchmarks
 │   │   ├── research/         # What's New, Open-Source Models, Trends, History
 │   │   ├── deep-dive/        # 12 deep dives (How LLMs Work, RAG, Agents, Agent Skills, etc.)
 │   │   ├── community/        # Contributing, audit, help-wanted, contributors
-│   │   └── resources/        # Papers, communities, templates, case studies
+│   │   └── resources/        # Papers, communities, templates, case studies, automations
 │   └── styles/
 │       └── custom.css        # Paperclip-inspired design system (640+ lines)
 ```
@@ -354,6 +354,12 @@ This only works in `.mdx` files, not `.md` files.
 1. Create `src/content/docs/reference/cheatsheets/name.md`
 2. Add frontmatter with `sidebar: { order: N }`
 3. Appears automatically in sidebar (autogenerate)
+
+### Add an automation recipe
+
+1. Create `src/content/docs/resources/automations/name.md`
+2. Add frontmatter with `sidebar: { order: N }`, follow the recipe shape (What it does / flow / n8n steps / prompt / Zapier alt / cost)
+3. Appears automatically in sidebar (autogenerate under Resources → Automations)
 
 ### Add a Mermaid diagram
 
@@ -614,7 +620,7 @@ All workflows auto-create GitHub Issues with reports/checklists.
 
 ## Sidebar Structure
 
-The sidebar is manually configured in `astro.config.mjs`. Current sections (~101 pages):
+The sidebar is manually configured in `astro.config.mjs`. Current sections (~110 pages):
 
 ### Start Here
 Welcome → Quick Start
