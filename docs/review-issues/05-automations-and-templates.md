@@ -28,10 +28,15 @@ Deliver the "practical toolkit / automations" promise that the playbook currentl
 
 ## Acceptance criteria
 
-- [ ] `automations/` section live with ≥3 working, copy-deploy recipes
-- [ ] Every template uses current model IDs and runs without errors as written
-- [ ] Pinecone/OpenAI snippets use current SDK syntax
-- [ ] Misleading "simple text chunks" comment corrected
+> **Status:** Shipped. `resources/automations/` section live (overview + 4 recipes); all 4 templates fixed.
+
+- [x] `automations/` section live with ≥3 working, copy-deploy recipes *(4: inbox triage, meeting notes→actions, RSS→digest, doc→flashcards, + overview with the reusable n8n AI node)*
+- [x] Every template uses current model IDs *(claude-sonnet-4-6)* and runs without errors *(answer_with_memory stub fixed)*
+- [x] Pinecone/OpenAI snippets use current SDK syntax *(Pinecone v3 `Pinecone()`, OpenAI v1 `embeddings.create`)*
+- [x] Misleading "simple text chunks" comment corrected
+
+### Optional follow-up
+- Add "Run in playground" buttons to templates (Playground component exists; not yet embedded per-snippet)
 
 ## References
 

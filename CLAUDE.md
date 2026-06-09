@@ -637,7 +637,7 @@ What's New → Open-Source Models → Chinese AI Ecosystem → Trends → Histor
 - **Production & Operations:** Inference Optimization → Production LLMOps → Evaluation & Testing → LLM Backend Engineering → Observability & Tracing → Safety & Security
 
 ### Resources (collapsed)
-Overview & Downloads → Papers → Build an LLM from Scratch → Communities → Tools & Frameworks → Interview Prep (collapsed: Overview, LLM Engineering, Quantitative Analytics, Machine Learning, System Design, Behavioral, AI Product, AI Data Scientist) → Case Studies → Templates
+Overview & Downloads → Papers → Build an LLM from Scratch → Communities → Tools & Frameworks → Interview Prep (collapsed: Overview, LLM Engineering, Quantitative Analytics, Machine Learning, System Design, Behavioral, AI Product, AI Data Scientist) → Case Studies → Templates → Automations
 
 ### Claude (uncollapsed)
 Ecosystem Overview → Claude Models → API & SDKs → Claude Code → Agent Skills → MCP Protocol → Cowork & Dispatch → Workflows & Best Practices → Enterprise & Deployment

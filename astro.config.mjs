@@ -355,6 +355,7 @@ export default defineConfig({
             },
             { label: 'Case Studies', autogenerate: { directory: 'resources/case-studies' } },
             { label: 'Templates', autogenerate: { directory: 'resources/templates' } },
+            { label: 'Automations', autogenerate: { directory: 'resources/automations' } },
           ],
         },
         {
