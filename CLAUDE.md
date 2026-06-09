@@ -60,6 +60,7 @@ ai-playbook/
 │   └── mindmaps/             # Exported Markmap HTML + source .md
 ├── scripts/
 │   ├── build-search-index.mjs  # Prebuild script — chunks content for chatbot search
+│   ├── check-model-consistency.mjs  # Prebuild guard — flags model price/cutoff drift vs models.ts
 │   └── generate-quiz-bank.mjs  # Generates quiz questions via Groq
 ├── functions/
 │   ├── api/chat.js           # Cloudflare Pages Function — chatbot backend
@@ -358,6 +359,13 @@ This only works in `.mdx` files, not `.md` files.
 
 Just include a ` ```mermaid ``` ` block in any `.md` or `.mdx` file. Renders at build time.
 
+### Update model pricing / add a model
+
+1. Edit `src/data/models.ts` (the single source of truth) — never hardcode prices in pages
+2. Bump `modelsLastVerified` to today's date
+3. Run `npm run check:models` to find any prose pages that now contradict the change, and fix them
+4. `npm run build` — all model-driven UI (homepage comparison, calculator, selector, ToolComparison Models tab, etc.) updates automatically
+
 ### Fix styling
 
 Edit `src/styles/custom.css`. Changes hot-reload in dev mode.
@@ -438,9 +446,9 @@ The chatbot uses a multi-step pipeline:
 
 ### Search Index
 
-Built automatically during `npm run build` via the `prebuild` script:
+Built automatically during `npm run build` via the `prebuild` script (which also runs the model-consistency guard):
 ```bash
-node scripts/build-search-index.mjs
+node scripts/build-search-index.mjs && node scripts/check-model-consistency.mjs
 ```
 
 Indexes (~700+ chunks):
@@ -547,7 +555,8 @@ Run `fix-quiz-quality.mjs` after any regeneration to catch:
 | **Quiz** | `Quiz.astro` | `/learn/quiz` |
 | **SearchOverride** | `SearchOverride.astro` | Header search bar (with recent searches) |
 | **SeeAlso** | `SeeAlso.astro` | Auto-injected on all pages (tag-based) |
-| **ToolComparison** | `ToolComparison.astro` | `/decide/tools/comparison`, `/decide/tools/guide` |
+| **ConversationalCompare** | `ConversationalCompare.astro` | `/` (homepage) — top conversational-AI table; model specs (context, cutoff, pricing, reasoning, vision) from models.ts |
+| **ToolComparison** | `ToolComparison.astro` | `/decide/tools/comparison`, `/decide/tools/guide` — Models tab renders from models.ts; other tabs hand-curated |
 | **TrendingWidget** | `TrendingWidget.astro` | Homepage, `/research/whats-new` |
 
 All use Astro components with inline vanilla JS for interactivity (no React/Vue dependencies).
@@ -560,9 +569,21 @@ All use Astro components with inline vanilla JS for interactivity (no React/Vue 
 |---|---|
 | `src/data/benchmarks.ts` | Benchmark scores (30+ entries, 7 model families) |
 | `src/data/capabilities.ts` | Model capability ratings (9 models × 9 tasks) |
-| `src/data/models.ts` | Structured model data (name, company, pricing, context) |
+| `src/data/models.ts` | **Single source of truth for model facts** — 35 models (name, company, pricing, context, `cutoff`, capabilities, flagship). Also exports `modelsLastVerified` (date stamp). All model-driven UI renders from here; prose is policed against it (see Model Data below) |
 | `src/data/trends.ts` | Trending topics (10 entries with links) |
 | `src/data/contributors.ts` | Contributor entries (name, GitHub, contribution types) |
+
+### Model Data — Single Source of Truth
+
+`src/data/models.ts` is the canonical source for every model fact (name, pricing, context, knowledge `cutoff`, capabilities, `flagship`). **Edit it there — never hardcode a model's price/context/name in a page or component.**
+
+**Renders from `models.ts` (auto-update, never drift):** homepage `ConversationalCompare` table, `ModelTiers` (homepage company sections), `CostCalculator`, `ModelSelector`, `ModelMatrix`, `ModelCompare`, the `ToolComparison` **Models** tab, and the `Playground` cost estimates.
+
+**Consistency guard — `scripts/check-model-consistency.mjs`:** keeps the (legitimately hand-written) prose in sync with `models.ts`. Two passes:
+1. **Provider tables** — verifies each current model's canonical price/context appears on its vendor `models.md` page.
+2. **Prose contradictions** — scans all content pages for inline `$A/$B per 1M` rates next to a model name and flags any that disagree (skips batch/cached rates and variant suffixes like "mini"/"Instant").
+
+Runs in `prebuild` (**warn only**, never breaks the build) and as `npm run check:models` (**`--strict`**, exits non-zero — use in CI). When you change a price in `models.ts`, run the guard; it tells you which prose pages still need updating.
 
 ---
 
