@@ -1,5 +1,27 @@
 ---
 import './ToolComparison.css';
+import { models } from '../data/models';
+
+// The "models" category is derived from models.ts (single source of truth) so
+// prices/names can't drift. The other categories are tools/products, not in models.ts.
+const speedMap = {
+  'ultra-fast': { label: 'Fastest', sort: 0 },
+  'fast': { label: 'Fast', sort: 1 },
+  'medium': { label: 'Medium', sort: 2 },
+  'varies': { label: 'Varies', sort: 2 },
+  'slow': { label: 'Slow', sort: 3 },
+  'very-slow': { label: 'Very Slow', sort: 4 },
+};
+const modelRows = models
+  .filter((m) => m.latest && !m.name.includes('(') && (m.showInSelector || m.showInCalculator))
+  .map((m) => {
+    const sp = speedMap[m.speed] || { label: 'Medium', sort: 2 };
+    const outNum = typeof m.outputPrice === 'number'
+      ? m.outputPrice
+      : parseFloat((m.pricing.match(/\$[0-9.]+\s*\/\s*\$([0-9.]+)/) || [])[1] || '0');
+    const bestFor = m.bestFor || (m.notes && m.notes.length > 48 ? m.notes.slice(0, 45) + '…' : (m.notes || m.capabilities));
+    return { name: m.name, cost: m.pricing, costSort: outNum, speed: sp.label, speedSort: sp.sort, bestFor };
+  });
 
 const toolsByCategory = {
   chat: [
@@ -46,20 +68,7 @@ const toolsByCategory = {
     { name: 'LangChain', cost: 'Open-source', costSort: 0, speed: 'Varies', speedSort: 2, bestFor: 'LLM app framework' },
     { name: 'CrewAI', cost: 'Open-source', costSort: 0, speed: 'Varies', speedSort: 2, bestFor: 'Multi-agent orchestration' },
   ],
-  models: [
-    { name: 'Claude Opus 4.8 (Thinking)', cost: '$5/$25 per 1M', costSort: 25, speed: 'Medium', speedSort: 2, bestFor: 'Complex reasoning, design, coding' },
-    { name: 'Claude Sonnet 4.6', cost: '$3/$15 per 1M', costSort: 15, speed: 'Fast', speedSort: 1, bestFor: 'Default daily driver, balanced' },
-    { name: 'GPT-5.5', cost: '$2/$8 per 1M', costSort: 8, speed: 'Fast', speedSort: 1, bestFor: 'General tasks, all-around' },
-    { name: 'GPT-5.5 Instant', cost: '$0.05/$0.15 per 1M', costSort: 0.15, speed: 'Fastest', speedSort: 0, bestFor: 'Ultra-cheap routing, simple tasks' },
-    { name: 'Gemini 3.1 Pro', cost: '$2/$12 per 1M', costSort: 12, speed: 'Medium', speedSort: 2, bestFor: 'Long-context research, docs' },
-    { name: 'DeepSeek V4 Flash', cost: '$0.14/$0.28 per 1M', costSort: 0.28, speed: 'Fast', speedSort: 1, bestFor: 'Cheapest frontier-quality API' },
-    { name: 'DeepSeek R1', cost: '$0.55/$2.19 per 1M', costSort: 2.19, speed: 'Slow', speedSort: 3, bestFor: 'Open-weight reasoning (o1-class)' },
-    { name: 'Kimi K2.6', cost: '$0.55/$2.19 per 1M', costSort: 2.19, speed: 'Medium', speedSort: 2, bestFor: 'Agent swarm, 256K context' },
-    { name: 'Grok 4.3', cost: '$1.25/$2.50 per 1M', costSort: 2.50, speed: 'Fast', speedSort: 1, bestFor: 'Real-time X/Twitter data' },
-    { name: 'Qwen 3.6', cost: '$0.40/$1.50 per 1M', costSort: 1.5, speed: 'Fast', speedSort: 1, bestFor: 'Multilingual, vision, general' },
-    { name: 'o3', cost: '$10-60 per 1M out', costSort: 60, speed: 'Very Slow', speedSort: 4, bestFor: 'Deep reasoning, hard math, science' },
-    { name: 'Llama 4', cost: 'Free (self-host)', costSort: 0, speed: 'Varies', speedSort: 2, bestFor: 'On-prem, privacy-critical' },
-  ],
+  models: modelRows,
 };
 ---
 
