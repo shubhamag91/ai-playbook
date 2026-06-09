@@ -144,7 +144,7 @@ for (const comp of attrComparisons) {
 const comparisons = [
   {
     topic: 'Latest flagship models comparison',
-    models: modelEntries.filter(m => ['Claude Opus 4.7', 'GPT-5.5', 'Gemini 3.5 Ultra', 'DeepSeek V4 Pro', 'Llama 4 Scout'].includes(m.name)),
+    models: modelEntries.filter(m => ['Claude Opus 4.8', 'GPT-5.5', 'Gemini 3.1 Pro', 'DeepSeek V4 Pro', 'Llama 4 Scout'].includes(m.name)),
     slug: 'models/comparison-flagship',
   },
   {

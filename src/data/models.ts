@@ -38,9 +38,9 @@ export const modelsLastVerified = '2026-06-05';
 export const models: ModelEntry[] = [
   // Anthropic
   {
-    name: 'Claude Opus 4.7', company: 'Anthropic', latest: true, context: '1M',
+    name: 'Claude Opus 4.8', company: 'Anthropic', latest: true, context: '1M',
     pricing: '$5/$25 per 1M', capabilities: 'reasoning, coding, writing, analysis, vision',
-    notes: 'Most capable Claude. Best for complex reasoning and agentic coding. Adaptive thinking.',
+    notes: 'Most capable Claude (May 2026). Best for complex reasoning and agentic coding. Adaptive thinking. Fast Mode $10/$50.',
     flagship: true,
     inputPrice: 5, outputPrice: 25,
     showInCalculator: true, calcOrder: 3, calcClass: 'opus', calcFamily: 'Anthropic',
@@ -48,7 +48,8 @@ export const models: ModelEntry[] = [
     showInSelector: true, selectorId: 'opus', speed: 'slow', costTier: 'premium',
     useCases: ['reasoning', 'writing', 'analysis', 'coding'], bestFor: 'Complex reasoning, long documents',
   },
-  { name: 'Claude Opus 4.7 (Thinking)', company: 'Anthropic', latest: true, context: '1M', pricing: '$5/$25 per 1M', capabilities: 'reasoning, coding, writing, analysis, vision, design', notes: 'Top-ranked on Design Arena. Thinking mode enabled.', inputPrice: 5, outputPrice: 25 },
+  { name: 'Claude Opus 4.8 (Thinking)', company: 'Anthropic', latest: true, context: '1M', pricing: '$5/$25 per 1M', capabilities: 'reasoning, coding, writing, analysis, vision, design', notes: 'Top-ranked on Design Arena. Thinking mode enabled.', inputPrice: 5, outputPrice: 25 },
+  { name: 'Claude Opus 4.7', company: 'Anthropic', latest: false, context: '1M', pricing: '$5/$25 per 1M', capabilities: 'reasoning, coding, writing, analysis, vision', notes: 'Previous flagship (superseded by Opus 4.8, May 2026).' },
   { name: 'Claude Opus 4.6', company: 'Anthropic', latest: false, context: '1M', pricing: '$5/$25 per 1M', capabilities: 'reasoning, coding, writing, analysis, vision', notes: 'Previous gen flagship. Still highly capable.' },
   { name: 'Claude Opus 4.6 (Thinking)', company: 'Anthropic', latest: false, context: '1M', pricing: '$5/$25 per 1M', capabilities: 'reasoning, coding, writing, analysis, vision, design', notes: 'Previous gen with thinking mode. Strong on design benchmarks.' },
   { name: 'Claude Opus 4.5', company: 'Anthropic', latest: false, context: '200K', pricing: '$5/$25 per 1M', capabilities: 'reasoning, coding, writing, analysis', notes: 'Earlier generation. Still available for certain use cases.' },
@@ -118,16 +119,16 @@ export const models: ModelEntry[] = [
 
   // Google
   {
-    name: 'Gemini 3.5 Pro', company: 'Google', latest: true, context: '1M',
+    name: 'Gemini 3.1 Pro', company: 'Google', latest: true, context: '1M',
     pricing: '$2/$12 per 1M', capabilities: 'reasoning, research, vision, long-context, video',
-    notes: 'Best context window. Excellent multimodal.',
+    notes: 'Flagship Gemini. Best context window, excellent multimodal. Prompts >200K billed $4/$18.',
+    flagship: true,
     inputPrice: 2, outputPrice: 12,
     showInCalculator: true, calcOrder: 6, calcClass: 'gemini', calcFamily: 'Google',
-    calcDisplayName: 'Gemini 3.5', calcRate: '$2/$12 per 1M', calcBadge: '1M ctx', calcBadgeClass: 'context',
+    calcDisplayName: 'Gemini 3.1 Pro', calcRate: '$2/$12 per 1M', calcBadge: '1M ctx', calcBadgeClass: 'context',
     showInSelector: true, selectorId: 'gemini', speed: 'medium', costTier: 'mid',
     useCases: ['long-context', 'vision', 'research'], bestFor: 'Massive documents & vision',
   },
-  {     name: 'Gemini 3.5 Ultra', company: 'Google', latest: true, context: '1M', pricing: '$4/$20 per 1M', capabilities: 'reasoning, research, vision, long-context, design, agentic', notes: 'Most capable Gemini. Advanced reasoning and agentic capabilities.', flagship: true },
   {
     name: 'Gemini 3.5 Flash', company: 'Google', latest: true, context: '1M',
     pricing: '$1.50/$9 per 1M', capabilities: 'reasoning, coding, vision, speed',
@@ -159,7 +160,7 @@ export const models: ModelEntry[] = [
     showInSelector: true, selectorId: 'deepseek-pro', speed: 'medium', costTier: 'budget',
     useCases: ['reasoning', 'budget', 'coding'], bestFor: 'Frontier quality at fraction of cost',
   },
-  { name: 'DeepSeek R1', company: 'DeepSeek', latest: true, context: '1M', pricing: '$0.435/$0.87 per 1M', capabilities: 'reasoning, math, science, coding', parameters: '671B (MoE)', notes: 'Dedicated reasoning. Chain-of-thought specialist. Open-weight.' },
+  { name: 'DeepSeek R1', company: 'DeepSeek', latest: false, context: '1M', pricing: '$0.435/$0.87 per 1M', capabilities: 'reasoning, math, science, coding', parameters: '671B (MoE)', notes: 'Deprecated as standalone; folded into V4 Flash thinking mode (deepseek-reasoner). Open-weight.' },
   { name: 'DeepSeek V4', company: 'DeepSeek', latest: false, context: '128K', pricing: '$0.55/$2.19 per 1M', capabilities: 'reasoning, coding, general', parameters: '236B', notes: 'Previous gen. Superseded by V4 Flash and Pro.' },
 
   // Meta
@@ -172,17 +173,19 @@ export const models: ModelEntry[] = [
     useCases: ['open-source', 'privacy'], bestFor: 'Private, self-hosted',
   },
   {     name: 'Llama 4 Scout', company: 'Meta', latest: true, context: '10M', pricing: 'Free (self-host)', capabilities: 'general, coding, long-context, vision', parameters: '109B (MoE)', notes: 'MoE variant. 10M context window, 109B total params.', flagship: true },
-  { name: 'Muse Spark', company: 'Meta', latest: true, context: 'varies', pricing: 'Free (self-host)', capabilities: 'reasoning, coding, design, multimodal', parameters: '~70B', notes: 'Meta\'s latest open-weight model. Replaces Llama. Strong on design.' },
+  { name: 'Muse Spark', company: 'Meta', latest: true, context: 'varies', pricing: 'API-only (preview)', capabilities: 'reasoning, coding, design, multimodal', notes: 'Meta\'s first proprietary (closed-weight) frontier model, Apr 2026. Powers Meta AI; private-preview API. NOT open-weight.' },
 
   // xAI
   {
-    name: 'Grok 3 Pro', company: 'xAI', latest: true, context: '128K',
-    pricing: '$3/$15 per 1M', capabilities: 'reasoning, coding, real-time, vision',
-    parameters: 'Unknown', notes: 'Premium tier of Grok 3. Real-time X/Twitter data.',
-    inputPrice: 3, outputPrice: 15,
+    name: 'Grok 4.3', company: 'xAI', latest: true, context: '1M',
+    pricing: '$1.25/$2.50 per 1M', capabilities: 'reasoning, coding, real-time, vision',
+    parameters: 'Unknown', notes: 'xAI flagship (Apr 2026). Real-time X data. Legacy Grok 3/4 aliases route here.',
+    flagship: true,
+    inputPrice: 1.25, outputPrice: 2.50,
     showInCalculator: true, calcOrder: 10, calcClass: 'grok', calcFamily: 'xAI',
-    calcDisplayName: 'Grok 3 Pro', calcRate: '$3/$15 per 1M', calcBadge: 'Real-time', calcBadgeClass: 'context',
+    calcDisplayName: 'Grok 4.3', calcRate: '$1.25/$2.50 per 1M', calcBadge: 'Real-time', calcBadgeClass: 'context',
   },
+  { name: 'Grok 3 Pro', company: 'xAI', latest: false, context: '128K', pricing: '$3/$15 per 1M', capabilities: 'reasoning, coding, real-time, vision', notes: 'Previous gen. Routes to Grok 4.3.' },
 
   // Moonshot AI
   {
@@ -216,5 +219,5 @@ export const models: ModelEntry[] = [
   { name: 'MiniMax M2.7', company: 'MiniMax', latest: true, context: '128K', pricing: '~$0.30/$1.20 per 1M', capabilities: 'reasoning, coding, long-context, vision', notes: 'Independent Chinese AI lab. Strong long-context performance.', inputPrice: 0.30, outputPrice: 1.20 },
 
   // Xiaomi
-  { name: 'MiMo M2.7', company: 'Xiaomi', latest: true, context: '128K', pricing: '~$0.25/$0.80 per 1M', capabilities: 'reasoning, coding, vision', notes: 'Xiaomi\'s multimodal model. First major AI release.', inputPrice: 0.25, outputPrice: 0.80 },
+  { name: 'MiMo V2.5', company: 'Xiaomi', latest: true, context: '128K', pricing: '~$1/$3 per 1M', capabilities: 'reasoning, coding, vision', notes: 'Xiaomi\'s multimodal model.', inputPrice: 1, outputPrice: 3 },
 ];
