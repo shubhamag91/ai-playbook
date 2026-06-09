@@ -623,7 +623,7 @@ All workflows auto-create GitHub Issues with reports/checklists.
 The sidebar is manually configured in `astro.config.mjs`. Current sections (~110 pages):
 
 ### Start Here
-Welcome → Quick Start
+Welcome → Quick Start → The AI Landscape
 
 ### Learn (collapsed)
 Beginner Path → Builder Path → Researcher Path → Workflows → Interview Prep (collapsed: Overview, LLM Engineering, Quantitative Analytics, Machine Learning, System Design, Behavioral, AI Product) → Knowledge Quiz

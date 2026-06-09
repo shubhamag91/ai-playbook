@@ -241,6 +241,7 @@ export default defineConfig({
           items: [
             { label: 'Welcome', slug: 'index' },
             { label: 'Quick Start', slug: 'start/quick-start' },
+            { label: 'The AI Landscape', slug: 'start/ai-landscape' },
           ],
         },
         {

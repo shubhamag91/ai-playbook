@@ -8,13 +8,12 @@ glossaryLinks:
   - llm
   - inference
   - agent
-lastUpdated: 2026-05-16
-nextVerificationDue: 2026-08-06
+lastUpdated: 2026-06-09
+nextVerificationDue: 2026-09-09
 ---
 
 import PathSelector from '../../components/PathSelector.astro';
 import TrendingWidget from '../../components/TrendingWidget.astro';
-import ModelTiers from '../../components/ModelTiers.astro';
 import ConversationalCompare from '../../components/ConversationalCompare.astro';
 
 A personal reference for navigating the modern AI ecosystem  -  tools, workflows, models, and principles.
@@ -25,135 +24,11 @@ A personal reference for navigating the modern AI ecosystem  -  tools, workflows
 
 ---
 
-## How the Major AI Companies Are Structured
+## New to the AI ecosystem?
 
-Each major lab has a full vertical stack  -  a research org, a model family, products built on those models, and distinct tiers you choose between. Understanding this helps you know exactly what you're paying for and why the same company can have five different products.
+For a structured map of the whole landscape — how each major lab (Anthropic, OpenAI, Google DeepMind, DeepSeek) is organized, and where tools like Cursor, Perplexity, and LangChain fit — see **[The AI Landscape](/start/ai-landscape)**.
 
-### Anthropic
-
-Founded 2021 · Safety-focused · San Francisco
-
-**Model Family:** Claude
-
-**Products:**
-- claude.ai  -  Chat interface (web & mobile)
-- Anthropic API  -  Direct model access for developers
-- Claude Code  -  Agentic CLI for complex coding tasks and refactoring
-- Claude Cowork  -  AI for knowledge work (Jan 2026 research preview); give Claude a goal and it works autonomously on your computer, files, and apps
-- Claude Dispatch  -  Mobile-to-desktop workflow layer (Mar 2026); text tasks from your phone, Claude executes them on your desktop with full computer control; Max/Pro subscribers, macOS
-- Claude for Teams / Enterprise  -  Business plans with data privacy and compliance
-- Powering other apps  -  Cursor, Windsurf use Claude under the hood
-
-**Model Tiers (cheapest → most capable):**
-<ModelTiers provider="Anthropic" />
-All tiers share 1M token context (Opus 4.8 and Sonnet 4.6); Haiku 4.5 has 200K. See the [Claude section](/claude/) for complete ecosystem details.
-
----
-
-### OpenAI
-
-Founded 2015 · Microsoft-backed · San Francisco
-
-**Model Families:**
-- GPT-5.5  -  General purpose (including instant variant for cost-efficiency)
-- o3  -  Test-time compute reasoning (spends tokens on hidden "thinking" before answering)
-
-**Products:**
-- ChatGPT  -  Chat interface (web, mobile, desktop); includes web search, code execution, image generation
-- OpenAI API  -  Direct model access for developers
-- GitHub Copilot  -  Code-powered IDE integration (powered by OpenAI models)
-- DALL-E 3  -  Image generation (inside ChatGPT Plus)
-- Sora  -  Video generation (ChatGPT Pro)
-- ChatGPT Enterprise  -  Business plan, data privacy, org-wide deployment
-
-**Model Tiers (cheapest → most capable):**
-<ModelTiers provider="OpenAI" />
-o3 allocates compute at inference time ("thinking" before answering) — slower but smarter on math, coding, reasoning.
-
----
-
-### Google DeepMind
-
-Founded 1998 (Google) · Alphabet subsidiary · Mountain View
-
-**Model Family:** Gemini + Imagen + Veo (video)
-
-**Products:**
-- Gemini.google.com  -  Chat interface (web & mobile); includes Deep Research mode for extended exploration
-- Google AI Studio  -  Free API access for developers
-- Vertex AI  -  Enterprise API with Google Cloud integration
-- Gemini in Workspace  -  AI inside Docs, Gmail, Sheets, Slides
-- Imagen / ImageFX  -  Image generation with editing
-- Veo 3.1  -  Video generation (cinematic quality)
-- Gemini on Android  -  Native assistant replacing Google Assistant
-
-**Model Tiers (cheapest → most capable):**
-<ModelTiers provider="Google" />
-Gemini 3.1 Pro's 1M-token context enables entire research papers in a single request. See the [DeepMind section](/deepmind/) for complete ecosystem details.
-
----
-
-### DeepSeek (High-Flyer)
-
-Founded 2023 · Hangzhou, China · Open weights (MIT license)
-
-**Model Family:** DeepSeek V4 + R1 (reasoning)
-
-**Products:**
-- chat.deepseek.com  -  Chat interface (free)
-- DeepSeek API  -  Direct access with enterprise pricing
-- Open weights  -  Run locally via Ollama, Hugging Face, or LM Studio (fully self-hosted)
-
-**Model Tiers (cheapest → most capable):**
-<ModelTiers provider="DeepSeek" />
-MIT license = free for commercial use. Most cost-effective by far (15-100x cheaper). See the [DeepSeek section](/deepseek/) for complete ecosystem details.
-
----
-
-## How Other Tools Fit Into This Picture
-
-Not every AI tool builds its own model. Most sit on top of the big three, or rely on the open-source community. Here's where everything else fits:
-
-### Open Weights  -  No product, just models
-
-Meta (Llama), Mistral, Google (Gemma), Microsoft (Phi-4), Yi (01.AI)
-
-These companies release model weights publicly but don't operate a major consumer product. They build the engine and let the community use it.
-
-**How you access them:**
-- Ollama (run locally)
-- Hugging Face
-- Replicate
-- Together AI
-- LM Studio
-
----
-
-### Sits on top of the big three
-
-Perplexity, Microsoft Copilot, GitHub Copilot, Cursor, Windsurf, Aider
-
-These products don't build their own foundation models. They call the OpenAI, Anthropic, or Google APIs and wrap them in specialized experiences (often agentic ones).
-
-- **Perplexity** → Uses Claude + GPT-4o + proprietary search and synthesis
-- **Microsoft Copilot** → Powered by OpenAI GPT-4o with web integration
-- **GitHub Copilot** → Powered by OpenAI models (code-optimized)
-- **Cursor** → Agentic IDE using Claude Sonnet or GPT-4o (you choose); 78% SWE-bench
-- **Windsurf** → Agentic IDE with cascading AI; uses Claude or Codeium models; 75% SWE-bench
-- **Aider** → Git-native AI coding agent; terminal-based, works with Claude or GPT-4o
-
----
-
-### Infrastructure & Routing
-
-LangChain, LlamaIndex, OpenRouter, CrewAI
-
-These tools don't provide AI themselves  -  they help you build systems that connect to and orchestrate multiple models and data sources.
-
-- **OpenRouter** → single API to route between 200+ models
-- **LangChain** → framework to chain LLM calls and tools
-- **LlamaIndex** → connects your data to any LLM
-- **CrewAI** → orchestrates multiple AI agents working together
+Otherwise, pick a path above, scan the comparison below, or jump into the [Models Decision Guide](/decide/models/guide).
 
 ---
 
