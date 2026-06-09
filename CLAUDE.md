@@ -415,6 +415,7 @@ The chatbot uses a multi-step pipeline:
 | `src/data/models.ts` | Structured model data for search index and pricing components. Includes `flagship: true` for top model per company |
 
 ### Chat Widget Features
+- **Model attribution** — header reads "Powered by Llama 3.3 70B · Groq" (transparent open-model choice; the site recommends flagships but the bot honestly runs a free open model)
 - **Streaming responses** — answers render token-by-token as they arrive (NDJSON frames; ~0.5s to first token)
 - Markdown rendering via **marked + DOMPurify** (self-hosted in `public/vendor/`), with the legacy regex parser as a graceful fallback; links forced to `target=_blank rel=noopener`
 - Source badges: green (playbook), blue (web), orange (model knowledge)

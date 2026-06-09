@@ -29,7 +29,8 @@ We already have ~80% of the backend: the Cloudflare Pages Function in `functions
 
 ### Optional follow-ups
 - Render streamed output as markdown (reuse the vendored marked + DOMPurify)
-- Resolve the #6 model question — demo runs on Groq open models; cost table estimates flagship API pricing
+
+> Model question (#6) resolved: own the open-model choice. Demo runs on Groq open models (named in the model picker); the cost table estimates flagship API pricing for comparison.
 
 ## References
 

@@ -40,8 +40,8 @@ The bot runs **Llama 3.3 70B via Groq** (`chat.js:170`) on a site that recommend
 - [x] Markdown rendered by a vetted lib *(marked + DOMPurify, self-hosted; regex fallback)*
 - [x] Source badge reflects actually-retrieved pages *(source chips)*
 
-### Remaining
-- **#6 Model choice** — Llama 3.3 70B via Groq vs a flagship (Claude/GPT). Product decision, still open.
+### Resolved
+- **#6 Model choice** — Decided: **own the open-model choice** (transparent, $0). Keep Llama 3.3 70B via Groq; the widget header now reads "Powered by Llama 3.3 70B · Groq". On-brand for a site that also champions open models, with zero cost/abuse risk.
 
 ## References
 
