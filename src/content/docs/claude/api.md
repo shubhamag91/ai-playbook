@@ -69,7 +69,7 @@ The Messages API is the primary endpoint. Key capabilities:
 
 ```python
 message = client.messages.create(
-    model="claude-opus-4-7",
+    model="claude-opus-4-8",
     max_tokens=1024,
     messages=[{
         "role": "user",
@@ -194,7 +194,7 @@ message = client.messages.beta.batches.create(
 
 | Model | Batch Input | Batch Output | vs Standard |
 |---|---|---|---|
-| Opus 4.7 | $2.50 / 1M | $12.50 / 1M | 50% off |
+| Opus 4.8 | $2.50 / 1M | $12.50 / 1M | 50% off |
 | Sonnet 4.6 | $1.50 / 1M | $7.50 / 1M | 50% off |
 | Haiku 4.5 | $0.50 / 1M | $2.50 / 1M | 50% off |
 

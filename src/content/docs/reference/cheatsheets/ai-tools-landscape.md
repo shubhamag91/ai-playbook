@@ -19,10 +19,10 @@ sidebar:
 
 | Tool | Best Model | Cost | Killer Feature | Use Case |
 |---|---|---|---|---|
-| **Claude.ai** | Claude Opus 4.7 / Sonnet 4.6 | $20/mo Pro | 400K context, best writing | Writing, long docs, analysis |
+| **Claude.ai** | Claude Opus 4.8 / Sonnet 4.6 | $20/mo Pro | 1M context, best writing | Writing, long docs, analysis |
 | **ChatGPT** | GPT-5.5 / GPT-5.5 Instant | $20/mo Plus | Web search + file analysis | General tasks, web research |
 | **Gemini** | Gemini 3.1 Pro | $20/mo (or $7.99 Plus) | 1M context, Deep Research | Research, long documents |
-| **Grok** | Grok 3 | X Premium or API | Real-time X/Twitter data | Current events, real-time info |
+| **Grok** | Grok 4.3 | X Premium or API | Real-time X/Twitter data | Current events, real-time info |
 | **Perplexity** | Claude + GPT-4o + search | $20/mo Pro | Cited sources always | Research with attribution |
 
 ## Writing & Content Creation
@@ -171,5 +171,5 @@ For a comprehensive decision tree with detailed recommendations, see the [Tools 
 | Live video analysis | Claude API + streaming | Pay-per-token |
 | Real-time transcription | OpenAI Whisper API | $0.02/minute |
 | Live translation | Google Translate API + LLM | Variable |
-| Stock market monitoring | Grok 3 API | API pricing |
+| Stock market monitoring | Grok 4.3 API | API pricing |
 | Autonomous vehicles | Custom models (not yet consumer-facing) | Enterprise |

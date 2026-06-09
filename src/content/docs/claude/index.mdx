@@ -15,7 +15,7 @@ glossaryLinks:
   - inference
 tldr:
   - "Anthropic's ecosystem spans 12+ products: Claude API, Claude Code (Terminal/VS Code/Desktop/Web), MCP protocol, Agent Skills, Dispatch, Cowork, and more"
-  - "Three model tiers: Opus 4.7 ($5/$25, 1M context), Sonnet 4.6 ($3/$15, 1M), Haiku 4.5 ($1/$5, 200K)"
+  - "Three model tiers: Opus 4.8 ($5/$25, 1M context), Sonnet 4.6 ($3/$15, 1M), Haiku 4.5 ($1/$5, 200K)"
   - "Claude Code supports 7 surfaces: Terminal, VS Code, JetBrains, Desktop, Web, iOS, and CI/CD"
   - "MCP is the open standard for connecting AI to external tools and data — supported across Claude, ChatGPT, and 32+ tools"
 lastUpdated: 2026-05-22
@@ -28,7 +28,7 @@ Claude is Anthropic's family of AI models and the full platform ecosystem built 
 
 ```mermaid
 flowchart LR
-    A["Claude Models\nOpus 4.7 · Sonnet 4.6 · Haiku 4.5"] --> B["Claude API\nMessages · Caching · Batch · Tools"]
+    A["Claude Models\nOpus 4.8 · Sonnet 4.6 · Haiku 4.5"] --> B["Claude API\nMessages · Caching · Batch · Tools"]
     B --> C["Developer Platform\nClaude Code · MCP · SDKs · Skills"]
     B --> D["End Products\nclaude.ai · Teams · Cowork · Dispatch"]
     C --> D
@@ -55,11 +55,11 @@ flowchart LR
 
 | Model | API Price (in/out) | Context | Best For |
 |---|---|---|---|
-| **Claude Opus 4.7** | $5 / $25 per 1M | 1M tokens | Complex reasoning, agentic coding, long docs |
+| **Claude Opus 4.8** | $5 / $25 per 1M | 1M tokens | Complex reasoning, agentic coding, long docs |
 | **Claude Sonnet 4.6** | $3 / $15 per 1M | 1M tokens | Balanced speed + intelligence, most workloads |
 | **Claude Haiku 4.5** | $1 / $5 per 1M | 200K tokens | Fastest, near-frontier at lowest cost |
 
-> **Note:** Playbook previously referenced Opus at $15/$75 (Opus 4.1 pricing). Opus 4.7 dropped pricing by 67% while gaining 1M context and adaptive thinking. See [Claude Models](/claude/models) for detailed benchmarks and comparison.
+> **Note:** Opus pricing dropped 67% from Opus 4.1's $15/$75 to $5/$25 (with Opus 4.7); **Opus 4.8** (May 2026) is the current flagship at the same $5/$25 with 1M context and adaptive thinking. See [Claude Models](/claude/models) for detailed benchmarks and comparison.
 
 ## Decision Tree: Which Claude Product?
 

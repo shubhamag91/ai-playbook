@@ -43,7 +43,7 @@ For the full tool comparison tables across all categories, see the [Tools Guide]
 **GPT-5.5 Instant**  -  Replies in <1s, great for real-time apps. Good quality for the speed.
 
 ### 🏆 Best Quality
-**Claude Opus 4.7**  -  Longest context, most thoughtful. Slower, more expensive.
+**Claude Opus 4.8**  -  Longest context, most thoughtful. Slower, more expensive.
 
 ### 💰 Cheapest
 **DeepSeek V4**  -  10–50x less than others. Quality is surprisingly good for reasoning.

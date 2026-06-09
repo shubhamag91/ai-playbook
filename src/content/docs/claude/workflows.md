@@ -153,7 +153,7 @@ def route_query(query, complexity="auto"):
     elif complexity == "medium":
         return sonnet.messages.create(model="claude-sonnet-4-6", ...)
     else:
-        return opus.messages.create(model="claude-opus-4-7", ...)
+        return opus.messages.create(model="claude-opus-4-8", ...)
 ```
 
 ### 2. Prompt Caching

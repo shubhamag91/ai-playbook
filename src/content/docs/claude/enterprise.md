@@ -80,7 +80,7 @@ Token usage → USD pricing → CCU conversion → AWS Marketplace billing → M
 
 | Model on Bedrock | Global Endpoint | Regional Endpoint |
 |---|---|---|
-| Claude Opus 4.7 | Standard pricing | 10% premium |
+| Claude Opus 4.8 | Standard pricing | 10% premium |
 | Claude Sonnet 4.6 | Standard pricing | 10% premium |
 
 ### 4. Vertex AI (Google Cloud)
@@ -137,7 +137,7 @@ Anthropic provides advance notice for model deprecations:
 | Model | Status | Retirement Date | Migrate To |
 |---|---|---|---|
 | Claude Sonnet 4 | **Deprecated** | June 15, 2026 | Sonnet 4.6 |
-| Claude Opus 4 | **Deprecated** | June 15, 2026 | Opus 4.7 |
+| Claude Opus 4 | **Deprecated** | June 15, 2026 | Opus 4.8 |
 | Claude Haiku 3.5 | **Retired** (except Bedrock/Vertex) | Already retired | Haiku 4.5 |
 
 See [Anthropic's deprecation policy](https://docs.anthropic.com/en/docs/about-claude/model-deprecations) for full schedule.

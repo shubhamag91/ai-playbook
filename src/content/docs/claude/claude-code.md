@@ -196,7 +196,7 @@ Run Claude on a schedule — even when your computer is off:
 | Feature | Claude Code | Cursor | GitHub Copilot |
 |---|---|---|---|
 | **Primary interface** | Terminal CLI | IDE fork (VSCode-based) | IDE extension |
-| **Model** | Claude Opus 4.7 / Sonnet 4.6 | Claude Sonnet + GPT-4o | GPT-4o + Codex |
+| **Model** | Claude Opus 4.8 / Sonnet 4.6 | Claude Sonnet + GPT-4o | GPT-4o + Codex |
 | **Codebase awareness** | 1M context, reads all files | `.cursorrules` context | Repository context |
 | **Git integration** | Native: commits, PRs, branches | Built-in source control | Copilot Chat in PRs |
 | **Multi-file edits** | Full project scope | Multi-file via inline | Context-limit aware |
