@@ -284,7 +284,7 @@ Audit log (query, context used, answer, user_id, timestamp)
 
 **Q: Design a multi-model routing system to minimize cost while maintaining quality.**
 
-**Problem:** 95% of queries are simple (summary, extraction) — sending all to Claude Opus ($15/$75 per 1M) is wasteful.
+**Problem:** 95% of queries are simple (summary, extraction) — sending all to Claude Opus ($5/$25 per 1M) is wasteful.
 
 **Solution — cascade router:**
 
@@ -293,9 +293,9 @@ Incoming query
     ↓
 Query classifier (difficulty + intent)
     ↓
-[Simple/low-risk] → Haiku / GPT-5.5 Instant  (<$0.80/$4 per 1M)
-[Medium complexity] → Sonnet / GPT-5.5         ($3/$15 per 1M)
-[High complexity, reasoning] → Opus / o3       ($15/$75 per 1M)
+[Simple/low-risk] → Haiku / GPT-5.5 Instant  (cheapest tier)
+[Medium complexity] → Sonnet / GPT-5.5         (mid-tier cost)
+[High complexity, reasoning] → Opus / o3       (premium tier)
 [Sensitive/regulated] → On-prem model          ($infra)
 ```
 

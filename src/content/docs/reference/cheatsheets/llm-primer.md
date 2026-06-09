@@ -40,10 +40,10 @@ A **Large Language Model** is software that predicts the next word by learning p
 
 | Model | Best For | Context | Cost | Training Data |
 |-------|----------|---------|------|---|
-| **Claude Opus 4.7** | Writing, reasoning, analysis | 400K tokens | $15/$75 per 1M input/output | April 2024 |
-| **GPT-5.5** | Speed, all-purpose | 128K tokens | $2/$8 per 1M | April 2024 |
+| **Claude Opus 4.8** | Writing, reasoning, analysis | 1M tokens | $5/$25 per 1M input/output | April 2024 |
+| **GPT-5.5** | Speed, all-purpose | 1M tokens | $5/$30 per 1M | April 2024 |
 | **Gemini 3.1 Pro** | Long documents, research | 1M tokens | $2/$12 per 1M (free tier available) | April 2024 |
-| **Claude Sonnet 4.6** | Balanced, coding | 200K tokens | $3/$15 per 1M | April 2024 |
+| **Claude Sonnet 4.6** | Balanced, coding | 1M tokens | $3/$15 per 1M | April 2024 |
 | **DeepSeek V4** | Cost-conscious teams | 256K tokens | 10–50x cheaper | Late 2024 |
 
 ---
