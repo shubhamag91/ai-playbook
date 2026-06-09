@@ -90,7 +90,7 @@ You are part of a team working on a task. Think carefully and contribute your ex
 Provide your analysis and recommendations based on your expertise."""
         
         response = client.messages.create(
-            model="claude-3-5-sonnet-20241022",
+            model="claude-sonnet-4-6",
             max_tokens=1024,
             system=system,
             messages=[{"role": "user", "content": prompt}]

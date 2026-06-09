@@ -189,7 +189,7 @@ def execute_tool(tool_name: str, tool_input: dict) -> Any:
         return {"error": f"Tool error: {str(e)}"}
 
 class Agent:
-    def __init__(self, model: str = "claude-3-5-sonnet-20241022", max_iterations: int = 10):
+    def __init__(self, model: str = "claude-sonnet-4-6", max_iterations: int = 10):
         self.model = model
         self.max_iterations = max_iterations
         self.messages = []

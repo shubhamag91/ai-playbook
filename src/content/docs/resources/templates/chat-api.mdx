@@ -145,7 +145,7 @@ def chat(msg: ChatMessage):
     # Get response from Claude
     try:
         response = client.messages.create(
-            model="claude-3-5-sonnet-20241022",
+            model="claude-sonnet-4-6",
             max_tokens=1024,
             system=conv["system_prompt"],
             messages=conv["messages"]
@@ -198,7 +198,7 @@ def chat_stream(msg: ChatMessage):
             full_response = ""
             
             with client.messages.stream(
-                model="claude-3-5-sonnet-20241022",
+                model="claude-sonnet-4-6",
                 max_tokens=1024,
                 system=conv["system_prompt"],
                 messages=conv["messages"]

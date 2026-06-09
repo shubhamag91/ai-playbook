@@ -80,7 +80,7 @@ class RAGSystem:
             name=collection_name,
             metadata={"hnsw:space": "cosine"}
         )
-        self.model = "claude-3-5-sonnet-20241022"
+        self.model = "claude-sonnet-4-6"
 
     def add_documents(self, documents: list[dict]) -> None:
         """
@@ -97,8 +97,9 @@ class RAGSystem:
             ]
         """
         for doc in documents:
-            # In production, use embedding API
-            # For demo, use simple text chunks
+            # Chroma embeds each document with its built-in model (all-MiniLM-L6-v2).
+            # For production-grade retrieval, pass your own embedding_function when
+            # creating the collection (e.g. OpenAI/Cohere embeddings).
             self.collection.add(
                 ids=[doc["id"]],
                 documents=[doc["text"]],
@@ -260,28 +261,25 @@ if __name__ == "__main__":
 Replace Chroma with Pinecone:
 
 ```python
-import pinecone
+from pinecone import Pinecone
 from openai import OpenAI
 
-# Initialize Pinecone
-pinecone.init(api_key=os.getenv("PINECONE_API_KEY"))
-index = pinecone.Index("my-index")
-
-# Embed documents with OpenAI
+# Initialize clients (Pinecone SDK v3+, OpenAI SDK v1+)
+pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
+index = pc.Index("my-index")
 openai_client = OpenAI()
-embedding = openai_client.Embedding.create(
+
+# Embed a document with OpenAI
+resp = openai_client.embeddings.create(
     input=text,
-    model="text-embedding-3-small"
+    model="text-embedding-3-small",
 )
+embedding = resp.data[0].embedding
 
 # Store in Pinecone
 index.upsert(
     vectors=[
-        {
-            "id": doc_id,
-            "values": embedding["data"][0]["embedding"],
-            "metadata": {"text": text}
-        }
+        {"id": doc_id, "values": embedding, "metadata": {"text": text}}
     ]
 )
 
@@ -289,7 +287,7 @@ index.upsert(
 results = index.query(
     vector=query_embedding,
     top_k=3,
-    include_metadata=True
+    include_metadata=True,
 )
 ```
 
@@ -310,23 +308,36 @@ class ConversationalRAG(RAGSystem):
         
         # Retrieve documents
         retrieved = self.retrieve(query, top_k=3)
-        
-        # Generate answer with history
-        system_prompt = """You are a helpful assistant. Remember the conversation context.
-        Answer based on provided documents AND conversation history."""
-        
-        messages = [
-            {"role": "user", "content": f"Conversation history:\n{history_context}\n\nNew question: {query}"}
-        ]
-        
-        # ... generate answer ...
-        
+        context_text = "\n\n".join(
+            f"Document: {d['metadata'].get('source', 'Unknown')}\n{d['text']}"
+            for d in retrieved
+        )
+
+        # Generate answer using both the documents and the conversation history
+        system_prompt = (
+            "You are a helpful assistant. Answer using the provided documents and "
+            "the prior conversation. If the answer isn't in the documents, say so."
+        )
+        response = client.messages.create(
+            model=self.model,
+            max_tokens=1024,
+            system=system_prompt,
+            messages=[
+                {
+                    "role": "user",
+                    "content": (
+                        f"Conversation so far:\n{history_context}\n\n"
+                        f"Documents:\n{context_text}\n\n"
+                        f"New question: {query}"
+                    ),
+                }
+            ],
+        )
+        answer = response.content[0].text
+
         # Store in history
-        self.conversation_history.append({
-            "user": query,
-            "assistant": answer
-        })
-        
+        self.conversation_history.append({"user": query, "assistant": answer})
+
         return {"answer": answer, "sources": [d["metadata"].get("source") for d in retrieved]}
 ```
 
