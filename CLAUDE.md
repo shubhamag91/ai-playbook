@@ -194,7 +194,9 @@ $$
 $$
 ```
 
-KaTeX stylesheet is loaded via CDN in `astro.config.mjs`. Avoid unmatched `$` signs — they break rendering.
+KaTeX stylesheet is **self-hosted** at `public/vendor/katex/` (loaded in `astro.config.mjs`). Avoid unmatched `$` signs — they break rendering.
+
+**Offline-friendly assets:** KaTeX (CSS + fonts), Mermaid (self-hosted UMD, lazy-loaded only on pages with diagrams), and the web fonts (Inter / Instrument Serif / JetBrains Mono) are all vendored under `public/vendor/` — so content pages render fully offline (no CDN). Exceptions that still need the network: the AI chatbot + playground (call Groq), and the two Markmap mindmaps (`public/mindmaps/*.html` still load d3/markmap from jsdelivr).
 
 ### SVG Infographics
 

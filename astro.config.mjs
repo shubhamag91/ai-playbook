@@ -110,44 +110,15 @@ export default defineConfig({
         {
           tag: 'link',
           attrs: {
-            rel: 'preconnect',
-            href: 'https://cdn.jsdelivr.net',
-          },
-        },
-        {
-          tag: 'link',
-          attrs: {
-            rel: 'preconnect',
-            href: 'https://fonts.googleapis.com',
-          },
-        },
-        {
-          tag: 'link',
-          attrs: {
-            rel: 'preconnect',
-            href: 'https://fonts.gstatic.com',
-            crossorigin: true,
+            rel: 'stylesheet',
+            href: '/vendor/fonts/fonts.css',
           },
         },
         {
           tag: 'link',
           attrs: {
             rel: 'stylesheet',
-            href: 'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap',
-          },
-        },
-        {
-          tag: 'link',
-          attrs: {
-            rel: 'dns-prefetch',
-            href: 'https://cdn.jsdelivr.net',
-          },
-        },
-        {
-          tag: 'link',
-          attrs: {
-            rel: 'stylesheet',
-            href: 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css',
+            href: '/vendor/katex/katex.min.css',
           },
         },
         // Open Graph image for social sharing
@@ -199,32 +170,44 @@ export default defineConfig({
         },
         {
           tag: 'script',
-          attrs: { type: 'module' },
+          attrs: {},
           content: `
-            import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-            const render = () => {
-              const isDark = document.documentElement.dataset.theme === 'dark';
-              mermaid.initialize({ startOnLoad: false, theme: isDark ? 'dark' : 'default', securityLevel: 'loose' });
-              document.querySelectorAll('pre > code.language-mermaid').forEach((el, i) => {
-                const pre = el.parentElement;
-                if (!pre || pre.dataset.mermaidProcessed) return;
-                const container = document.createElement('div');
-                container.className = 'mermaid';
-                container.textContent = el.textContent;
-                pre.replaceWith(container);
-              });
-              mermaid.run({ querySelector: '.mermaid' }).catch(() => {});
-            };
-            document.addEventListener('DOMContentLoaded', render);
-            // Re-render on Starlight theme toggle
-            new MutationObserver(() => {
-              document.querySelectorAll('.mermaid[data-processed]').forEach(el => {
-                el.removeAttribute('data-processed');
-                const src = el.getAttribute('data-src-mermaid');
-                if (src) el.textContent = src;
-              });
-              render();
-            }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+            (function () {
+              function render() {
+                var mermaid = window.mermaid;
+                if (!mermaid) return;
+                var isDark = document.documentElement.dataset.theme === 'dark';
+                mermaid.initialize({ startOnLoad: false, theme: isDark ? 'dark' : 'default', securityLevel: 'loose' });
+                document.querySelectorAll('pre > code.language-mermaid').forEach(function (el) {
+                  var pre = el.parentElement;
+                  if (!pre || pre.dataset.mermaidProcessed) return;
+                  var container = document.createElement('div');
+                  container.className = 'mermaid';
+                  container.textContent = el.textContent;
+                  pre.replaceWith(container);
+                });
+                mermaid.run({ querySelector: '.mermaid' }).catch(function () {});
+              }
+              function boot() {
+                // Self-hosted Mermaid, lazy-loaded only on pages that have diagrams
+                if (!document.querySelector('pre > code.language-mermaid, .mermaid')) return;
+                if (window.mermaid) { render(); return; }
+                var s = document.createElement('script');
+                s.src = '/vendor/mermaid/mermaid.min.js';
+                s.onload = render;
+                document.head.appendChild(s);
+              }
+              document.addEventListener('DOMContentLoaded', boot);
+              new MutationObserver(function () {
+                if (!window.mermaid) return;
+                document.querySelectorAll('.mermaid[data-processed]').forEach(function (el) {
+                  el.removeAttribute('data-processed');
+                  var src = el.getAttribute('data-src-mermaid');
+                  if (src) el.textContent = src;
+                });
+                render();
+              }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+            })();
           `,
         },
       ],
