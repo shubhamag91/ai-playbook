@@ -1,33 +1,42 @@
-## Goal
+## Status: re-scoped after audit (most of the original premise didn't hold)
 
-Cut the largest source of redundancy and maintenance tax in the site: the four near-identical provider sections and the scattered, duplicated model guides. Finish the Phase-2 IA consolidation already noted in the project.
+The original issue assumed the provider sections were redundant sprawl and the model guides were duplicates. A direct audit of the repo disproved most of that. This doc now records the findings and the **narrow, real** action that came out of it.
 
-## Why
+## Audit: original claims vs. reality
 
-- **Provider sprawl:** `claude/`, `openai/`, `deepmind/`, `deepseek/` are each ~8–9 pages with near-identical skeletons (index, models, api, agent-skills/codex, mcp, workflows, enterprise…). That's **~35 pages** that heavily restate official vendor docs, duplicate each other's structure, and go stale fastest.
-- **Model info scattered across 6+ places:** `decide/models/guide`, `research/models/guide`, `claude/models`, `openai/models`, `deepmind/models`, `deepseek/models` — plus `models.ts`, plus the homepage table. Too many doors for "what should I use?"
-- **Duplicate guides/sections:** two model guides (`decide/models/guide.mdx` vs `research/models/guide.mdx`); Interview Prep appears under both Learn and Resources.
-- **Cheatsheets duplicate live content:** `reference/cheatsheets/tools-comparison.md` overlaps `decide/tools/comparison.mdx`; `ai-tools-landscape.md` overlaps the homepage taxonomy.
+| Original claim | Reality in the repo |
+|---|---|
+| "Merge the two duplicate model guides" | **Not duplicates.** `decide/models/guide` = *Models Decision Guide* (which LLM to use); `research/models/guide` = *Open Source AI & Self-Hosting* (run locally). Different jobs — merging would be wrong. |
+| "Interview Prep is in two homes (Learn + Resources)" | **One home.** Only one sidebar block exists (`astro.config.mjs`, under Resources). The CLAUDE.md text claiming both was stale. |
+| "Collapse the ~35-page provider sprawl" | Those sections were **deliberately built recently** (Linear MOS-371/372/373, "Add dedicated <vendor> section, 9 pages", all Done). Collapsing them fights intentional work. |
+| "Provider model pages just duplicate models.ts" | They are **rich, hand-curated reference docs** — API IDs, batch pricing, max-output, knowledge cutoffs, extended vs. adaptive thinking, deprecation/migration tables, cost-at-scale. `models.ts` holds none of that. Rendering them from `models.ts` would *strip* detail. |
 
-## Scope
+**Conclusion:** there is no large consolidation to do. The pages are legitimate. The page-collapsing / guide-merging / interview-prep parts of the original issue are dropped.
 
-- Collapse the four vendor sections into **thin overview pages** that link to one canonical, `models.ts`-driven model guide (depends on / pairs with the single-source-of-truth issue).
-- Merge the duplicate model guides into one canonical location.
-- Resolve the double Interview Prep home.
-- Generate cheatsheets *from* the same data the live pages use, rather than maintaining static copies.
-- Update the sidebar in `astro.config.mjs` to match the consolidated IA.
+## The one real risk → the one real action
+
+The provider pages *do* restate each model's headline **pricing + context window**, which can silently drift from `models.ts` (the single source of truth established in issue #2). The fix is enforcement, not componentization:
+
+- **Added `scripts/check-model-consistency.mjs`** — for every current model whose name appears on its vendor page, it verifies the page contains that model's canonical price tokens + context from `models.ts`. Warns by default; `--strict` fails.
+- Wired into `prebuild` (non-strict, won't break deploys) and exposed as `npm run check:models` (strict, for CI).
+
+## Drift the guard found on first run (needs reconciliation — data decision)
+
+`models.ts` is canonical, so these pages should be aligned to it (or `models.ts` corrected):
+
+- **OpenAI · GPT-5.4 nano** — page says `$0.20/$1.25`; `models.ts` says `~$0.15/~$0.60`.
+- **Google · Gemini 3.5 Flash** — page says `$1.50/$9`; `models.ts` says `$0.15/$0.60` (~10× gap). The deepmind page also uses different version naming ("Gemini 3.1 Pro", "Gemini 3 generation") than `models.ts` ("Gemini 3.5 Pro/Ultra/Flash").
+
+These are left for a human call (which number is intended), exactly like the DeepSeek pricing reconciliation in issue #2.
 
 ## Acceptance criteria
 
-- [ ] One canonical model guide; provider pages are thin and link to it
-- [ ] No model fact duplicated across provider pages
-- [ ] Single Interview Prep home
-- [ ] Sidebar reflects the new structure; no broken internal links
-- [ ] Net page count meaningfully reduced
+- [x] Drift between provider pages and `models.ts` is detectable automatically
+- [x] Check runs in prebuild (warn) and is available strict for CI (`npm run check:models`)
+- [x] Rich provider pages preserved (no detail loss, no page deletions)
+- [ ] Reconcile the two drifts the guard found (GPT-5.4 nano, Gemini 3.5 Flash) — pending a data decision
 
 ## References
 
-- `src/content/docs/{claude,openai,deepmind,deepseek}/`
-- `src/content/docs/decide/models/guide.mdx`, `src/content/docs/research/models/guide.mdx`
-- `astro.config.mjs` (sidebar)
-- Existing Phase-2 migration plan (project notes)
+- `scripts/check-model-consistency.mjs`, `package.json` (prebuild + `check:models`)
+- `src/data/models.ts` (canonical), `src/content/docs/{claude,openai,deepmind,deepseek}/models.md`

@@ -4,12 +4,13 @@
   "version": "0.1.0",
   "description": "A personal + public playbook for AI & LLM knowledge.",
   "scripts": {
-    "prebuild": "node scripts/build-search-index.mjs",
+    "prebuild": "node scripts/build-search-index.mjs && node scripts/check-model-consistency.mjs",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "check:models": "node scripts/check-model-consistency.mjs --strict",
     "generate-quiz": "node scripts/generate-quiz-bank.mjs"
   },
   "dependencies": {
