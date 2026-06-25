@@ -3,7 +3,8 @@ title: Neural Networks
 description: The foundational building block of every LLM — how neurons, layers, activation functions, and backpropagation work, from intuition to the math.
 sidebar:
   order: 2
-lastUpdated: 2026-05-17
+lastUpdated: 2026-06-26
+nextVerificationDue: 2026-09-24
 tags:
   - deep-dive
   - neural-networks
@@ -49,7 +50,7 @@ flowchart LR
     x2["x₂"] -->|w₂| S
     x3["x₃"] -->|w₃| S
     b["bias b"] --> S
-    S --> A["activation\nfunction"]
+    S --> A["activation<br/>function"]
     A --> y["output y"]
 ```
 
