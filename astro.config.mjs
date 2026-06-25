@@ -88,6 +88,15 @@ export default defineConfig({
       },
       // KaTeX stylesheet + client-side Mermaid renderer + analytics
       head: [
+        // PWA manifest + service worker registration
+        {
+          tag: 'link',
+          attrs: { rel: 'manifest', href: '/manifest.json' },
+        },
+        {
+          tag: 'script',
+          content: `if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js',{scope:'/'}).catch(function(){});})}`,
+        },
         // Cloudflare Web Analytics (privacy-first, no cookie consent needed)
         // To enable: replace 'YOUR_TOKEN' with your Cloudflare Web Analytics token
         // Get one at: https://dash.cloudflare.com/ → Web Analytics → Add site
@@ -178,19 +187,24 @@ export default defineConfig({
                 if (!mermaid) return;
                 var isDark = document.documentElement.dataset.theme === 'dark';
                 mermaid.initialize({ startOnLoad: false, theme: isDark ? 'dark' : 'default', securityLevel: 'loose' });
-                document.querySelectorAll('pre > code.language-mermaid').forEach(function (el) {
-                  var pre = el.parentElement;
-                  if (!pre || pre.dataset.mermaidProcessed) return;
+                document.querySelectorAll('pre[data-language="mermaid"]').forEach(function (pre) {
+                  if (pre.dataset.mermaidProcessed) return;
+                  pre.dataset.mermaidProcessed = 'true';
+                  var lines = pre.querySelectorAll('.ec-line');
+                  var code = lines.length
+                    ? Array.prototype.map.call(lines, function (l) { return l.textContent; }).join('\\n')
+                    : pre.textContent;
                   var container = document.createElement('div');
                   container.className = 'mermaid';
-                  container.textContent = el.textContent;
-                  pre.replaceWith(container);
+                  container.textContent = code;
+                  container.setAttribute('data-src-mermaid', code);
+                  (pre.closest('figure.frame') || pre).replaceWith(container);
                 });
                 mermaid.run({ querySelector: '.mermaid' }).catch(function () {});
               }
               function boot() {
                 // Self-hosted Mermaid, lazy-loaded only on pages that have diagrams
-                if (!document.querySelector('pre > code.language-mermaid, .mermaid')) return;
+                if (!document.querySelector('pre[data-language="mermaid"], .mermaid')) return;
                 if (window.mermaid) { render(); return; }
                 var s = document.createElement('script');
                 s.src = '/vendor/mermaid/mermaid.min.js';
@@ -350,7 +364,6 @@ export default defineConfig({
             { label: 'Claude Models', slug: 'claude/models' },
             { label: 'API & SDKs', slug: 'claude/api' },
             { label: 'Claude Code', slug: 'claude/claude-code' },
-            { label: 'Agent Skills', slug: 'claude/agent-skills' },
             { label: 'MCP — Model Context Protocol', slug: 'claude/mcp' },
             { label: 'Cowork & Dispatch', slug: 'claude/cowork-dispatch' },
             { label: 'Workflows & Best Practices', slug: 'claude/workflows' },
@@ -365,7 +378,6 @@ export default defineConfig({
             { label: 'GPT Models', slug: 'openai/models' },
             { label: 'API & SDKs', slug: 'openai/api' },
             { label: 'Codex', slug: 'openai/codex' },
-            { label: 'Agent Skills', slug: 'openai/agent-skills' },
             { label: 'MCP & Integrations', slug: 'openai/mcp' },
             { label: 'Realtime, Image & Media', slug: 'openai/realtime' },
             { label: 'Workflows & Best Practices', slug: 'openai/workflows' },
